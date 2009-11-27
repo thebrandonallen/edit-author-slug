@@ -79,8 +79,6 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 						<td>
 							<input type="text" name="ba-edit-author-slug" id="ba-edit-author-slug" value="<?php echo sanitize_title_with_dashes( $user->user_nicename ); ?>" class="regular-text" /><br />
 							<span class="description">only alphanumeric characters (A-Z, a-z, 0-9), underscores (_) and dashes (-)</span>
-							<span><?php print_r( $user ); ?></span>
-							<span><?php echo $user_id; ?></span>
 						</td>
 					</tr>
 
