@@ -33,5 +33,9 @@ You will not be able to change your author slug. Changing the author slug too fr
 
 == Changelog ==
 
+= 0.1.1 =
+* Remove extra debug functions left behind
+* Add screenshot
+
 = 0.1 =
 * Initial release
