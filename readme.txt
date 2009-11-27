@@ -3,7 +3,7 @@ Contributors: cnorris23
 Tags: slug, author, permalink, users, user, admin
 Requires at least: 2.8
 Tested up to: 2.8.6
-Stable tag: 0.1
+Stable tag: 0.1.1
 
 This plugin allows you to change the Author slug, without having to actually enter the database.
 
@@ -17,6 +17,9 @@ This plugin allows you to change the Author slug, without having to actually ent
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Go to your Profile page, or the profile page of another user and edit their Author slug.
 1. Click the update button, and you're done
+
+== Screenshots ==
+1. Edit Author Slug screenshot
 
 == Frequently Asked Questions ==
 
