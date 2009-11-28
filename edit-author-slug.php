@@ -3,7 +3,7 @@
 Plugin Name: Edit Author Slug
 Plugin URI: http://wordpress.org/extend/plugins/edit-author-slug/ 
 Description: Allows user with with user editing capabilities to edit the author slug of a user. <em>i.e. - change http://example.com/author/username/ to http://example.com/author/user-name/</em>
-Version: 0.1
+Version: 0.1.2
 Tested With: 2.8.6, 2.9-beta-1
 Author: Brandon Allen
 Author URI: http://brandonallen.org
