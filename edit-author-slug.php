@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Edit Author Slug
-Plugin URI: http://brandonallen.org/wordpress/plugins/edit-author-slug/ 
+Plugin URI: http://brandonallen.org/wordpress/plugins/edit-author-slug/
 Description: Allows user with with user editing capabilities to edit the author slug of a user. <em>i.e. - change http://example.com/author/username/ to http://example.com/author/user-name/</em>
-Version: 0.1.4
+Version: 0.2
 Tested With: 2.8.6, 2.9.1
 Author: Brandon Allen
 Author URI: http://brandonallen.org/
@@ -35,7 +35,7 @@ Author URI: http://brandonallen.org/
  * It helps us avoid name collisions.
  * http://codex.wordpress.org/Writing_a_Plugin#Avoiding_Function_Name_Collisions
  */
-if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
+if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
 	class BA_Edit_Author_Slug {
 
 		/**
@@ -50,7 +50,7 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 				add_action( 'show_user_profile', array( &$this, 'show_user_nicename' ) );
 				add_action( 'edit_user_profile', array( &$this, 'show_user_nicename' ) );
 				add_action( 'personal_options_update', array( &$this, 'update_user_nicename' ) );
-				add_action( 'edit_user_profile_update', array( &$this, 'update_user_nicename' ) );	
+				add_action( 'edit_user_profile_update', array( &$this, 'update_user_nicename' ) );
 			}
 		}
 
@@ -65,7 +65,7 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 		 */
 		function show_user_nicename( $user ) {
 			global $user_id;
-			
+
 			if ( current_user_can( 'edit_users' ) ) {
 				?>
 
@@ -77,7 +77,7 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 						<th><label for="ba-edit-author-slug">Author Slug</label></th>
 
 						<td>
-							<input type="text" name="ba-edit-author-slug" id="ba-edit-author-slug" value="<?php echo sanitize_title_with_dashes( $user->user_nicename ); ?>" class="regular-text" /><br />
+							<input type="text" name="ba-edit-author-slug" id="ba-edit-author-slug" value="<?php echo $user->user_nicename; ?>" class="regular-text" /><br />
 							<span class="description">only alphanumeric characters (A-Z, a-z, 0-9), underscores (_) and dashes (-)</span>
 						</td>
 					</tr>
@@ -85,7 +85,7 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 				</table>
 			<?php }
 		}
-		
+
 		/**
 		 * Update user_nicename database option for corresponding user.
 		 *
@@ -98,18 +98,22 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 		 * @param object $user User data object
 		 */
 		function update_user_nicename( $user ) {
-			global $user_id;
-			
-			if ( !empty( $_POST['action'] ) && ( $_POST['action'] === 'update' ) && !empty( $_POST['ba-edit-author-slug'] ) && ( $user->user_nicename != $_POST['ba-edit-author-slug'] ) ) {
-				$new_user_nicename = sanitize_title_with_dashes( $_POST['ba-edit-author-slug'] );
-				
-				$userdata = array( 'ID' => $user_id, 'user_nicename' => $new_user_nicename );
-				wp_update_user( $userdata );
-			
-				wp_cache_delete( $user->user_nicename, 'userslugs' );
+			global $user_id, $wpdb;
+
+			$ba_edit_author_slug = sanitize_title_with_dashes( $_POST['ba-edit-author-slug'] );
+			$user_nicename_array = $wpdb->get_col( $wpdb->prepare( "SELECT user_nicename FROM $wpdb->users" ) );
+
+			if ( ! empty( $_POST['action'] ) && ( $_POST['action'] === 'update' ) && ! empty( $ba_edit_author_slug ) ) {
+				if ( in_array( $ba_edit_author_slug, $user_nicename_array ) ) {
+					wp_die( "The author slug, '<em><strong>" . $ba_edit_author_slug . "</strong></em>', is already in use. Please go back, and try again.", 'Author Slug Already Exists - Please Try Again' );
+				} elseif ( $user->user_nicename != $ba_edit_author_slug ) {
+					$userdata = array( 'ID' => $user_id, 'user_nicename' => $ba_edit_author_slug );
+					wp_update_user( $userdata );
+
+					wp_cache_delete( $user->user_nicename, 'userslugs' );
+				}
 			}
 		}
-
 	}
 } //end class BA_Edit_Author_Slug
 
