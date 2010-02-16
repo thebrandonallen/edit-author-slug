@@ -3,14 +3,14 @@
 Plugin Name: Edit Author Slug
 Plugin URI: http://brandonallen.org/wordpress/plugins/edit-author-slug/
 Description: Allows user with with user editing capabilities to edit the author slug of a user. <em>i.e. - change http://example.com/author/username/ to http://example.com/author/user-name/</em>
-Version: 0.2
+Version: 0.2.1
 Tested With: 2.8.6, 2.9.1
 Author: Brandon Allen
 Author URI: http://brandonallen.org/
 */
 
 /*
-* Copyright 2009  Brandon Allen  (email : wp_plugins_support@brandonallen.org)	
+* Copyright 2009  Brandon Allen  (email : wp_plugins_support@brandonallen.org)
 
 			This program is free software; you can redistribute it and/or modify
 			it under the terms of the GNU General Public License as published by
@@ -37,6 +37,8 @@ Author URI: http://brandonallen.org/
  */
 if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
 	class BA_Edit_Author_Slug {
+
+		var $ba_current_author_slug = '';
 
 		/**
 		 * Automatically run actions using a function with the same name as it's class.
@@ -65,7 +67,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
 		 */
 		function show_user_nicename( $user ) {
 			global $user_id;
-
+			
 			if ( current_user_can( 'edit_users' ) ) {
 				?>
 
@@ -100,18 +102,18 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
 		function update_user_nicename( $user ) {
 			global $user_id, $wpdb;
 
+			$ba_user_to_update = get_userdata( $user_id );
 			$ba_edit_author_slug = sanitize_title_with_dashes( $_POST['ba-edit-author-slug'] );
 			$user_nicename_array = $wpdb->get_col( $wpdb->prepare( "SELECT user_nicename FROM $wpdb->users" ) );
 
-			if ( ! empty( $_POST['action'] ) && ( $_POST['action'] === 'update' ) && ! empty( $ba_edit_author_slug ) ) {
-				if ( in_array( $ba_edit_author_slug, $user_nicename_array ) ) {
+			if ( ! empty( $_POST['action'] ) && ( $_POST['action'] === 'update' ) && ! empty( $ba_edit_author_slug ) && ( $ba_user_to_update->user_nicename != $ba_edit_author_slug ) ) {
+				if ( in_array( $ba_edit_author_slug, $user_nicename_array ) )
 					wp_die( "The author slug, '<em><strong>" . $ba_edit_author_slug . "</strong></em>', is already in use. Please go back, and try again.", 'Author Slug Already Exists - Please Try Again' );
-				} elseif ( $user->user_nicename != $ba_edit_author_slug ) {
-					$userdata = array( 'ID' => $user_id, 'user_nicename' => $ba_edit_author_slug );
-					wp_update_user( $userdata );
+				
+				$userdata = array( 'ID' => $user_id, 'user_nicename' => $ba_edit_author_slug );
+				wp_update_user( $userdata );
 
-					wp_cache_delete( $user->user_nicename, 'userslugs' );
-				}
+				wp_cache_delete( $user->user_nicename, 'userslugs' );
 			}
 		}
 	}
