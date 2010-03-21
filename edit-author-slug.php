@@ -3,8 +3,8 @@
 Plugin Name: Edit Author Slug
 Plugin URI: http://brandonallen.org/wordpress/plugins/edit-author-slug/
 Description: Allows user with with user editing capabilities to edit the author slug of a user. <em>i.e. - change http://example.com/author/username/ to http://example.com/author/user-name/</em>
-Version: 0.2.1
-Tested With: 2.8.6, 2.9.1
+Version: 0.3
+Tested With: 2.8.6, 2.9.2
 Author: Brandon Allen
 Author URI: http://brandonallen.org/
 */
@@ -53,6 +53,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
 				add_action( 'edit_user_profile', array( &$this, 'show_user_nicename' ) );
 				add_action( 'personal_options_update', array( &$this, 'update_user_nicename' ) );
 				add_action( 'edit_user_profile_update', array( &$this, 'update_user_nicename' ) );
+				load_plugin_textdomain( 'ba-edit-author-slug', false, 'edit-author-slug/languages' );
 			}
 		}
 
@@ -71,16 +72,16 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
 			if ( current_user_can( 'edit_users' ) ) {
 				?>
 
-				<h3>Edit Author Slug</h3>
+				<h3><?php _e( 'Edit Author Slug', 'ba-edit-author-slug' ) ?></h3>
 
 				<table class="form-table">
 
 					<tr>
-						<th><label for="ba-edit-author-slug">Author Slug</label></th>
+						<th><label for="ba-edit-author-slug"><?php _e( 'Author Slug', 'ba-edit-author-slug' ) ?></label></th>
 
 						<td>
 							<input type="text" name="ba-edit-author-slug" id="ba-edit-author-slug" value="<?php echo $user->user_nicename; ?>" class="regular-text" /><br />
-							<span class="description">only alphanumeric characters (A-Z, a-z, 0-9), underscores (_) and dashes (-)</span>
+							<span class="description"><?php _e( 'only alphanumeric characters (A-Z, a-z, 0-9), underscores (_) and dashes (-)', 'ba-edit-author-slug' ) ?></span>
 						</td>
 					</tr>
 
@@ -105,10 +106,12 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
 			$ba_user_to_update = get_userdata( $user_id );
 			$ba_edit_author_slug = sanitize_title_with_dashes( $_POST['ba-edit-author-slug'] );
 			$user_nicename_array = $wpdb->get_col( $wpdb->prepare( "SELECT user_nicename FROM $wpdb->users" ) );
+			$wp_die_html_front = '<em><strong>';
+			$wp_die_html_rear = '</strong></em>';
 
 			if ( ! empty( $_POST['action'] ) && ( $_POST['action'] === 'update' ) && ! empty( $ba_edit_author_slug ) && ( $ba_user_to_update->user_nicename != $ba_edit_author_slug ) ) {
 				if ( in_array( $ba_edit_author_slug, $user_nicename_array ) )
-					wp_die( "The author slug, '<em><strong>" . $ba_edit_author_slug . "</strong></em>', is already in use. Please go back, and try again.", 'Author Slug Already Exists - Please Try Again' );
+					wp_die( sprintf( __( "The author slug, '%s%s%s', is already in use. Please go back, and try again.", 'ba-edit-author-slug' ), $wp_die_html_front, $ba_edit_author_slug, $wp_die_html_rear ), __( 'Author Slug Already Exists - Please Try Again', 'ba-edit-author-slug' ) );
 				
 				$userdata = array( 'ID' => $user_id, 'user_nicename' => $ba_edit_author_slug );
 				wp_update_user( $userdata );
