@@ -3,7 +3,7 @@ Contributors: cnorris23
 Tags: slug, author, permalink, users, user, admin
 Requires at least: 2.8
 Tested up to: 3.0-alpha
-Stable tag: 0.2.1
+Stable tag: 0.3
 
 This plugin allows you to change the Author slug, without having to actually enter the database.
 
@@ -63,6 +63,9 @@ You will not be able to change your author slug. Changing the author slug too fr
 * Initial release
 
 == Upgrade Notice ==
+
+= 0.3 =
+Edit Author Slug can now be localized. You can find edit-author-slug.pot in 'edit-author-slug/languages' to get you started.
 
 = 0.2 =
 Added a check to avoid duplicate duplicate author slugs, and better sanitization.
