@@ -34,6 +34,9 @@ You will not be able to change your author slug. Changing the author slug too fr
 
 == Changelog ==
 
+= 0.3 =
+* now localization friendly
+
 = 0.2.1 =
 * fixed a bug that prevented updating a user if the author slug did not change
 
