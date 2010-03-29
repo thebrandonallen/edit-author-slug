@@ -1,0 +1,38 @@
+# Translation of Edit Author Slug.
+# Copyright (C) 2010 BuddyPress
+# This file is distributed under the same license as the Edit Author Slug package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Edit Author Slug\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-21 16:27-0600\n"
+"PO-Revision-Date: 2010-03-21 16:27-0600\n"
+"Last-Translator: Brandon Allen <me@brandonallen.org>\n"
+"Language-Team:  <wp_plugins@brandonallen.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: edit-author-slug.php:75
+msgid "Edit Author Slug"
+msgstr ""
+
+#: edit-author-slug.php:80
+msgid "Author Slug"
+msgstr ""
+
+#: edit-author-slug.php:84
+msgid "only alphanumeric characters (A-Z, a-z, 0-9), underscores (_) and dashes (-)"
+msgstr ""
+
+#: edit-author-slug.php:114
+#, php-format
+msgid "The author slug, '%s%s%s', is already in use. Please go back, and try again."
+msgstr ""
+
+#: edit-author-slug.php:114
+msgid "Author Slug Already Exists - Please Try Again"
+msgstr ""
+
