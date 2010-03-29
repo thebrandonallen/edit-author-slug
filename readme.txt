@@ -11,6 +11,9 @@ This plugin allows you to change the Author slug, without having to actually ent
 
 This plugin allows you to change the Author slug, without having to actually enter the database. Assuming you are an admin or a user with the "edit_users" capability, you will see an extra field on your user edit/profile edit page. This allows for greater security, as your user name isn't revealed through your URL structure. It also allows you to make your URLs look a bit cleaner. (i.e. - http://example.com/author/username/ could become http://example.com/author/user-name/)
 
+#### Translations Available
+* Hebrew (he_IL) - Yonat Sharon
+
 == Installation ==
 
 1. Upload `edit-author-slug` folder to your WordPress plugins directory (typically 'wp-content/plugins')
