@@ -3,7 +3,7 @@ Contributors: cnorris23
 Tags: slug, author, permalink, users, user, admin
 Requires at least: 2.8
 Tested up to: 3.0-alpha
-Stable tag: 0.3
+Stable tag: 0.3.1
 
 This plugin allows you to change the Author slug, without having to actually enter the database.
 
@@ -33,6 +33,9 @@ Make sure you are an admin, or someone with the `edit_users` capability.
 You will not be able to change your author slug. Changing the author slug too frequently, or to something non-descriptive is bad SEO, so we'll leave this ability to a chosen few. If this doesn't work for you, consider Justin Tadlock's [Members] (http://wordpress.org/extend/plugins/members/ "Justin Tadlock's Members plugin") plugin.
 
 == Changelog ==
+
+= 0.3.1 =
+* added Hebrew Translation, props Yonat Sharon
 
 = 0.3 =
 * now localization friendly
