@@ -2,7 +2,7 @@
 Contributors: cnorris23
 Tags: slug, author, permalink, users, user, admin
 Requires at least: 2.8
-Tested up to: 3.0-alpha
+Tested up to: 3.0-beta1
 Stable tag: 0.3.1
 
 This plugin allows you to change the Author slug, without having to actually enter the database.
