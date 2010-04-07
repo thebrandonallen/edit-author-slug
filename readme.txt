@@ -5,11 +5,17 @@ Requires at least: 2.8
 Tested up to: 3.0-beta1
 Stable tag: 0.3.1
 
-This plugin allows you to change the Author slug, without having to actually enter the database.
+Allows an Admin to edit the author slug of any blog user, and change the Author Base.
 
 == Description ==
 
-This plugin allows you to change the Author slug, without having to actually enter the database. Assuming you are an admin or a user with the "edit_users" capability, you will see an extra field on your user edit/profile edit page. This allows for greater security, as your user name isn't revealed through your URL structure. It also allows you to make your URLs look a bit cleaner. (i.e. - http://example.com/author/username/ could become http://example.com/author/user-name/)
+This plugin allows an Admin to change the Author slug, without having to actually enter the database. You can also change the Author Base. Two new fields will be added to your Dashboard. The "Edit Author Slug" field can be found under Users > Your Profile or Users > Authors & Users. The "Author Base" field can be found under Settings > Permalinks. This plugin not only allows for greater security, as it helps mask usernames, but it also allows you to craft the perfect URL structure for you Author pages. 
+
+WordPress default structure
+http://example.com/author/username/
+
+Plugin allows
+http://example.com/ninja/master-ninja/
 
 #### Translations Available
 * Hebrew (he_IL) - Yonat Sharon
@@ -18,12 +24,15 @@ This plugin allows you to change the Author slug, without having to actually ent
 
 1. Upload `edit-author-slug` folder to your WordPress plugins directory (typically 'wp-content/plugins')
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Go to your Profile page, or the profile page of another user and edit their Author slug.
-1. Click the update button, and you're done
+1. Go to Users > Your Profile, or Users > Authors & Users > (username), and edit the Author slug.
+1. Click "Update Profile"
+1. Go to Settings > Permalinks, and edit the Author Base
+1. Click "Save Changes"
 
 == Screenshots ==
 
 1. Edit Author Slug screenshot
+2. Author Base screenshot
 
 == Frequently Asked Questions ==
 
@@ -36,6 +45,10 @@ Make sure you are an admin, or someone with the `edit_users` capability.
 You will not be able to change your author slug. Changing the author slug too frequently, or to something non-descriptive is bad SEO, so we'll leave this ability to a chosen few. If this doesn't work for you, consider Justin Tadlock's [Members] (http://wordpress.org/extend/plugins/members/ "Justin Tadlock's Members plugin") plugin.
 
 == Changelog ==
+
+= 0.4 =
+* added ability to change the Author Base 
+* updated documentation
 
 = 0.3.1 =
 * added Hebrew Translation, props Yonat Sharon
@@ -70,8 +83,14 @@ You will not be able to change your author slug. Changing the author slug too fr
 
 == Upgrade Notice ==
 
+= 0.4 =
+Adds ability to change the Author Base (not a required upgrade)
+
 = 0.3 =
 Edit Author Slug can now be localized. You can find edit-author-slug.pot in 'edit-author-slug/languages' to get you started.
 
 = 0.2 =
 Added a check to avoid duplicate duplicate author slugs, and better sanitization.
+
+= TODO =
+* Allow Author Slug editing of users from one centralized location
