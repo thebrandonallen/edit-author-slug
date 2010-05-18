@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Edit Author Slug 0.4\n"
-"Report-Msgid-Bugs-To: wp_plugins@brandonallen.org\n"
-"POT-Creation-Date: 2010-04-06 22:26+0000\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/edit-author-slug\n"
+"POT-Creation-Date: 2010-05-18 21:35+0000\n"
 "PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,17 +31,13 @@ msgid ""
 "only alphanumeric characters (A-Z, a-z, 0-9), underscores (_) and dashes (-)"
 msgstr ""
 
-#: edit-author-slug.php:128
+#: edit-author-slug.php:131
 #, php-format
 msgid ""
 "The author slug, '%s%s%s', is already in use. Please go back, and try again."
 msgstr ""
 
-#: edit-author-slug.php:128
-msgid "Author Slug Already Exists - Please Try Again"
-msgstr ""
-
-#: edit-author-slug.php:154
+#: edit-author-slug.php:157
 msgid "Author Base"
 msgstr ""
 
@@ -53,7 +49,7 @@ msgstr ""
 msgid ""
 "Allows an Admin to edit the author slug of any blog user, and change the "
 "Author Base. <em>i.e. - (WordPress default structure) http://example.com/"
-"author/username/ (Plugin allows) http://example.com/user/user-name/</em>"
+"author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>"
 msgstr ""
 
 #. Author of the plugin/theme
