@@ -18,7 +18,7 @@ Plugin allows
 http://example.com/ninja/master-ninja/
 
 #### Translations Available
-* Hebrew (he_IL) - Yonat Sharon
+* Hebrew (he_IL) - [Yonat Sharon](http://ootips.org/ "Yonat Sharon")
 * Belorussian (be_BY) - [Marcis G.](http://pc.de/ "Marcis G.")
 
 == Installation ==
