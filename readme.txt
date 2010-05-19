@@ -14,7 +14,7 @@ This plugin allows an Admin to change the Author slug, without having to actuall
 WordPress default structure
 http://example.com/author/username/
 
-Plugin allows
+Edit Author Slug allows for
 http://example.com/ninja/master-ninja/
 
 #### Translations Available
