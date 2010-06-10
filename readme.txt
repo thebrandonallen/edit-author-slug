@@ -1,8 +1,8 @@
 === Edit Author Slug ===
 Contributors: cnorris23
 Tags: admin, author, permalink, permalinks, slug, users, user
-Requires at least: 2.8
-Tested up to: 3.0-beta1
+Requires at least: 2.8.6
+Tested up to: 3.0-RC2
 Stable tag: 0.4
 
 Allows an Admin to edit the author slug of any blog user, and change the Author Base.
@@ -14,11 +14,12 @@ This plugin allows an Admin to change the Author slug, without having to actuall
 WordPress default structure
 http://example.com/author/username/
 
-Plugin allows
+Edit Author Slug allows for
 http://example.com/ninja/master-ninja/
 
 #### Translations Available
 * Hebrew (he_IL) - Yonat Sharon
+* Belorussian (be_BY) - [Marcis G.](http://pc.de/ "Marcis G.")
 
 == Installation ==
 
@@ -36,19 +37,17 @@ http://example.com/ninja/master-ninja/
 
 == Frequently Asked Questions ==
 
-= Nothing shows up when I go to my profile page? =
+= Why can't I edit my Author Slug? =
 
-Make sure you are an admin, or someone with the `edit_users` capability.
-
-= What if I'm not an admin? =
-
-You will not be able to change your author slug. Changing the author slug too frequently, or to something non-descriptive is bad SEO, so we'll leave this ability to a chosen few. If this doesn't work for you, consider Justin Tadlock's [Members] (http://wordpress.org/extend/plugins/members/ "Justin Tadlock's Members plugin") plugin.
+Make sure you are an admin, or have been assigned the `edit_users` capability.
 
 == Changelog ==
 
 = 0.4 =
 * added ability to change the Author Base 
 * updated documentation
+* added some extra security via WP esc_* functions
+* added Belorussian translation, props Marcis G.
 
 = 0.3.1 =
 * added Hebrew Translation, props Yonat Sharon
