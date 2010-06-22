@@ -3,8 +3,8 @@
 Plugin Name: Edit Author Slug
 Plugin URI: http://brandonallen.org/wordpress/plugins/edit-author-slug/
 Description: Allows an Admin to edit the author slug of any blog user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
-Version: 0.4
-Tested With: 2.9.2, 3.0-beta1
+Version: 0.5
+Tested With: 2.9.2, 3.0
 Author: Brandon Allen
 Author URI: http://brandonallen.org/
 License: GPL2
@@ -37,22 +37,23 @@ License: GPL2
  *
  * @package Edit Author Slug
  */
-if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
+if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 	class BA_Edit_Author_Slug {
 
 		/**
 		 * Run necessary actions automagically.
 		 *
 		 * Runs necessary actions and localization by placing them inside a
-		 * function with the same name as the Class name. 
+		 * function with the same name as the Class name.
 		 *
 		 * @author Brandon Allen
 		 *
 		 * @since 0.1.0
 		 * @uses is_admin() Only run actions when on admin pages.
-		 *
 		 */
 		function BA_Edit_Author_Slug() {
+			global $pagenow;
+
 			if ( is_admin() ) {
 				add_action( 'show_user_profile', array( &$this, 'show_user_nicename' ) );
 				add_action( 'edit_user_profile', array( &$this, 'show_user_nicename' ) );
@@ -60,8 +61,13 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
 				add_action( 'edit_user_profile_update', array( &$this, 'update_user_nicename' ) );
 				add_action( 'admin_init', array( &$this, 'add_author_base_settings_field' ) );
 				load_plugin_textdomain( 'edit-author-slug', false, 'edit-author-slug/languages' );
+
+				if ( isset( $pagenow ) && $pagenow == 'users.php' ) {
+					add_filter( 'manage_users_columns', array( &$this, 'author_slug_column' ) );
+					add_filter( 'manage_users_custom_column', array( &$this, 'author_slug_custom_column' ), 10, 3 );
+				}
 			}
-			
+
 			add_action( 'init', array( &$this, 'author_base_rewrite' ) );
 		}
 
@@ -85,12 +91,12 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
 			if ( current_user_can( 'edit_users' ) ) {
 				?>
 
-<h3><?php _e( 'Edit Author Slug', 'edit-author-slug' ) ?></h3>
+<h3><?php esc_html_e( 'Edit Author Slug', 'edit-author-slug' ) ?></h3>
 
 <table class="form-table">
 <tbody><tr>
-	<th><label for="ba-edit-author-slug"><?php _e( 'Author Slug', 'edit-author-slug' ) ?></label></th>
-	<td><input type="text" name="ba-edit-author-slug" id="ba-edit-author-slug" value="<?php echo $user->user_nicename; ?>" class="regular-text" /><br /><span class="description"><?php _e( 'only alphanumeric characters (A-Z, a-z, 0-9), underscores (_) and dashes (-)', 'edit-author-slug' ) ?></span></td>
+	<th><label for="ba-edit-author-slug"><?php esc_html_e( 'Author Slug', 'edit-author-slug' ) ?></label></th>
+	<td><input type="text" name="ba-edit-author-slug" id="ba-edit-author-slug" value="<?php echo esc_attr( $user->user_nicename ); ?>" class="regular-text" /><br /><span class="description"><?php esc_html_e( "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'", 'edit-author-slug' ) ?></span></td>
 </tr>
 </tbody></table>
 			<?php }
@@ -99,33 +105,32 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
 		/**
 		 * Update user_nicename for a given user.
 		 *
-		 * Runs with 'personal_options_update' and 'edit_user_profile_update' actions.
-		 * Only alphanumeric characters (A-Z, a-z, 0-9), underscores (_) and dashes (-)
-		 * are allowed. Everything else will be stripped. Spaces will be replaced with dashes.
+		 * Runs with 'personal_options_update' and 'edit_user_profile_update' actions,
+		 * and updates the user_nicename.
 		 *
 		 * @author Brandon Allen
 		 *
 		 * @since 0.1.0
 		 * @global int $user_ID The ID of the user
 		 * @global $wpdb WordPress database object for queries
-		 * @uses sanitize_title_with_dashes() Used to sanitize Author Slug
+		 * @uses sanitize_title() Used to sanitize Author Slug
 		 */
 		function update_user_nicename() {
 			global $user_id, $wpdb;
 
 			$userdata = get_userdata( $user_id );
-			$author_slug = sanitize_title_with_dashes( $_POST['ba-edit-author-slug'] );
+			$author_slug = sanitize_title( $_POST['ba-edit-author-slug'] );
 
 			// Get array of existing user_nicenames to compare against
 			$user_nicenames = $wpdb->get_col( $wpdb->prepare( "SELECT user_nicename FROM $wpdb->users" ) );
 
-			// Setup HTML for wp_die() message
-			$wp_die_html_front = '<em><strong>';
-			$wp_die_html_rear = '</strong></em>';
-
 			if ( !empty( $_POST['action'] ) && ( $_POST['action'] === 'update' ) && !empty( $author_slug ) && ( $userdata->user_nicename != $author_slug ) ) {
-				if ( in_array( $author_slug, $user_nicenames ) )
-					wp_die( sprintf( __( "The author slug, '%s%s%s', is already in use. Please go back, and try again.", 'edit-author-slug' ), $wp_die_html_front, $author_slug, $wp_die_html_rear ), __( 'Author Slug Already Exists - Please Try Again', 'edit-author-slug' ) );
+				if ( in_array( $author_slug, $user_nicenames ) ) {
+					$stylized_author_slug = '<em><strong>' . esc_attr( $author_slug ) . '</strong></em>';
+					$message = esc_html__( "The author slug, '[baeas_author_slug]', is already in use. Please go back, and try again.", 'edit-author-slug' );
+
+					wp_die( str_replace( '[baeas_author_slug]', $stylized_author_slug, $message ) );
+				}
 
 				$new_userdata = array( 'ID' => $user_id, 'user_nicename' => $author_slug );
 				wp_update_user( $new_userdata );
@@ -147,10 +152,10 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
 		function add_author_base_settings_field() {
 			// Register setting doesn't work on options-permalink.php
 			// see Trac ticket #9296 (http://core.trac.wordpress.org/ticket/9296)
-			//register_setting( 'ba_edit_author_slug', 'ba_edit_author_slug', array( &$this, 'sanitize_author_base' ) );
-			
+			// register_setting( 'ba_edit_author_slug', 'ba_edit_author_slug', array( &$this, 'sanitize_author_base' ) );
+
 			$this->sanitize_author_base();
-			
+
 			add_settings_field( 'baeas_author_base', __( 'Author Base', 'edit-author-slug' ), array( &$this, 'author_base_settings_html' ), 'permalink', 'optional' );
 		}
 
@@ -167,10 +172,10 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
 		 */
 		function sanitize_author_base() {
 			$options = get_option( 'ba_edit_author_slug' );
-			
+
 			if ( isset( $_POST['permalink_structure'] ) || isset( $_POST['category_base'] ) ) {
 				check_admin_referer('update-permalink');
-				
+
 				if ( isset( $_POST['baeas_author_base'] ) ) {
 					$author_base = $_POST['baeas_author_base'];
 					if ( !empty( $author_base ) ) {
@@ -178,7 +183,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
 						$author_base = _wp_filter_taxonomy_base( $author_base );
 						$author_base = untrailingslashit( $author_base );
 					}
-		
+
 					if ( $author_base != $options['author_base'] ) {
 						$ba_edit_author_slug['author_base'] = $author_base;
 						update_option( 'ba_edit_author_slug', $ba_edit_author_slug );
@@ -199,10 +204,10 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
 		 */
 		function author_base_settings_html() {
 			$options = get_option( 'ba_edit_author_slug' );
-			
+
 			echo '<input id="baeas_author_base" name="baeas_author_base" type="text" value="' . esc_attr( $options['author_base'] ) . '" class="regular-text code" />';
 		}
-		
+
 		/**
 		 * Rewrite Author Base according to user's setting.
 		 *
@@ -210,18 +215,62 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
 		 * Author Base field on Options > Permalinks.
 		 *
 		 * @author Brandon Allen
+		 *
 		 * @since 0.4.0
 		 * @global object $wp_rewrite Adds rewrite tags and permastructs.
 		 */
 		function author_base_rewrite() {
 			global $wp_rewrite;
-			
+
 			$options = get_option( 'ba_edit_author_slug' );
-			
+
 			if ( !empty( $options['author_base'] ) ) {
-				$wp_rewrite->author_base = $options['author_base'];
+				$wp_rewrite->author_base = esc_attr( $options['author_base'] );
 				$wp_rewrite->flush_rules();
 			}
+		}
+
+		/**
+		 * Add 'Author Slug' column to Users page.
+		 *
+		 * Adds the 'Author Slug' column and column heading
+		 * to the page Users > Authors & Users.
+		 *
+		 * @author Brandon Allen
+		 *
+		 * @since 0.5.0
+		 *
+		 * @param array $defaults Array of current columns/column headings
+		 */
+		function author_slug_column( $defaults ) {
+			$defaults['baeas_author_slug'] = esc_html__( 'Author Slug', 'edit-author-base' );
+
+			return $defaults;
+		}
+
+		/**
+		 * Fill in user_nicename for 'Author Slug' column.
+		 *
+		 * Adds the user's corresponding user_nicename to the
+		 * 'Author Slug' column.
+		 *
+		 * @author Brandon Allen
+		 *
+		 * @since 0.5.0
+		 * @uses get_userdata() Used to retrieve user_nicename
+		 *
+		 * @param string $default Value for column data, defaults to ''
+		 * @param string $column_name Column name currently being filtered
+		 * @param int $user_id User ID
+		 */
+		function author_slug_custom_column( $default, $column_name, $user_id ) {
+			if ( $column_name == 'baeas_author_slug') {
+				$userdata = get_userdata( $user_id );
+
+				return $userdata->user_nicename;
+			}
+
+			return $default;
 		}
 	}
 } //end class BA_Edit_Author_Slug
@@ -229,8 +278,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) {
 /**
  * Initialize BA_Edit_Author_Slug class
  */
-if ( class_exists( 'BA_Edit_Author_Slug' ) ) {
-	$ba_edit_author_slug = new BA_Edit_Author_Slug;
-}
+add_action( 'plugins_loaded', create_function( '', 'global $ba_edit_author_slug; $ba_edit_author_slug = new BA_Edit_Author_Slug();' ) );
 
 ?>

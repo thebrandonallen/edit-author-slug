@@ -1,7 +1,7 @@
 === Edit Author Slug ===
 Contributors: cnorris23
 Tags: admin, author, permalink, permalinks, slug, users, user
-Requires at least: 2.8.6
+Requires at least: 2.9
 Tested up to: 3.0
 Stable tag: 0.4
 
@@ -9,7 +9,7 @@ Allows an Admin to edit the author slug of any blog user, and change the Author 
 
 == Description ==
 
-This plugin allows an Admin to change the Author slug, without having to actually enter the database. You can also change the Author Base. Two new fields will be added to your Dashboard. The "Edit Author Slug" field can be found under Users > Your Profile or Users > Authors & Users. The "Author Base" field can be found under Settings > Permalinks. This plugin not only allows for greater security, as it helps mask usernames, but it also allows you to craft the perfect URL structure for you Author pages. 
+This plugin allows an Admin to change the Author slug, without having to actually enter the database. You can also change the Author Base. Two new fields will be added to your Dashboard. The "Edit Author Slug" field can be found under Users > Your Profile or Users > Authors & Users (Users > Users in WP 3.0). The "Author Base" field can be found under Settings > Permalinks. This plugin not only allows for greater security, as it helps mask usernames, but it also allows you to craft the perfect URL structure for you Author pages. For your convenience, an Author Slug column is added to make it easier to determine if one needs to change the Author Slug.
 
 WordPress default structure
 http://example.com/author/username/
@@ -42,6 +42,11 @@ http://example.com/ninja/master-ninja/
 Make sure you are an admin, or have been assigned the `edit_users` capability.
 
 == Changelog ==
+
+= 0.5 =
+* added 'Author Slug' column to Users > Authors & Users (Users > Users in 3.0) page (prop Yonat Sharon for the jumpstart)
+* ended support for the WP 2.8 branch. Most likely still works, but I will not support it.
+* various bug fixes
 
 = 0.4 =
 * added ability to change the Author Base 
