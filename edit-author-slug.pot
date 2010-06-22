@@ -1,0 +1,60 @@
+# Translation of the WordPress plugin Edit Author Slug 0.5 by Brandon Allen.
+# Copyright (C) 2010 Brandon Allen
+# This file is distributed under the same license as the Edit Author Slug package.
+# Brandon Allen <wp_plugins@brandonallen.org>, 2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Edit Author Slug 0.5\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/edit-author-slug\n"
+"POT-Creation-Date: 2010-06-22 22:44+0000\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. #-#-#-#-#  plugin.pot (Edit Author Slug 0.5)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: edit-author-slug.php:94
+msgid "Edit Author Slug"
+msgstr ""
+
+#: edit-author-slug.php:98 edit-author-slug.php:246
+msgid "Author Slug"
+msgstr ""
+
+#: edit-author-slug.php:99
+msgid "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'"
+msgstr ""
+
+#: edit-author-slug.php:130
+msgid ""
+"The author slug, '[baeas_author_slug]', is already in use. Please go back, "
+"and try again."
+msgstr ""
+
+#: edit-author-slug.php:159
+msgid "Author Base"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://brandonallen.org/wordpress/plugins/edit-author-slug/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Allows an Admin to edit the author slug of any blog user, and change the "
+"Author Base. <em>i.e. - (WordPress default structure) http://example.com/"
+"author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Brandon Allen"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://brandonallen.org/"
+msgstr ""
