@@ -3,8 +3,8 @@
 Plugin Name: Edit Author Slug
 Plugin URI: http://brandonallen.org/wordpress/plugins/edit-author-slug/
 Description: Allows an Admin to edit the author slug of any blog user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
-Version: 0.5
-Tested With: 2.9.2, 3.0
+Version: 0.6-beta1
+Tested With: 2.9.2, 3.0.1
 Author: Brandon Allen
 Author URI: http://brandonallen.org/
 License: GPL2
@@ -86,8 +86,6 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 		 * @param object $user User data object
 		 */
 		function show_user_nicename( $user ) {
-			global $user_id;
-
 			if ( current_user_can( 'edit_users' ) ) {
 				?>
 
@@ -118,8 +116,8 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 		function update_user_nicename() {
 			global $user_id, $wpdb;
 
-			$userdata = get_userdata( $user_id );
-			$author_slug = sanitize_title( $_POST['ba-edit-author-slug'] );
+			$userdata		= get_userdata( $user_id );
+			$author_slug	= sanitize_title( $_POST['ba-edit-author-slug'] );
 
 			// Get array of existing user_nicenames to compare against
 			$user_nicenames = $wpdb->get_col( $wpdb->prepare( "SELECT user_nicename FROM $wpdb->users" ) );
@@ -171,10 +169,10 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 		 * @since 0.4.0
 		 */
 		function sanitize_author_base() {
-			$options = get_option( 'ba_edit_author_slug' );
-
 			if ( isset( $_POST['permalink_structure'] ) || isset( $_POST['category_base'] ) ) {
 				check_admin_referer('update-permalink');
+
+				$options = get_option( 'ba_edit_author_slug' );
 
 				if ( isset( $_POST['baeas_author_base'] ) ) {
 					$author_base = $_POST['baeas_author_base'];
@@ -185,7 +183,8 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 					}
 
 					if ( $author_base != $options['author_base'] ) {
-						$ba_edit_author_slug['author_base'] = $author_base;
+						$ba_edit_author_slug['author_base']				= $author_base;
+						$ba_edit_author_slug['dont_forget_to_flush']	= 1;
 						update_option( 'ba_edit_author_slug', $ba_edit_author_slug );
 					}
 				}
@@ -224,9 +223,23 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 
 			$options = get_option( 'ba_edit_author_slug' );
 
-			if ( !empty( $options['author_base'] ) ) {
+			// Use this filter with caution! It could cause things to terribly ary
+			// with your permalinks. If you use this filter, make sure you go to
+			// your Permalink Options page, and click save. This will flush the old
+			// rules, and update your permalinks.
+			$remove_author_base = apply_filters( 'baeas_remove_author_base', false );
+
+			if ( !$remove_author_base && !empty( $options['author_base'] ) ) {
 				$wp_rewrite->author_base = esc_attr( $options['author_base'] );
-				$wp_rewrite->flush_rules();
+			} elseif ( $remove_author_base ) {
+				$wp_rewrite->author_base = '';
+				$wp_rewrite->author_structure = '/%author%';
+			}
+
+			if ( isset( $options['dont_forget_to_flush'] ) && (int) $options['dont_forget_to_flush'] === 1 ) {
+				flush_rewrite_rules( false );
+				unset( $options['dont_forget_to_flush'] );
+				update_option( 'ba_edit_author_slug', $options );
 			}
 		}
 
@@ -243,7 +256,7 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 		 * @param array $defaults Array of current columns/column headings
 		 */
 		function author_slug_column( $defaults ) {
-			$defaults['baeas_author_slug'] = esc_html__( 'Author Slug', 'edit-author-base' );
+			$defaults['baeas-author-slug'] = esc_html__( 'Author Slug', 'edit-author-base' );
 
 			return $defaults;
 		}
@@ -264,10 +277,10 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 		 * @param int $user_id User ID
 		 */
 		function author_slug_custom_column( $default, $column_name, $user_id ) {
-			if ( $column_name == 'baeas_author_slug') {
+			if ( $column_name == 'baeas-author-slug') {
 				$userdata = get_userdata( $user_id );
 
-				return $userdata->user_nicename;
+				return esc_attr( $userdata->user_nicename );
 			}
 
 			return $default;
