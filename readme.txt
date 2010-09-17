@@ -2,7 +2,7 @@
 Contributors: cnorris23
 Tags: admin, author, permalink, permalinks, slug, users, user
 Requires at least: 2.9
-Tested up to: 3.0
+Tested up to: 3.0.1
 Stable tag: 0.5
 
 Allows an Admin to edit the author slug of any blog user, and change the Author Base.
@@ -18,8 +18,9 @@ Edit Author Slug allows for
 http://example.com/ninja/master-ninja/
 
 #### Translations Available
-* Hebrew (he_IL) - [Yonat Sharon](http://ootips.org/ "Yonat Sharon")
-* Belorussian (be_BY) - [Marcis G.](http://pc.de/ "Marcis G.")
+* Hebrew (he_IL) - Yonat Sharon
+* Belorussian (be_BY) - Marcis G.
+* Polish (pl_PL) - Kornel Łysikowski
 
 == Installation ==
 
@@ -42,6 +43,11 @@ http://example.com/ninja/master-ninja/
 Make sure you are an admin, or have been assigned the `edit_users` capability.
 
 == Changelog ==
+
+= 0.6 =
+* some code cleanup
+* more security hardening
+* added filter to allow for the complete removal of the Author Base (see link to be added)
 
 = 0.5 =
 * added 'Author Slug' column to Users > Authors & Users (Users > Users in 3.0) page (props Yonat Sharon for the jumpstart)
