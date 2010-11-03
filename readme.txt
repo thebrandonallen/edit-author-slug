@@ -47,7 +47,8 @@ Make sure you are an admin, or have been assigned the `edit_users` capability.
 = 0.6 =
 * some code cleanup
 * more security hardening
-* added filter to allow for the complete removal of the Author Base (see link to be added)
+* added filter to allow for the complete removal of the Author Base (http://brandonallen.org/2010/11/03/how-to-remove-the-author-base-with-edit-author-slug/)
+* flush rewrite rules only when necessary instead every page load
 
 = 0.5 =
 * added 'Author Slug' column to Users > Authors & Users (Users > Users in 3.0) page (props Yonat Sharon for the jumpstart)

@@ -3,7 +3,7 @@
 Plugin Name: Edit Author Slug
 Plugin URI: http://brandonallen.org/wordpress/plugins/edit-author-slug/
 Description: Allows an Admin to edit the author slug of any blog user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
-Version: 0.6-beta1
+Version: 0.6
 Tested With: 2.9.2, 3.0.1
 Author: Brandon Allen
 Author URI: http://brandonallen.org/
@@ -229,11 +229,14 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 			// rules, and update your permalinks.
 			$remove_author_base = apply_filters( 'baeas_remove_author_base', false );
 
-			if ( !$remove_author_base && !empty( $options['author_base'] ) ) {
+			if ( !empty( $options['author_base'] ) ) {
 				$wp_rewrite->author_base = esc_attr( $options['author_base'] );
-			} elseif ( $remove_author_base ) {
+			} elseif ( empty( $options['author_base'] ) && $remove_author_base ) {
 				$wp_rewrite->author_base = '';
+				// We need to remove the extra backslash
 				$wp_rewrite->author_structure = '/%author%';
+			} else {
+				return;
 			}
 
 			if ( isset( $options['dont_forget_to_flush'] ) && (int) $options['dont_forget_to_flush'] === 1 ) {
