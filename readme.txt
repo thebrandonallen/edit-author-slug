@@ -1,9 +1,9 @@
 === Edit Author Slug ===
 Contributors: cnorris23
 Tags: admin, author, permalink, permalinks, slug, users, user
-Requires at least: 2.9
-Tested up to: 3.0.1
-Stable tag: 0.6
+Requires at least: 2.8
+Tested up to: 3.0.3
+Stable tag: 0.6.1
 
 Allows an Admin to edit the author slug of any blog user, and change the Author Base.
 
@@ -21,6 +21,7 @@ http://example.com/ninja/master-ninja/
 * Hebrew (he_IL) - Yonat Sharon
 * Belorussian (be_BY) - Marcis G.
 * Polish (pl_PL) - Kornel Łysikowski
+* Dutch (nl_NL) - Juliette Reinders Folmer
 
 == Installation ==
 
@@ -43,6 +44,11 @@ http://example.com/ninja/master-ninja/
 Make sure you are an admin, or have been assigned the `edit_users` capability.
 
 == Changelog ==
+
+= 0.6.1 =
+* added Dutch translation - props Juliette Reinders Folmer
+* don't hard code the languages folder path
+* improve class check/initialization
 
 = 0.6 =
 * some code cleanup

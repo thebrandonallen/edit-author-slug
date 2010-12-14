@@ -3,8 +3,8 @@
 Plugin Name: Edit Author Slug
 Plugin URI: http://brandonallen.org/wordpress/plugins/edit-author-slug/
 Description: Allows an Admin to edit the author slug of any blog user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
-Version: 0.6
-Tested With: 2.9.2, 3.0.1
+Version: 0.6.1
+Tested With: 2.9.2, 3.0.3
 Author: Brandon Allen
 Author URI: http://brandonallen.org/
 License: GPL2
@@ -60,7 +60,7 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 				add_action( 'personal_options_update', array( &$this, 'update_user_nicename' ) );
 				add_action( 'edit_user_profile_update', array( &$this, 'update_user_nicename' ) );
 				add_action( 'admin_init', array( &$this, 'add_author_base_settings_field' ) );
-				load_plugin_textdomain( 'edit-author-slug', false, 'edit-author-slug/languages' );
+				load_plugin_textdomain( 'edit-author-slug', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 				if ( isset( $pagenow ) && $pagenow == 'users.php' ) {
 					add_filter( 'manage_users_columns', array( &$this, 'author_slug_column' ) );
@@ -289,11 +289,12 @@ if ( !class_exists( 'BA_Edit_Author_Slug' ) ) {
 			return $default;
 		}
 	}
-} //end class BA_Edit_Author_Slug
 
 /**
  * Initialize BA_Edit_Author_Slug class
  */
 add_action( 'plugins_loaded', create_function( '', 'global $ba_edit_author_slug; $ba_edit_author_slug = new BA_Edit_Author_Slug();' ) );
+
+} //end class BA_Edit_Author_Slug
 
 ?>
