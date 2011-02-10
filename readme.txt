@@ -2,7 +2,7 @@
 Contributors: cnorris23
 Tags: admin, author, permalink, permalinks, slug, users, user
 Requires at least: 2.8
-Tested up to: 3.0.3
+Tested up to: 3.0.5
 Stable tag: 0.6.1
 
 Allows an Admin to edit the author slug of any blog user, and change the Author Base.
