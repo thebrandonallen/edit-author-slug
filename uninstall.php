@@ -1,6 +1,15 @@
 <?
 
-if ( !defined( 'WP_UNINSTALL_PLUGIN') )
+/**
+ * Edit Author Slug Uninstall Functions
+ *
+ * @package Edit Author Slug
+ * @subpackage Uninstall
+ *
+ * @author Brandon Allen
+ */
+
+if ( ! defined( 'WP_UNINSTALL_PLUGIN') )
 	return false;
 
 delete_option( 'ba_edit_author_slug' );
