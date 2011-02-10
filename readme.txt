@@ -2,7 +2,7 @@
 Contributors: cnorris23
 Tags: admin, author, permalink, permalinks, slug, users, user
 Requires at least: 2.8
-Tested up to: 3.0.3
+Tested up to: 3.0.5
 Stable tag: 0.6.1
 
 Allows an Admin to edit the author slug of any blog user, and change the Author Base.
@@ -44,6 +44,13 @@ http://example.com/ninja/master-ninja/
 Make sure you are an admin, or have been assigned the `edit_users` capability.
 
 == Changelog ==
+
+= 0.7 =
+* Significant code refactoring
+* Added custom capability to give site admins the ability to add author slug access to other roles
+* Improvements/optimizations to code logic
+* Fixed an incorrect textdomain string
+* Removed filter added in 0.6 as it was messy. It's much easier to achieve the same result without the plugin.
 
 = 0.6.1 =
 * added Dutch translation - props Juliette Reinders Folmer
