@@ -14,4 +14,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN') )
 
 delete_option( 'ba_edit_author_slug' );
 
+// Final flush for good measure
+flush_rewrite_rules( false );
+
 ?>

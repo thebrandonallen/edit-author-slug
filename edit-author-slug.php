@@ -92,9 +92,9 @@ class BA_Edit_Author_Slug {
 	 *
 	 * @since 0.7.0
 	 *
-	 * @uses plugin_dir_path()
-	 * @uses plugin_dir_url()
-	 * @uses get_option()
+	 * @uses plugin_dir_path() To generate Edit Author Slug plugin path
+	 * @uses plugin_dir_url() To generate Edit Author Slug plugin url
+	 * @uses get_option()  To get the Edit Author Slug options
 	 */
 	function _setup_globals() {
 		// Edit Author Slug root directory
@@ -108,7 +108,6 @@ class BA_Edit_Author_Slug {
 
 		// Author base
 		$this->author_base          = $this->original_author_base;
-
 	}
 
 	/**
@@ -118,7 +117,7 @@ class BA_Edit_Author_Slug {
 	 */
 	function _includes() {
 		require_once( $this->plugin_dir . 'includes/functions.php' );
-		require_once( $this->plugin_dir . 'includes/hooks.php' );
+		require_once( $this->plugin_dir . 'includes/hooks.php'     );
 	}
 
 	/**
@@ -134,12 +133,12 @@ class BA_Edit_Author_Slug {
 	 */
 	function _setup_actions() {
 		// Register Edit Author Slug activation/deactivation sequences
-		register_activation_hook  ( $this->file,    'ba_eas_activation'   );
-		register_deactivation_hook( $this->file,    'ba_eas_deactivation' );
+		register_activation_hook  ( $this->file, 'ba_eas_activation'   );
+		register_deactivation_hook( $this->file, 'ba_eas_deactivation' );
 
 		// Author Base Actions
-		add_action( 'init', array( $this, 'sanitize_author_base' ), 8     );
-		add_action( 'init', array( $this, 'author_base_rewrite'  )        );
+		add_action( 'init', array( $this, 'sanitize_author_base' ), 8 );
+		add_action( 'init', array( $this, 'author_base_rewrite'  )    );
 
 		// Localize
 		load_plugin_textdomain( 'edit-author-slug', false, dirname( $this->plugin_dir ) . '/languages/' );
@@ -153,8 +152,9 @@ class BA_Edit_Author_Slug {
 	 *
 	 * @since 0.4.0
 	 *
-	 * @uses _wp_filter_taxonomy_base()
-	 * @uses update_option()
+	 * @uses check_admin_referer() To verify the nonce and check referer
+	 * @uses _wp_filter_taxonomy_base() To remove any manually prepended /index.php/.
+	 * @uses update_option() To update Edit Author Slug options
 	 */
 	function sanitize_author_base() {
 		if ( isset( $_POST['permalink_structure'] ) || isset( $_POST['category_base'] ) ) {
@@ -187,7 +187,7 @@ class BA_Edit_Author_Slug {
 	 *
 	 * @global object $wp_rewrite Adds rewrite tags and permastructs.
 	 * @uses do_action() calls 'ba_eas_author_base_rewrite' hook
-	 * @uses flush_rewrite_rules() flush the rules on change
+	 * @uses flush_rewrite_rules() Flush the rules on change
 	 */
 	function author_base_rewrite() {
 		global $wp_rewrite;

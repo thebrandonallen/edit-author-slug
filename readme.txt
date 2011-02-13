@@ -2,14 +2,14 @@
 Contributors: cnorris23
 Tags: admin, author, permalink, permalinks, slug, users, user
 Requires at least: 2.8
-Tested up to: 3.0.5
+Tested up to: 3.1-RC4
 Stable tag: 0.6.1
 
 Allows an Admin to edit the author slug of any blog user, and change the Author Base.
 
 == Description ==
 
-This plugin allows an Admin to change the Author slug, without having to actually enter the database. You can also change the Author Base. Two new fields will be added to your Dashboard. The "Edit Author Slug" field can be found under Users > Your Profile or Users > Authors & Users (Users > Users in WP 3.0). The "Author Base" field can be found under Settings > Permalinks. This plugin not only allows for greater security, as it helps mask usernames, but it also allows you to craft the perfect URL structure for you Author pages. For your convenience, an Author Slug column is added to make it easier to determine if one needs to change the Author Slug.
+This plugin allows an Admin to change the Author slug, without having to actually enter the database. You can also change the Author Base. Two new fields will be added to your Dashboard. The "Edit Author Slug" field can be found under Users > Your Profile or Users > Authors & Users (Users > Users in WP 3.0). The "Author Base" field can be found under Settings > Permalinks. This plugin not only allows for greater security (through obscurity of a users login username), as it helps mask usernames, but it also allows you to craft the perfect URL structure for you Author pages. For your convenience, an Author Slug column is added to make it easier to determine if one needs to change the Author Slug.
 
 WordPress default structure
 http://example.com/author/username/
@@ -51,6 +51,7 @@ Make sure you are an admin, or have been assigned the `edit_users` capability.
 * Improvements/optimizations to code logic
 * Fixed an incorrect textdomain string
 * Removed filter added in 0.6 as it was messy. It's much easier to achieve the same result without the plugin.
+* Got rid of wp_die() statement on duplicate author slugs in favor of WP's built-in duplicate author slug method
 
 = 0.6.1 =
 * added Dutch translation - props Juliette Reinders Folmer
