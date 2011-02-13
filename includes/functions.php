@@ -167,7 +167,7 @@ function ba_eas_author_slug_column( $defaults ) {
  *
  * @since 0.5.0
  *
- * @param string $default Value for column data, defaults to ''
+ * @param string $default Value for column data. Defaults to ''.
  * @param string $column_name Column name currently being filtered
  * @param int $user_id User ID
  * @uses get_userdata() To get the user data
@@ -189,13 +189,13 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
 /**
  * Cleanup old options.
  *
- * Nothing urgent so no need to worry constant checks while
- * in the admin. We'll run even less frequently for those on 3.1+.
+ * Nothing urgent so no need to worry with constant checks while
+ * in the admin. Will run even less frequently for those on 3.1+.
  *
  * @since 0.7.0
  *
  * @global $ba_eas Edit Author Slug object
- * @uses update_option()
+ * @uses update_option() To update Edit Author Slug options
  */
 function ba_eas_cleanup_options() {
 	global $ba_eas;

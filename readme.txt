@@ -1,15 +1,15 @@
 === Edit Author Slug ===
 Contributors: cnorris23
-Tags: admin, author, permalink, permalinks, slug, users, user
+Tags: admin, author, author base, author slug, permalink, permalinks, slug, users, user
 Requires at least: 2.8
 Tested up to: 3.1-RC4
-Stable tag: 0.6.1
+Stable tag: 0.7
 
-Allows an Admin to edit the author slug of any blog user, and change the Author Base.
+Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base.
 
 == Description ==
 
-This plugin allows an Admin to change the Author slug, without having to actually enter the database. You can also change the Author Base. Two new fields will be added to your Dashboard. The "Edit Author Slug" field can be found under Users > Your Profile or Users > Authors & Users (Users > Users in WP 3.0). The "Author Base" field can be found under Settings > Permalinks. This plugin not only allows for greater security (through obscurity of a users login username), as it helps mask usernames, but it also allows you to craft the perfect URL structure for you Author pages. For your convenience, an Author Slug column is added to make it easier to determine if one needs to change the Author Slug.
+This plugin allows an Admin to change the Author slug, without having to actually enter the database. You can also change the Author Base. Two new fields will be added to your Dashboard. The "Edit Author Slug" field can be found under Users > Your Profile or Users > Authors & Users (Users > Users in WP 3.0). The "Author Base" field can be found under Settings > Permalinks. This plugin not only allows for greater security, as it helps mask usernames, but it also allows you to craft the perfect URL structure for you Author pages. For your convenience, an Author Slug column is added to make it easier to determine if one needs to change the Author Slug.
 
 WordPress default structure
 http://example.com/author/username/
@@ -18,17 +18,17 @@ Edit Author Slug allows for
 http://example.com/ninja/master-ninja/
 
 #### Translations Available
-* Hebrew (he_IL) - Yonat Sharon
+* Hebrew (he_IL)      - Yonat Sharon
 * Belorussian (be_BY) - Marcis G.
-* Polish (pl_PL) - Kornel Łysikowski
-* Dutch (nl_NL) - Juliette Reinders Folmer
+* Polish (pl_PL)      - Kornel Łysikowski
+* Dutch (nl_NL)       - Juliette Reinders Folmer
 
 == Installation ==
 
 1. Upload `edit-author-slug` folder to your WordPress plugins directory (typically 'wp-content/plugins')
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Go to Users > Your Profile, or Users > Authors & Users > (username), and edit the Author slug.
-1. Click "Update Profile"
+1. Click "Update Profile" or "Update User"
 1. Go to Settings > Permalinks, and edit the Author Base
 1. Click "Save Changes"
 
@@ -41,7 +41,7 @@ http://example.com/ninja/master-ninja/
 
 = Why can't I edit my Author Slug? =
 
-Make sure you are an admin, or have been assigned the `edit_users` capability.
+Make sure you are an admin, or have been assigned the `edit_users` or `edit_author_slug` capability.
 
 == Changelog ==
 
