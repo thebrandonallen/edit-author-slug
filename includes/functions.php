@@ -19,6 +19,7 @@
  *
  * @param object $user User data object
  * @uses current_user_can() To hide from unauthorized users.
+ * @uses esc_html_e() To make sure we're safe to display
  */
 function ba_eas_show_user_nicename( $user ) {
 	if ( current_user_can( 'edit_users' ) || ( current_user_can( 'edit_author_slug' ) && IS_PROFILE_PAGE ) ) : ?>
@@ -44,37 +45,64 @@ function ba_eas_show_user_nicename( $user ) {
  *
  * @since 0.1.0
  *
- * @global int $user_ID The ID of the user
  * @global $wpdb WordPress database object for queries
- * @uses sanitize_title() Used to sanitize Author Slug
+ * @uses check_admin_referer() To verify the nonce and check referer
+ * @uses current_user_can() To prevent unauthorized users from saving.
+ * @uses get_userdata() To get the user data
+ * @uses sanitize_title() Used to sanitize user_nicename
+ * @uses wp_update_user() Update to new user_nicename
+ * @uses wp_cache_delete() To delete the 'userslugs' cache for old nicename
  */
 function ba_eas_update_user_nicename( $user_id = 0 ) {
 	global $wpdb;
 
 	$user_id = (int) $user_id;
+
+	// Check the nonce
 	check_admin_referer( 'update-user_' . $user_id );
 
+	// Make sure the user is allowed to do this
 	if ( ! current_user_can( 'edit_users' ) || ! current_user_can( 'edit_author_slug' ) )
 		return false;
 
+	// User, tell me a little about yourself.
 	$userdata	 = get_userdata( $user_id );
+
+	// Do we have an author slug?
 	$author_slug = isset( $_POST['ba-edit-author-slug'] ) ? sanitize_title( trim( $_POST['ba-edit-author-slug'] ) ) : '';
 
-	// Get array of existing user_nicenames to compare against
-	$user_nicenames = $wpdb->get_col( $wpdb->prepare( "SELECT user_nicename FROM $wpdb->users" ) );
-
 	if ( ! empty( $author_slug ) && ( $userdata->user_nicename != $author_slug ) ) {
+		/*
+		 * Legacy nicename verification code
+		 *
+		 * May make a return in a later release, but discovered that wp_insert_user(),
+		 * which is called by wp_update_user() handles duplicate nicenames with a bit
+		 * more grace. It does, however, come at the expense of appending a '-2' at the
+		 * end without warning. Colliding nicenames should be a rare/fringe case, so no
+		 * issues should arise.
+		 *
+		// Get array of existing user_nicenames to compare against
+		$user_nicenames = $wpdb->get_col( $wpdb->prepare( "SELECT user_nicename FROM $wpdb->users" ) );
+
+		// Bail if we the nicename already exists
 		if ( in_array( $author_slug, $user_nicenames ) ) {
 			$author_slug_html = '<em><strong>' . esc_attr( $author_slug ) . '</strong></em>';
 			$message          = sprintf( esc_html__( "The author slug, '%s', is already in use. Please go back, and try again.", 'edit-author-slug' ), $author_slug_html );
 
 			wp_die( $message );
 		}
+		*/
 
-		$new_userdata = array( 'ID' => $user_id, 'user_nicename' => $author_slug );
-		wp_update_user( $new_userdata );
+		// Looks like we made it, so let's update
+		$new_userdata = array(
+			'ID'            => $user_id,
+			'user_nicename' => $author_slug
+		);
+		$updated_user_id = wp_update_user( $new_userdata );
 
-		wp_cache_delete( $userdata->user_nicename, 'userslugs' );
+		// Clear the cache for good measure
+		if ( $updated_user_id )
+			wp_cache_delete( $userdata->user_nicename, 'userslugs' );
 	}
 }
 
@@ -86,7 +114,7 @@ function ba_eas_update_user_nicename( $user_id = 0 ) {
  *
  * @since 0.4.0
  *
- * @uses add_settings_field() adds the settings field
+ * @uses add_settings_field() To add the settings field
  */
 function ba_eas_add_author_base_settings_field() {
 	/**
@@ -105,7 +133,7 @@ function ba_eas_add_author_base_settings_field() {
  *
  * @since 0.4.0
  *
- * @uses esc_attr()
+ * @uses esc_attr() To sanitize the author base
  */
 function ba_eas_author_base_settings_html() {
 	global $ba_eas;
@@ -122,7 +150,7 @@ function ba_eas_author_base_settings_html() {
  * @since 0.5.0
  *
  * @param array $defaults Array of current columns/column headings
- * @uses esc_html__()
+ * @uses esc_html__() To sanitize the author slug column title
  * @return array $defaults Array of current columns/column headings
  */
 function ba_eas_author_slug_column( $defaults ) {
@@ -142,9 +170,9 @@ function ba_eas_author_slug_column( $defaults ) {
  * @param string $default Value for column data, defaults to ''
  * @param string $column_name Column name currently being filtered
  * @param int $user_id User ID
- * @uses get_userdata() Used to retrieve user_nicename
- * @uses esc_attr()
- * @return string $default Value for column data, defaults to ''
+ * @uses get_userdata() To get the user data
+ * @uses esc_attr() To sanitize the user_nicename
+ * @return string $default Value for column data. Defaults to ''.
  */
 function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
 	$user_id = (int) $user_id;
@@ -166,7 +194,7 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
  *
  * @since 0.7.0
  *
- * @global obj $ba_eas Edit Author Slug object
+ * @global $ba_eas Edit Author Slug object
  * @uses update_option()
  */
 function ba_eas_cleanup_options() {
@@ -187,7 +215,7 @@ function ba_eas_cleanup_options() {
  *
  * @since 0.7.0
  *
- * @uses flush_rewrite_rules()
+ * @uses flush_rewrite_rules() To flush the rewrite rules
  */
 function ba_eas_courtesy_flush() {
 	flush_rewrite_rules( false );
