@@ -61,10 +61,6 @@ function ba_eas_update_user_nicename( $user_id = 0 ) {
 	// Check the nonce
 	check_admin_referer( 'update-user_' . $user_id );
 
-	// Make sure the user is allowed to do this
-	if ( ! current_user_can( 'edit_users' ) || ! current_user_can( 'edit_author_slug' ) )
-		return false;
-
 	// User, tell me a little about yourself.
 	$userdata	 = get_userdata( $user_id );
 
