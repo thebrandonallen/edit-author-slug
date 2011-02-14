@@ -45,6 +45,12 @@ Make sure you are an admin, or have been assigned the `edit_users` or `edit_auth
 
 == Changelog ==
 
+= 0.7.2 =
+* Remove overzealous cap check
+
+= 0.7.1 =
+* fix some unfortunate errors I missed before tagging 0.7
+
 = 0.7 =
 * Significant code refactoring
 * Added custom capability to give site admins the ability to add author slug access to other roles
