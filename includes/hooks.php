@@ -25,10 +25,6 @@ if ( is_admin() ) {
 	add_action( 'personal_options_update',    'ba_eas_update_user_nicename'             );
 }
 
-// Capabilities
-add_action( 'ba_eas_activation',   'ba_eas_add_caps'        );
-add_action( 'ba_eas_deactivation', 'ba_eas_remove_caps'     );
-
 // Activation/Deactivation Hooks
 add_action( 'ba_eas_activation',   'ba_eas_cleanup_options' );
 add_action( 'ba_eas_deactivation', 'ba_eas_courtesy_flush'  );

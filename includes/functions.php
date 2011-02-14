@@ -24,13 +24,13 @@
 function ba_eas_show_user_nicename( $user ) {
 	if ( current_user_can( 'edit_users' ) || ( current_user_can( 'edit_author_slug' ) && IS_PROFILE_PAGE ) ) : ?>
 
-	<h3><?php esc_html_e( 'Edit Author Slug', 'edit-author-slug' ) ?></h3>
+	<h3><?php esc_html_e( 'Edit Author Slug', 'edit-author-slug' ); ?></h3>
 	<table class="form-table">
 		<tbody><tr>
-			<th><label for="ba-edit-author-slug"><?php esc_html_e( 'Author Slug', 'edit-author-slug' ) ?></label></th>
+			<th><label for="ba-edit-author-slug"><?php esc_html_e( 'Author Slug', 'edit-author-slug' ); ?></label></th>
 			<td>
 				<input type="text" name="ba-edit-author-slug" id="ba-edit-author-slug" value="<?php echo esc_attr( $user->user_nicename ); ?>" class="regular-text" /><br />
-				<span class="description"><?php esc_html_e( "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'", 'edit-author-slug' ) ?></span>
+				<span class="description"><?php esc_html_e( "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'", 'edit-author-slug' ); ?></span>
 			</td>
 		</tr></tbody>
 	</table>
@@ -198,12 +198,12 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
  * @uses update_option() To update Edit Author Slug options
  */
 function ba_eas_cleanup_options() {
-	global $ba_eas;
+	$options = get_option( 'ba_edit_author_slug', array() );
 
-	if ( array_key_exists( $ba_eas->options['dont_forget_to_flush'] ) ) {
-		unset( $ba_eas->options['dont_forget_to_flush'] );
+	if ( array_key_exists( 'dont_forget_to_flush', $options ) ) {
+		unset( $options['dont_forget_to_flush'] );
 
-		update_option( 'ba_edit_author_slug', $ba_eas->options );
+		update_option( 'ba_edit_author_slug', $options );
 	}
 }
 
