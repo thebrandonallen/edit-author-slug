@@ -1,0 +1,44 @@
+# Copyright (C) 2011 Brandon Allen
+# This file is distributed under the same license as the Edit Author Slug package.
+# Brandon Allen <wp_plugins@brandonallen.org>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: Edit Author Slug 0.7\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/edit-author-slug\n"
+"POT-Creation-Date: 2011-02-13 23:57:22+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#. #-#-#-#-#  plugin.pot (Edit Author Slug 0.7)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: includes/functions.php:27
+msgid "Edit Author Slug"
+msgstr ""
+
+#: includes/functions.php:30 includes/functions.php:157
+msgid "Author Slug"
+msgstr ""
+
+#: includes/functions.php:33
+msgid "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'"
+msgstr ""
+
+#: includes/functions.php:125
+msgid "Author Base"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://brandonallen.org/wordpress/plugins/edit-author-slug/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Allows an Admin (or capable user) to edit the author slug of a user, and "
+"change the Author Base. <em>i.e. - (WordPress default structure) http://"
+"example.com/author/username/ (Plugin allows) http://example.com/ninja/master-"
+"ninja/</em>"
+msgstr ""
