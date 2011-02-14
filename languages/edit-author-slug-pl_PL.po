@@ -1,0 +1,59 @@
+# Translation of the WordPress plugin Edit Author Slug 0.5 by Brandon Allen.
+# Copyright (C) 2010 Brandon Allen
+# This file is distributed under the same license as the Edit Author Slug package.
+# Brandon Allen <wp_plugins@brandonallen.org>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Edit Author Slug 0.5\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/edit-author-slug\n"
+"POT-Creation-Date: 2010-06-22 22:44+0000\n"
+"PO-Revision-Date: 2010-08-10 10:28+0100\n"
+"Last-Translator: PositionMaker <info@positionmaker.pl>\n"
+"Language-Team: PositionMaker <info@positionmaker.pl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Polish\n"
+"X-Poedit-Country: Poland\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#. #-#-#-#-#  plugin.pot (Edit Author Slug 0.5)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: edit-author-slug.php:94
+msgid "Edit Author Slug"
+msgstr "Edycja uproszczonej nazwy Autora"
+
+#: edit-author-slug.php:98
+#: edit-author-slug.php:246
+msgid "Author Slug"
+msgstr "Uproszczona nazwa Autora"
+
+#: edit-author-slug.php:99
+msgid "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'"
+msgstr "np. 'moje-imie', 'imie-nazwisko' lub 'mistrz-ninja'"
+
+#: edit-author-slug.php:130
+msgid "The author slug, '[baeas_author_slug]', is already in use. Please go back, and try again."
+msgstr "Uproszczona nazwa '[baeas_author_slug]' jest już używana. Spróbuj skorzystać z innej."
+
+#: edit-author-slug.php:159
+msgid "Author Base"
+msgstr "Alias autorów"
+
+#. Plugin URI of the plugin/theme
+msgid "http://brandonallen.org/wordpress/plugins/edit-author-slug/"
+msgstr "http://brandonallen.org/wordpress/plugins/edit-author-slug/"
+
+#. Description of the plugin/theme
+msgid "Allows an Admin to edit the author slug of any blog user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>"
+msgstr "Umiżliwia administratorom edycję uproszczonych nazw użytkowników oraz zmianę Aliasów Autorów <em>np. (domyślne w WP) http://example.com/author/admin/ (Za pomocą pluginu) http://example.com/ninja/mistrz-ninja/ </em>"
+
+#. Author of the plugin/theme
+msgid "Brandon Allen"
+msgstr "Brandon Allen"
+
+#. Author URI of the plugin/theme
+msgid "http://brandonallen.org/"
+msgstr "http://brandonallen.org/"
+
