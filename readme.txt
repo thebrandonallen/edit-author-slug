@@ -20,7 +20,7 @@ http://example.com/ninja/master-ninja/
 #### Translations Available
 * Hebrew (he_IL) - Yonat Sharon
 * Belorussian (be_BY) - Marcis G.
-* Polish (pl_PL) - Kornel Łysikowski
+* Polish (pl_PL) - Kornel L.
 * Dutch (nl_NL) - Juliette Reinders Folmer
 
 == Installation ==
