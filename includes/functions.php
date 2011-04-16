@@ -73,10 +73,11 @@ function ba_eas_update_user_nicename( $user_id = 0 ) {
 		 *
 		 * May make a return in a later release, but discovered that wp_insert_user(),
 		 * which is called by wp_update_user() handles duplicate nicenames with a bit
-		 * more grace. It does, however, come at the expense of appending a '-2' at the
-		 * end without warning. Colliding nicenames should be a rare/fringe case, so no
-		 * issues should arise.
+		 * more grace. It does, however, come at the expense of appending a '-2' without warning.
+		 * Colliding nicenames should be a rare/fringe case, so no issues should arise.
 		 *
+		 */
+		/*
 		// Get array of existing user_nicenames to compare against
 		$user_nicenames = $wpdb->get_col( $wpdb->prepare( "SELECT user_nicename FROM $wpdb->users" ) );
 
