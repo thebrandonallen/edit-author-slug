@@ -2,7 +2,7 @@
 Contributors: cnorris23
 Tags: admin, author, author base, author slug, permalink, permalinks, slug, users, user
 Requires at least: 2.8
-Tested up to: 3.2
+Tested up to: 3.2.1
 Stable tag: 0.7.2
 
 Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base.
@@ -22,6 +22,8 @@ http://example.com/ninja/master-ninja/
 * Belorussian (be_BY) - Marcis G.
 * Polish (pl_PL)      - Kornel L.
 * Dutch (nl_NL)       - Juliette Reinders Folmer
+
+You can also visit the plugin's homepage at http://brandonallen.org/wordpress/plugins/edit-author-slug/
 
 == Installation ==
 
