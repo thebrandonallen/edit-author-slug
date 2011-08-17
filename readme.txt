@@ -2,10 +2,10 @@
 Contributors: cnorris23
 Tags: admin, author, author base, author slug, permalink, permalinks, slug, users, user
 Requires at least: 2.8
-Tested up to: 3.1.1
+Tested up to: 3.2.1
 Stable tag: 0.7.2
 
-Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base.
+Allows an admin (or capable user) to edit the author slug of a user, and change the uthor base.
 
 == Description ==
 
@@ -23,11 +23,13 @@ http://example.com/ninja/master-ninja/
 * Polish (pl_PL)      - Kornel L.
 * Dutch (nl_NL)       - Juliette Reinders Folmer
 
+You can also visit the plugin's homepage at http://brandonallen.org/wordpress/plugins/edit-author-slug/
+
 == Installation ==
 
 1. Upload `edit-author-slug` folder to your WordPress plugins directory (typically 'wp-content/plugins')
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Go to Users > Your Profile, or Users > Authors & Users > (username), and edit the Author slug.
+1. Go to Users > Your Profile, or Users > Authors & Users ("All Users" in 3.2+) > (username), and edit the author slug.
 1. Click "Update Profile" or "Update User"
 1. Go to Settings > Permalinks, and edit the Author Base
 1. Click "Save Changes"
@@ -44,6 +46,12 @@ http://example.com/ninja/master-ninja/
 Make sure you are an admin, or have been assigned the `edit_users` or `edit_author_slug` capability.
 
 == Changelog ==
+
+= 0.8.0 =
+* Drastically improved error handling and feedback for author slug editing
+* Restore duplicate author slug check as old method could alter the slug without any sort of warning
+* Further improve the logic for flushing rewrite rules
+* Introduce ba_eas_can_edit_author_slug() and matching filter to make it even easier to give users the ability to update their own author slug
 
 = 0.7.2 =
 * Remove overzealous cap check

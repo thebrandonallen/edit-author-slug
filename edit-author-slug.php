@@ -5,7 +5,7 @@
  *
  * Customize a user's author links
  *
- * @package Edit Author Slug
+ * @package Edit_Author_Slug
  * @subpackage Main
  *
  * @author Brandon Allen
@@ -15,14 +15,15 @@
  * Plugin Name: Edit Author Slug
  * Plugin URI: http://brandonallen.org/wordpress/plugins/edit-author-slug/
  * Description: Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
- * Version: 0.7.2
- * Tested With: 3.0.5, 3.1.1
+ * Version: 0.8-beta
+ * Tested With: 3.1.4, 3.2.1
  * Author: Brandon Allen
  * Author URI: http://brandonallen.org/
  * License: GPL2
  */
 
-/*			Copyright 2011  Brandon Allen  (email : wp_plugins@brandonallen.org)
+/*
+			Copyright 2011  Brandon Allen  (email : wp_plugins@brandonallen.org)
 
 			This program is free software; you can redistribute it and/or modify
 			it under the terms of the GNU General Public License as published by
@@ -47,25 +48,44 @@
  * It helps us avoid name collisions.
  * http://codex.wordpress.org/Writing_a_Plugin#Avoiding_Function_Name_Collisions
  */
-if ( !class_exists( 'BA_Edit_Author_Slug' ) ) :
+if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 class BA_Edit_Author_Slug {
 
 	/**
+	 * @var string Original author base
+	 */
+	var $version = '0.8-beta';
+
+	/**
 	 * @var string Author base
 	 */
-	var $author_base;
+	var $file = '';
+
+	/**
+	 * @var string Author base
+	 */
+	var $plugin_dir = '';
+
+	/**
+	 * @var string Author base
+	 */
+	var $plugin_url = '';
+
+	/**
+	 * @var string Author base
+	 */
+	var $author_base = '';
 
 	/**
 	 * @var array Original options
 	 */
-	var $options;
+	var $options = array();
 
 	/**
 	 * @var string Original author base
 	 */
-	var $original_author_base;
-
+	var $original_author_base = '';
 
 	/**
 	 * PHP4 constructor
@@ -98,16 +118,16 @@ class BA_Edit_Author_Slug {
 	 */
 	function _setup_globals() {
 		// Edit Author Slug root directory
-		$this->file                 = __FILE__;
-		$this->plugin_dir           = plugin_dir_path( $this->file );
-		$this->plugin_url           = plugin_dir_url ( $this->file );
+		$this->file        = __FILE__;
+		$this->plugin_dir  = plugin_dir_path( $this->file );
+		$this->plugin_url  = plugin_dir_url(  $this->file );
 
 		// Options
-		$this->options              = get_option( 'ba_edit_author_slug', array( 'author_base' => '' ) );
-		$this->original_author_base = $this->options['author_base'];
+		$this->options     = get_option( 'ba_edit_author_slug', array( 'author_base' => '' ) );
 
 		// Author base
-		$this->author_base          = $this->original_author_base;
+		$this->author_base = $this->original_author_base = $this->options['author_base'];
+
 	}
 
 	/**
@@ -116,8 +136,10 @@ class BA_Edit_Author_Slug {
 	 * @since 0.7.0
 	 */
 	function _includes() {
-		require_once( $this->plugin_dir . 'includes/functions.php' );
-		require_once( $this->plugin_dir . 'includes/hooks.php'     );
+		if ( is_admin() )
+			require_once( $this->plugin_dir . 'includes/admin-functions.php' );
+
+		require_once( $this->plugin_dir . 'includes/hooks.php' );
 	}
 
 	/**
@@ -127,54 +149,19 @@ class BA_Edit_Author_Slug {
 	 *
 	 * @uses register_activation_hook() To register the activation hook
 	 * @uses register_deactivation_hook() To register the deactivation hook
-	 * @uses add_action() To call BA_Edit_Author_Slug::sanitize_author_base
 	 * @uses add_action() To call BA_Edit_Author_Slug::author_base_rewrite
 	 * @uses load_plugin_textdomain()
 	 */
 	function _setup_actions() {
 		// Register Edit Author Slug activation/deactivation sequences
-		register_activation_hook  ( $this->file, 'ba_eas_activation'   );
+		register_activation_hook(   $this->file, 'ba_eas_activation'   );
 		register_deactivation_hook( $this->file, 'ba_eas_deactivation' );
 
 		// Author Base Actions
-		add_action( 'init', array( $this, 'sanitize_author_base' ), 8 );
-		add_action( 'init', array( $this, 'author_base_rewrite'  )    );
+		add_action( 'init',       array( $this, 'author_base_rewrite'  ) );
 
 		// Localize
 		load_plugin_textdomain( 'edit-author-slug', false, dirname( $this->plugin_dir ) . '/languages/' );
-	}
-
-	/**
-	 * Sanitize author base and add to database.
-	 *
-	 * This is a workaround until ticket #9296 is resolved
-	 * (http://core.trac.wordpress.org/ticket/9296)
-	 *
-	 * @since 0.4.0
-	 *
-	 * @uses check_admin_referer() To verify the nonce and check referer
-	 * @uses _wp_filter_taxonomy_base() To remove any manually prepended /index.php/.
-	 * @uses update_option() To update Edit Author Slug options
-	 */
-	function sanitize_author_base() {
-		if ( isset( $_POST['permalink_structure'] ) || isset( $_POST['category_base'] ) ) {
-			check_admin_referer( 'update-permalink' );
-
-			if ( isset( $_POST['ba-eas-author-base'] ) ) {
-				$this->author_base = trim( $_POST['ba-eas-author-base'] );
-
-				if ( ! empty( $this->author_base ) ) {
-					$this->author_base = str_replace( '#', '', $this->author_base     );
-					$this->author_base = _wp_filter_taxonomy_base( $this->author_base );
-				}
-
-				if ( $this->author_base != $this->original_author_base ) {
-					$this->options['author_base'] = $this->author_base;
-
-					update_option( 'ba_edit_author_slug', $this->options );
-				}
-			}
-		}
 	}
 
 	/**
@@ -194,15 +181,11 @@ class BA_Edit_Author_Slug {
 
 		if ( ! empty( $this->author_base ) )
 			$wp_rewrite->author_base = $this->author_base;
-
-		// Don't forget to flush
-		if ( $this->author_base != $this->original_author_base )
-			flush_rewrite_rules( false );
 	}
 }
 
 // Places everyone! The show is starting!
-$ba_eas = new BA_Edit_Author_Slug();
+$GLOBALS['ba_eas'] = new BA_Edit_Author_Slug();
 
 endif; //end class BA_Edit_Author_Slug
 
@@ -226,6 +209,9 @@ function ba_eas_activation() {
  */
 function ba_eas_deactivation() {
 	do_action( 'ba_eas_deactivation' );
+
+	// Courtesy flush
+	flush_rewrite_rules( false );
 }
 
 ?>

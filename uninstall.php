@@ -3,7 +3,7 @@
 /**
  * Edit Author Slug Uninstall Functions
  *
- * @package Edit Author Slug
+ * @package Edit_Author_Slug
  * @subpackage Uninstall
  *
  * @author Brandon Allen
