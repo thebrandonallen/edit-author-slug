@@ -3,9 +3,9 @@
 # Brandon Allen <wp_plugins@brandonallen.org>, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: Edit Author Slug 0.7\n"
+"Project-Id-Version: Edit Author Slug 0.8-beta\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/edit-author-slug\n"
-"POT-Creation-Date: 2011-02-13 23:57:22+00:00\n"
+"POT-Creation-Date: 2011-08-17 07:58:21+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,22 +13,40 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#. #-#-#-#-#  plugin.pot (Edit Author Slug 0.7)  #-#-#-#-#
+#. #-#-#-#-#  plugin.pot (Edit Author Slug 0.8-beta)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
-#: includes/functions.php:27
+#: includes/functions.php:27 includes/admin-functions.php:27
 msgid "Edit Author Slug"
 msgstr ""
 
-#: includes/functions.php:30 includes/functions.php:157
+#: includes/functions.php:30 includes/functions.php:154
+#: includes/admin-functions.php:30 includes/admin-functions.php:232
 msgid "Author Slug"
 msgstr ""
 
-#: includes/functions.php:33
+#: includes/functions.php:33 includes/admin-functions.php:33
 msgid "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'"
 msgstr ""
 
-#: includes/functions.php:125
+#: includes/functions.php:122 includes/admin-functions.php:153
 msgid "Author Base"
+msgstr ""
+
+#: includes/admin-functions.php:104
+msgid ""
+"<strong>ERROR</strong>: An author slug cannot be blank. Please try again."
+msgstr ""
+
+#: includes/admin-functions.php:116
+msgid ""
+"<strong>ERROR</strong>: That author slug appears to be invalid. Please try "
+"something different."
+msgstr ""
+
+#: includes/admin-functions.php:128
+msgid ""
+"<strong>ERROR</strong>: There was an error updating the author slug. Please "
+"try again."
 msgstr ""
 
 #. Plugin URI of the plugin/theme
