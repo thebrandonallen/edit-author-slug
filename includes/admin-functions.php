@@ -22,19 +22,21 @@
  * @uses esc_html_e() To make sure we're safe to display
  */
 function ba_eas_show_user_nicename( $user ) {
-	if ( ba_eas_can_edit_author_slug() ) : ?>
+	if ( !ba_eas_can_edit_author_slug() )
+		return false;
+	?>
 
 	<h3><?php esc_html_e( 'Edit Author Slug', 'edit-author-slug' ); ?></h3>
 	<table class="form-table">
 		<tbody><tr>
 			<th><label for="ba-edit-author-slug"><?php esc_html_e( 'Author Slug', 'edit-author-slug' ); ?></label></th>
 			<td>
-				<input type="text" name="ba-edit-author-slug" id="ba-edit-author-slug" value="<?php echo esc_attr( $user->user_nicename ); ?>" class="regular-text" /><br />
+				<input type="text" name="ba-edit-author-slug" id="ba-edit-author-slug" value="<?php isset( $user->user_nicename ) ? echo esc_attr( $user->user_nicename ) : ''; ?>" class="regular-text" /><br />
 				<span class="description"><?php esc_html_e( "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'", 'edit-author-slug' ); ?></span>
 			</td>
 		</tr></tbody>
 	</table>
-	<?php endif;
+	<?php
 }
 
 /**
@@ -94,7 +96,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	check_admin_referer( 'update-user_' . $user_id );
 
 	// User, tell me a little about yourself.
-	$userdata	 = get_userdata( $user_id );
+	$userdata = get_userdata( $user_id );
 
 	// Setup the author slug
 	$author_slug = isset( $_POST['ba-edit-author-slug'] ) ? trim( $_POST['ba-edit-author-slug'] ) : '';
@@ -192,7 +194,7 @@ function ba_eas_sanitize_author_base() {
 			$ba_eas->author_base = trim( $_POST['ba-eas-author-base'] );
 
 			// Filer and sanitize the new author_base
-			if ( ! empty( $ba_eas->author_base ) ) {
+			if ( !empty( $ba_eas->author_base ) ) {
 				$ba_eas->author_base = str_replace( '#', '', $ba_eas->author_base     );
 				$ba_eas->author_base = _wp_filter_taxonomy_base( $ba_eas->author_base );
 			}
@@ -206,7 +208,7 @@ function ba_eas_sanitize_author_base() {
 				update_option( 'ba_edit_author_slug', $ba_eas->options );
 
 				// Update the author_base in the WP_Rewrite object
-				if ( ! empty( $ba_eas->author_base ) )
+				if ( !empty( $ba_eas->author_base ) )
 					$wp_rewrite->author_base = $ba_eas->author_base;
 
 				// Courtesy flush
@@ -252,34 +254,43 @@ function ba_eas_author_slug_column( $defaults ) {
 function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
 	$user_id = (int) $user_id;
 
-	if ( $column_name == 'ba-eas-author-slug') {
+	if ( 'ba-eas-author-slug' == $column_name ) {
 		$userdata = get_userdata( $user_id );
 
-		return esc_attr( $userdata->user_nicename );
+		if ( !empty( $userdata->user_nicename ) )
+			$default = esc_attr( $userdata->user_nicename );
 	}
 
 	return $default;
 }
 
 /**
- * Cleanup old options.
+ * Upgrade Edit Author Slug.
  *
- * Nothing urgent so no need to worry with constant checks while
- * in the admin. Will run even less frequently for those on 3.1+.
+ * Just cleans up some options for now.
  *
- * @since 0.7.0
+ * @since 0.8.0
  *
  * @global $ba_eas Edit Author Slug object
  * @uses update_option() To update Edit Author Slug options
  */
-function ba_eas_cleanup_options() {
-	$options = get_option( 'ba_edit_author_slug', array() );
+function ba_eas_upgrade() {
+	global $ba_eas;
 
-	if ( array_key_exists( 'dont_forget_to_flush', $options ) ) {
-		unset( $options['dont_forget_to_flush'] );
+	// We're up-to-date, so let's move on
+	if ( $ba_eas->current_db_version === $ba_eas->db_version )
+		return;
 
-		update_option( 'ba_edit_author_slug', $options );
+	if ( $ba_eas->current_db_version < 100 ) {
+		$ba_eas->options['author_base'] = empty( $ba_eas->author_base ) ? '' : $ba_eas->author_base;
+		$ba_eas->options['db_version']  = $ba_eas->db_version;
+
+		if ( array_key_exists( 'dont_forget_to_flush', $ba_eas->options ) )
+			unset( $ba_eas->options['dont_forget_to_flush'] );
 	}
+
+	// Update the option
+	update_option( 'ba_edit_author_slug', $ba_eas->options );
 }
 
 ?>
