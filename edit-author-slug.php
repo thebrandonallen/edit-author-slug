@@ -53,22 +53,32 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 class BA_Edit_Author_Slug {
 
 	/**
-	 * @var string Original author base
+	 * @var string Edit Author Slug Version
 	 */
 	var $version = '0.8-beta';
 
 	/**
-	 * @var string Author base
+	 * @var int Edit Author Slug DB Version
+	 */
+	var $db_version = 100;
+
+	/**
+	 * @var int Edit Author Slug Currently Installed DB Version
+	 */
+	var $current_db_version = 0;
+
+	/**
+	 * @var string Result of __FILE__
 	 */
 	var $file = '';
 
 	/**
-	 * @var string Author base
+	 * @var string Edit Author Slug plugin directory
 	 */
 	var $plugin_dir = '';
 
 	/**
-	 * @var string Author base
+	 * @var string Edit Author Slug plugin URL
 	 */
 	var $plugin_url = '';
 
@@ -123,10 +133,14 @@ class BA_Edit_Author_Slug {
 		$this->plugin_url  = plugin_dir_url(  $this->file );
 
 		// Options
-		$this->options     = get_option( 'ba_edit_author_slug', array( 'author_base' => '' ) );
+		$this->options     = get_option( 'ba_edit_author_slug', array() );
 
 		// Author base
-		$this->author_base = $this->original_author_base = $this->options['author_base'];
+		$this->author_base = $this->original_author_base = !empty( $this->options['author_base'] ) ? $this->options['author_base'] : '';
+
+		// Current DB version
+		if ( !empty( $this->options['db_version'] ) )
+			$this->current_db_version = (int) $this->options['db_version'];
 
 	}
 
@@ -179,7 +193,7 @@ class BA_Edit_Author_Slug {
 	function author_base_rewrite() {
 		global $wp_rewrite;
 
-		if ( ! empty( $this->author_base ) )
+		if ( !empty( $this->author_base ) )
 			$wp_rewrite->author_base = $this->author_base;
 	}
 }

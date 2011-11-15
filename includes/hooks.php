@@ -15,6 +15,9 @@ if ( is_admin() ) {
 	add_action( 'admin_init', 'ba_eas_sanitize_author_base'           );
 	add_action( 'admin_init', 'ba_eas_add_author_base_settings_field' );
 
+	// Cleanup options array
+	add_action( 'admin_init', 'ba_eas_upgrade', 999 );
+
 	// Nicename Actions
 	add_action( 'edit_user_profile',          'ba_eas_show_user_nicename'          );
 	add_action( 'show_user_profile',          'ba_eas_show_user_nicename'          );
@@ -25,8 +28,5 @@ if ( is_admin() ) {
 	add_filter( 'manage_users_custom_column', 'ba_eas_author_slug_custom_column', 10, 3 );
 
 }
-
-// Activation/Deactivation Hooks
-add_action( 'ba_eas_activation', 'ba_eas_cleanup_options' );
 
 ?>
