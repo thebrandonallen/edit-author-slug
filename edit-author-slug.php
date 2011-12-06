@@ -83,6 +83,11 @@ class BA_Edit_Author_Slug {
 	var $plugin_url = '';
 
 	/**
+	 * @var string Edit Author Slug plugin basename
+	 */
+	var $plugin_basename = '';
+
+	/**
 	 * @var string Author base
 	 */
 	var $author_base = '';
@@ -128,9 +133,10 @@ class BA_Edit_Author_Slug {
 	 */
 	function _setup_globals() {
 		// Edit Author Slug root directory
-		$this->file        = __FILE__;
-		$this->plugin_dir  = plugin_dir_path( $this->file );
-		$this->plugin_url  = plugin_dir_url(  $this->file );
+		$this->file            = __FILE__;
+		$this->plugin_dir      = plugin_dir_path( $this->file );
+		$this->plugin_url      = plugin_dir_url(  $this->file );
+		$this->plugin_basename = plugin_basename( $this->file );
 
 		// Options
 		$this->options     = get_option( 'ba_edit_author_slug', array() );
