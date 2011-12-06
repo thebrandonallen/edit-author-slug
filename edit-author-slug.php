@@ -139,7 +139,7 @@ class BA_Edit_Author_Slug {
 		$this->plugin_basename = plugin_basename( $this->file );
 
 		// Options
-		$this->options     = get_option( 'ba_edit_author_slug', array() );
+		$this->options = get_option( 'ba_edit_author_slug', array() );
 
 		// Author base
 		$this->author_base = $this->original_author_base = !empty( $this->options['author_base'] ) ? $this->options['author_base'] : '';
