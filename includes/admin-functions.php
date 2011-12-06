@@ -31,7 +31,7 @@ function ba_eas_show_user_nicename( $user ) {
 		<tbody><tr>
 			<th><label for="ba-edit-author-slug"><?php esc_html_e( 'Author Slug', 'edit-author-slug' ); ?></label></th>
 			<td>
-				<input type="text" name="ba-edit-author-slug" id="ba-edit-author-slug" value="<?php isset( $user->user_nicename ) ? echo esc_attr( $user->user_nicename ) : ''; ?>" class="regular-text" /><br />
+				<input type="text" name="ba-edit-author-slug" id="ba-edit-author-slug" value="<?php ( isset( $user->user_nicename ) ) ? esc_attr_e( $user->user_nicename ) : ''; ?>" class="regular-text" /><br />
 				<span class="description"><?php esc_html_e( "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'", 'edit-author-slug' ); ?></span>
 			</td>
 		</tr></tbody>
@@ -291,6 +291,34 @@ function ba_eas_upgrade() {
 
 	// Update the option
 	update_option( 'ba_edit_author_slug', $ba_eas->options );
+}
+
+/**
+ * Show the message warning users using WP 3.1.2 or less that they need
+ * to upgrade WP if they want to enjoy the tasty goodness that will start
+ * pouring out in 0.9+.
+ *
+ * @since 0.8.0
+ *
+ * @global $wp_list_table Edit Author Slug object
+ * @uses esc_url() To sanitize the info link
+ * @uses esc_attr() To sanitize the info title
+ */
+function ba_eas_eol_for_less_than_wp_3_2_message() {
+	if ( version_compare( $GLOBALS['wp_version'], '3.1.4', '>' ) )
+		return;
+
+	global $wp_list_table;
+
+	$details_url = 'http://example.com';
+	$details_title = 'Something awesome to be determined';
+
+	echo '<tr class="plugin-update-tr"><td colspan="' . $wp_list_table->get_column_count() . '" class="plugin-update colspanchange"><div class="update-message">';
+
+	printf( __( 'Version 0.8 is the last update of Edit Author Slug that will be compatible with WordPress 3.1.4 or less. Please consider upgrading to the latest version of WordPress if you\'d like to take advantage of upcoming features. <a href="%1$s" title="%2$s">View more information about this notice</a>.', 'edit-author-slug' ), esc_url( $details_url ), esc_attr( $details_title ) );
+
+	echo '</div></td></tr>';
+
 }
 
 ?>
