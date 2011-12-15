@@ -315,7 +315,7 @@ function ba_eas_eol_for_less_than_wp_3_2_message() {
 
 	echo '<tr class="plugin-update-tr"><td colspan="' . $wp_list_table->get_column_count() . '" class="plugin-update colspanchange"><div class="update-message">';
 
-	printf( __( 'Version 0.8 is the last update of Edit Author Slug that will be compatible with WordPress 3.1.4 or less. Please consider upgrading to the latest version of WordPress if you\'d like to take advantage of upcoming features. <a href="%1$s" title="%2$s">View more information about this notice</a>.', 'edit-author-slug' ), esc_url( $details_url ), esc_attr( $details_title ) );
+	printf( __( 'Version 0.8 is the last update of Edit Author Slug that will officially support WordPress 3.1.4 or less. Please consider upgrading to the latest version of WordPress if you\'d like to take advantage of upcoming features. <a href="%1$s" title="%2$s">View more information about this notice</a>.', 'edit-author-slug' ), esc_url( $details_url ), esc_attr( $details_title ) );
 
 	echo '</div></td></tr>';
 
