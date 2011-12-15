@@ -310,8 +310,8 @@ function ba_eas_eol_for_less_than_wp_3_2_message() {
 
 	global $wp_list_table;
 
-	$details_url = 'http://example.com';
-	$details_title = 'Something awesome to be determined';
+	$details_url = 'http://brandonallen.org/2011/12/15/edit-author-slug-0-8-and-beyond/';
+	$details_title = 'Edit Author Slug 0.8 and Beyond';
 
 	echo '<tr class="plugin-update-tr"><td colspan="' . $wp_list_table->get_column_count() . '" class="plugin-update colspanchange"><div class="update-message">';
 
