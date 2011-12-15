@@ -17,6 +17,8 @@ http://example.com/author/username/
 Edit Author Slug allows for
 http://example.com/ninja/master-ninja/
 
+**Version 0.8 will be the last release to officially support WordPress 3.1.4 or less. [Read more about this](http://brandonallen.org/2011/12/15/edit-author-slug-0-8-and-beyond/ "Edit Author Slug 0.8 and Beyond").**
+
 #### Translations Available
 * Hebrew (he_IL)      - Yonat Sharon
 * Belorussian (be_BY) - Marcis G.
