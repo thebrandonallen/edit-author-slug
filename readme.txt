@@ -1,11 +1,11 @@
 === Edit Author Slug ===
 Contributors: cnorris23
-Tags: admin, author, author base, author slug, permalink, permalinks, slug, users, user
+Tags: admin, author, author base, author slug, nicename, permalink, permalinks, slug, users, user
 Requires at least: 2.8
 Tested up to: 3.3
 Stable tag: 0.7.2
 
-Allows an admin (or capable user) to edit the author slug of a user, and change the uthor base.
+Allows an admin (or capable user) to edit the author slug (a.k.a. - nicename) of a user, and change the author base (the '/author/' portion of the URL).
 
 == Description ==
 
