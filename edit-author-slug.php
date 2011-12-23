@@ -15,7 +15,7 @@
  * Plugin Name: Edit Author Slug
  * Plugin URI: http://brandonallen.org/wordpress/plugins/edit-author-slug/
  * Description: Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
- * Version: 0.8
+ * Version: 0.9-alpha
  * Tested With: 3.2.1, 3.3
  * Author: Brandon Allen
  * Author URI: http://brandonallen.org/
@@ -23,7 +23,7 @@
  */
 
 /*
-			Copyright 2011  Brandon Allen  (email : wp_plugins@brandonallen.org)
+			Copyright 2011  Brandon Allen  (email : wp_plugins ([at]) brandonallen ([dot]) org)
 
 			This program is free software; you can redistribute it and/or modify
 			it under the terms of the GNU General Public License as published by
@@ -53,73 +53,84 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 class BA_Edit_Author_Slug {
 
 	/**
+	 * Edit Author Slug Version
+	 * @access public
 	 * @var string Edit Author Slug Version
 	 */
-	var $version = '0.8';
+	public $version = '0.9-alpha';
 
 	/**
+	 * Edit Author Slug Version
+	 * @access public
 	 * @var int Edit Author Slug DB Version
 	 */
-	var $db_version = 100;
+	public $db_version = 100;
 
 	/**
+	 * Edit Author Slug Version
+	 * @access public
 	 * @var int Edit Author Slug Currently Installed DB Version
 	 */
-	var $current_db_version = 0;
+	public $current_db_version = 0;
 
 	/**
+	 * Edit Author Slug Version
+	 * @access public
 	 * @var string Result of __FILE__
 	 */
-	var $file = '';
+	public $file = '';
 
 	/**
+	 * Edit Author Slug Version
+	 * @access public
 	 * @var string Edit Author Slug plugin directory
 	 */
-	var $plugin_dir = '';
+	public $plugin_dir = '';
 
 	/**
+	 * Edit Author Slug Version
+	 * @access public
 	 * @var string Edit Author Slug plugin URL
 	 */
-	var $plugin_url = '';
+	public $plugin_url = '';
 
 	/**
+	 * Edit Author Slug Version
+	 * @access public
 	 * @var string Edit Author Slug plugin basename
 	 */
-	var $plugin_basename = '';
+	public $plugin_basename = '';
 
 	/**
+	 * Edit Author Slug Version
+	 * @access public
 	 * @var string Author base
 	 */
-	var $author_base = '';
+	public $author_base = '';
 
 	/**
+	 * Edit Author Slug Version
+	 * @access public
 	 * @var array Original options
 	 */
-	var $options = array();
+	public $options = array();
 
 	/**
+	 * Edit Author Slug Version
+	 * @access public
 	 * @var string Original author base
 	 */
-	var $original_author_base = '';
-
-	/**
-	 * PHP4 constructor
-	 *
-	 * @since 0.1.0
-	 */
-	function BA_Edit_Author_Slug() {
-		$this->__construct();
-	}
+	public $original_author_base = '';
 
 	/**
 	 * PHP5 constructor
 	 *
 	 * @since 0.7.0
 	 */
-	function __construct() {
-		$this->_setup_globals();
-		$this->_includes();
-		$this->_setup_actions();
+	public function __construct() {
+		$this->setup_globals();
+		$this->includes();
+		$this->setup_actions();
 	}
 
 	/**
@@ -131,7 +142,7 @@ class BA_Edit_Author_Slug {
 	 * @uses plugin_dir_url() To generate Edit Author Slug plugin url
 	 * @uses get_option()  To get the Edit Author Slug options
 	 */
-	function _setup_globals() {
+	private function setup_globals() {
 		// Edit Author Slug root directory
 		$this->file            = __FILE__;
 		$this->plugin_dir      = plugin_dir_path( $this->file );
@@ -155,7 +166,7 @@ class BA_Edit_Author_Slug {
 	 *
 	 * @since 0.7.0
 	 */
-	function _includes() {
+	private function includes() {
 		if ( is_admin() )
 			require_once( $this->plugin_dir . 'includes/admin-functions.php' );
 
@@ -172,7 +183,7 @@ class BA_Edit_Author_Slug {
 	 * @uses add_action() To call BA_Edit_Author_Slug::author_base_rewrite
 	 * @uses load_plugin_textdomain()
 	 */
-	function _setup_actions() {
+	private function setup_actions() {
 		// Register Edit Author Slug activation/deactivation sequences
 		register_activation_hook(   $this->file, 'ba_eas_activation'   );
 		register_deactivation_hook( $this->file, 'ba_eas_deactivation' );
@@ -196,7 +207,7 @@ class BA_Edit_Author_Slug {
 	 * @uses do_action() calls 'ba_eas_author_base_rewrite' hook
 	 * @uses flush_rewrite_rules() Flush the rules on change
 	 */
-	function author_base_rewrite() {
+	public function author_base_rewrite() {
 		global $wp_rewrite;
 
 		if ( !empty( $this->author_base ) )
