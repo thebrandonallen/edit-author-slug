@@ -54,21 +54,21 @@ Make sure you are an admin, or have been assigned the `edit_users` or `edit_auth
 * Restore duplicate author slug check as old method could alter the slug without any sort of warning
 * Further improve the logic for flushing rewrite rules
 * Introduce ba_eas_can_edit_author_slug() and matching filter to make it even easier to give users the ability to update their own author slug
-* Add message in plugins list warning users of WP <3.2 that 0.8 is the last update they'll receive
+* Add message in plugins list warning users of WP <3.2 that 0.8 is the last update they'll receive.
 
 = 0.7.2 =
-* Remove overzealous cap check
+* Remove overzealous cap check.
 
 = 0.7.1 =
-* fix some unfortunate errors I missed before tagging 0.7
+* fix some unfortunate errors I missed before tagging 0.7.
 
 = 0.7 =
 * Significant code refactoring
-* Added custom capability to give site admins the ability to add author slug access to other roles
-* Improvements/optimizations to code logic
-* Fixed an incorrect textdomain string
+* Added custom capability to give site admins the ability to add author slug access to other roles.
+* Improvements/optimizations to code logic.
+* Fixed an incorrect textdomain string.
 * Removed filter added in 0.6 as it was messy. It's much easier to achieve the same result without the plugin.
-* Got rid of wp_die() statement on duplicate author slugs in favor of WP's built-in duplicate author slug method
+* Got rid of wp_die() statement on duplicate author slugs in favor of WP's built-in duplicate author slug method.
 
 = 0.6.1 =
 * added Dutch translation - props Juliette Reinders Folmer
@@ -76,13 +76,13 @@ Make sure you are an admin, or have been assigned the `edit_users` or `edit_auth
 * improve class check/initialization
 
 = 0.6 =
-* some code cleanup
-* more security hardening
-* added filter to allow for the complete removal of the Author Base (http://brandonallen.org/2010/11/03/how-to-remove-the-author-base-with-edit-author-slug/)
-* flush rewrite rules only when necessary instead every page load
+* some code cleanup.
+* more security hardening.
+* added filter to allow for the complete removal of the Author Base (http://brandonallen.org/2010/11/03/how-to-remove-the-author-base-with-edit-author-slug/).
+* flush rewrite rules only when necessary instead every page load.
 
 = 0.5 =
-* added 'Author Slug' column to Users > Authors & Users (Users > Users in 3.0) page (props Yonat Sharon for the jumpstart)
+* added 'Author Slug' column to Users > Authors & Users (Users > Users in 3.0) page (props Yonat Sharon for the jumpstart).
 * ended support for the WP 2.8 branch. Most likely still works, but I will not support it.
 * various bug fixes
 
