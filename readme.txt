@@ -54,7 +54,7 @@ Make sure you are an admin, or have been assigned the `edit_users` or `edit_auth
 * Restore duplicate author slug check as old method could alter the slug without any sort of warning.
 * Further improve the logic for flushing rewrite rules.
 * Introduce ba_eas_can_edit_author_slug() and matching filter to make it even easier to give users the ability to update their own author slug.
-* Add message in plugins list warning users of WP <3.2 that 0.8 is the last update they'll receive.
+* Add message in plugins list warning users of WP less than 3.2 that 0.8 is the last update they'll receive.
 
 = 0.7.2 =
 * Remove overzealous cap check.
