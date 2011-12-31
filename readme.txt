@@ -50,87 +50,78 @@ Make sure you are an admin, or have been assigned the `edit_users` or `edit_auth
 == Changelog ==
 
 = 0.8.0 =
-* Drastically improved error handling and feedback for author slug editing
-* Restore duplicate author slug check as old method could alter the slug without any sort of warning
-* Further improve the logic for flushing rewrite rules
-* Introduce ba_eas_can_edit_author_slug() and matching filter to make it even easier to give users the ability to update their own author slug
+* Drastically improved error handling and feedback for author slug editing.
+* Restore duplicate author slug check as old method could alter the slug without any sort of warning.
+* Further improve the logic for flushing rewrite rules.
+* Introduce ba_eas_can_edit_author_slug() and matching filter to make it even easier to give users the ability to update their own author slug.
 * Add message in plugins list warning users of WP <3.2 that 0.8 is the last update they'll receive.
-
 
 = 0.7.2 =
 * Remove overzealous cap check.
 
-
 = 0.7.1 =
-* fix some unfortunate errors I missed before tagging 0.7.
-
+* Fix some unfortunate errors I missed before tagging 0.7.
 
 = 0.7 =
-* Significant code refactoring
+* Significant code refactoring.
 * Added custom capability to give site admins the ability to add author slug access to other roles.
 * Improvements/optimizations to code logic.
 * Fixed an incorrect textdomain string.
 * Removed filter added in 0.6 as it was messy. It's much easier to achieve the same result without the plugin.
 * Got rid of wp_die() statement on duplicate author slugs in favor of WP's built-in duplicate author slug method.
 
-
 = 0.6.1 =
-* added Dutch translation - props Juliette Reinders Folmer
-* don't hard code the languages folder path
-* improve class check/initialization
-
+* Added Dutch translation - props Juliette Reinders Folmer.
+* Don't hard code the languages folder path.
+* Improve class check/initialization.
 
 = 0.6 =
-* some code cleanup.
-* more security hardening.
-* added filter to allow for the complete removal of the Author Base (http://brandonallen.org/2010/11/03/how-to-remove-the-author-base-with-edit-author-slug/).
-* flush rewrite rules only when necessary instead every page load.
-
+* Some code cleanup.
+* More security hardening.
+* Added filter to allow for the complete removal of the Author Base (http://brandonallen.org/2010/11/03/how-to-remove-the-author-base-with-edit-author-slug/).
+* Flush rewrite rules only when necessary instead of every page load.
 
 = 0.5 =
-* added 'Author Slug' column to Users > Authors & Users (Users > Users in 3.0) page (props Yonat Sharon for the jumpstart).
-* ended support for the WP 2.8 branch. Most likely still works, but I will not support it.
-* various bug fixes
-
+* Added 'Author Slug' column to Users > Authors & Users (Users > Users in 3.0) page (props Yonat Sharon for the jumpstart).
+* Ended support for the WP 2.8 branch. Most likely still works, but I will not support it.
+* Various bug fixes.
 
 = 0.4 =
-* added ability to change the Author Base
-* updated documentation
-* added some extra security via WP esc_* functions
-* added Belorussian translation, props Marcis G.
-
+* Added ability to change the Author Base.
+* Updated documentation.
+* Added some extra security via WP esc_* functions.
+* Added Belorussian translation, props Marcis G.
 
 = 0.3.1 =
-* added Hebrew Translation, props Yonat Sharon
-
+* Added Hebrew Translation, props Yonat Sharon.
 
 = 0.3 =
-* now localization friendly
+* Now localization friendly.
 
 = 0.2.1 =
-* fixed a bug that prevented updating a user if the author slug did not change
+* Fixed a bug that prevented updating a user if the author slug did not change.
 
 = 0.2 =
-* added a check to avoid duplicate slugs
-* properly sanitize slug before comparison and database insertion
-* updated plugin URI
+* Added a check to avoid duplicate slugs.
+* Properly sanitize slug before comparison and database insertion.
+* Updated plugin URI.
 
 = 0.1.4 =
-* update tags to reflect WordPress 2.9.1 compatability
-* update link to plugin homepage
+* Update tags to reflect WordPress 2.9.1 compatability.
+* Update link to plugin homepage.
 
 = 0.1.3 =
-* update tags to reflect WordPress 2.9 compatability
+* Update tags to reflect WordPress 2.9 compatability.
 
 = 0.1.2 =
-* fix version number issues
+* Fix version number issues.
 
 = 0.1.1 =
-* Remove extra debug functions left behind
-* Add screenshot
+* Remove extra debug functions left behind.
+* Add screenshot.
 
 = 0.1 =
-* Initial release
+* Initial release.
 
 == Upgrade Notice ==
 
