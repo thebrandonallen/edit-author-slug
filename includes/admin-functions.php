@@ -72,6 +72,7 @@ function ba_eas_can_edit_author_slug() {
  *
  * @global obj $wpdb
  * @uses check_admin_referer() To verify the nonce and check referer
+ * @uses ba_eas_can_edit_author_slug() To verify the current user can edit the slug
  * @uses current_user_can() To prevent unauthorized users from saving.
  * @uses get_userdata() To get the user data
  * @uses sanitize_title() Used to sanitize user_nicename
@@ -79,6 +80,11 @@ function ba_eas_can_edit_author_slug() {
  * @uses wp_cache_delete() To delete the 'userslugs' cache for old nicename
  */
 function ba_eas_update_user_nicename( $errors, $update, $user ) {
+
+	// Bail early if user can't edit the slug
+	if ( !ba_eas_can_edit_author_slug() )
+		return false;
+
 	global $wpdb;
 
 	// We shouldn't be here if we're not updating
