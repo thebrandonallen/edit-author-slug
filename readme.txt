@@ -2,8 +2,8 @@
 Contributors: cnorris23
 Tags: admin, author, author base, author slug, nicename, permalink, permalinks, slug, users, user
 Requires at least: 2.8
-Tested up to: 3.3
-Stable tag: 0.8
+Tested up to: 3.3.1
+Stable tag: 0.8.1
 
 Allows an admin (or capable user) to edit the author slug of a user, and change the author base.
 
@@ -48,6 +48,9 @@ You can also visit the plugin's homepage at http://brandonallen.org/wordpress/pl
 Make sure you are an admin, or have been assigned the `edit_users` or `edit_author_slug` capability.
 
 == Changelog ==
+
+= 0.8.1 =
+* Fix a bug that prevented non-admin users from updating their profile
 
 = 0.8.0 =
 * Drastically improved error handling and feedback for author slug editing.
