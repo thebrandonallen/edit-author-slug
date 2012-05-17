@@ -87,11 +87,11 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	global $wpdb;
 
 	// We shouldn't be here if we're not updating
-	if ( ! $update )
+	if ( !$update )
 		return;
 
 	// Bail if we don't have a user
-	if ( empty( $user ) )
+	if ( empty( $user ) || !is_object( $user ) )
 		return;
 
 	// Setup the user_id
@@ -100,8 +100,8 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	// Check the nonce
 	check_admin_referer( 'update-user_' . $user_id );
 
-	// User, tell me a little about yourself.
-	$userdata = get_userdata( $user_id );
+	// Validate the user object
+	$user = get_userdata( $user_id );
 
 	// Setup the author slug
 	$author_slug = isset( $_POST['ba-edit-author-slug'] ) ? trim( $_POST['ba-edit-author-slug'] ) : '';
@@ -116,7 +116,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	$author_slug = sanitize_title( $_POST['ba-edit-author-slug'] );
 
 	// Maybe update the author slug?
-	if ( $userdata->user_nicename != $author_slug ) {
+	if ( $user->user_nicename != $author_slug ) {
 
 		// Do we have an author slug?
 		if ( empty( $author_slug ) ) {
@@ -131,13 +131,13 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 		}
 
 		// Looks like we made it, so let's update
-		if ( ! $updated_user_id = wp_update_user( array( 'ID' => $user_id, 'user_nicename' => $author_slug ) ) ){
+		if ( !$updated_user_id = wp_update_user( array( 'ID' => $user_id, 'user_nicename' => $author_slug ) ) ){
 			$errors->add( 'ba_edit_author_slug', __( '<strong>ERROR</strong>: There was an error updating the author slug. Please try again.' ) );
 			return;
 		}
 
 		// Clear the cache for good measure
-		wp_cache_delete( $userdata->user_nicename, 'userslugs' );
+		wp_cache_delete( $user->user_nicename, 'userslugs' );
 	}
 }
 
@@ -260,10 +260,10 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
 	$user_id = (int) $user_id;
 
 	if ( 'ba-eas-author-slug' == $column_name ) {
-		$userdata = get_userdata( $user_id );
+		$user = get_userdata( $user_id );
 
-		if ( !empty( $userdata->user_nicename ) )
-			$default = esc_attr( $userdata->user_nicename );
+		if ( !empty( $user->user_nicename ) )
+			$default = esc_attr( $user->user_nicename );
 	}
 
 	return $default;
