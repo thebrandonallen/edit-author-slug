@@ -152,12 +152,25 @@ class BA_Edit_Author_Slug {
 		// Options
 		$this->options = get_option( 'ba_edit_author_slug', array() );
 
-		// Author base
-		$this->author_base = $this->original_author_base = !empty( $this->options['author_base'] ) ? $this->options['author_base'] : '';
+		if ( !empty( $this->options ) ) {
+			// Author base
+			$this->author_base = $this->original_author_base = !empty( $this->options['author_base'] ) ? $this->options['author_base'] : '';
 
-		// Current DB version
-		if ( !empty( $this->options['db_version'] ) )
-			$this->current_db_version = (int) $this->options['db_version'];
+			// Current DB version
+			if ( !empty( $this->options['db_version'] ) )
+				$this->current_db_version = (int) $this->options['db_version'];
+		} else {
+			// Author base
+			$base = get_option( '_ba_eas_author_base', 'author' );
+			$this->author_base = $this->original_author_base = $value;
+			if ( 'author' == $value )
+				$this->author_base = $this->original_author_base = '';
+
+			// Current DB version
+			$version = get_option( '_ba_eas_db_version', 0 );
+			if ( !empty( $version ) )
+				$this->current_db_version = (int) $version;
+		}
 
 	}
 
