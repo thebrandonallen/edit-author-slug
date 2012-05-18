@@ -9,6 +9,8 @@
  * @author Brandon Allen
  */
 
+/** Nicename ******************************************************************/
+
 /**
  * Display Author slug edit field on User/Profile edit page.
  *
@@ -142,88 +144,6 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 }
 
 /**
- * Add Author Base settings field to 'Permalink' options page.
- *
- * Adds a settings field for Author Base in the 'Optional' settings
- * section along with Category Base and Tag Base.
- *
- * @since 0.4.0
- *
- * @uses add_settings_field() To add the settings field
- */
-function ba_eas_add_author_base_settings_field() {
-	/**
-	 * Register setting doesn't work on options-permalink.php
-	 * see Trac ticket #9296 (http://core.trac.wordpress.org/ticket/9296)
-	 * register_setting( 'ba_edit_author_slug', 'ba_edit_author_slug', array( $this, 'sanitize_author_base' ) );
-	 */
-	add_settings_field( 'ba-eas-author-base', __( 'Author Base', 'edit-author-slug' ), 'ba_eas_author_base_settings_html', 'permalink', 'optional' );
-}
-
-/**
- * Add Author Base settings html to Options > Permalinks.
- *
- * Adds a settings field for Author Base in the 'Optional'
- * settings section along with Category Base and Tag Base.
- *
- * @since 0.4.0
- *
- * @uses esc_attr() To sanitize the author base
- */
-function ba_eas_author_base_settings_html() {
-	global $ba_eas;
-
-	echo '<input id="ba-eas-author-base" name="ba-eas-author-base" type="text" value="' . esc_attr( $ba_eas->author_base ) . '" class="regular-text code" />';
-}
-
-/**
- * Sanitize author base and add to database.
- *
- * This is a workaround until ticket #9296 is resolved
- * (http://core.trac.wordpress.org/ticket/9296)
- *
- * @since 0.8.0
- *
- * @uses check_admin_referer() To verify the nonce and check referer
- * @uses _wp_filter_taxonomy_base() To remove any manually prepended /index.php/.
- * @uses update_option() To update Edit Author Slug options
- * @uses flush_rewrite_rules() To update Edit Author Slug options
- */
-function ba_eas_sanitize_author_base() {
-	global $ba_eas, $wp_rewrite;
-
-	if ( isset( $_POST['permalink_structure'] ) || isset( $_POST['category_base'] ) ) {
-		check_admin_referer( 'update-permalink' );
-
-		if ( isset( $_POST['ba-eas-author-base'] ) ) {
-			$ba_eas->author_base = trim( $_POST['ba-eas-author-base'] );
-
-			// Filer and sanitize the new author_base
-			if ( !empty( $ba_eas->author_base ) ) {
-				$ba_eas->author_base = str_replace( '#', '', $ba_eas->author_base     );
-				$ba_eas->author_base = _wp_filter_taxonomy_base( $ba_eas->author_base );
-			}
-
-			// Do we need to update the author_base
-			if ( $ba_eas->author_base != $ba_eas->original_author_base ) {
-				// Setup the new author_base
-				$ba_eas->options['author_base'] = $ba_eas->author_base;
-
-				// Update options with new author_base
-				update_option( 'ba_edit_author_slug', $ba_eas->options );
-
-				// Update the author_base in the WP_Rewrite object
-				if ( !empty( $ba_eas->author_base ) )
-					$wp_rewrite->author_base = $ba_eas->author_base;
-
-				// Courtesy flush
-				flush_rewrite_rules( false );
-			}
-		}
-	}
-}
-
-/**
  * Add 'Author Slug' column to Users page.
  *
  * Adds the 'Author Slug' column and column heading
@@ -269,6 +189,199 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
 	return $default;
 }
 
+/** Author Base **************************************************************/
+
+/**
+ * Sanitize author base and add to database.
+ *
+ * This is a workaround until ticket #9296 is resolved
+ * (http://core.trac.wordpress.org/ticket/9296)
+ *
+ * @since 0.8.0
+ *
+ * @uses check_admin_referer() To verify the nonce and check referer
+ * @uses _wp_filter_taxonomy_base() To remove any manually prepended /index.php/.
+ * @uses update_option() To update Edit Author Slug options
+ * @uses flush_rewrite_rules() To update Edit Author Slug options
+ */
+function ba_eas_sanitize_author_base() {
+	global $ba_eas, $wp_rewrite;
+
+	if ( isset( $_POST['permalink_structure'] ) || isset( $_POST['category_base'] ) ) {
+		check_admin_referer( 'update-permalink' );
+
+		if ( isset( $_POST['ba-eas-author-base'] ) ) {
+			$ba_eas->author_base = trim( $_POST['ba-eas-author-base'] );
+
+			// Filter and sanitize the new author_base
+			if ( !empty( $ba_eas->author_base ) ) {
+				$ba_eas->author_base = preg_replace('#/+#', '/', '/' . str_replace( '#', '', $ba_eas->author_base ) );
+				// Add to filter, see option_category_base
+				//$ba_eas->author_base = _wp_filter_taxonomy_base( $ba_eas->author_base );
+			}
+
+			// Do we need to update the author_base
+			if ( $ba_eas->author_base != $ba_eas->original_author_base ) {
+				// Setup the new author_base
+				$ba_eas->options['author_base'] = $ba_eas->author_base;
+
+				// Update options with new author_base
+				update_option( 'ba_edit_author_slug', $ba_eas->options );
+
+				// Update the author_base in the WP_Rewrite object
+				if ( !empty( $ba_eas->author_base ) )
+					$wp_rewrite->author_base = $ba_eas->author_base;
+
+				// Courtesy flush
+				flush_rewrite_rules( false );
+			}
+		}
+	}
+}
+
+/** Settings *****************************************************************/
+
+/**
+ * Add the Edit Author Slug Settings Menu.
+ *
+ * @since 0.9.0
+ *
+ * @uses add_submenu_page() To add the Edit Author Slug submenu
+ */
+function ba_eas_add_settings_menu() {
+	add_options_page( __( 'Edit Author Slug Settings', 'edit-author-slug' ), __( 'Edit Author Slug', 'edit-author-slug' ), 'edit_users', 'edit-author-slug', 'ba_eas_settings_page_html' );
+}
+
+/**
+ * Output HTML for settings page.
+ *
+ * @since 0.9.0
+ *
+ * @uses add_submenu_page() To add the Edit Author Slug submenu
+ */
+function ba_eas_settings_page_html() {
+?>
+
+	<div class="wrap">
+
+		<?php screen_icon(); ?>
+
+		<h2><?php _e( 'Edit Author Slug Settings', 'edit-author-slug' ); ?></h2>
+
+		<form action="options.php" method="post">
+
+			<?php settings_fields( 'edit-author-slug' ); ?>
+
+			<?php do_settings_sections( 'edit-author-slug' ); ?>
+
+			<p class="submit">
+				<input type="submit" name="submit" class="button-primary" value="<?php _e( 'Save Changes', 'edit-author-slug' ); ?>" />
+			</p>
+		</form>
+	</div>
+
+<?php
+}
+
+/**
+ * Add Author Base settings field to 'Permalink' options page.
+ *
+ * Adds a settings field for Author Base in the 'Optional' settings
+ * section along with Category Base and Tag Base.
+ *
+ * @since 0.9.0
+ *
+ * @uses add_settings_field() To add the settings field
+ */
+function ba_eas_register_admin_settings() {
+	// Add the Author Base section
+	add_settings_section( 'ba_eas_author_base', __( 'Author Base', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_author_base_section', 'edit-author-slug' );
+
+	// Author Base setting
+	add_settings_field( '_ba_eas_author_base', __( 'Author Base', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_author_base', 'edit-author-slug', 'ba_eas_author_base' );
+	register_setting( 'edit-author-slug', '_ba_eas_author_base', 'ba_eas_sanitize_author_base' );
+}
+
+/**
+ * Add Author Base settings section.
+ *
+ * @since 0.9.0
+ */
+function ba_eas_admin_setting_callback_author_base_section() {
+?>
+
+	<p><?php _e( "Change your author base to something more fun. <em>Defaults to 'author'</em>.", 'edit-author-slug' ); ?></p>
+
+<?php
+}
+
+/**
+ * Add Author Base settings field.
+ *
+ * @since 0.9.0
+ *
+ * @uses esc_attr() To sanitize the author base
+ */
+function ba_eas_admin_setting_callback_author_base() {
+	global $ba_eas;
+?>
+
+	<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php esc_attr( $ba_eas->author_base ); ?>" class="regular-text code" />
+
+<?php
+}
+
+/**
+ * Output settings API option
+ *
+ * @since 0.9.0
+ *
+ * @uses ba_eas_get_form_option()
+ *
+ * @param string $option
+ * @param string $default
+ * @param bool $slug
+ */
+function ba_eas_form_option( $option, $default = '' , $slug = false ) {
+	echo ba_eas_get_form_option( $option, $default, $slug );
+}
+
+/**
+ * Return settings API option
+ *
+ * @since 0.9.0
+ *
+ * @uses get_option()
+ * @uses esc_attr()
+ * @uses apply_filters()
+ *
+ * @param string $option
+ * @param string $default
+ * @param bool $slug
+ */
+function ba_eas_get_form_option( $option, $default = '', $slug = false ) {
+
+	// Get the option and sanitize it
+	$value = get_option( $option, $default );
+
+	// Slug?
+	if ( true === $slug )
+		$value = esc_attr( apply_filters( 'editable_slug', $value ) );
+
+	// Not a slug
+	else
+		$value = esc_attr( $value );
+
+	// Fallback to default
+	if ( empty( $value ) )
+		$value = $default;
+
+	// Allow plugins to further filter the output
+	return apply_filters( 'ba_eas_get_form_option', $value, $option );
+}
+
+/** Upgrade *******************************************************************/
+
 /**
  * Upgrade Edit Author Slug.
  *
@@ -296,34 +409,6 @@ function ba_eas_upgrade() {
 
 	// Update the option
 	update_option( 'ba_edit_author_slug', $ba_eas->options );
-}
-
-/**
- * Show the message warning users using WP 3.1.2 or less that they need
- * to upgrade WP if they want to enjoy the tasty goodness that will start
- * pouring out in 0.9+.
- *
- * @since 0.8.0
- *
- * @global $wp_list_table Edit Author Slug object
- * @uses esc_url() To sanitize the info link
- * @uses esc_attr() To sanitize the info title
- */
-function ba_eas_eol_for_less_than_wp_3_2_message() {
-	if ( version_compare( $GLOBALS['wp_version'], '3.1.4', '>' ) )
-		return;
-
-	global $wp_list_table;
-
-	$details_url = 'http://brandonallen.org/2011/12/15/edit-author-slug-0-8-and-beyond/';
-	$details_title = 'Edit Author Slug 0.8 and Beyond';
-
-	echo '<tr class="plugin-update-tr"><td colspan="' . $wp_list_table->get_column_count() . '" class="plugin-update colspanchange"><div class="update-message">';
-
-	printf( __( 'Version 0.8 is the last update of Edit Author Slug that will officially support WordPress 3.1.4 or less. Please consider upgrading to the latest version of WordPress if you\'d like to take advantage of upcoming features. <a href="%1$s" title="%2$s">View more information about this notice</a>.', 'edit-author-slug' ), esc_url( $details_url ), esc_attr( $details_title ) );
-
-	echo '</div></td></tr>';
-
 }
 
 ?>

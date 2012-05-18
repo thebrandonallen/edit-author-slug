@@ -11,9 +11,6 @@
 
 // Admin
 if ( is_admin() ) {
-	// Author base settings
-	add_action( 'admin_init', 'ba_eas_sanitize_author_base'           );
-	add_action( 'admin_init', 'ba_eas_add_author_base_settings_field' );
 
 	// Cleanup options array
 	add_action( 'admin_init', 'ba_eas_upgrade', 999 );
@@ -27,8 +24,9 @@ if ( is_admin() ) {
 	add_filter( 'manage_users_columns',       'ba_eas_author_slug_column'               );
 	add_filter( 'manage_users_custom_column', 'ba_eas_author_slug_custom_column', 10, 3 );
 
-	// WP < 3.2 EOL message
-	add_action( 'after_plugin_row_' . $this->plugin_basename, 'ba_eas_eol_for_less_than_wp_3_2_message' );
+	// Settings
+	add_action( 'admin_menu', 'ba_eas_add_settings_menu' );
+	add_action( 'admin_init', 'ba_eas_register_admin_settings'        );
 
 }
 
