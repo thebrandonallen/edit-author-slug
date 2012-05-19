@@ -150,26 +150,32 @@ class BA_Edit_Author_Slug {
 		$this->plugin_basename = plugin_basename( $this->file );
 
 		// Options
-		$this->options = get_option( 'ba_edit_author_slug', array() );
-
-		if ( !empty( $this->options ) ) {
+		if ( $base = get_option( '_ba_eas_author_base' ) ) {
 			// Author base
-			$this->author_base = $this->original_author_base = !empty( $this->options['author_base'] ) ? $this->options['author_base'] : '';
+			$this->author_base = $this->original_author_base = 'author';
+			if ( 'author' != $base )
+				$this->author_base = $this->original_author_base = $base;
 
 			// Current DB version
-			if ( !empty( $this->options['db_version'] ) )
-				$this->current_db_version = (int) $this->options['db_version'];
+			$db_version = get_option( '_ba_eas_db_version', 0 );
+			if ( !empty( $db_version ) )
+				$this->current_db_version = (int) $db_version;
+
+		// Pre-0.9 Back compat
+		} elseif ( $options = get_option( 'ba_edit_author_slug' ) {
+			// Author base
+			$this->author_base = $this->original_author_base = 'author';
+			if ( 'author' != $options['author_base'] )
+				$this->author_base = $this->original_author_base = $options['author_base'];
+
+			// Current DB version
+			if ( !empty( $options['db_version'] ) )
+				$this->current_db_version = (int) $options['db_version'];
+
+		// Something has gone horribly wrong if this happens
 		} else {
 			// Author base
-			$base = get_option( '_ba_eas_author_base', 'author' );
-			$this->author_base = $this->original_author_base = $value;
-			if ( 'author' == $value )
-				$this->author_base = $this->original_author_base = '';
-
-			// Current DB version
-			$version = get_option( '_ba_eas_db_version', 0 );
-			if ( !empty( $version ) )
-				$this->current_db_version = (int) $version;
+			$this->author_base = $this->original_author_base = 'author';
 		}
 
 	}
@@ -223,7 +229,7 @@ class BA_Edit_Author_Slug {
 	public function author_base_rewrite() {
 		global $wp_rewrite;
 
-		if ( !empty( $this->author_base ) )
+		if ( !empty( $this->author_base ) || 'author' != $this->author_base )
 			$wp_rewrite->author_base = $this->author_base;
 	}
 }
