@@ -112,6 +112,7 @@ class BA_Edit_Author_Slug {
 	 * Edit Author Slug Version
 	 * @access public
 	 * @var array Original options
+	 * @deprecated 0.9.0
 	 */
 	public $options = array();
 
