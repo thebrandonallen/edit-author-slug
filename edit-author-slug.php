@@ -109,21 +109,6 @@ class BA_Edit_Author_Slug {
 	public $author_base = '';
 
 	/**
-	 * Edit Author Slug Version
-	 * @access public
-	 * @var array Original options
-	 * @deprecated 0.9.0
-	 */
-	public $options = array();
-
-	/**
-	 * Edit Author Slug Version
-	 * @access public
-	 * @var string Original author base
-	 */
-	public $original_author_base = '';
-
-	/**
 	 * PHP5 constructor
 	 *
 	 * @since 0.7.0
@@ -153,9 +138,9 @@ class BA_Edit_Author_Slug {
 		// Options
 		if ( $base = get_option( '_ba_eas_author_base' ) ) {
 			// Author base
-			$this->author_base = $this->original_author_base = 'author';
+			$this->author_base = 'author';
 			if ( 'author' != $base )
-				$this->author_base = $this->original_author_base = $base;
+				$this->author_base = $base;
 
 			// Current DB version
 			$db_version = get_option( '_ba_eas_db_version', 0 );
@@ -163,11 +148,11 @@ class BA_Edit_Author_Slug {
 				$this->current_db_version = (int) $db_version;
 
 		// Pre-0.9 Back compat
-		} elseif ( $options = get_option( 'ba_edit_author_slug' ) {
+		} elseif ( $options = get_option( 'ba_edit_author_slug' ) ) {
 			// Author base
-			$this->author_base = $this->original_author_base = 'author';
+			$this->author_base = 'author';
 			if ( 'author' != $options['author_base'] )
-				$this->author_base = $this->original_author_base = $options['author_base'];
+				$this->author_base = $options['author_base'];
 
 			// Current DB version
 			if ( !empty( $options['db_version'] ) )
@@ -176,9 +161,8 @@ class BA_Edit_Author_Slug {
 		// Something has gone horribly wrong if this happens
 		} else {
 			// Author base
-			$this->author_base = $this->original_author_base = 'author';
+			$this->author_base = 'author';
 		}
-
 	}
 
 	/**
