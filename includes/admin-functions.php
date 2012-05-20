@@ -204,39 +204,34 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
  * @uses update_option() To update Edit Author Slug options
  * @uses flush_rewrite_rules() To update Edit Author Slug options
  */
-function ba_eas_sanitize_author_base() {
+function ba_eas_sanitize_author_base( $author_base ) {
 	global $ba_eas, $wp_rewrite;
 
-	if ( isset( $_POST['permalink_structure'] ) || isset( $_POST['category_base'] ) ) {
-		check_admin_referer( 'update-permalink' );
+	// Sanitize the author base
+	$author_base = sanitize_title( $author_base );
 
-		if ( isset( $_POST['ba-eas-author-base'] ) ) {
-			$ba_eas->author_base = trim( $_POST['ba-eas-author-base'] );
+	// Make sure we have something
+	if ( empty( $author_base ) )
+		$author_base = 'author';
 
-			// Filter and sanitize the new author_base
-			if ( !empty( $ba_eas->author_base ) ) {
-				$ba_eas->author_base = preg_replace('#/+#', '/', '/' . str_replace( '#', '', $ba_eas->author_base ) );
-				// Add to filter, see option_category_base
-				//$ba_eas->author_base = _wp_filter_taxonomy_base( $ba_eas->author_base );
-			}
 
-			// Do we need to update the author_base
-			if ( $ba_eas->author_base != $ba_eas->original_author_base ) {
-				// Setup the new author_base
-				$ba_eas->options['author_base'] = $ba_eas->author_base;
+	// Do we need to update the author_base
+	if ( $author_base != $ba_eas->author_base ) {
+		// Setup the new author_base global
+		$ba_eas->author_base = $author_base;
 
-				// Update options with new author_base
-				update_option( 'ba_edit_author_slug', $ba_eas->options );
+		// Update options with new author_base
+		update_option( '_ba_eas_author_base', $ba_eas->author_base );
 
-				// Update the author_base in the WP_Rewrite object
-				if ( !empty( $ba_eas->author_base ) )
-					$wp_rewrite->author_base = $ba_eas->author_base;
+		// Update the author_base in the WP_Rewrite object
+		if ( !empty( $ba_eas->author_base ) )
+			$wp_rewrite->author_base = $ba_eas->author_base;
 
-				// Courtesy flush
-				flush_rewrite_rules( false );
-			}
-		}
+		// Courtesy flush
+		flush_rewrite_rules( false );
 	}
+
+	return $author_base;
 }
 
 /** Settings *****************************************************************/
@@ -300,6 +295,13 @@ function ba_eas_register_admin_settings() {
 	// Author Base setting
 	add_settings_field( '_ba_eas_author_base', __( 'Author Base', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_author_base', 'edit-author-slug', 'ba_eas_author_base' );
 	register_setting( 'edit-author-slug', '_ba_eas_author_base', 'ba_eas_sanitize_author_base' );
+
+	// Add the default user nicename section
+	add_settings_section( 'ba_eas_default_user_nicename', __( 'Author Slug Creation', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_default_user_nicename_section', 'edit-author-slug' );
+
+	// Default user nicename setting
+	add_settings_field( '_ba_eas_default_user_nicename', __( 'Author Base', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_default_user_nicename', 'edit-author-slug', 'ba_eas_default_user_nicename' );
+	register_setting( 'edit-author-slug', '_ba_eas_default_user_nicename' );
 }
 
 /**
@@ -316,17 +318,67 @@ function ba_eas_admin_setting_callback_author_base_section() {
 }
 
 /**
+ * Add default user nicename settings section.
+ *
+ * @since 0.9.0
+ */
+function ba_eas_admin_setting_callback_default_user_nicename_section() {
+?>
+
+	<p><?php _e( 'Set the default Author Slug structure for new users', 'edit-author-slug' ); ?></p>
+
+<?php
+}
+
+/**
  * Add Author Base settings field.
  *
  * @since 0.9.0
  *
- * @uses esc_attr() To sanitize the author base
+ * @uses esc_attr_e() To sanitize the author base
  */
 function ba_eas_admin_setting_callback_author_base() {
 	global $ba_eas;
 ?>
 
-	<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php esc_attr( $ba_eas->author_base ); ?>" class="regular-text code" />
+	<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php esc_attr_e( $ba_eas->author_base ); ?>" class="regular-text code" />
+
+<?php
+}
+
+/**
+ * Add default user nicename options.
+ *
+ * @since 0.9.0
+ *
+ * @uses get_option() To get the default user nicename
+ * @uses apply_filters() To call 'ba_eas_admin_setting_callback_default_user_nicename_list' hook
+ * @uses esc_attr_e() To sanitize the nicename options
+ */
+function ba_eas_admin_setting_callback_default_user_nicename() {
+	global $ba_eas;
+
+	$structure = get_option( '_ba_eas_default_user_nicename', 'username' );
+
+	$options = apply_filters( 'ba_eas_admin_setting_callback_default_user_nicename_list', array(
+		'username'  => 'Default (Username)',
+		'nickname'  => 'Nickname',
+		'firstname' => 'First Name',
+		'lastname'  => 'Last Name',
+		'firstlast' => 'First Name + Last Name',
+		'lastfirst' => 'Last Name + First Name',
+	) );
+
+	$options = (array) $options;
+	$options = array_map( 'trim', $options );
+	$options = array_unique( $options );
+?>
+
+	<select id="_ba_eas_default_user_nicename" name="_ba_eas_default_user_nicename">
+	<?php foreach ( (array) $options as $id => $item ) { ?>
+		<option id="<?php esc_attr_e( $id ); ?>" value="<?php esc_attr_e( $id ); ?>"<?php selected( $structure, $id ); ?>><?php esc_attr_e( $item ); ?></option>
+	<?php } ?>
+	</select>
 
 <?php
 }
