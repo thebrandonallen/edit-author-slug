@@ -26,18 +26,51 @@
 function ba_eas_show_user_nicename( $user ) {
 	if ( !ba_eas_can_edit_author_slug() )
 		return false;
+
+	// Setup the nicename
+	$nicename = '';
+	if ( !empty( $user->user_nicename ) )
+		$nicename = $user->user_nicename;
+
+	$options = array();
+	$options['ba_eas_username'] = sanitize_title( $user->user_login );
+	$options['ba_eas_nickname'] = sanitize_title( $user->nickname );
+
+	if ( !empty( $user->first_name ) )
+		$options['ba_eas_firstname'] = sanitize_title( $user->first_name );
+
+	if ( !empty( $user->last_name ) )
+		$options['ba_eas_lastname'] = sanitize_title( $user->last_name );
+
+	if ( !empty( $user->first_name ) && !empty( $user->last_name ) ) {
+		$options['ba_eas_firstname-lastname'] = sanitize_title( $user->first_name  . ' ' . $user->last_name );
+		$options['ba_eas_lastname-firstname'] = sanitize_title( $user->last_name . ' ' . $user->first_name );
+	}
+
+	$options['ba_eas_other'] = $nicename;
+
+	$options = (array) $options;
+	$options = array_map( 'trim', $options );
+	$options = array_unique( $options );
 	?>
 
 	<h3><?php esc_html_e( 'Edit Author Slug', 'edit-author-slug' ); ?></h3>
+	<p><?php _e( 'Use the select box to auto-populate an Author Slug, or create your own.', 'edit-author-slug' ); ?>
 	<table class="form-table">
 		<tbody><tr>
 			<th><label for="ba-edit-author-slug"><?php esc_html_e( 'Author Slug', 'edit-author-slug' ); ?></label></th>
 			<td>
-				<input type="text" name="ba-edit-author-slug" id="ba-edit-author-slug" value="<?php ( isset( $user->user_nicename ) ) ? esc_attr_e( $user->user_nicename ) : ''; ?>" class="regular-text" /><br />
+				<select id="ba_eas_author_slug_select" name="ba_eas_author_slug_select">
+				<?php foreach ( (array) $options as $id => $item ) { ?>
+					<option id="<?php esc_attr_e( $id ); ?>" value="<?php esc_attr_e( $item ); ?>"<?php selected( $nicename, $item ); ?>><?php esc_attr_e( str_replace( 'ba_eas_', '', $id ) ); ?></option>
+				<?php } ?>
+				</select>
+				<input type="text" name="ba_eas_author_slug" id="ba_eas_author_slug" value="<?php ( isset( $user->user_nicename ) ) ? esc_attr_e( $user->user_nicename ) : ''; ?>" class="regular-text" /><br />
 				<span class="description"><?php esc_html_e( "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'", 'edit-author-slug' ); ?></span>
 			</td>
 		</tr></tbody>
 	</table>
+
 	<?php
 }
 
@@ -106,7 +139,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	$user = get_userdata( $user_id );
 
 	// Setup the author slug
-	$author_slug = isset( $_POST['ba-edit-author-slug'] ) ? trim( $_POST['ba-edit-author-slug'] ) : '';
+	$author_slug = isset( $_POST['ba_eas_author_slug'] ) ? trim( $_POST['ba_eas_author_slug'] ) : '';
 
 	// Do we have an author slug?
 	if ( empty( $author_slug ) ) {
@@ -115,7 +148,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	}
 
 	// Prepare the author slug
-	$author_slug = sanitize_title( $_POST['ba-edit-author-slug'] );
+	$author_slug = sanitize_title( $author_slug );
 
 	// Maybe update the author slug?
 	if ( $user->user_nicename != $author_slug ) {
@@ -132,15 +165,42 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 			return;
 		}
 
+		// Remove the auto-update actions so we're already updating the nicename
+		remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
+		remove_action( 'user_register',  'ba_eas_auto_update_user_nicename' );
+
 		// Looks like we made it, so let's update
-		if ( !$updated_user_id = wp_update_user( array( 'ID' => $user_id, 'user_nicename' => $author_slug ) ) ){
+		if ( !$updated_user_id = wp_update_user( array( 'ID' => $user_id, 'user_nicename' => $author_slug ) ) ) {
 			$errors->add( 'ba_edit_author_slug', __( '<strong>ERROR</strong>: There was an error updating the author slug. Please try again.' ) );
+
+			// Add the auto-update actions back for other functions
+			add_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
+			add_action( 'user_register',  'ba_eas_auto_update_user_nicename' );
+
 			return;
 		}
 
 		// Clear the cache for good measure
 		wp_cache_delete( $user->user_nicename, 'userslugs' );
+
+		// Add the auto-update actions back for other functions
+		add_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
+		add_action( 'user_register',  'ba_eas_auto_update_user_nicename' );
 	}
+}
+
+/**
+ * Auto-update the user_nicename for a given user.
+ *
+ * @since 0.9.0
+ *
+ * @param int $user_id User id
+ *
+ * @uses get_option() To get the default nicename structure
+ */
+function ba_eas_auto_update_user_nicename( $user_id ) {
+	// Get the default nicename structure
+	$structure = get_option( '_ba_eas_default_user_nicename', 'username' );
 }
 
 /**
@@ -187,6 +247,27 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
 	}
 
 	return $default;
+}
+
+function ba_eas_show_user_nicename_scripts() {
+	global $pagenow;
+
+	if ( !in_array( $pagenow, array( 'user-edit.php', 'profile.php' ) ) || !ba_eas_can_edit_author_slug() )
+		return;
+?>
+
+	<!-- Edit Author Slug nicename edit -->
+	<script type="text/javascript">
+		jQuery(document).ready(function(){
+			jQuery("#ba_eas_author_slug_select").change(function(){
+				var value = jQuery(this).val();
+				jQuery("#ba_eas_author_slug").val(value);
+			});
+		});
+	</script>
+	<!-- end Edit Author Slug nicename edit -->
+
+<?php
 }
 
 /** Author Base **************************************************************/
