@@ -1,6 +1,6 @@
 === Edit Author Slug ===
 Contributors: cnorris23
-Tags: admin, author, author base, author slug, nicename, permalink, permalinks, slug, users, user
+Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user
 Requires at least: 2.8
 Tested up to: 3.3.1
 Stable tag: 0.8.1
