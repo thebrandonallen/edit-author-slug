@@ -33,23 +33,23 @@ function ba_eas_show_user_nicename( $user ) {
 		$nicename = $user->user_nicename;
 
 	$options = array();
-	$options['ba_eas_username'] = sanitize_title( $user->user_login );
-	$options['ba_eas_nickname'] = sanitize_title( $user->nickname );
+	$options['username'] = sanitize_title( $user->user_login );
+	$options['nickname'] = sanitize_title( $user->nickname );
 
 	if ( !empty( $user->first_name ) )
-		$options['ba_eas_firstname'] = sanitize_title( $user->first_name );
+		$options['firstname'] = sanitize_title( $user->first_name );
 
 	if ( !empty( $user->last_name ) )
-		$options['ba_eas_lastname'] = sanitize_title( $user->last_name );
+		$options['lastname'] = sanitize_title( $user->last_name );
 
 	if ( !empty( $user->first_name ) && !empty( $user->last_name ) ) {
-		$options['ba_eas_firstname-lastname'] = sanitize_title( $user->first_name  . ' ' . $user->last_name );
-		$options['ba_eas_lastname-firstname'] = sanitize_title( $user->last_name . ' ' . $user->first_name );
+		$options['firstname-lastname'] = sanitize_title( $user->first_name  . ' ' . $user->last_name );
+		$options['lastname-firstname'] = sanitize_title( $user->last_name . ' ' . $user->first_name );
 	}
 
-	$options['ba_eas_other'] = $nicename;
+	$options['other'] = $nicename;
 
-	$options = (array) $options;
+	$options = (array) apply_filters( 'ba_eas_show_user_nicename_options_list', $options );
 	$options = array_map( 'trim', $options );
 	$options = array_unique( $options );
 	?>
@@ -62,7 +62,7 @@ function ba_eas_show_user_nicename( $user ) {
 			<td>
 				<select id="ba_eas_author_slug_select" name="ba_eas_author_slug_select">
 				<?php foreach ( (array) $options as $id => $item ) { ?>
-					<option id="<?php esc_attr_e( $id ); ?>" value="<?php esc_attr_e( $item ); ?>"<?php selected( $nicename, $item ); ?>><?php esc_attr_e( str_replace( 'ba_eas_', '', $id ) ); ?></option>
+					<option id="<?php esc_attr_e( $id ); ?>" value="<?php esc_attr_e( $item ); ?>"<?php selected( $nicename, $item ); ?>><?php esc_attr_e( $id ); ?></option>
 				<?php } ?>
 				</select>
 				<input type="text" name="ba_eas_author_slug" id="ba_eas_author_slug" value="<?php ( isset( $user->user_nicename ) ) ? esc_attr_e( $user->user_nicename ) : ''; ?>" class="regular-text" /><br />
@@ -196,11 +196,24 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
  *
  * @param int $user_id User id
  *
+ * @uses get_userdata() To get the user object
  * @uses get_option() To get the default nicename structure
  */
 function ba_eas_auto_update_user_nicename( $user_id ) {
+	// Bail if no user_id
+	if ( empty( $user_id ) )
+		return;
+
+	// Get WP_User object
+	$user = get_userdata( $user_id );
+
+	// Double check we're still good
+	if ( !is_object( $user ) || empty( $user->id ) )
+		return;
+
 	// Get the default nicename structure
 	$structure = get_option( '_ba_eas_default_user_nicename', 'username' );
+
 }
 
 /**
@@ -441,7 +454,7 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 
 	$structure = get_option( '_ba_eas_default_user_nicename', 'username' );
 
-	$options = apply_filters( 'ba_eas_admin_setting_callback_default_user_nicename_list', array(
+	$options = apply_filters( 'ba_eas_default_user_nicename_options_list', array(
 		'username'  => 'Default (Username)',
 		'nickname'  => 'Nickname',
 		'firstname' => 'First Name',
