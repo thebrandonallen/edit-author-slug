@@ -587,7 +587,6 @@ function ba_eas_admin_setting_callback_author_base() {
  */
 function ba_eas_admin_setting_callback_do_auto_update() {
 	$do_auto_update = (int) get_option( '_ba_eas_do_auto_update', '0' );
-
 ?>
 
 	<input name="_ba_eas_do_auto_update" id="_ba_eas_do_auto_update" value="1"<?php checked( $do_auto_update, '1' ); ?>type="checkbox">
@@ -606,8 +605,6 @@ function ba_eas_admin_setting_callback_do_auto_update() {
  * @uses esc_attr_e() To sanitize the nicename options
  */
 function ba_eas_admin_setting_callback_default_user_nicename() {
-	global $ba_eas;
-
 	$structure = get_option( '_ba_eas_default_user_nicename', 'username' );
 
 	$options = apply_filters( 'ba_eas_default_user_nicename_options_list', array(
