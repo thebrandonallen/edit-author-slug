@@ -75,28 +75,6 @@ function ba_eas_show_user_nicename( $user ) {
 }
 
 /**
- * Can the current user edit the author slug?
- *
- * @since 0.8.0
- *
- * @uses is_super_admin() To check if super admin
- * @uses current_user_can() To check for 'edit_users' and 'edit_author_slug' caps
- * @uses apply_filters() To call 'ba_eas_can_edit_author_slug' hook
- *
- * @return bool True if edit privileges. Defaults to false.
- */
-function ba_eas_can_edit_author_slug() {
-
-	// Default to false
-	$retval = false;
-
-	if ( is_super_admin() || current_user_can( 'edit_users' ) || current_user_can( 'edit_author_slug' ) )
-		$retval = true;
-
-	return apply_filters( 'ba_eas_can_edit_author_slug', $retval );
-}
-
-/**
  * Update the user_nicename for a given user.
  *
  * @since 0.1.0
@@ -150,8 +128,11 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	// Prepare the author slug
 	$author_slug = sanitize_title( $author_slug );
 
+	// Don't run the auto-update when the current user can update nicenames
+	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
+
 	// Maybe update the author slug?
-	if ( $user->user_nicename != $author_slug ) {
+	if ( $author_slug != $user->user_nicename ) {
 
 		// Do we have an author slug?
 		if ( empty( $author_slug ) ) {
@@ -165,28 +146,38 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 			return;
 		}
 
-		// Remove the auto-update actions so we're already updating the nicename
-		remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
-		remove_action( 'user_register',  'ba_eas_auto_update_user_nicename' );
-
 		// Looks like we made it, so let's update
 		if ( !$updated_user_id = wp_update_user( array( 'ID' => $user_id, 'user_nicename' => $author_slug ) ) ) {
 			$errors->add( 'ba_edit_author_slug', __( '<strong>ERROR</strong>: There was an error updating the author slug. Please try again.' ) );
-
-			// Add the auto-update actions back for other functions
-			add_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
-			add_action( 'user_register',  'ba_eas_auto_update_user_nicename' );
-
 			return;
+
 		}
 
-		// Clear the cache for good measure
+		// We're still here, so clear the cache for good measure
 		wp_cache_delete( $user->user_nicename, 'userslugs' );
-
-		// Add the auto-update actions back for other functions
-		add_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
-		add_action( 'user_register',  'ba_eas_auto_update_user_nicename' );
 	}
+}
+
+/**
+ * Can the current user edit the author slug?
+ *
+ * @since 0.8.0
+ *
+ * @uses is_super_admin() To check if super admin
+ * @uses current_user_can() To check for 'edit_users' and 'edit_author_slug' caps
+ * @uses apply_filters() To call 'ba_eas_can_edit_author_slug' hook
+ *
+ * @return bool True if edit privileges. Defaults to false.
+ */
+function ba_eas_can_edit_author_slug() {
+
+	// Default to false
+	$retval = false;
+
+	if ( is_super_admin() || current_user_can( 'edit_users' ) || current_user_can( 'edit_author_slug' ) )
+		$retval = true;
+
+	return apply_filters( 'ba_eas_can_edit_author_slug', $retval );
 }
 
 /**
@@ -194,26 +185,144 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
  *
  * @since 0.9.0
  *
- * @param int $user_id User id
+ * @param mixed $user User id or WP_User object
+ * @param bool $bulk Bulk upgrade flag. Defaults to false
  *
  * @uses get_userdata() To get the user object
  * @uses get_option() To get the default nicename structure
+ * @uses get_option() To get the default nicename structure
  */
-function ba_eas_auto_update_user_nicename( $user_id ) {
-	// Bail if no user_id
-	if ( empty( $user_id ) )
+function ba_eas_auto_update_user_nicename( $user, $bulk = false ) {
+	// Bail if there's no id or object
+	if ( empty( $user ) )
 		return;
 
-	// Get WP_User object
-	$user = get_userdata( $user_id );
+	if ( false === $bulk ) {
+		// Get WP_User object
+		$user = get_userdata( $user );
+	}
 
 	// Double check we're still good
-	if ( !is_object( $user ) || empty( $user->id ) )
+	if ( !is_object( $user ) || empty( $user ) )
+		return;
+
+	// Setup the user_id
+	if ( !empty( $user->ID ) )
+		$user_id  = (int) $user->ID;
+
+	// No user_id so bail
+	else
 		return;
 
 	// Get the default nicename structure
-	$structure = get_option( '_ba_eas_default_user_nicename', 'username' );
+	$structure = apply_filters( 'ba_eas_auto_update_user_nicename_structure', get_option( '_ba_eas_default_user_nicename', 'username' ), $user_id );
 
+	// Make sure we have a structure
+	if ( empty( $structure ) )
+		$structure = 'username';
+
+	// Setup the current nicename
+	if ( empty( $user->user_nicename ) )
+		$current_nicename = $user->user_nicename;
+	else
+		$current_nicename = $user->user_login;
+
+	// Setup default nicename
+	$nicename = $current_nicename;
+
+	// Setup the new nicename
+	switch( $structure ) {
+
+		case 'username':
+
+			if ( !empty( $user->user_login ) )
+				$nicename = $user->user_login;
+
+			break;
+
+		case 'nickname':
+
+			if ( !empty( $user->nickname ) )
+				$nicename = $user->nickname;
+
+			break;
+
+		case 'firstname':
+
+			if ( !empty( $user->first_name ) )
+				$nicename = $user->first_name;
+
+			break;
+
+		case 'lastname':
+
+			if ( !empty( $user->last_name ) )
+				$nicename = $user->last_name;
+
+			break;
+
+		case 'firstlast':
+
+			if ( !empty( $user->first_name ) && !empty( $user->last_name ) )
+				$nicename = $user->first_name . '-' . $user->last_name;
+
+			break;
+
+		case 'lastfirst':
+
+			if ( !empty( $user->first_name ) && !empty( $user->last_name ) )
+				$nicename = $user->last_name . '-' . $user->first_name;
+
+			break;
+	}
+
+	// Sanitize the new nicename
+	$nicename = apply_filters( 'ba_eas_pre_auto_update_user_nicename', sanitize_title( $nicename ), $user_id, $structure );
+
+	// Bail if nothing changed
+	if ( $nicename == $current_nicename )
+		return $user_id;
+
+	// Remove the auto-update actions so we don't find ourselves in a loop
+	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
+
+	// Update if there's a change
+	$user_id = wp_update_user( array( 'ID' => $user_id, 'user_nicename' => $nicename ) );
+
+	// Clear the cache for good measure
+	wp_cache_delete( $current_nicename, 'userslugs' );
+
+	return $user_id;
+}
+
+/**
+ * Auto-update the user_nicename for a given user.
+ *
+ * Runs on profile updates and registrations
+ *
+ * @since 0.9.0
+ *
+ * @param int $user_id User id
+ *
+ * @uses ba_eas_auto_update_user_nicename() To get the user object
+ */
+function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
+	ba_eas_auto_update_user_nicename( $user_id );
+}
+
+/**
+ * Auto-update the user_nicename for a given user.
+ *
+ * Runs during the bulk upgrade process in the Dashboard
+ *
+ * @since 0.9.0
+ *
+ * @param int $user_id User id
+ *
+ * @uses ba_eas_auto_update_user_nicename() To get the user object
+ */
+function ba_eas_auto_update_user_nicename_bulk( $user = false ) {
+	ba_eas_auto_update_user_nicename( $user, true );
 }
 
 /**
