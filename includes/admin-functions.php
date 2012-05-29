@@ -181,6 +181,27 @@ function ba_eas_can_edit_author_slug() {
 }
 
 /**
+ * Can the current user edit the author slug?
+ *
+ * @since 0.8.0
+ *
+ * @uses is_super_admin() To check if super admin
+ * @uses current_user_can() To check for 'edit_users' and 'edit_author_slug' caps
+ * @uses apply_filters() To call 'ba_eas_can_edit_author_slug' hook
+ *
+ * @return bool True if edit privileges. Defaults to false.
+ */
+function ba_eas_do_auto_update() {
+
+	// Default to false
+	$retval = false;
+
+	$retval = (bool) get_option( '_ba_eas_do_auto_update', '0' );
+
+	return apply_filters( 'ba_eas_do_auto_update', $retval );
+}
+
+/**
  * Auto-update the user_nicename for a given user.
  *
  * @since 0.9.0
@@ -198,6 +219,10 @@ function ba_eas_auto_update_user_nicename( $user, $bulk = false ) {
 		return;
 
 	if ( false === $bulk ) {
+		// Should we auto-update
+		if ( !ba_eas_do_auto_update() )
+			return;
+
 		// Get WP_User object
 		$user = get_userdata( $user );
 	}
@@ -500,10 +525,14 @@ function ba_eas_register_admin_settings() {
 	register_setting( 'edit-author-slug', '_ba_eas_author_base', 'ba_eas_sanitize_author_base' );
 
 	// Add the default user nicename section
-	add_settings_section( 'ba_eas_default_user_nicename', __( 'Author Slug Creation', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_default_user_nicename_section', 'edit-author-slug' );
+	add_settings_section( 'ba_eas_auto_update', __( 'Automatic Author Slug Creation', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_auto_update_section', 'edit-author-slug' );
+
+	// Auto-update on/off
+	add_settings_field( '_ba_eas_do_auto_update', __( 'Automatically Update', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_do_auto_update', 'edit-author-slug', 'ba_eas_auto_update' );
+	register_setting( 'edit-author-slug', '_ba_eas_do_auto_update' );
 
 	// Default user nicename setting
-	add_settings_field( '_ba_eas_default_user_nicename', __( 'Author Base', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_default_user_nicename', 'edit-author-slug', 'ba_eas_default_user_nicename' );
+	add_settings_field( '_ba_eas_default_user_nicename', __( 'Author Base', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_default_user_nicename', 'edit-author-slug', 'ba_eas_auto_update' );
 	register_setting( 'edit-author-slug', '_ba_eas_default_user_nicename' );
 }
 
@@ -525,10 +554,10 @@ function ba_eas_admin_setting_callback_author_base_section() {
  *
  * @since 0.9.0
  */
-function ba_eas_admin_setting_callback_default_user_nicename_section() {
+function ba_eas_admin_setting_callback_auto_update_section() {
 ?>
 
-	<p><?php _e( 'Set the default Author Slug structure for new users', 'edit-author-slug' ); ?></p>
+	<p><?php _e( "Allow Author Slugs to be automatically update, and set the default Author Slug structure for users. Automatic updating will only occur when a user can't edit Author Slugs own their own.<br />**WARNING** This could have SEO repercussions if users update their profiles frequently, and it will override any manual editing of the Author Slug you may have previously done.", 'edit-author-slug' ); ?></p>
 
 <?php
 }
@@ -550,12 +579,30 @@ function ba_eas_admin_setting_callback_author_base() {
 }
 
 /**
+ * Add auto-update checkbox.
+ *
+ * @since 0.9.0
+ *
+ * @uses get_option() To get the auto-update option
+ */
+function ba_eas_admin_setting_callback_do_auto_update() {
+	$do_auto_update = (int) get_option( '_ba_eas_do_auto_update', '0' );
+
+?>
+
+	<input name="_ba_eas_do_auto_update" id="_ba_eas_do_auto_update" value="1"<?php checked( $do_auto_update, '1' ); ?>type="checkbox">
+	<label for="_ba_eas_do_auto_update">Automatically update Author Slug when a user updates their profile</label>
+
+<?php
+}
+
+/**
  * Add default user nicename options.
  *
  * @since 0.9.0
  *
  * @uses get_option() To get the default user nicename
- * @uses apply_filters() To call 'ba_eas_admin_setting_callback_default_user_nicename_list' hook
+ * @uses apply_filters() To call 'ba_eas_default_user_nicename_options_list' hook
  * @uses esc_attr_e() To sanitize the nicename options
  */
 function ba_eas_admin_setting_callback_default_user_nicename() {
