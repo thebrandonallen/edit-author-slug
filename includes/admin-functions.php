@@ -43,30 +43,35 @@ function ba_eas_show_user_nicename( $user ) {
 		$options['lastname'] = sanitize_title( $user->last_name );
 
 	if ( !empty( $user->first_name ) && !empty( $user->last_name ) ) {
-		$options['firstname-lastname'] = sanitize_title( $user->first_name  . ' ' . $user->last_name );
-		$options['lastname-firstname'] = sanitize_title( $user->last_name . ' ' . $user->first_name );
+		$options['firslast'] = sanitize_title( $user->first_name  . ' ' . $user->last_name );
+		$options['lastfirst'] = sanitize_title( $user->last_name . ' ' . $user->first_name );
 	}
-
-	$options['other'] = $nicename;
 
 	$options = (array) apply_filters( 'ba_eas_show_user_nicename_options_list', $options );
 	$options = array_map( 'trim', $options );
 	$options = array_unique( $options );
+
+	$checked = true;
 	?>
 
 	<h3><?php esc_html_e( 'Edit Author Slug', 'edit-author-slug' ); ?></h3>
-	<p><?php _e( 'Use the select box to auto-populate an Author Slug, or create your own.', 'edit-author-slug' ); ?>
+	<p><?php _e( 'Choose an Author Slug based on the above profile information, or create your own.', 'edit-author-slug' ); ?> <br /><span class="description"><?php esc_html_e( "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'", 'edit-author-slug' ); ?></span></p>
 	<table class="form-table">
 		<tbody><tr>
-			<th><label for="ba-edit-author-slug"><?php esc_html_e( 'Author Slug', 'edit-author-slug' ); ?></label></th>
+			<th scope="row"><?php esc_html_e( 'Author Slug', 'edit-author-slug' ); ?></th>
 			<td>
-				<select id="ba_eas_author_slug_select" name="ba_eas_author_slug_select">
-				<?php foreach ( (array) $options as $id => $item ) { ?>
-					<option id="<?php esc_attr_e( $id ); ?>" value="<?php esc_attr_e( $item ); ?>"<?php selected( $nicename, $item ); ?>><?php esc_attr_e( $id ); ?></option>
+				<fieldset><legend class="screen-reader-text"><span><?php esc_html_e( 'Author Slug', 'edit-author-slug' ); ?></span></legend>
+				<?php foreach ( (array) $options as $id => $item ) {
+					$checked_text = '';
+					if ( $item === $nicename ) {
+						$checked_text = ' checked="checked"';
+						$checked = false;
+					}
+				?>
+				<label title="<?php esc_attr_e( $item ); ?>"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="<?php esc_attr_e( $item ); ?>"<?php echo $checked_text; ?>> <span><?php esc_attr_e( $item ); ?></span></label><br>
 				<?php } ?>
-				</select>
-				<input type="text" name="ba_eas_author_slug" id="ba_eas_author_slug" value="<?php ( isset( $user->user_nicename ) ) ? esc_attr_e( $user->user_nicename ) : ''; ?>" class="regular-text" /><br />
-				<span class="description"><?php esc_html_e( "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'", 'edit-author-slug' ); ?></span>
+				<label title="<?php esc_attr_e( $nicename ); ?>"><input type="radio" id="ba_eas_author_slug_custom_radio" name="ba_eas_author_slug" value="\c\u\s\t\o\m"<?php checked( $checked ); ?>> <span><?php esc_html_e( 'Custom:', 'edit-author-slug' ); ?> </span></label> <input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="<?php ( isset( $user->user_nicename ) ) ? esc_attr_e( $user->user_nicename ) : ''; ?>" class="regular-text" />
+				</fieldset>
 			</td>
 		</tr></tbody>
 	</table>
@@ -116,8 +121,14 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	// Validate the user object
 	$user = get_userdata( $user_id );
 
+	// Check for a custom author slug
+	if ( !empty( $_POST['ba_eas_author_slug'] ) && isset( $_POST['ba_eas_author_slug_custom'] ) && '\c\u\s\t\o\m' == stripslashes( $_POST['ba_eas_author_slug'] ) )
+			$_POST['ba_eas_author_slug'] = $_POST['ba_eas_author_slug_custom'];
+
 	// Setup the author slug
-	$author_slug = isset( $_POST['ba_eas_author_slug'] ) ? trim( $_POST['ba_eas_author_slug'] ) : '';
+	$author_slug = '';
+	if ( isset( $_POST['ba_eas_author_slug'] ) )
+		$author_slug = trim( stripslashes( $_POST['ba_eas_author_slug'] ) );
 
 	// Do we have an author slug?
 	if ( empty( $author_slug ) ) {
@@ -405,12 +416,18 @@ function ba_eas_show_user_nicename_scripts() {
 
 	<!-- Edit Author Slug nicename edit -->
 	<script type="text/javascript">
-		jQuery(document).ready(function(){
-			jQuery("#ba_eas_author_slug_select").change(function(){
-				var value = jQuery(this).val();
-				jQuery("#ba_eas_author_slug").val(value);
+	//<![CDATA[
+		jQuery(document).ready(function($){
+			$("input[name='ba_eas_author_slug']").click(function(){
+				if ( "ba_eas_author_slug_custom_radio" != $(this).attr("id") )
+					$("input[name='ba_eas_author_slug_custom']").val( $(this).val() ).siblings('.example').text( $(this).siblings('span').text() );
 			});
+			$("input[name='ba_eas_author_slug_custom']").focus(function(){
+				$("#ba_eas_author_slug_custom_radio").attr("checked", "checked");
+			});
+
 		});
+	//]]>
 	</script>
 	<!-- end Edit Author Slug nicename edit -->
 
@@ -497,9 +514,7 @@ function ba_eas_settings_page_html() {
 
 			<?php do_settings_sections( 'edit-author-slug' ); ?>
 
-			<p class="submit">
-				<input type="submit" name="submit" class="button-primary" value="<?php _e( 'Save Changes', 'edit-author-slug' ); ?>" />
-			</p>
+			<?php submit_button(); ?>
 		</form>
 	</div>
 
@@ -607,16 +622,19 @@ function ba_eas_admin_setting_callback_do_auto_update() {
 function ba_eas_admin_setting_callback_default_user_nicename() {
 	$structure = get_option( '_ba_eas_default_user_nicename', 'username' );
 
+	if ( empty( $structure ) )
+		$structure = 'username';
+
 	$options = apply_filters( 'ba_eas_default_user_nicename_options_list', array(
-		'username'  => 'Default (Username)',
-		'nickname'  => 'Nickname',
-		'firstname' => 'First Name',
-		'lastname'  => 'Last Name',
-		'firstlast' => 'First Name + Last Name',
-		'lastfirst' => 'Last Name + First Name',
+		'username'  => __( 'username (Default)', 'edit-author-slug' ),
+		'nickname'  => __( 'nickname', 'edit-author-slug' ),
+		'firstname' => __( 'firstname', 'edit-author-slug' ),
+		'lastname'  => __( 'lastname', 'edit-author-slug' ),
+		'firstlast' => __( 'firstname-lastname', 'edit-author-slug' ),
+		'lastfirst' => __( 'lastname-firstname', 'edit-author-slug' ),
 	) );
 
-	$options = (array) $options;
+	$options = (array) apply_filters( 'ba_eas_default_user_nicename_options_list', $options );
 	$options = array_map( 'trim', $options );
 	$options = array_unique( $options );
 ?>
