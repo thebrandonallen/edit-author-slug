@@ -20,8 +20,12 @@
  * @since 0.1.0
  *
  * @param object $user User data object
- * @uses current_user_can() To hide from unauthorized users.
+ * @uses ba_eas_can_edit_author_slug() To verify current user can edit the author slug
+ * @uses sanitize_title() To sanitize userdata into a new nicename
+ * @uses apply_filters() To call the 'ba_eas_show_user_nicename_options_list' hook
  * @uses esc_html_e() To make sure we're safe to display
+ * @uses esc_attr_e() To make sure we're safe to display
+ * @uses checked() To check that box
  */
 function ba_eas_show_user_nicename( $user ) {
 	if ( !ba_eas_can_edit_author_slug() )
@@ -32,6 +36,7 @@ function ba_eas_show_user_nicename( $user ) {
 	if ( !empty( $user->user_nicename ) )
 		$nicename = $user->user_nicename;
 
+	// Setup options array
 	$options = array();
 	$options['username'] = sanitize_title( $user->user_login );
 	$options['nickname'] = sanitize_title( $user->nickname );
@@ -47,10 +52,12 @@ function ba_eas_show_user_nicename( $user ) {
 		$options['lastfirst'] = sanitize_title( $user->last_name . ' ' . $user->first_name );
 	}
 
+	// Allow custom options to be added, and prep for display
 	$options = (array) apply_filters( 'ba_eas_show_user_nicename_options_list', $options );
 	$options = array_map( 'trim', $options );
 	$options = array_unique( $options );
 
+	// Set default for checked status
 	$checked = true;
 	?>
 
@@ -70,7 +77,7 @@ function ba_eas_show_user_nicename( $user ) {
 				?>
 				<label title="<?php esc_attr_e( $item ); ?>"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="<?php esc_attr_e( $item ); ?>"<?php echo $checked_text; ?>> <span><?php esc_attr_e( $item ); ?></span></label><br>
 				<?php } ?>
-				<label title="<?php esc_attr_e( $nicename ); ?>"><input type="radio" id="ba_eas_author_slug_custom_radio" name="ba_eas_author_slug" value="\c\u\s\t\o\m"<?php checked( $checked ); ?>> <span><?php esc_html_e( 'Custom:', 'edit-author-slug' ); ?> </span></label> <input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="<?php ( isset( $user->user_nicename ) ) ? esc_attr_e( $user->user_nicename ) : ''; ?>" class="regular-text" />
+				<label title="<?php esc_attr_e( $nicename ); ?>"><input type="radio" id="ba_eas_author_slug_custom_radio" name="ba_eas_author_slug" value="\c\u\s\t\o\m"<?php checked( $checked ); ?>> <span><?php esc_html_e( 'Custom:', 'edit-author-slug' ); ?> </span></label> <input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="<?php esc_attr_e( $nicename ); ?>" class="regular-text" />
 				</fieldset>
 			</td>
 		</tr></tbody>
@@ -89,10 +96,11 @@ function ba_eas_show_user_nicename( $user ) {
  * @param obj WP_User object
  *
  * @global obj $wpdb
+ * @uses ba_eas_can_edit_author_slug() To verify current user can edit the author slug
  * @uses check_admin_referer() To verify the nonce and check referer
- * @uses current_user_can() To prevent unauthorized users from saving.
  * @uses get_userdata() To get the user data
  * @uses sanitize_title() Used to sanitize user_nicename
+ * @uses remove_action() To remove the 'ba_eas_auto_update_user_nicename_single' and prevent looping
  * @uses wp_update_user() Update to new user_nicename
  * @uses wp_cache_delete() To delete the 'userslugs' cache for old nicename
  */
@@ -101,8 +109,6 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	// Bail early if user can't edit the slug
 	if ( !ba_eas_can_edit_author_slug() )
 		return false;
-
-	global $wpdb;
 
 	// We shouldn't be here if we're not updating
 	if ( !$update )
@@ -144,6 +150,9 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
 	// Maybe update the author slug?
 	if ( $author_slug != $user->user_nicename ) {
+	
+		// Add the wpdb global only when necessary
+		global $wpdb;
 
 		// Do we have an author slug?
 		if ( empty( $author_slug ) ) {
@@ -192,24 +201,23 @@ function ba_eas_can_edit_author_slug() {
 }
 
 /**
- * Can the current user edit the author slug?
+ * Determines if an auto-update should occur
  *
- * @since 0.8.0
+ * @since 0.9.0
  *
- * @uses is_super_admin() To check if super admin
- * @uses current_user_can() To check for 'edit_users' and 'edit_author_slug' caps
- * @uses apply_filters() To call 'ba_eas_can_edit_author_slug' hook
+ * @uses get_option() To get the auto-update option
+ * @uses apply_filters() To call 'ba_eas_do_auto_update' hook
  *
- * @return bool True if edit privileges. Defaults to false.
+ * @return bool True if auto-update enabled
  */
 function ba_eas_do_auto_update() {
 
-	// Default to false
-	$retval = false;
+	$retval = get_option( '_ba_eas_do_auto_update', '0' );
+	
+	if ( !is_numeric( $retval ) || 1 !== (int) $retval )
+		$retval = false;
 
-	$retval = (bool) get_option( '_ba_eas_do_auto_update', '0' );
-
-	return apply_filters( 'ba_eas_do_auto_update', $retval );
+	return apply_filters( 'ba_eas_do_auto_update', (bool) $retval );
 }
 
 /**
@@ -220,27 +228,34 @@ function ba_eas_do_auto_update() {
  * @param mixed $user User id or WP_User object
  * @param bool $bulk Bulk upgrade flag. Defaults to false
  *
+ * @uses ba_eas_do_auto_update() Do we auto-update?
  * @uses get_userdata() To get the user object
+ * @uses apply_filters() To call the 'ba_eas_auto_update_user_nicename_structure' hook
  * @uses get_option() To get the default nicename structure
- * @uses get_option() To get the default nicename structure
+ * @uses apply_filters() To call the 'ba_eas_pre_auto_update_user_nicename' hook
+ * @uses remove_action() To remove the 'ba_eas_auto_update_user_nicename_single' and prevent looping
+ * @uses wp_update_user() Update to new user_nicename
+ * @uses wp_cache_delete() To delete the 'userslugs' cache for old nicename
+ *
+ * @return int $user_id. False on failure
  */
-function ba_eas_auto_update_user_nicename( $user, $bulk = false ) {
+function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	// Bail if there's no id or object
-	if ( empty( $user ) )
-		return;
+	if ( empty( $user_id ) )
+		return false;
 
 	if ( false === $bulk ) {
 		// Should we auto-update
 		if ( !ba_eas_do_auto_update() )
-			return;
-
-		// Get WP_User object
-		$user = get_userdata( $user );
+			return false;
 	}
+
+	// Get WP_User object
+	$user = get_userdata( $user_id );
 
 	// Double check we're still good
 	if ( !is_object( $user ) || empty( $user ) )
-		return;
+		return false;
 
 	// Setup the user_id
 	if ( !empty( $user->ID ) )
@@ -248,7 +263,7 @@ function ba_eas_auto_update_user_nicename( $user, $bulk = false ) {
 
 	// No user_id so bail
 	else
-		return;
+		return false;
 
 	// Get the default nicename structure
 	$structure = apply_filters( 'ba_eas_auto_update_user_nicename_structure', get_option( '_ba_eas_default_user_nicename', 'username' ), $user_id );
@@ -340,7 +355,7 @@ function ba_eas_auto_update_user_nicename( $user, $bulk = false ) {
  *
  * @param int $user_id User id
  *
- * @uses ba_eas_auto_update_user_nicename() To get the user object
+ * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename
  */
 function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
 	ba_eas_auto_update_user_nicename( $user_id );
@@ -355,10 +370,10 @@ function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
  *
  * @param int $user_id User id
  *
- * @uses ba_eas_auto_update_user_nicename() To get the user object
+ * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename
  */
-function ba_eas_auto_update_user_nicename_bulk( $user = false ) {
-	ba_eas_auto_update_user_nicename( $user, true );
+function ba_eas_auto_update_user_nicename_bulk( $user_id = 0 ) {
+	ba_eas_auto_update_user_nicename( $user_id, true );
 }
 
 /**
@@ -370,7 +385,9 @@ function ba_eas_auto_update_user_nicename_bulk( $user = false ) {
  * @since 0.5.0
  *
  * @param array $defaults Array of current columns/column headings
+ *
  * @uses esc_html__() To sanitize the author slug column title
+ *
  * @return array $defaults Array of current columns/column headings
  */
 function ba_eas_author_slug_column( $defaults ) {
@@ -390,8 +407,10 @@ function ba_eas_author_slug_column( $defaults ) {
  * @param string $default Value for column data. Defaults to ''.
  * @param string $column_name Column name currently being filtered
  * @param int $user_id User ID
+ *
  * @uses get_userdata() To get the user data
  * @uses esc_attr() To sanitize the user_nicename
+ *
  * @return string $default Value for column data. Defaults to ''.
  */
 function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
@@ -604,7 +623,7 @@ function ba_eas_admin_setting_callback_do_auto_update() {
 	$do_auto_update = (int) get_option( '_ba_eas_do_auto_update', '0' );
 ?>
 
-	<input name="_ba_eas_do_auto_update" id="_ba_eas_do_auto_update" value="1"<?php checked( $do_auto_update, '1' ); ?>type="checkbox">
+	<input name="_ba_eas_do_auto_update" id="_ba_eas_do_auto_update" value="1"<?php checked( $do_auto_update, '1' ); ?> type="checkbox">
 	<label for="_ba_eas_do_auto_update">Automatically update Author Slug when a user updates their profile</label>
 
 <?php
@@ -646,55 +665,6 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 	</select>
 
 <?php
-}
-
-/**
- * Output settings API option
- *
- * @since 0.9.0
- *
- * @uses ba_eas_get_form_option()
- *
- * @param string $option
- * @param string $default
- * @param bool $slug
- */
-function ba_eas_form_option( $option, $default = '' , $slug = false ) {
-	echo ba_eas_get_form_option( $option, $default, $slug );
-}
-
-/**
- * Return settings API option
- *
- * @since 0.9.0
- *
- * @uses get_option()
- * @uses esc_attr()
- * @uses apply_filters()
- *
- * @param string $option
- * @param string $default
- * @param bool $slug
- */
-function ba_eas_get_form_option( $option, $default = '', $slug = false ) {
-
-	// Get the option and sanitize it
-	$value = get_option( $option, $default );
-
-	// Slug?
-	if ( true === $slug )
-		$value = esc_attr( apply_filters( 'editable_slug', $value ) );
-
-	// Not a slug
-	else
-		$value = esc_attr( $value );
-
-	// Fallback to default
-	if ( empty( $value ) )
-		$value = $default;
-
-	// Allow plugins to further filter the output
-	return apply_filters( 'ba_eas_get_form_option', $value, $option );
 }
 
 /** Upgrade *******************************************************************/
