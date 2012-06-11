@@ -17,8 +17,6 @@ http://example.com/author/username/
 Edit Author Slug allows for
 http://example.com/ninja/master-ninja/
 
-**Version 0.8 will be the last release to officially support WordPress 3.1.4 or less. [Read more about this](http://brandonallen.org/2011/12/15/edit-author-slug-0-8-and-beyond/ "Edit Author Slug 0.8 and Beyond").**
-
 #### Translations Available
 * Hebrew (he_IL)      - Yonat Sharon
 * Belorussian (be_BY) - Marcis G.
@@ -31,9 +29,9 @@ You can also visit the plugin's homepage at http://brandonallen.org/wordpress/pl
 
 1. Upload `edit-author-slug` folder to your WordPress plugins directory (typically 'wp-content/plugins')
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Go to Users > Your Profile, or Users > Authors & Users ("All Users" in 3.2+) > (username), and edit the author slug.
+1. Go to Users > Your Profile, or Users > All Users > (username), and edit the author slug.
 1. Click "Update Profile" or "Update User"
-1. Go to Settings > Permalinks, and edit the Author Base
+1. Go to Settings > Edit Author Slug to edit settings
 1. Click "Save Changes"
 
 == Screenshots ==
@@ -48,6 +46,10 @@ You can also visit the plugin's homepage at http://brandonallen.org/wordpress/pl
 Make sure you are an admin, or have been assigned the `edit_users` or `edit_author_slug` capability.
 
 == Changelog ==
+
+= 0.9 =
+* Allow Author Slug to be automatically created/updated based on a defined structure
+* Switched to using the Settings API, which also means that all options moved to the Settings > Edit Author Slug page
 
 = 0.8.1 =
 * Fix a bug that prevented non-admin users from updating their profile

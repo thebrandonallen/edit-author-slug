@@ -150,7 +150,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
 	// Maybe update the author slug?
 	if ( $author_slug != $user->user_nicename ) {
-	
+
 		// Add the wpdb global only when necessary
 		global $wpdb;
 
@@ -198,182 +198,6 @@ function ba_eas_can_edit_author_slug() {
 		$retval = true;
 
 	return apply_filters( 'ba_eas_can_edit_author_slug', $retval );
-}
-
-/**
- * Determines if an auto-update should occur
- *
- * @since 0.9.0
- *
- * @uses get_option() To get the auto-update option
- * @uses apply_filters() To call 'ba_eas_do_auto_update' hook
- *
- * @return bool True if auto-update enabled
- */
-function ba_eas_do_auto_update() {
-
-	$retval = get_option( '_ba_eas_do_auto_update', '0' );
-	
-	if ( !is_numeric( $retval ) || 1 !== (int) $retval )
-		$retval = false;
-
-	return apply_filters( 'ba_eas_do_auto_update', (bool) $retval );
-}
-
-/**
- * Auto-update the user_nicename for a given user.
- *
- * @since 0.9.0
- *
- * @param mixed $user User id or WP_User object
- * @param bool $bulk Bulk upgrade flag. Defaults to false
- *
- * @uses ba_eas_do_auto_update() Do we auto-update?
- * @uses get_userdata() To get the user object
- * @uses apply_filters() To call the 'ba_eas_auto_update_user_nicename_structure' hook
- * @uses get_option() To get the default nicename structure
- * @uses apply_filters() To call the 'ba_eas_pre_auto_update_user_nicename' hook
- * @uses remove_action() To remove the 'ba_eas_auto_update_user_nicename_single' and prevent looping
- * @uses wp_update_user() Update to new user_nicename
- * @uses wp_cache_delete() To delete the 'userslugs' cache for old nicename
- *
- * @return int $user_id. False on failure
- */
-function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
-	// Bail if there's no id or object
-	if ( empty( $user_id ) )
-		return false;
-
-	if ( false === $bulk ) {
-		// Should we auto-update
-		if ( !ba_eas_do_auto_update() )
-			return false;
-	}
-
-	// Get WP_User object
-	$user = get_userdata( $user_id );
-
-	// Double check we're still good
-	if ( !is_object( $user ) || empty( $user ) )
-		return false;
-
-	// Setup the user_id
-	if ( !empty( $user->ID ) )
-		$user_id  = (int) $user->ID;
-
-	// No user_id so bail
-	else
-		return false;
-
-	// Get the default nicename structure
-	$structure = apply_filters( 'ba_eas_auto_update_user_nicename_structure', get_option( '_ba_eas_default_user_nicename', 'username' ), $user_id );
-
-	// Make sure we have a structure
-	if ( empty( $structure ) )
-		$structure = 'username';
-
-	// Setup the current nicename
-	if ( empty( $user->user_nicename ) )
-		$current_nicename = $user->user_nicename;
-	else
-		$current_nicename = $user->user_login;
-
-	// Setup default nicename
-	$nicename = $current_nicename;
-
-	// Setup the new nicename
-	switch( $structure ) {
-
-		case 'username':
-
-			if ( !empty( $user->user_login ) )
-				$nicename = $user->user_login;
-
-			break;
-
-		case 'nickname':
-
-			if ( !empty( $user->nickname ) )
-				$nicename = $user->nickname;
-
-			break;
-
-		case 'firstname':
-
-			if ( !empty( $user->first_name ) )
-				$nicename = $user->first_name;
-
-			break;
-
-		case 'lastname':
-
-			if ( !empty( $user->last_name ) )
-				$nicename = $user->last_name;
-
-			break;
-
-		case 'firstlast':
-
-			if ( !empty( $user->first_name ) && !empty( $user->last_name ) )
-				$nicename = $user->first_name . '-' . $user->last_name;
-
-			break;
-
-		case 'lastfirst':
-
-			if ( !empty( $user->first_name ) && !empty( $user->last_name ) )
-				$nicename = $user->last_name . '-' . $user->first_name;
-
-			break;
-	}
-
-	// Sanitize the new nicename
-	$nicename = apply_filters( 'ba_eas_pre_auto_update_user_nicename', sanitize_title( $nicename ), $user_id, $structure );
-
-	// Bail if nothing changed
-	if ( $nicename == $current_nicename )
-		return $user_id;
-
-	// Remove the auto-update actions so we don't find ourselves in a loop
-	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
-
-	// Update if there's a change
-	$user_id = wp_update_user( array( 'ID' => $user_id, 'user_nicename' => $nicename ) );
-
-	// Clear the cache for good measure
-	wp_cache_delete( $current_nicename, 'userslugs' );
-
-	return $user_id;
-}
-
-/**
- * Auto-update the user_nicename for a given user.
- *
- * Runs on profile updates and registrations
- *
- * @since 0.9.0
- *
- * @param int $user_id User id
- *
- * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename
- */
-function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
-	ba_eas_auto_update_user_nicename( $user_id );
-}
-
-/**
- * Auto-update the user_nicename for a given user.
- *
- * Runs during the bulk upgrade process in the Dashboard
- *
- * @since 0.9.0
- *
- * @param int $user_id User id
- *
- * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename
- */
-function ba_eas_auto_update_user_nicename_bulk( $user_id = 0 ) {
-	ba_eas_auto_update_user_nicename( $user_id, true );
 }
 
 /**
@@ -463,6 +287,10 @@ function ba_eas_show_user_nicename_scripts() {
  *
  * @since 0.8.0
  *
+ * @param str $author_base Author base to be sanitized
+ *
+ * @global obj $ba_eas Edit Author Slug object
+ * @global obj $wp_rewrite WP_Rewrite object
  * @uses check_admin_referer() To verify the nonce and check referer
  * @uses _wp_filter_taxonomy_base() To remove any manually prepended /index.php/.
  * @uses update_option() To update Edit Author Slug options
@@ -601,13 +429,17 @@ function ba_eas_admin_setting_callback_auto_update_section() {
  *
  * @since 0.9.0
  *
+ * @global obj $ba_eas Edit Author Slug object
+ * @uses apply_filters() To call 'editable_slug' hook
  * @uses esc_attr_e() To sanitize the author base
  */
 function ba_eas_admin_setting_callback_author_base() {
 	global $ba_eas;
+
+	$author_base = apply_filters( 'editable_slug', $ba_eas->author_base );
 ?>
 
-	<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php esc_attr_e( $ba_eas->author_base ); ?>" class="regular-text code" />
+	<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php esc_attr_e( $author_base ); ?>" class="regular-text code" />
 
 <?php
 }
@@ -676,26 +508,25 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
  *
  * @since 0.8.0
  *
- * @global $ba_eas Edit Author Slug object
+ * @global obj $ba_eas Edit Author Slug object
+ *
  * @uses update_option() To update Edit Author Slug options
  */
 function ba_eas_upgrade() {
-	global $ba_eas;
+	global $ba_eas, $wpdb;
 
 	// We're up-to-date, so let's move on
 	if ( $ba_eas->current_db_version === $ba_eas->db_version )
 		return;
 
-	if ( $ba_eas->current_db_version < 100 ) {
-		$ba_eas->options['author_base'] = empty( $ba_eas->author_base ) ? '' : $ba_eas->author_base;
-		$ba_eas->options['db_version']  = $ba_eas->db_version;
+	if ( $ba_eas->current_db_version < 130 ) {
+		// Add new options
+		update_option( '_ba_eas_author_base', $ba_eas->author_base );
+		update_option( '_ba_eas_db_version',  $ba_eas->db_version  );
 
-		if ( array_key_exists( 'dont_forget_to_flush', $ba_eas->options ) )
-			unset( $ba_eas->options['dont_forget_to_flush'] );
+		// Rename the old option for safe keeping
+		$wpdb->update( $wpdb->options, array( 'option_name' => '_ba_eas_old_options' ), array( 'option_name' => 'ba_edit_author_slug' ) );
 	}
-
-	// Update the option
-	update_option( 'ba_edit_author_slug', $ba_eas->options );
 }
 
 ?>

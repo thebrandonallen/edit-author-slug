@@ -64,7 +64,7 @@ class BA_Edit_Author_Slug {
 	 * @access public
 	 * @var int Edit Author Slug DB Version
 	 */
-	public $db_version = 100;
+	public $db_version = 130;
 
 	/**
 	 * Edit Author Slug Version
@@ -174,6 +174,7 @@ class BA_Edit_Author_Slug {
 		if ( is_admin() )
 			require_once( $this->plugin_dir . 'includes/admin-functions.php' );
 
+		require_once( $this->plugin_dir . 'includes/general-functions.php' );
 		require_once( $this->plugin_dir . 'includes/hooks.php' );
 	}
 
