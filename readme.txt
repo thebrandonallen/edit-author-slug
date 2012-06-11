@@ -47,7 +47,7 @@ Make sure you are an admin, or have been assigned the `edit_users` or `edit_auth
 
 == Changelog ==
 
-= 0.9 =
+= 0.9.0 =
 * Allow Author Slug to be automatically created/updated based on a defined structure
 * Switched to using the Settings API, which also means that all options moved to the Settings > Edit Author Slug page
 

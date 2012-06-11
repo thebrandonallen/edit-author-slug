@@ -519,7 +519,7 @@ function ba_eas_upgrade() {
 	if ( $ba_eas->current_db_version === $ba_eas->db_version )
 		return;
 
-	if ( $ba_eas->current_db_version < 130 ) {
+	if ( $ba_eas->current_db_version < 132 ) {
 		// Add new options
 		update_option( '_ba_eas_author_base', $ba_eas->author_base );
 		update_option( '_ba_eas_db_version',  $ba_eas->db_version  );
