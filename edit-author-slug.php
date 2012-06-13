@@ -42,6 +42,9 @@
 			http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 */
 
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
 /**
  * Main Edit Author Slug class
  */
