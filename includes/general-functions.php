@@ -9,6 +9,9 @@
  * @author Brandon Allen
  */
 
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
 /** Nicename ******************************************************************/
 
 /**
@@ -153,6 +156,9 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 
 	// Clear the cache for good measure
 	wp_cache_delete( $current_nicename, 'userslugs' );
+
+	// Add it back in case other plugins do some updating
+	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
 
 	return $user_id;
 }

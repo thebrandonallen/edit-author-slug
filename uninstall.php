@@ -9,9 +9,14 @@
  * @author Brandon Allen
  */
 
-if ( ! defined( 'WP_UNINSTALL_PLUGIN') )
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
+// Make sure we're uninstalling
+if ( !defined( 'WP_UNINSTALL_PLUGIN') )
 	return false;
 
+// Delete all the options
 delete_option( '_ba_eas_author_base'           );
 delete_option( '_ba_eas_db_version'            );
 delete_option( '_ba_eas_old_options'           );
