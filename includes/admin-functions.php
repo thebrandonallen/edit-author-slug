@@ -9,6 +9,9 @@
  * @author Brandon Allen
  */
 
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
 /** Nicename ******************************************************************/
 
 /**
@@ -419,7 +422,7 @@ function ba_eas_admin_setting_callback_author_base_section() {
 function ba_eas_admin_setting_callback_auto_update_section() {
 ?>
 
-	<p><?php _e( "Allow Author Slugs to be automatically update, and set the default Author Slug structure for users. Automatic updating will only occur when a user can't edit Author Slugs own their own.<br />**WARNING** This could have SEO repercussions if users update their profiles frequently, and it will override any manual editing of the Author Slug you may have previously done.", 'edit-author-slug' ); ?></p>
+	<p><?php _e( "Allow Author Slugs to be automatically update, and set the default Author Slug structure for users. Automatic updating will only occur when a user can't edit Author Slugs on their own.", 'edit-author-slug' ); ?> <br /><strong><em><?php _e( 'This could have SEO repercussions if users update their profiles frequently, and it will override any manual editing of the Author Slug you may have previously completed.', 'edit-author-slug' ); ?></em></strong></p>
 
 <?php
 }
