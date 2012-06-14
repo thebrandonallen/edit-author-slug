@@ -31,7 +31,6 @@ if ( is_admin() ) {
 	// Settings
 	add_action( 'admin_menu', 'ba_eas_add_settings_menu'       );
 	add_action( 'admin_init', 'ba_eas_register_admin_settings' );
-
 }
 
 // Nicename auto-update actions
