@@ -1,6 +1,6 @@
 # Copyright (C) 2012 Brandon Allen
 # This file is distributed under the same license as the Edit Author Slug package.
-# Brandon Allen <wp_plugins [at] brandonallen (dot) org>, 2011.
+# Brandon Allen <wp_plugins [at] brandonallen (dot) org>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Edit Author Slug 0.9\n"
