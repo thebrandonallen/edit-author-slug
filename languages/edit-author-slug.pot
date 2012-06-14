@@ -1,11 +1,11 @@
 # Copyright (C) 2012 Brandon Allen
 # This file is distributed under the same license as the Edit Author Slug package.
-# Brandon Allen <wp_plugins [at] brandonallen (dot) org>, 2011.
+# Brandon Allen <wp_plugins [at] brandonallen (dot) org>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: Edit Author Slug 0.9\n"
+"Project-Id-Version: Edit Author Slug 0.9.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/edit-author-slug\n"
-"POT-Creation-Date: 2012-06-14 02:13:21+00:00\n"
+"POT-Creation-Date: 2012-06-14 06:53:17+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#. #-#-#-#-#  plugin.pot (Edit Author Slug 0.9)  #-#-#-#-#
+#. #-#-#-#-#  plugin.pot (Edit Author Slug 0.9.1)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: includes/admin-functions.php:67 includes/admin-functions.php:342
 msgid "Edit Author Slug"
@@ -119,6 +119,10 @@ msgstr ""
 
 #: includes/admin-functions.php:488
 msgid "lastname-firstname"
+msgstr ""
+
+#: includes/admin-functions.php:522
+msgid "Settings"
 msgstr ""
 
 #. Plugin URI of the plugin/theme

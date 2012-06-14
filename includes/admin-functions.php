@@ -502,6 +502,30 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 <?php
 }
 
+/**
+ * Add settings link to plugin listing.
+ *
+ * @since 0.9.1
+ *
+ * @param array $links Links array in which we would prepend our link
+ * @param string $file Current plugin basename
+ *
+ * @global obj $ba_eas Edit Author Slug object
+ * @uses plugin_basename() To get the plugin basename
+ * @uses add_query_arg() To add the edit-author-slug query arg
+ * @uses admin_url() To get the admin url
+ */
+function ba_eas_add_settings_link( $links, $file ) {
+	global $ba_eas;
+
+	if ( plugin_basename( $ba_eas->file ) == $file ) {
+		$settings_link = '<a href="' . add_query_arg( array( 'page' => 'edit-author-slug' ), admin_url( 'options-general.php' ) ) . '">' . __( 'Settings', 'edit-author-slug' ) . '</a>';
+		array_unshift( $links, $settings_link );
+	}
+
+	return $links;
+}
+
 /** Upgrade *******************************************************************/
 
 /**
@@ -512,7 +536,6 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
  * @since 0.8.0
  *
  * @global obj $ba_eas Edit Author Slug object
- *
  * @uses update_option() To update Edit Author Slug options
  */
 function ba_eas_upgrade() {
