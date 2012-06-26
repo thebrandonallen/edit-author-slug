@@ -47,6 +47,10 @@ Make sure you are an admin, or have been assigned the `edit_users` or `edit_auth
 
 == Changelog ==
 
+= 0.9.2 =
+* Fix issue where any profile information other than the Author Slug could not be updated
+* Minor code improvement
+
 = 0.9.1 =
 * Add 'Settings' link to plugins list table
 
