@@ -128,7 +128,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	check_admin_referer( 'update-user_' . $user_id );
 
 	// Validate the user object
-	$user = get_userdata( $user_id );
+	$_user = get_userdata( $user_id );
 
 	// Check for a custom author slug
 	if ( !empty( $_POST['ba_eas_author_slug'] ) && isset( $_POST['ba_eas_author_slug_custom'] ) && '\c\u\s\t\o\m' == stripslashes( $_POST['ba_eas_author_slug'] ) )
@@ -152,7 +152,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
 
 	// Maybe update the author slug?
-	if ( $author_slug != $user->user_nicename ) {
+	if ( $author_slug != $_user->user_nicename ) {
 
 		// Add the wpdb global only when necessary
 		global $wpdb;
@@ -164,7 +164,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 		}
 
 		// Does this author slug already exist?
-		if ( $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->users WHERE user_nicename = %s", $author_slug ) ) ) {
+		if ( (int) get_user_by( 'slug', $author_slug )->ID !== $user_id ) {
 			$errors->add( 'ba_edit_author_slug', sprintf( __( '<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try something different.' ), '<strong><em>' . esc_attr( $author_slug ) . '</em></strong>' ) );
 			return;
 		}
@@ -177,7 +177,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 		}
 
 		// We're still here, so clear the cache for good measure
-		wp_cache_delete( $user->user_nicename, 'userslugs' );
+		wp_cache_delete( $_user->user_nicename, 'userslugs' );
 	}
 }
 
