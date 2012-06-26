@@ -164,7 +164,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 		}
 
 		// Does this author slug already exist?
-		if ( $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->users WHERE user_nicename = %s", $author_slug ) ) ) {
+		if ( (int) get_user_by( 'slug', $author_slug )->ID !== $user_id ) {
 			$errors->add( 'ba_edit_author_slug', sprintf( __( '<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try something different.' ), '<strong><em>' . esc_attr( $author_slug ) . '</em></strong>' ) );
 			return;
 		}
