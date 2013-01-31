@@ -1,0 +1,41 @@
+# Translation of Edit Author Slug.
+# Copyright (C) 2010 BuddyPress
+# This file is distributed under the same license as the Edit Author Slug package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Edit Author Slug\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-21 16:27-0600\n"
+"PO-Revision-Date: 2010-03-31 23:11+0300\n"
+"Last-Translator: FatCow <zhr@tut.by>\n"
+"Language-Team: Marcis G. <by.marcis@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Belarusian\n"
+"X-Poedit-Country: BELARUS\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: edit-author-slug.php:75
+msgid "Edit Author Slug"
+msgstr "Редактировать авторский слоган"
+
+#: edit-author-slug.php:80
+msgid "Author Slug"
+msgstr "Авторский слоган"
+
+#: edit-author-slug.php:84
+msgid "only alphanumeric characters (A-Z, a-z, 0-9), underscores (_) and dashes (-)"
+msgstr "только алфавитно-цифровые символы (A-Z, a-z, 0-9), подчеркивания (_) и пунктир  (-)"
+
+#: edit-author-slug.php:114
+#, php-format
+msgid "The author slug, '%s%s%s', is already in use. Please go back, and try again."
+msgstr "Авторский слоган '%s%s%s' уже находится в использовании. Пожалуйста, вернитесь назад и попробуйте снова."
+
+#: edit-author-slug.php:114
+msgid "Author Slug Already Exists - Please Try Again"
+msgstr "Авторский слоган уже существует - пожалуйста, повторите попытку"
+
