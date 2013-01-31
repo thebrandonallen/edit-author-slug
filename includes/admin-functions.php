@@ -397,7 +397,7 @@ function ba_eas_register_admin_settings() {
 	register_setting( 'edit-author-slug', '_ba_eas_do_auto_update' );
 
 	// Default user nicename setting
-	add_settings_field( '_ba_eas_default_user_nicename', __( 'Author Base', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_default_user_nicename', 'edit-author-slug', 'ba_eas_auto_update' );
+	add_settings_field( '_ba_eas_default_user_nicename', __( 'Author Slug', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_default_user_nicename', 'edit-author-slug', 'ba_eas_auto_update' );
 	register_setting( 'edit-author-slug', '_ba_eas_default_user_nicename' );
 }
 

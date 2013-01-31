@@ -2,14 +2,14 @@
 Contributors: cnorris23
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user
 Requires at least: 3.2.1
-Tested up to: 3.5
-Stable tag: 0.9.2
+Tested up to: 3.5.1
+Stable tag: 0.9.3
 
 Allows an admin (or capable user) to edit the author slug of a user, and change the author base.
 
 == Description ==
 
-This plugin allows an Admin to change the author slug (a.k.a. - nicename), without having to actually enter the database. You can also change the Author Base (the '/author/' portion of the author URLs). Two new fields will be added to your Dashboard. The "Edit Author Slug" field can be found under Users > Your Profile or Users > Authors & Users (Users > Users in WP 3.0). The "Author Base" field can be found under Settings > Permalinks. This allows you to craft the perfect URL structure for you Author pages. For your convenience, an Author Slug column is added to make it easier to determine if one needs to change the Author Slug.
+This plugin allows an Admin to change the author slug (a.k.a. - nicename), without having to actually enter the database. You can also change the Author Base (the '/author/' portion of the author URLs). Two new fields will be added to your Dashboard. The "Edit Author Slug" field can be found under Users > Your Profile or Users > Authors & Users (Users > Users in WP 3.0). The "Author Base" field can be found under Settings > Edit Author Slug. This allows you to craft the perfect URL structure for you Author pages. For your convenience, an Author Slug column is added to make it easier to determine if one needs to change the Author Slug.
 
 WordPress default structure
 http://example.com/author/username/
@@ -18,10 +18,7 @@ Edit Author Slug allows for
 http://example.com/ninja/master-ninja/
 
 #### Translations Available
-* Hebrew (he_IL)      - Yonat Sharon
-* Belorussian (be_BY) - Marcis G.
-* Polish (pl_PL)      - Kornel L.
-* Dutch (nl_NL)       - Juliette Reinders Folmer
+* None at the moment, but translations are welcome
 
 You can also visit the plugin's homepage at http://brandonallen.org/wordpress/plugins/edit-author-slug/
 
@@ -36,8 +33,8 @@ You can also visit the plugin's homepage at http://brandonallen.org/wordpress/pl
 
 == Screenshots ==
 
-1. Edit Author Slug screenshot
-2. Author Base screenshot
+1. Settings
+2. Individual user author slug
 
 == Frequently Asked Questions ==
 
@@ -46,6 +43,10 @@ You can also visit the plugin's homepage at http://brandonallen.org/wordpress/pl
 Make sure you are an admin, or have been assigned the `edit_users` or `edit_author_slug` capability.
 
 == Changelog ==
+
+= 0.9.3 =
+* Update readme references to plugin settings
+* Fix some copy pasta in settings
 
 = 0.9.2 =
 * Fix issue where any profile information other than the Author Slug could not be updated
