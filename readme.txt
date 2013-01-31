@@ -47,6 +47,7 @@ Make sure you are an admin, or have been assigned the `edit_users` or `edit_auth
 = 0.9.3 =
 * Update readme references to plugin settings
 * Fix some copy pasta in settings
+* Update screenshots
 
 = 0.9.2 =
 * Fix issue where any profile information other than the Author Slug could not be updated
