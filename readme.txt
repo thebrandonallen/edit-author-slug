@@ -3,7 +3,7 @@ Contributors: cnorris23
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user
 Requires at least: 3.2.1
 Tested up to: 3.5.1
-Stable tag: 0.9.3
+Stable tag: 0.9.4
 
 Allows an admin (or capable user) to edit the author slug of a user, and change the author base.
 
@@ -44,10 +44,13 @@ Make sure you are an admin, or have been assigned the `edit_users` or `edit_auth
 
 == Changelog ==
 
-= 0.9.3 =
+= 0.9.4 =
 * Update readme references to plugin settings
 * Fix some copy pasta in settings
 * Update screenshots
+
+= 0.9.3 =
+* Quickly caught a few things I missed, so this release was skipped. See 0.9.4 for changes
 
 = 0.9.2 =
 * Fix issue where any profile information other than the Author Slug could not be updated
