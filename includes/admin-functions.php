@@ -309,7 +309,6 @@ function ba_eas_sanitize_author_base( $author_base ) {
 	if ( empty( $author_base ) )
 		$author_base = 'author';
 
-
 	// Do we need to update the author_base
 	if ( $author_base != $ba_eas->author_base ) {
 		// Setup the new author_base global
@@ -323,8 +322,11 @@ function ba_eas_sanitize_author_base( $author_base ) {
 			$wp_rewrite->author_base = $ba_eas->author_base;
 
 		// Courtesy flush
-		flush_rewrite_rules( false );
+		//flush_rewrite_rules( false );
 	}
+
+	// Courtesy flush
+	delete_option( 'rewrite_rules' );
 
 	return $author_base;
 }

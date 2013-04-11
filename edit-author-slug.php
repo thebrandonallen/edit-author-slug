@@ -15,15 +15,15 @@
  * Plugin Name: Edit Author Slug
  * Plugin URI: http://brandonallen.org/wordpress/plugins/edit-author-slug/
  * Description: Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
- * Version: 0.9.4
- * Tested With: 3.2.1, 3.3.2, 3.4, 3.5.1
+ * Version: 0.9.5
+ * Tested With: 3.2.1, 3.3.2, 3.4, 3.5.1, 3.6
  * Author: Brandon Allen
  * Author URI: http://brandonallen.org/
  * License: GPL2
  */
 
 /*
-			Copyright 2011  Brandon Allen  (email : wp_plugins ([at]) brandonallen ([dot]) org)
+			Copyright 2013  Brandon Allen  (email : wp_plugins ([at]) brandonallen ([dot]) org)
 
 			This program is free software; you can redistribute it and/or modify
 			it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ final class BA_Edit_Author_Slug {
 	 * @access public
 	 * @var string Edit Author Slug Version
 	 */
-	public $version = '0.9.4';
+	public $version = '0.9.5-beta';
 
 	/**
 	 * Edit Author Slug Version
@@ -215,7 +215,7 @@ final class BA_Edit_Author_Slug {
 	public function author_base_rewrite() {
 		global $wp_rewrite;
 
-		if ( !empty( $this->author_base ) || 'author' != $this->author_base )
+		if ( !empty( $this->author_base ) && 'author' != $this->author_base )
 			$wp_rewrite->author_base = $this->author_base;
 	}
 }
@@ -234,6 +234,9 @@ endif; //end class BA_Edit_Author_Slug
  */
 function ba_eas_activation() {
 	do_action( 'ba_eas_activation' );
+
+	// Pre-emptive courtesy flush in case of existing author base
+	add_action( 'init', 'ba_eas_delete_rewrite_rules', 999 );
 }
 
 /**

@@ -193,4 +193,17 @@ function ba_eas_auto_update_user_nicename_bulk( $user_id = 0 ) {
 	ba_eas_auto_update_user_nicename( $user_id, true );
 }
 
+/**
+ * Delete WP generated rewrite rules from database.
+ *
+ * Rules will be recreated on next page load.
+ *
+ * @since 0.9.5
+ *
+ * @uses delete_option() To auto-update the nicename
+ */
+function ba_eas_delete_rewrite_rules() {
+	delete_option( 'rewrite_rules' );
+}
+
 ?>
