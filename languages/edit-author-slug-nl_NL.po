@@ -1,0 +1,177 @@
+# Translation of the WordPress plugin Edit Author Slug 0.5 by Brandon Allen.
+# Copyright (C) 2010 Brandon Allen
+# This file is distributed under the same license as the Edit Author Slug package.
+# Brandon Allen <wp_plugins@brandonallen.org>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Edit Author Slug 0.5\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/edit-author-slug\n"
+"POT-Creation-Date: 2013-01-31 11:59:54+00:00\n"
+"PO-Revision-Date: 2013-03-07 22:20+0100\n"
+"Last-Translator: EJ Reinders Folmer <poedit_nospam@adviesenzo.nl>\n"
+"Language-Team: \n"
+"Language: nl_NL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+
+#. #-#-#-#-#  plugin.pot (Edit Author Slug 0.9.4)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: includes/admin-functions.php:67 includes/admin-functions.php:342
+msgid "Edit Author Slug"
+msgstr "Edit Author Slug"
+
+#: includes/admin-functions.php:68
+msgid ""
+"Choose an Author Slug based on the above profile information, or create your "
+"own."
+msgstr ""
+"Kies een auteurslug gebaseerd op de bovenstaande profiel informatie of "
+"bedenk er zelf één."
+
+#: includes/admin-functions.php:68
+msgid "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'"
+msgstr "BV. - 'gebruikersnaam', 'voornaam-achternaam' of 'master-ninja'"
+
+#: includes/admin-functions.php:71 includes/admin-functions.php:73
+#: includes/admin-functions.php:221 includes/admin-functions.php:400
+msgid "Author Slug"
+msgstr "Auteurslug"
+
+#: includes/admin-functions.php:83
+msgid "Custom:"
+msgstr "Aangepast:"
+
+#: includes/admin-functions.php:144
+msgid ""
+"<strong>ERROR</strong>: An author slug cannot be blank. Please try again."
+msgstr ""
+"<strong>FOUTMELDING</strong>: een auteurslug kan niet blanco zijn. Probeer "
+"het ajb opnieuw."
+
+#: includes/admin-functions.php:162
+msgid ""
+"<strong>ERROR</strong>: That author slug appears to be invalid. Please try "
+"something different."
+msgstr ""
+"<strong>FOUTMELDING</strong>: de auteurslug lijkt ongeldig te zijn. Probeer "
+"ajb iets anders."
+
+#: includes/admin-functions.php:168
+msgid ""
+"<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try "
+"something different."
+msgstr ""
+"<strong>FOUTMELDING</strong>: de auteurslug, %1$s, bestaat al. Probeer ajb "
+"iets anders."
+
+#: includes/admin-functions.php:174
+msgid ""
+"<strong>ERROR</strong>: There was an error updating the author slug. Please "
+"try again."
+msgstr ""
+"<strong>FOUTMELDING</strong>: er is een fout opgetreden tijdens het "
+"bijwerken van de auteurslug. Probeer het ajb opnieuw."
+
+#: includes/admin-functions.php:342 includes/admin-functions.php:359
+msgid "Edit Author Slug Settings"
+msgstr "Edit Author Slug Instellingen"
+
+#: includes/admin-functions.php:386 includes/admin-functions.php:389
+msgid "Author Base"
+msgstr "Auteurbasis"
+
+#: includes/admin-functions.php:393
+msgid "Automatic Author Slug Creation"
+msgstr "Automatisch aanmaken auteurslug"
+
+#: includes/admin-functions.php:396
+msgid "Automatically Update"
+msgstr "Automatisch bijwerken"
+
+#: includes/admin-functions.php:412
+msgid ""
+"Change your author base to something more fun. <em>Defaults to 'author'</em>."
+msgstr ""
+"Wijzig de auteurbasis naar iets leukers. <em>Standaard is 'author'</em>."
+
+#: includes/admin-functions.php:425
+msgid ""
+"Allow Author Slugs to be automatically update, and set the default Author "
+"Slug structure for users. Automatic updating will only occur when a user "
+"can't edit Author Slugs on their own."
+msgstr ""
+"Sta automatisch updaten van auteurslugs toe en stel tevens de standaard "
+"auteurslugstructuur in voor gebruikers. Automatisch updaten zal enkel "
+"gebeuren als een gebruiker niet zelf auteurslugs kan bewerken."
+
+#: includes/admin-functions.php:425
+msgid ""
+"This could have SEO repercussions if users update their profiles frequently, "
+"and it will override any manual editing of the Author Slug you may have "
+"previously completed."
+msgstr ""
+"Dit kan nadeling zijn voor zoekmachineoptimalisatie als gebruikers hun "
+"profielen vaak updaten en het zal eventueel eerder handmatig bewerkte "
+"auteurslugs overschrijven."
+
+#: includes/admin-functions.php:483
+msgid "username (Default)"
+msgstr "gebruikersnaam (Standaard)"
+
+#: includes/admin-functions.php:484
+msgid "nickname"
+msgstr "schermnaam"
+
+#: includes/admin-functions.php:485
+msgid "firstname"
+msgstr "voornaam"
+
+#: includes/admin-functions.php:486
+msgid "lastname"
+msgstr "achternaam"
+
+#: includes/admin-functions.php:487
+msgid "firstname-lastname"
+msgstr "voornaam-achternaam"
+
+#: includes/admin-functions.php:488
+msgid "lastname-firstname"
+msgstr "achternaam-voornaam"
+
+#: includes/admin-functions.php:522
+msgid "Settings"
+msgstr "Instellingen"
+
+#. Plugin URI of the plugin/theme
+msgid "http://brandonallen.org/wordpress/plugins/edit-author-slug/"
+msgstr "http://brandonallen.org/wordpress/plugins/edit-author-slug/"
+
+#. Description of the plugin/theme
+msgid ""
+"Allows an Admin (or capable user) to edit the author slug of a user, and "
+"change the Author Base. <em>i.e. - (WordPress default structure) http://"
+"example.com/author/username/ (Plugin allows) http://example.com/ninja/master-"
+"ninja/</em>"
+msgstr ""
+"Staat een Admin (of een geauthoriseerde gebruiker) toe om de auteurslug van "
+"een gebruiker te bewerken en om de auteurbasis te wijzigen. <em> b.v. - "
+"(WordPress standaard structuur) http://example.com/author/username/ (Plugin "
+"verzorgt) http://example.com/ninja/master-ninja/</em>"
+
+#. Author of the plugin/theme
+msgid "Brandon Allen"
+msgstr "Brandon Allen"
+
+#. Author URI of the plugin/theme
+msgid "http://brandonallen.org/"
+msgstr "http://brandonallen.org/"
+
+#~ msgid ""
+#~ "The author slug, '[baeas_author_slug]', is already in use. Please go "
+#~ "back, and try again."
+#~ msgstr ""
+#~ "De auteurslug, '[baeas_author_slug]', is reeds in gebruik. Ga terug en "
+#~ "probeer het opnieuw."

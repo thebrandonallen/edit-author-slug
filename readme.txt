@@ -1,5 +1,5 @@
 === Edit Author Slug ===
-Contributors: cnorris23
+Contributors: cnorris23, thebrandonallen
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user
 Requires at least: 3.2.1
 Tested up to: 3.6
@@ -18,7 +18,7 @@ Edit Author Slug allows for
 http://example.com/ninja/master-ninja/
 
 #### Translations Available
-* None at the moment, but translations are welcome
+* Dutch - props Juliette Reinders Folmer
 
 You can also visit the plugin's homepage at http://brandonallen.org/wordpress/plugins/edit-author-slug/
 
