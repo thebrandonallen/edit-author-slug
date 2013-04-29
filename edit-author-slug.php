@@ -57,7 +57,7 @@ final class BA_Edit_Author_Slug {
 	 * @access public
 	 * @var string Edit Author Slug Version
 	 */
-	public $version = '0.9.5-beta';
+	public $version = '0.9.5';
 
 	/**
 	 * Edit Author Slug Version
