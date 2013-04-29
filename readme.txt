@@ -42,7 +42,16 @@ You can also visit the plugin's homepage at http://brandonallen.org/wordpress/pl
 
 Make sure you are an admin, or have been assigned the `edit_users` or `edit_author_slug` capability.
 
+= Why isn't my new Author Slug working? =
+
+While I've made every attempt to prevent this, I may have missed a spot or two. First things first, go to Settings > Permalinks and click "Save Changes." You don't need to actually need to make any changes for this to work. Hopefully, this should kick your new Author Slug into gear.
+
+If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums.
+
 == Changelog ==
+
+= 0.9.5 =
+* Fixed instances where the Author Base wouldn't change, or would result in a 404
 
 = 0.9.4 =
 * Update readme references to plugin settings

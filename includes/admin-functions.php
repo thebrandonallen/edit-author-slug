@@ -320,13 +320,10 @@ function ba_eas_sanitize_author_base( $author_base ) {
 		// Update the author_base in the WP_Rewrite object
 		if ( !empty( $ba_eas->author_base ) )
 			$wp_rewrite->author_base = $ba_eas->author_base;
-
-		// Courtesy flush
-		//flush_rewrite_rules( false );
 	}
 
 	// Courtesy flush
-	delete_option( 'rewrite_rules' );
+	ba_eas_flush_rewrite_rules();
 
 	return $author_base;
 }
@@ -546,6 +543,11 @@ function ba_eas_upgrade() {
 	// We're up-to-date, so let's move on
 	if ( $ba_eas->current_db_version === $ba_eas->db_version )
 		return;
+
+	if ( $ba_eas->current_db_version < 158 ) {
+		// Courtesy flush for those having issues
+		ba_eas_flush_rewrite_rules();
+	}
 
 	if ( $ba_eas->current_db_version < 132 ) {
 		// Add new options

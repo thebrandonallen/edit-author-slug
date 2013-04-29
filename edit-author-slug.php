@@ -64,7 +64,7 @@ final class BA_Edit_Author_Slug {
 	 * @access public
 	 * @var int Edit Author Slug DB Version
 	 */
-	public $db_version = 132;
+	public $db_version = 158;
 
 	/**
 	 * Edit Author Slug Version
@@ -236,7 +236,7 @@ function ba_eas_activation() {
 	do_action( 'ba_eas_activation' );
 
 	// Pre-emptive courtesy flush in case of existing author base
-	add_action( 'init', 'ba_eas_delete_rewrite_rules', 999 );
+	ba_eas_flush_rewrite_rules();
 }
 
 /**
@@ -249,8 +249,9 @@ function ba_eas_activation() {
 function ba_eas_deactivation() {
 	do_action( 'ba_eas_deactivation' );
 
+
 	// Courtesy flush
-	flush_rewrite_rules( false );
+	delete_option( 'rewrite_rules' );
 }
 
 ?>

@@ -202,7 +202,7 @@ function ba_eas_auto_update_user_nicename_bulk( $user_id = 0 ) {
  *
  * @uses delete_option() To auto-update the nicename
  */
-function ba_eas_delete_rewrite_rules() {
+function ba_eas_flush_rewrite_rules() {
 	delete_option( 'rewrite_rules' );
 }
 
