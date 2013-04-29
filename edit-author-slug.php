@@ -253,6 +253,4 @@ function ba_eas_deactivation() {
 	delete_option( 'rewrite_rules' );
 }
 
-// Cruft for a test
-
 ?>
