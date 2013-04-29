@@ -158,7 +158,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	wp_cache_delete( $current_nicename, 'userslugs' );
 
 	// Add it back in case other plugins do some updating
-	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
+	add_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
 
 	return $user_id;
 }
@@ -191,6 +191,19 @@ function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
  */
 function ba_eas_auto_update_user_nicename_bulk( $user_id = 0 ) {
 	ba_eas_auto_update_user_nicename( $user_id, true );
+}
+
+/**
+ * Delete WP generated rewrite rules from database.
+ *
+ * Rules will be recreated on next page load.
+ *
+ * @since 0.9.5
+ *
+ * @uses delete_option() To auto-update the nicename
+ */
+function ba_eas_flush_rewrite_rules() {
+	delete_option( 'rewrite_rules' );
 }
 
 ?>
