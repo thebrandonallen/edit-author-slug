@@ -158,7 +158,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	wp_cache_delete( $current_nicename, 'userslugs' );
 
 	// Add it back in case other plugins do some updating
-	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
+	add_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
 
 	return $user_id;
 }
