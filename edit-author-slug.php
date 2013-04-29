@@ -249,7 +249,6 @@ function ba_eas_activation() {
 function ba_eas_deactivation() {
 	do_action( 'ba_eas_deactivation' );
 
-
 	// Courtesy flush
 	delete_option( 'rewrite_rules' );
 }
