@@ -19,7 +19,9 @@
  * Tested With: 3.2.1, 3.3.2, 3.4, 3.5.1, 3.6
  * Author: Brandon Allen
  * Author URI: http://brandonallen.org/
- * License: GPL2
+ * License: GPL2+
+ * Text Domain: edit-author-slug
+ * Domain Path: /languages
  */
 
 /*
@@ -163,7 +165,7 @@ final class BA_Edit_Author_Slug {
 			// Author base
 			$this->author_base = 'author';
 		}
-		
+
 		// Misc
 		$this->domain = 'edit-author-slug';
 	}
@@ -200,7 +202,7 @@ final class BA_Edit_Author_Slug {
 		add_action( 'init',       array( $this, 'author_base_rewrite'  ) );
 
 		// Localize
-		add_action( 'init',       array( $this, 'load_textdomain'  ) );
+		add_action( 'plugins_loaded',       array( $this, 'load_textdomain'  ) );
 	}
 
 	/**
@@ -221,26 +223,9 @@ final class BA_Edit_Author_Slug {
 	 */
 	public function load_textdomain() {
 
-		// Traditional WordPress plugin locale filter
-		$locale = apply_filters( 'plugin_locale', get_locale(), $this->domain );
-		$mofile = sprintf( '%1$s-%2$s.mo', $this->domain, $locale );
-
-		// Setup paths to current locale file
-		$mofile_local       = trailingshlashit( $this->plugin_dir . 'languages' ) . $mofile;
-		$mofile_global      = WP_LANG_DIR . '/' . $mofile;
-		$mofile_semi_global = WP_LANG_DIR . '/edit-author-slug/' . $mofile;
-
-		// Look in global /wp-content/languages/ folder
-		load_textdomain( $this->domain, $mofile_global );
-
-		// Look in global /wp-content/languages/edit-author-slug/ folder
-		load_textdomain( $this->domain, $mofile_semi_global );
-
-		// Look in local /wp-content/plugins/edit-author-slug/languages/ folder
-		load_textdomain( $this->domain, $mofile_local );
-
-		// Look in /wp-content/plugins/
-		load_plugin_textdomain( $this->domain );
+		// Look in wp-content/plugins/edit-author-slug/languages first
+		// fallback to wp-content/languages/plugins
+		load_plugin_textdomain( $this->domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
 	/**
