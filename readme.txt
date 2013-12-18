@@ -1,8 +1,8 @@
 === Edit Author Slug ===
-Contributors: cnorris23, thebrandonallen
+Contributors: thebrandonallen
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user
 Requires at least: 3.2.1
-Tested up to: 3.6
+Tested up to: 3.8
 Stable tag: 0.9.5
 
 Allows an admin (or capable user) to edit the author slug of a user, and change the author base.
