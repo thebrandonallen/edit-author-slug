@@ -163,6 +163,9 @@ final class BA_Edit_Author_Slug {
 			// Author base
 			$this->author_base = 'author';
 		}
+		
+		// Misc
+		$this->domain = 'edit-author-slug';
 	}
 
 	/**
@@ -197,7 +200,47 @@ final class BA_Edit_Author_Slug {
 		add_action( 'init',       array( $this, 'author_base_rewrite'  ) );
 
 		// Localize
-		load_plugin_textdomain( 'edit-author-slug', false, dirname( $this->plugin_dir ) . '/languages/' );
+		add_action( 'init',       array( $this, 'load_textdomain'  ) );
+	}
+
+	/**
+	 * Load the translation file for current language. Checks the default WordPress
+	 * languages folder first, then inside edit-author-slug inside the default WordPress
+	 * languages folder, then inside edit-author-slug plugin languages , and then the
+	 * WordPress plugins folder.
+	 *
+	 * Note that custom translation files inside the bbPress plugin folder
+	 * will be removed on edit-author-slug updates. If you're creating custom
+	 * translation files, please use the global language folder.
+	 *
+	 * @since 0.9.6
+	 *
+	 * @uses apply_filters() Calls 'plugin_locale' with {@link get_locale()} value
+	 * @uses load_textdomain() To load the textdomain
+	 * @uses load_plugin_textdomain() To load the textdomain inside the 'plugin/languages' folder
+	 */
+	public function load_textdomain() {
+
+		// Traditional WordPress plugin locale filter
+		$locale = apply_filters( 'plugin_locale', get_locale(), $this->domain );
+		$mofile = sprintf( '%1$s-%2$s.mo', $this->domain, $locale );
+
+		// Setup paths to current locale file
+		$mofile_local       = trailingshlashit( $this->plugin_dir . 'languages' ) . $mofile;
+		$mofile_global      = WP_LANG_DIR . '/' . $mofile;
+		$mofile_semi_global = WP_LANG_DIR . '/edit-author-slug/' . $mofile;
+
+		// Look in global /wp-content/languages/ folder
+		load_textdomain( $this->domain, $mofile_global );
+
+		// Look in global /wp-content/languages/edit-author-slug/ folder
+		load_textdomain( $this->domain, $mofile_semi_global );
+
+		// Look in local /wp-content/plugins/edit-author-slug/languages/ folder
+		load_textdomain( $this->domain, $mofile_local );
+
+		// Look in /wp-content/plugins/
+		load_plugin_textdomain( $this->domain );
 	}
 
 	/**
