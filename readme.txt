@@ -1,9 +1,9 @@
 === Edit Author Slug ===
 Contributors: thebrandonallen
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user
-Requires at least: 3.2.1
-Tested up to: 3.8
-Stable tag: 0.9.5
+Requires at least: 3.6.1
+Tested up to: 3.8.1
+Stable tag: 0.9.6
 
 Allows an admin (or capable user) to edit the author slug of a user, and change the author base.
 
@@ -49,6 +49,9 @@ While I've made every attempt to prevent this, I may have missed a spot or two. 
 If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums.
 
 == Changelog ==
+
+= 0.9.6 =
+* Fixed loading of translation files. Looks in wp-content/plugins/edit-author-slug/languages. If you're running 3.7+ (and you are... aren't you?), it will fall back to wp-content/languages/plugins if a proper localization can't be found in the edit-author-slug folder.
 
 = 0.9.5 =
 * Fixed instances where the Author Base wouldn't change, or would result in a 404
