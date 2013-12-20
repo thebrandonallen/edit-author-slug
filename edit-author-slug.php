@@ -141,24 +141,28 @@ final class BA_Edit_Author_Slug {
 		if ( $base = get_option( '_ba_eas_author_base' ) ) {
 			// Author base
 			$this->author_base = 'author';
-			if ( 'author' != $base )
+			if ( 'author' != $base ) {
 				$this->author_base = $base;
+			}
 
 			// Current DB version
 			$db_version = get_option( '_ba_eas_db_version', 0 );
-			if ( !empty( $db_version ) )
+			if ( !empty( $db_version ) ) {
 				$this->current_db_version = (int) $db_version;
+			}
 
 		// Pre-0.9 Back compat
 		} elseif ( $options = get_option( 'ba_edit_author_slug' ) ) {
 			// Author base
 			$this->author_base = 'author';
-			if ( 'author' != $options['author_base'] )
+			if ( 'author' != $options['author_base'] ) {
 				$this->author_base = $options['author_base'];
+			}
 
 			// Current DB version
-			if ( !empty( $options['db_version'] ) )
+			if ( !empty( $options['db_version'] ) ) {
 				$this->current_db_version = (int) $options['db_version'];
+			}
 
 		// Something has gone horribly wrong if this happens
 		} else {
@@ -176,8 +180,9 @@ final class BA_Edit_Author_Slug {
 	 * @since 0.7.0
 	 */
 	private function includes() {
-		if ( is_admin() )
+		if ( is_admin() ) {
 			require_once( $this->plugin_dir . 'includes/admin-functions.php' );
+		}
 
 		require_once( $this->plugin_dir . 'includes/general-functions.php' );
 		require_once( $this->plugin_dir . 'includes/hooks.php' );
@@ -243,8 +248,9 @@ final class BA_Edit_Author_Slug {
 	public function author_base_rewrite() {
 		global $wp_rewrite;
 
-		if ( !empty( $this->author_base ) && 'author' != $this->author_base )
+		if ( !empty( $this->author_base ) && 'author' != $this->author_base ) {
 			$wp_rewrite->author_base = $this->author_base;
+		}
 	}
 }
 

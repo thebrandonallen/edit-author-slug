@@ -31,24 +31,28 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @uses checked() To check that box
  */
 function ba_eas_show_user_nicename( $user ) {
-	if ( !ba_eas_can_edit_author_slug() )
+	if ( !ba_eas_can_edit_author_slug() ) {
 		return false;
+	}
 
 	// Setup the nicename
 	$nicename = '';
-	if ( !empty( $user->user_nicename ) )
+	if ( !empty( $user->user_nicename ) ) {
 		$nicename = $user->user_nicename;
+	}
 
 	// Setup options array
 	$options = array();
 	$options['username'] = sanitize_title( $user->user_login );
 	$options['nickname'] = sanitize_title( $user->nickname );
 
-	if ( !empty( $user->first_name ) )
+	if ( !empty( $user->first_name ) ) {
 		$options['firstname'] = sanitize_title( $user->first_name );
+	}
 
-	if ( !empty( $user->last_name ) )
+	if ( !empty( $user->last_name ) ) {
 		$options['lastname'] = sanitize_title( $user->last_name );
+	}
 
 	if ( !empty( $user->first_name ) && !empty( $user->last_name ) ) {
 		$options['firslast'] = sanitize_title( $user->first_name  . ' ' . $user->last_name );
@@ -110,16 +114,19 @@ function ba_eas_show_user_nicename( $user ) {
 function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
 	// Bail early if user can't edit the slug
-	if ( !ba_eas_can_edit_author_slug() )
+	if ( !ba_eas_can_edit_author_slug() ) {
 		return false;
+	}
 
 	// We shouldn't be here if we're not updating
-	if ( !$update )
+	if ( !$update ) {
 		return;
+	}
 
 	// Bail if we don't have a user
-	if ( empty( $user ) || !is_object( $user ) )
+	if ( empty( $user ) || !is_object( $user ) ) {
 		return;
+	}
 
 	// Setup the user_id
 	$user_id = (int) $user->ID;
@@ -131,13 +138,15 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	$_user = get_userdata( $user_id );
 
 	// Check for a custom author slug
-	if ( !empty( $_POST['ba_eas_author_slug'] ) && isset( $_POST['ba_eas_author_slug_custom'] ) && '\c\u\s\t\o\m' == stripslashes( $_POST['ba_eas_author_slug'] ) )
+	if ( !empty( $_POST['ba_eas_author_slug'] ) && isset( $_POST['ba_eas_author_slug_custom'] ) && '\c\u\s\t\o\m' == stripslashes( $_POST['ba_eas_author_slug'] ) ) {
 			$_POST['ba_eas_author_slug'] = $_POST['ba_eas_author_slug_custom'];
+	}
 
 	// Setup the author slug
 	$author_slug = '';
-	if ( isset( $_POST['ba_eas_author_slug'] ) )
+	if ( isset( $_POST['ba_eas_author_slug'] ) ) {
 		$author_slug = trim( stripslashes( $_POST['ba_eas_author_slug'] ) );
+	}
 
 	// Do we have an author slug?
 	if ( empty( $author_slug ) ) {
@@ -197,8 +206,9 @@ function ba_eas_can_edit_author_slug() {
 	// Default to false
 	$retval = false;
 
-	if ( is_super_admin() || current_user_can( 'edit_users' ) || current_user_can( 'edit_author_slug' ) )
+	if ( is_super_admin() || current_user_can( 'edit_users' ) || current_user_can( 'edit_author_slug' ) ) {
 		$retval = true;
+	}
 
 	return apply_filters( 'ba_eas_can_edit_author_slug', $retval );
 }
@@ -246,8 +256,9 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
 	if ( 'ba-eas-author-slug' == $column_name ) {
 		$user = get_userdata( $user_id );
 
-		if ( !empty( $user->user_nicename ) )
+		if ( !empty( $user->user_nicename ) ) {
 			$default = esc_attr( $user->user_nicename );
+		}
 	}
 
 	return $default;
@@ -256,8 +267,9 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
 function ba_eas_show_user_nicename_scripts() {
 	global $pagenow;
 
-	if ( !in_array( $pagenow, array( 'user-edit.php', 'profile.php' ) ) || !ba_eas_can_edit_author_slug() )
+	if ( !in_array( $pagenow, array( 'user-edit.php', 'profile.php' ) ) || !ba_eas_can_edit_author_slug() ) {
 		return;
+	}
 ?>
 
 	<!-- Edit Author Slug nicename edit -->
@@ -306,8 +318,9 @@ function ba_eas_sanitize_author_base( $author_base ) {
 	$author_base = sanitize_title( $author_base );
 
 	// Make sure we have something
-	if ( empty( $author_base ) )
+	if ( empty( $author_base ) ) {
 		$author_base = 'author';
+	}
 
 	// Do we need to update the author_base
 	if ( $author_base != $ba_eas->author_base ) {
@@ -318,8 +331,9 @@ function ba_eas_sanitize_author_base( $author_base ) {
 		update_option( '_ba_eas_author_base', $ba_eas->author_base );
 
 		// Update the author_base in the WP_Rewrite object
-		if ( !empty( $ba_eas->author_base ) )
+		if ( !empty( $ba_eas->author_base ) ) {
 			$wp_rewrite->author_base = $ba_eas->author_base;
+		}
 	}
 
 	// Courtesy flush
@@ -475,8 +489,9 @@ function ba_eas_admin_setting_callback_do_auto_update() {
 function ba_eas_admin_setting_callback_default_user_nicename() {
 	$structure = get_option( '_ba_eas_default_user_nicename', 'username' );
 
-	if ( empty( $structure ) )
+	if ( empty( $structure ) ) {
 		$structure = 'username';
+	}
 
 	$options = apply_filters( 'ba_eas_default_user_nicename_options_list', array(
 		'username'  => __( 'username (Default)', 'edit-author-slug' ),
@@ -541,8 +556,9 @@ function ba_eas_upgrade() {
 	global $ba_eas, $wpdb;
 
 	// We're up-to-date, so let's move on
-	if ( $ba_eas->current_db_version === $ba_eas->db_version )
+	if ( $ba_eas->current_db_version === $ba_eas->db_version ) {
 		return;
+	}
 
 	if ( $ba_eas->current_db_version < 158 ) {
 		// Courtesy flush for those having issues
