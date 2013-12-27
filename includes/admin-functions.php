@@ -179,11 +179,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 		}
 
 		// Looks like we made it, so let's update
-		if ( !$updated_user_id = wp_update_user( array( 'ID' => $user_id, 'user_nicename' => $author_slug ) ) ) {
-			$errors->add( 'ba_edit_author_slug', __( '<strong>ERROR</strong>: There was an error updating the author slug. Please try again.' ) );
-			return;
-
-		}
+		$user->user_nicename = $author_slug;
 
 		// We're still here, so clear the cache for good measure
 		wp_cache_delete( $_user->user_nicename, 'userslugs' );
