@@ -31,6 +31,8 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @uses checked() To check that box
  */
 function ba_eas_show_user_nicename( $user ) {
+	
+	// Return early if the user can't edit the author slug
 	if ( !ba_eas_can_edit_author_slug() ) {
 		return false;
 	}
@@ -69,7 +71,7 @@ function ba_eas_show_user_nicename( $user ) {
 	?>
 
 	<h3><?php esc_html_e( 'Edit Author Slug', 'edit-author-slug' ); ?></h3>
-	<p><?php _e( 'Choose an Author Slug based on the above profile information, or create your own.', 'edit-author-slug' ); ?> <br /><span class="description"><?php esc_html_e( "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'", 'edit-author-slug' ); ?></span></p>
+	<p><?php esc_html_e( 'Choose an Author Slug based on the above profile information, or create your own.', 'edit-author-slug' ); ?> <br /><span class="description"><?php esc_html_e( "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'", 'edit-author-slug' ); ?></span></p>
 	<table class="form-table">
 		<tbody><tr>
 			<th scope="row"><?php esc_html_e( 'Author Slug', 'edit-author-slug' ); ?></th>
@@ -139,7 +141,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
 	// Check for a custom author slug
 	if ( !empty( $_POST['ba_eas_author_slug'] ) && isset( $_POST['ba_eas_author_slug_custom'] ) && '\c\u\s\t\o\m' == stripslashes( $_POST['ba_eas_author_slug'] ) ) {
-			$_POST['ba_eas_author_slug'] = $_POST['ba_eas_author_slug_custom'];
+		$_POST['ba_eas_author_slug'] = $_POST['ba_eas_author_slug_custom'];
 	}
 
 	// Setup the author slug
@@ -202,11 +204,12 @@ function ba_eas_can_edit_author_slug() {
 	// Default to false
 	$retval = false;
 
+	// True if user is allowed to edit the author slug
 	if ( is_super_admin() || current_user_can( 'edit_users' ) || current_user_can( 'edit_author_slug' ) ) {
 		$retval = true;
 	}
 
-	return apply_filters( 'ba_eas_can_edit_author_slug', $retval );
+	return (bool) apply_filters( 'ba_eas_can_edit_author_slug', $retval );
 }
 
 /**
@@ -224,6 +227,8 @@ function ba_eas_can_edit_author_slug() {
  * @return array $defaults Array of current columns/column headings
  */
 function ba_eas_author_slug_column( $defaults ) {
+
+	// Set the new column name to "Author Slug"
 	$defaults['ba-eas-author-slug'] = esc_html__( 'Author Slug', 'edit-author-slug' );
 
 	return $defaults;
@@ -247,8 +252,8 @@ function ba_eas_author_slug_column( $defaults ) {
  * @return string $default Value for column data. Defaults to ''.
  */
 function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
-	$user_id = (int) $user_id;
 
+	// Set row value to user_nicename if applicable
 	if ( 'ba-eas-author-slug' == $column_name ) {
 		$user = get_userdata( $user_id );
 
@@ -260,6 +265,15 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
 	return $default;
 }
 
+/**
+ * Add javascript to user-edit.php and profile.php pages to
+ * update custom field when other radio buttons are selected.
+ *
+ * @since 0.9.0
+ *
+ * @global $pagenow Current admin page
+ * @uses ba_eas_can_edit_author_slug) To determine if the user can edit the author slug
+ */
 function ba_eas_show_user_nicename_scripts() {
 	global $pagenow;
 
@@ -302,10 +316,8 @@ function ba_eas_show_user_nicename_scripts() {
  *
  * @global obj $ba_eas Edit Author Slug object
  * @global obj $wp_rewrite WP_Rewrite object
- * @uses check_admin_referer() To verify the nonce and check referer
- * @uses _wp_filter_taxonomy_base() To remove any manually prepended /index.php/.
  * @uses update_option() To update Edit Author Slug options
- * @uses flush_rewrite_rules() To update Edit Author Slug options
+ * @uses ba_eas_flush_rewrite_rules() To flush the rewrite rules in the db
  */
 function ba_eas_sanitize_author_base( $author_base ) {
 	global $ba_eas, $wp_rewrite;
@@ -478,18 +490,21 @@ function ba_eas_admin_setting_callback_do_auto_update() {
  *
  * @since 0.9.0
  *
- * @uses get_option() To get the default user nicename
+ * @uses get_option() To get the default user nicename structure
  * @uses apply_filters() To call 'ba_eas_default_user_nicename_options_list' hook
  * @uses esc_attr_e() To sanitize the nicename options
  */
 function ba_eas_admin_setting_callback_default_user_nicename() {
+
+	// Get the nicename structure
 	$structure = get_option( '_ba_eas_default_user_nicename', 'username' );
 
+	// Set to default nicename structure if needed
 	if ( empty( $structure ) ) {
 		$structure = 'username';
 	}
 
-	$options = apply_filters( 'ba_eas_default_user_nicename_options_list', array(
+	$options = (array) apply_filters( 'ba_eas_default_user_nicename_options_list', array(
 		'username'  => __( 'username (Default)', 'edit-author-slug' ),
 		'nickname'  => __( 'nickname', 'edit-author-slug' ),
 		'firstname' => __( 'firstname', 'edit-author-slug' ),
@@ -497,8 +512,6 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 		'firstlast' => __( 'firstname-lastname', 'edit-author-slug' ),
 		'lastfirst' => __( 'lastname-firstname', 'edit-author-slug' ),
 	) );
-
-	$options = (array) apply_filters( 'ba_eas_default_user_nicename_options_list', $options );
 	$options = array_map( 'trim', $options );
 	$options = array_unique( $options );
 ?>
