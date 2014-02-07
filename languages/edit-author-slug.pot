@@ -1,127 +1,132 @@
-# Copyright (C) 2013 Brandon Allen
+# Copyright (C) 2014 Brandon Allen
 # This file is distributed under the same license as the Edit Author Slug package.
-# Brandon Allen <wp_plugins [at] brandonallen (dot) org>, 2013.
+# Brandon Allen <wp_plugins [at] brandonallen (dot) org>, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: Edit Author Slug 0.9.6\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/edit-author-slug\n"
-"POT-Creation-Date: 2013-12-18 09:18:44+00:00\n"
+"Project-Id-Version: Edit Author Slug 1.0-beta2\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/edit-author-slug\n"
+"POT-Creation-Date: 2014-02-07 16:00:53+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2013-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#. #-#-#-#-#  plugin.pot (Edit Author Slug 0.9.6)  #-#-#-#-#
-#. Plugin Name of the plugin/theme
-#: includes/admin-functions.php:67 includes/admin-functions.php:341
+#: edit-author-slug.php:124 edit-author-slug.php:131
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+
+#: includes/admin-functions.php:74 includes/admin-functions.php:383
 msgid "Edit Author Slug"
 msgstr ""
 
-#: includes/admin-functions.php:68
-msgid ""
-"Choose an Author Slug based on the above profile information, or create your "
-"own."
+#: includes/admin-functions.php:75
+msgid "Choose an Author Slug based on the above profile information, or create your own."
 msgstr ""
 
-#: includes/admin-functions.php:68
+#: includes/admin-functions.php:75
 msgid "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'"
 msgstr ""
 
-#: includes/admin-functions.php:71 includes/admin-functions.php:73
-#: includes/admin-functions.php:221 includes/admin-functions.php:399
+#: includes/admin-functions.php:78 includes/admin-functions.php:80
+#: includes/admin-functions.php:232 includes/admin-functions.php:447
 msgid "Author Slug"
 msgstr ""
 
-#: includes/admin-functions.php:83
+#: includes/admin-functions.php:89
 msgid "Custom:"
 msgstr ""
 
-#: includes/admin-functions.php:144
-msgid ""
-"<strong>ERROR</strong>: An author slug cannot be blank. Please try again."
+#: includes/admin-functions.php:155
+msgid "<strong>ERROR</strong>: An author slug cannot be blank. Please try again."
 msgstr ""
 
-#: includes/admin-functions.php:162
-msgid ""
-"<strong>ERROR</strong>: That author slug appears to be invalid. Please try "
-"something different."
+#: includes/admin-functions.php:173
+msgid "<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different."
 msgstr ""
 
-#: includes/admin-functions.php:168
-msgid ""
-"<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try "
-"something different."
+#: includes/admin-functions.php:179
+msgid "<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try something different."
 msgstr ""
 
-#: includes/admin-functions.php:174
-msgid ""
-"<strong>ERROR</strong>: There was an error updating the author slug. Please "
-"try again."
-msgstr ""
-
-#: includes/admin-functions.php:341 includes/admin-functions.php:358
+#: includes/admin-functions.php:383 includes/admin-functions.php:398
 msgid "Edit Author Slug Settings"
 msgstr ""
 
-#: includes/admin-functions.php:385 includes/admin-functions.php:388
+#: includes/admin-functions.php:425 includes/admin-functions.php:428
 msgid "Author Base"
 msgstr ""
 
-#: includes/admin-functions.php:392
+#: includes/admin-functions.php:432
+msgid "Role-Based Author Base"
+msgstr ""
+
+#: includes/admin-functions.php:436
+msgid "Role Slugs"
+msgstr ""
+
+#: includes/admin-functions.php:440
 msgid "Automatic Author Slug Creation"
 msgstr ""
 
-#: includes/admin-functions.php:395
+#: includes/admin-functions.php:443
 msgid "Automatically Update"
 msgstr ""
 
-#: includes/admin-functions.php:411
-msgid ""
-"Change your author base to something more fun. <em>Defaults to 'author'</em>."
+#: includes/admin-functions.php:459
+msgid "Change your author base to something more fun. <em>Defaults to 'author'</em>."
 msgstr ""
 
-#: includes/admin-functions.php:424
-msgid ""
-"Allow Author Slugs to be automatically update, and set the default Author "
-"Slug structure for users. Automatic updating will only occur when a user "
-"can't edit Author Slugs on their own."
+#: includes/admin-functions.php:472
+msgid "Allow Author Slugs to be automatically update, and set the default Author Slug structure for users. Automatic updating will only occur when a user can't edit Author Slugs on their own."
 msgstr ""
 
-#: includes/admin-functions.php:424
-msgid ""
-"This could have SEO repercussions if users update their profiles frequently, "
-"and it will override any manual editing of the Author Slug you may have "
-"previously completed."
+#: includes/admin-functions.php:472
+msgid "This could have SEO repercussions if users update their profiles frequently, and it will override any manual editing of the Author Slug you may have previously completed."
 msgstr ""
 
-#: includes/admin-functions.php:482
+#: includes/admin-functions.php:509
+msgid "Set user's Author Base according to their role. (The above \"Author Base\" setting will be used as a fallback.)"
+msgstr ""
+
+#: includes/admin-functions.php:590
+msgid "Automatically update Author Slug when a user updates their profile."
+msgstr ""
+
+#: includes/admin-functions.php:615
 msgid "username (Default)"
 msgstr ""
 
-#: includes/admin-functions.php:483
+#: includes/admin-functions.php:616
 msgid "nickname"
 msgstr ""
 
-#: includes/admin-functions.php:484
+#: includes/admin-functions.php:617
+msgid "displayname"
+msgstr ""
+
+#: includes/admin-functions.php:618
 msgid "firstname"
 msgstr ""
 
-#: includes/admin-functions.php:485
+#: includes/admin-functions.php:619
 msgid "lastname"
 msgstr ""
 
-#: includes/admin-functions.php:486
+#: includes/admin-functions.php:620
 msgid "firstname-lastname"
 msgstr ""
 
-#: includes/admin-functions.php:487
+#: includes/admin-functions.php:621
 msgid "lastname-firstname"
 msgstr ""
 
-#: includes/admin-functions.php:521
+#: includes/admin-functions.php:652
 msgid "Settings"
+msgstr ""
+#. Plugin Name of the plugin/theme
+msgid "Edit Author Slug"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
@@ -129,11 +134,7 @@ msgid "http://brandonallen.org/wordpress/plugins/edit-author-slug/"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid ""
-"Allows an Admin (or capable user) to edit the author slug of a user, and "
-"change the Author Base. <em>i.e. - (WordPress default structure) http://"
-"example.com/author/username/ (Plugin allows) http://example.com/ninja/master-"
-"ninja/</em>"
+msgid "Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>"
 msgstr ""
 
 #. Author of the plugin/theme
