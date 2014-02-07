@@ -22,6 +22,8 @@ delete_option( '_ba_eas_db_version'            );
 delete_option( '_ba_eas_old_options'           );
 delete_option( '_ba_eas_do_auto_update'        );
 delete_option( '_ba_eas_default_user_nicename' );
+delete_option( '_ba_eas_do_role_based'         );
+delete_option( '_ba_eas_role_slugs'            );
 delete_option( 'ba_edit_author_slug'           );
 
 // Final flush for good measure

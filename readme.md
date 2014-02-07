@@ -1,9 +1,9 @@
 # Edit Author Slug
 **Contributors:** thebrandonallen  
-**Tags:** author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user  
+**Tags:** author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles  
 **Requires at least:** 3.6.1  
 **Tested up to:** 3.8.1  
-**Stable tag:** 0.9.6  
+**Stable tag:** 0.9.6
 
 Allows an admin (or capable user) to edit the author slug of a user, and change the author base.
 
@@ -11,11 +11,15 @@ Allows an admin (or capable user) to edit the author slug of a user, and change 
 
 This plugin allows an Admin to change the author slug (a.k.a. - nicename), without having to actually enter the database. You can also change the Author Base (the '/author/' portion of the author URLs). Two new fields will be added to your Dashboard. The "Edit Author Slug" field can be found under Users > Your Profile or Users > Authors & Users (Users > Users in WP 3.0). The "Author Base" field can be found under Settings > Edit Author Slug. This allows you to craft the perfect URL structure for you Author pages. For your convenience, an Author Slug column is added to make it easier to determine if one needs to change the Author Slug.
 
-WordPress default structure
+WordPress default structure  
 http://example.com/author/username/
 
-Edit Author Slug allows for
+Edit Author Slug allows for  
 http://example.com/ninja/master-ninja/
+
+or using a role-based author base  
+http://example.com/ida/master-splinter/ (for an Administrator Role)  
+http://example.com/koga/leonardo/ (for a Subscriber Role)
 
 #### Translations Available
 * Dutch - props Juliette Reinders Folmer
@@ -45,6 +49,12 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 
 ## Changelog
 
+#### 1.0
+* Added ability to do role-based author bases
+* Moderate code refactoring
+* Various code fixes and improvements
+* Add "nickname" as option for auto-update
+
 #### 0.9.6
 * Fixed loading of translation files. Looks in wp-content/plugins/edit-author-slug/languages. If you're running 3.7+ (and you are... aren't you?), it will fall back to wp-content/languages/plugins if a proper localization can't be found in the edit-author-slug folder.
 
@@ -66,7 +76,7 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 #### 0.9.1
 * Add 'Settings' link to plugins list table
 
-#### 0.9.0
+#### 0.9
 * Allow Author Slug to be automatically created/updated based on a defined structure
 * Switched to using the Settings API, which also means that all options moved to the Settings > Edit Author Slug page
 * Various code improvements/optimizations
@@ -74,7 +84,7 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 #### 0.8.1
 * Fix a bug that prevented non-admin users from updating their profile
 
-#### 0.8.0
+#### 0.8
 * Drastically improved error handling and feedback for author slug editing.
 * Restore duplicate author slug check as old method could alter the slug without any sort of warning.
 * Further improve the logic for flushing rewrite rules.
@@ -149,6 +159,9 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 * Initial release.
 
 ## Upgrade Notice
+
+#### 1.0
+Role-based author bases are here!
 
 #### 0.4
 Adds ability to change the Author Base (not a required upgrade)
