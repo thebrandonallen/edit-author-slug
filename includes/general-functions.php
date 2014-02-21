@@ -289,6 +289,70 @@ function ba_eas_author_link( $link = '', $user_id = 0, $nicename = '' ) {
 	return $link;
 }
 
+/**
+ * Allow author templates to be based on role.
+ *
+ * Instead of only using author-{user_nicename}.php, author-{ID}.php, and author.php
+ * for templates, this allows author-{role}.php or author-{role-slug}.php to be used as well.
+ *
+ * @since 1.0.0
+ *
+ * @param string $template Current template according to template hierarchy
+ *
+ * @uses get_queried_object() To get the queried object (should be WP_User object).
+ * @uses ba_eas() BA_Edit_Author_Slug object
+ * @uses locate_template() To see if we have role-based templates.
+ *
+ * @return string Author archive link
+ */
+function ba_eas_template_include( $template ) {
+
+	// Bail if we're not doing role-based author bases
+	if ( !ba_eas_do_role_based_author_base() ) {
+		return $template;
+	}
+
+	// Get queried object, should be a WP_User object
+	$author = get_queried_object();
+
+	// Make sure we have a WP_User object
+	if ( !is_a( $author, 'WP_User' ) ) {
+		return $template;
+	}
+
+	// nicename and ID templates should take priority, so we need to check for their existence
+	$nicename_template = strpos( $template, "author-{$author->user_nicename}.php" );
+	$id_template       = strpos( $template, "author-{$author->ID}.php"            );
+
+	// If they don't exist, search for a role based template
+	if ( false === $nicename_template && false === $id_template ) {
+
+		// Grab the first listed role
+		if ( !empty( $author->roles ) && is_array( $author->roles ) ) {
+			$role = array_shift( $author->roles );
+		}
+
+		// Get the role slug
+		$role_slug = ba_eas()->role_slugs[$role]['slug'];
+
+		// Set the templates array
+		$templates = array(
+			( empty( $role )      ) ? false : "author-{$role}.php",
+			( empty( $role_slug ) ) ? false : "author-{$role_slug}.php",
+		);
+
+		// Check for the template
+		$new_template = locate_template( $templates );
+
+		// If we have a role-based template, let's set it to be loaded
+		if ( '' != $new_template ) {
+			$template = $new_template;
+		}
+	}
+
+	return $template;
+}
+
 /** Miscellaneous *************************************************************/
 
 /**
@@ -345,7 +409,7 @@ function ba_eas_author_rewrite_rules( $author_rewrite_rules ) {
  *
  * @global object $wp_roles WP_Roles object
  * @uses sanitize_title() To sanitize the role slug
- * 
+ *
  * @return array WP_Roles::roles object
  */
 function ba_eas_get_editable_roles() {
@@ -378,11 +442,11 @@ function ba_eas_get_editable_roles() {
  * Clean and update the nicename cache.
  *
  * @since 1.0.0
- * 
+ *
  * @param int $user_id
  * @param object|string $old_user_data WP_User object when coming from hook. Old nicename otherwise.
  * @param string $new_nicename
- * 
+ *
  * @uses get_userdata() To get a WP_User object.
  * @uses wp_cache_delete() To delete the old nicename from cache.
  * @uses wp_cache_add() To add the new nicename to cache.
@@ -393,7 +457,7 @@ function ba_eas_update_nicename_cache( $user_id = 0, $old_user_data = '', $new_n
 	if ( empty( $user_id ) && empty( $old_user_data->ID ) ) {
 		return;
 	}
-	
+
 	// Get a user_id. This will probably never happen.
 	if ( empty( $user_id ) ) {
 		$user_id = $old_user_data->ID;
