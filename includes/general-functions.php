@@ -38,24 +38,30 @@ function ba_eas_do_auto_update() {
  * @param int $user_id User id
  * @param bool $bulk Bulk upgrade flag. Defaults to false
  *
- * @uses ba_eas_do_auto_update() Do we auto-update?
- * @uses get_userdata() To get the user object
- * @uses apply_filters() To call the 'ba_eas_auto_update_user_nicename_structure' hook
- * @uses ba_eas() BA_Edit_Author_Slug object
- * @uses apply_filters() To call the 'ba_eas_pre_auto_update_user_nicename' hook
- * @uses remove_action() To remove the 'ba_eas_auto_update_user_nicename_single' and prevent looping
- * @uses wp_update_user() Update to new user_nicename
- * @uses wp_cache_delete() To delete the 'userslugs' cache for old nicename
+ * @uses ba_eas_do_auto_update() Do we auto-update?.
+ * @uses get_userdata() To get the user object.
+ * @uses apply_filters() To call the 'ba_eas_auto_update_user_nicename_structure' hook.
+ * @uses ba_eas() BA_Edit_Author_Slug object.
+ * @uses sanitize_title() To sanitize the new nicename.
+ * @uses apply_filters() To call the 'ba_eas_pre_auto_update_user_nicename' hook.
+ * @uses remove_action() To remove the 'ba_eas_auto_update_user_nicename_single' and prevent looping.
+ * @uses wp_update_user() Update to new user_nicename.
+ * @uses is_wp_error() To make sure update_user was successful before we clear the cache.
+ * @uses ba_eas_update_nicename_cache() There’s always money in the banana stand!
+ * @uses add_action() To re-add the 'ba_eas_auto_update_user_nicename_single' hook.
  *
  * @return int $user_id. False on failure
  */
 function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
+
 	// Bail if there's no id or object
 	if ( empty( $user_id ) ) {
 		return false;
 	}
 
+	// If we're not bulk updating, check if we should auto-update
 	if ( false === $bulk ) {
+
 		// Should we auto-update
 		if ( !ba_eas_do_auto_update() ) {
 			return false;
@@ -97,7 +103,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	// Setup default nicename
 	$nicename = $current_nicename;
 
-	// Setup the new nicename
+	// Setup the new nicename based on the provided structure
 	switch( $structure ) {
 
 		case 'username':
@@ -197,7 +203,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
  *
  * @param int $user_id User id
  *
- * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename
+ * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename.
  */
 function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
 	ba_eas_auto_update_user_nicename( $user_id );
@@ -212,7 +218,7 @@ function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
  *
  * @param int $user_id User id
  *
- * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename
+ * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename.
  */
 function ba_eas_auto_update_user_nicename_bulk( $user_id = 0 ) {
 	ba_eas_auto_update_user_nicename( $user_id, true );
@@ -226,9 +232,9 @@ function ba_eas_auto_update_user_nicename_bulk( $user_id = 0 ) {
  * @since 1.0.0
  *
  * @uses ba_eas() BA_Edit_Author_Slug object
- * @uses apply_filters() To call 'ba_eas_do_role_based_author_base' hook
+ * @uses apply_filters() To call 'ba_eas_do_role_based_author_base' hook.
  *
- * @return bool True if role-based author base enabled
+ * @return bool True if role-based author base enabled.
  */
 function ba_eas_do_role_based_author_base() {
 
@@ -248,15 +254,16 @@ function ba_eas_do_role_based_author_base() {
  * @param int $user_id
  * @param string $nicename
  *
+ * @uses ba_eas_do_role_based_author_base() To determine if we're doing role-based author bases.
  * @uses get_userdata() WP_User object
- * @uses apply_filters() To call 'ba_eas_do_role_based_author_base' hook
+ * @uses ba_eas() BA_Edit_Author_Slug object
  *
  * @return string Author archive link
  */
 function ba_eas_author_link( $link = '', $user_id = 0, $nicename = '' ) {
 
 	// Add a role slug if we're doing role based author bases
-	if ( ba_eas()->do_role_based && false !== strpos( $link, '%ba_eas_author_role%' ) ) {
+	if ( ba_eas_do_role_based_author_base() && false !== strpos( $link, '%ba_eas_author_role%' ) ) {
 
 		// Setup the user
 		$user = get_userdata( $user_id );
@@ -281,7 +288,6 @@ function ba_eas_author_link( $link = '', $user_id = 0, $nicename = '' ) {
 	// Return the link
 	return $link;
 }
-add_filter( 'author_link', 'ba_eas_author_link', 10, 3 );
 
 /** Miscellaneous *************************************************************/
 
@@ -303,7 +309,10 @@ function ba_eas_flush_rewrite_rules() {
  * rules array.
  *
  * @param array Author rewrite rules
- * @return void
+ *
+ * @uses ba_eas_do_role_based_author_base() To determine if we're doing role-based author bases.
+ *
+ * @return array Author rewrite rules
  */
 function ba_eas_author_rewrite_rules( $author_rewrite_rules ) {
 
@@ -319,7 +328,6 @@ function ba_eas_author_rewrite_rules( $author_rewrite_rules ) {
 
 	return $author_rewrite_rules;
 }
-add_filter( 'author_rewrite_rules', 'ba_eas_author_rewrite_rules' );
 
 /**
  * Fetch a filtered list of user roles that the current user is
@@ -335,6 +343,9 @@ add_filter( 'author_rewrite_rules', 'ba_eas_author_rewrite_rules' );
  *
  * @since 1.0.0
  *
+ * @global object $wp_roles WP_Roles object
+ * @uses sanitize_title() To sanitize the role slug
+ * 
  * @return array WP_Roles::roles object
  */
 function ba_eas_get_editable_roles() {
@@ -350,7 +361,7 @@ function ba_eas_get_editable_roles() {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $all_roles List of roles.
+	 * @param array WP_Roles::roles List of roles.
 	 */
 	$editable_roles = apply_filters( 'editable_roles', $wp_roles->roles );
 
@@ -364,19 +375,28 @@ function ba_eas_get_editable_roles() {
 }
 
 /**
- * ba_eas_update_nicename_cache function.
+ * Clean and update the nicename cache.
  *
- * @access public
- * @param int $user_id (default: 0)
- * @param string $old_user_data (default: '')
- * @param string $new_nicename (default: '')
- * @return void
+ * @since 1.0.0
+ * 
+ * @param int $user_id
+ * @param object|string $old_user_data WP_User object when coming from hook. Old nicename otherwise.
+ * @param string $new_nicename
+ * 
+ * @uses get_userdata() To get a WP_User object.
+ * @uses wp_cache_delete() To delete the old nicename from cache.
+ * @uses wp_cache_add() To add the new nicename to cache.
  */
 function ba_eas_update_nicename_cache( $user_id = 0, $old_user_data = '', $new_nicename = '' ) {
 
 	// Bail if there's no user
-	if ( empty( $user_id ) ) {
+	if ( empty( $user_id ) && empty( $old_user_data->ID ) ) {
 		return;
+	}
+	
+	// Get a user_id. This will probably never happen.
+	if ( empty( $user_id ) ) {
+		$user_id = $old_user_data->ID;
 	}
 
 	// We got here via 'profile_update'

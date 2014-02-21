@@ -27,6 +27,6 @@ delete_option( '_ba_eas_role_slugs'            );
 delete_option( 'ba_edit_author_slug'           );
 
 // Final flush for good measure
-flush_rewrite_rules( false );
+delete_option( 'rewrite_rules' );
 
 ?>
