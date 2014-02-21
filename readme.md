@@ -1,4 +1,4 @@
-# Edit Author Slug
+# Edit Author Slug [![Build Status](https://travis-ci.org/thebrandonallen/edit-author-slug.png?branch=master)](https://travis-ci.org/thebrandonallen/edit-author-slug)
 **Contributors:** thebrandonallen  
 **Tags:** author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles  
 **Requires at least:** 3.6.1  
