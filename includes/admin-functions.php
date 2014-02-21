@@ -126,13 +126,13 @@ function ba_eas_show_user_nicename( $user ) {
  */
 function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
-	// Check the nonce
-	check_admin_referer( 'update-user_' . $user->ID );
-
 	// We shouldn't be here if we're not updating
 	if ( !$update ) {
 		return;
 	}
+
+	// Check the nonce
+	check_admin_referer( 'update-user_' . $user->ID );
 
 	// Bail early if user can't edit the slug
 	if ( !ba_eas_can_edit_author_slug() ) {
