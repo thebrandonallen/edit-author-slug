@@ -56,9 +56,11 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 
 = 1.0 =
 * Added ability to do role-based author bases
+* Added ability to use role-based author templates
 * Moderate code refactoring
 * Various code fixes and improvements
 * Add "nickname" as option for auto-update
+* First pass at unit test (only checks if the plugin is installed, for now)
 
 = 0.9.6 =
 * Fixed loading of translation files. Looks in wp-content/plugins/edit-author-slug/languages. If you're running 3.7+ (and you are... aren't you?), it will fall back to wp-content/languages/plugins if a proper localization can't be found in the edit-author-slug folder.
