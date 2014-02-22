@@ -46,3 +46,6 @@ add_filter( 'author_link', 'ba_eas_author_link', 10, 3 );
 
 // Filter author rewrite rules
 add_filter( 'author_rewrite_rules', 'ba_eas_author_rewrite_rules' );
+
+// Add role-based author templates
+add_filter( 'author_template', 'ba_eas_template_include' );
