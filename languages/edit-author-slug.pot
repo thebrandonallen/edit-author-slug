@@ -3,9 +3,9 @@
 # Brandon Allen <wp_plugins [at] brandonallen (dot) org>, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: Edit Author Slug 1.0-RC2\n"
+"Project-Id-Version: Edit Author Slug 1.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/edit-author-slug\n"
-"POT-Creation-Date: 2014-02-21 08:55:46+00:00\n"
+"POT-Creation-Date: 2014-02-26 15:50:09+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
