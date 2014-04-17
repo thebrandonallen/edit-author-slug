@@ -139,11 +139,13 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 		return;
 	}
 
-	// Setup the user_id
-	$user_id = (int) $user->ID;
+	// Validate the user_id
+	if ( empty( $user->ID ) ) {
+		return;
+	}
 
 	// Stash the original user object
-	$_user = $user;
+	$_user = get_userdata( $user->ID );
 
 	// Check for a custom author slug
 	if ( !empty( $_POST['ba_eas_author_slug'] ) && isset( $_POST['ba_eas_author_slug_custom'] ) && '\c\u\s\t\o\m' == stripslashes( $_POST['ba_eas_author_slug'] ) ) {
@@ -181,7 +183,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 		}
 
 		// Does this author slug already exist?
-		if ( get_user_by( 'slug', $author_slug ) && (int) get_user_by( 'slug', $author_slug )->ID !== $user_id ) {
+		if ( get_user_by( 'slug', $author_slug ) && (int) get_user_by( 'slug', $author_slug )->ID !== $user->ID ) {
 			$errors->add( 'ba_edit_author_slug', sprintf( __( '<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try something different.' ), '<strong><em>' . esc_attr( $author_slug ) . '</em></strong>' ) );
 			return;
 		}
