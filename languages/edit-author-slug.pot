@@ -3,9 +3,9 @@
 # Brandon Allen <wp_plugins [at] brandonallen (dot) org>, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: Edit Author Slug 1.0\n"
+"Project-Id-Version: Edit Author Slug 1.0.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/edit-author-slug\n"
-"POT-Creation-Date: 2014-02-26 15:50:09+00:00\n"
+"POT-Creation-Date: 2014-04-17 21:53:49+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,7 +17,7 @@ msgstr ""
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 
-#: includes/admin-functions.php:78 includes/admin-functions.php:421
+#: includes/admin-functions.php:78 includes/admin-functions.php:423
 msgid "Edit Author Slug"
 msgstr ""
 
@@ -30,7 +30,7 @@ msgid "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'"
 msgstr ""
 
 #: includes/admin-functions.php:82 includes/admin-functions.php:84
-#: includes/admin-functions.php:238 includes/admin-functions.php:487
+#: includes/admin-functions.php:240 includes/admin-functions.php:489
 msgid "Author Slug"
 msgstr ""
 
@@ -38,95 +38,95 @@ msgstr ""
 msgid "Custom:"
 msgstr ""
 
-#: includes/admin-functions.php:161
+#: includes/admin-functions.php:163
 msgid "<strong>ERROR</strong>: An author slug cannot be blank. Please try again."
 msgstr ""
 
-#: includes/admin-functions.php:179
+#: includes/admin-functions.php:181
 msgid "<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different."
 msgstr ""
 
-#: includes/admin-functions.php:185
+#: includes/admin-functions.php:187
 msgid "<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try something different."
 msgstr ""
 
-#: includes/admin-functions.php:421 includes/admin-functions.php:439
+#: includes/admin-functions.php:423 includes/admin-functions.php:441
 msgid "Edit Author Slug Settings"
 msgstr ""
 
-#: includes/admin-functions.php:465 includes/admin-functions.php:468
+#: includes/admin-functions.php:467 includes/admin-functions.php:470
 msgid "Author Base"
 msgstr ""
 
-#: includes/admin-functions.php:472
+#: includes/admin-functions.php:474
 msgid "Role-Based Author Base"
 msgstr ""
 
-#: includes/admin-functions.php:476
+#: includes/admin-functions.php:478
 msgid "Role Slugs"
 msgstr ""
 
-#: includes/admin-functions.php:480
+#: includes/admin-functions.php:482
 msgid "Automatic Author Slug Creation"
 msgstr ""
 
-#: includes/admin-functions.php:483
+#: includes/admin-functions.php:485
 msgid "Automatically Update"
 msgstr ""
 
-#: includes/admin-functions.php:501
+#: includes/admin-functions.php:503
 msgid "Change your author base to something more fun!"
 msgstr ""
 
-#: includes/admin-functions.php:516
+#: includes/admin-functions.php:518
 msgid "Allow Author Slugs to be automatically update, and set the default Author Slug structure for users. Automatic updating will only occur when a user can't edit Author Slugs on their own."
 msgstr ""
 
-#: includes/admin-functions.php:516
+#: includes/admin-functions.php:518
 msgid "This could have SEO repercussions if users update their profiles frequently, and it will override any manual editing of the Author Slug you may have previously completed."
 msgstr ""
 
-#: includes/admin-functions.php:535
+#: includes/admin-functions.php:537
 msgid "Defaults to 'author'"
 msgstr ""
 
-#: includes/admin-functions.php:553
+#: includes/admin-functions.php:555
 msgid "Set user's Author Base according to their role. (The above \"Author Base\" setting will be used as a fallback.)"
 msgstr ""
 
-#: includes/admin-functions.php:639
+#: includes/admin-functions.php:641
 msgid "Automatically update Author Slug when a user updates their profile."
 msgstr ""
 
-#: includes/admin-functions.php:666
+#: includes/admin-functions.php:668
 msgid "username (Default)"
 msgstr ""
 
-#: includes/admin-functions.php:667
+#: includes/admin-functions.php:669
 msgid "nickname"
 msgstr ""
 
-#: includes/admin-functions.php:668
+#: includes/admin-functions.php:670
 msgid "displayname"
 msgstr ""
 
-#: includes/admin-functions.php:669
+#: includes/admin-functions.php:671
 msgid "firstname"
 msgstr ""
 
-#: includes/admin-functions.php:670
+#: includes/admin-functions.php:672
 msgid "lastname"
 msgstr ""
 
-#: includes/admin-functions.php:671
+#: includes/admin-functions.php:673
 msgid "firstname-lastname"
 msgstr ""
 
-#: includes/admin-functions.php:672
+#: includes/admin-functions.php:674
 msgid "lastname-firstname"
 msgstr ""
 
-#: includes/admin-functions.php:704
+#: includes/admin-functions.php:706
 msgid "Settings"
 msgstr ""
 #. Plugin Name of the plugin/theme
