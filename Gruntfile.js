@@ -60,7 +60,22 @@ module.exports = function(grunt) {
 			}
 		},
 		'string-replace': {
-			version: {
+			dev: {
+				files: {
+					'edit-author-slug.php': 'edit-author-slug.php',
+				},
+				options: {
+					replacements: [{
+						pattern: /(\$this->version.*)'(.*)';/gm, // For plugin version variable
+						replacement: '$1\'<%= pkg.version %>\';'
+					},
+					{
+						pattern: /(\* Version:\s*)(.*)$/gm, // For plugin header
+						replacement: '$1<%= pkg.version %>'
+					}]
+				}
+			},
+			build: {
 				files: {
 					'edit-author-slug.php': 'edit-author-slug.php',
 					'readme.md': 'readme.md',
@@ -68,15 +83,15 @@ module.exports = function(grunt) {
 				},
 				options: {
 					replacements: [{
-						pattern: /(\$this->version.*)'(.*)';/gm,
+						pattern: /(\$this->version.*)'(.*)';/gm, // For plugin version variable
 						replacement: '$1\'<%= pkg.version %>\';'
 					},
 					{
-						pattern: /(\* Version:\s*)(.*)$/gm,
+						pattern: /(\* Version:\s*)(.*)$/gm, // For plugin header
 						replacement: '$1<%= pkg.version %>'
 					},
 					{
-						pattern: /(Stable tag:[\*\ ]*)(.*\S)/gim,
+						pattern: /(Stable tag:[\*\ ]*)(.*\S)/gim, // For readme.*
 						replacement: '$1<%= pkg.version %>'
 					}]
 				}
@@ -91,7 +106,7 @@ module.exports = function(grunt) {
 	});
 
 	// Build tasks.
-	grunt.registerTask( 'build', [ 'makepot', 'string-replace:version' ] );
+	grunt.registerTask( 'build', [ 'makepot', 'string-replace:build' ] );
 
 	// PHPUnit test task.
 	grunt.registerMultiTask( 'phpunit', 'Runs PHPUnit tests, including the multisite tests.', function() {
