@@ -562,28 +562,33 @@ function ba_eas_admin_setting_callback_do_role_based() {
  *
  * @since 1.0.0
  *
- * @uses ba_eas_get_editable_roles() To get the editable roles.
- * @uses get_option() To get the role slugs array.
- * @uses wp_parse_args() To parse the role slugs.
- * @uses esc_html_e() To sanitize localized text for display.
- * @uses sanitize_title() To sanitize the role slugs.
+ * @uses ba_eas() To get the role slugs object.
+ * @uses ba_eas_get_default_role_slugs() To get the editable roles.
  * @uses translate_user_role() To translate the impossible.
+ * @uses sanitize_title() To sanitize the role slugs.
+ * @uses esc_attr() To sanitize role slugs for display.
+ * @uses esc_html() To sanitize localized text for display.
  */
 function ba_eas_admin_setting_callback_role_slugs() {
 
-	// Get editable_roles array
-	$editable_roles = ba_eas_get_editable_roles();
-
-	// Merge system roles with any customizations we may have
-	$roles = wp_parse_args( get_option( '_ba_eas_role_slugs', array() ), $editable_roles );
+	// Make sure we didn't pick up any dynamic roles between now and initialization
+	$roles = array_replace_recursive( ba_eas()->role_slugs, ba_eas_get_default_role_slugs() );
 
 	// Display the role slug customization fields
-	foreach( $roles as $key => $role ) {
+	foreach( $roles as $role => $details ) {
+
+		if ( empty( $details['name'] ) ) {
+			continue;
+		}
+
+		// Check for empty slugs from picking up a dynamic role
+		if ( empty( $details['slug'] ) ) {
+			$details['slug'] = sanitize_title( translate_user_role( $details['name'] ) );
+		}
 ?>
 
-		<input name="_ba_eas_role_slugs[<?php esc_html_e( $key ); ?>][slug]" id="_ba_eas_role_slugs[<?php esc_html_e( $key ); ?>][slug]" type="text" value="<?php echo sanitize_title( $role['slug'] ); ?>" class="regular-text code" />
-		<input name="_ba_eas_role_slugs[<?php esc_html_e( $key ); ?>][name]" id="_ba_eas_role_slugs[<?php esc_html_e( $key ); ?>][name]" type="hidden" value="<?php echo $role['name']; ?>" />
-		<label for="_ba_eas_role_slugs[<?php esc_html_e( $key ); ?>][slug]"><?php esc_html_e( translate_user_role( $role['name'] ) ); ?></label><br />
+		<input name="_ba_eas_role_slugs[<?php echo esc_attr( $role ); ?>][slug]" id="_ba_eas_role_slugs[<?php echo esc_attr( $role ); ?>][slug]" type="text" value="<?php echo sanitize_title( $details['slug'] ); ?>" class="regular-text code" />
+		<label for="_ba_eas_role_slugs[<?php echo esc_attr( $role ); ?>][slug]"><?php echo esc_html( translate_user_role( $details['name'] ) ); ?></label><br />
 
 <?php
 	}
@@ -594,19 +599,20 @@ function ba_eas_admin_setting_callback_role_slugs() {
  *
  * @since 1.0.0
  *
+ * @uses ba_eas_get_default_role_slugs() To get the editable roles.
  * @uses sanitize_title() To sanitize the slug.
- * @uses ba_eas_get_editable_roles() To get the editable roles.
- * @uses get_option() To get the role slugs array.
- * @uses wp_parse_args() To parse the role slugs.
  * @uses ba_eas() BA_Edit_Author_Slug object.
  */
 function ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs = array() ) {
 
+	// Get default role slugs
+	$default_role_slugs = ba_eas_get_default_role_slugs();
+
 	// Sanitize the slugs passed via POST
 	foreach( $role_slugs as $role => $role_slug ) {
-		$slug           = sanitize_title( $role_slug['slug'] );
-		$editable_roles = ba_eas_get_editable_roles();
-		$role_slugs[$role]['slug'] = empty( $slug ) ? $editable_roles[$role]['slug'] : $slug;
+		$slug                      = sanitize_title( $role_slug['slug'] );
+		$backup_role_slug          = empty( $default_role_slugs[$role] ) ? sanitize_title( $role ) : $default_role_slugs[$role];
+		$role_slugs[$role]['slug'] = empty( $slug ) ? $backup_role_slug : $slug;
 	}
 
 	/*
@@ -616,8 +622,7 @@ function ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs = array(
 	 * This could lead to lower level admins stamping out customizations
 	 * that only a higher level admin can, and has already, set.
 	 */
-	$role_slugs = wp_parse_args( $role_slugs, get_option( '_ba_eas_role_slugs', array() ) );
-
+	$role_slugs = array_replace_recursive( $role_slugs, ba_eas()->role_slugs );
 
 	// Set BA_Edit_Author_Slug::role_slugs for later use
 	ba_eas()->role_slugs = $role_slugs;

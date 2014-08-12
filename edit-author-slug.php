@@ -336,20 +336,13 @@ final class BA_Edit_Author_Slug {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @uses ba_eas_get_editable_roles() To get an array of editable_roles.
+	 * @uses ba_eas_get_default_role_slugs() To get an array of default role slugs.
 	 * @uses get_option() To get the custom role slugs array.
-	 * @uses wp_parse_args() To merge our custom role slugs array with the default role slugs.
 	 */
 	public function set_role_slugs() {
 
-		// Get editable_roles array
-		$editable_roles = ba_eas_get_editable_roles();
-
 		// Merge system roles with any customizations we may have
-		$roles = wp_parse_args( get_option( '_ba_eas_role_slugs', array() ), $editable_roles );
-
-		// Set the slugs global
-		$this->role_slugs = $roles;
+		$this->role_slugs = array_replace_recursive( get_option( '_ba_eas_role_slugs', array() ), ba_eas_get_default_role_slugs() );
 	}
 
 	/** Custom Rewrite Rules *****************************************************/

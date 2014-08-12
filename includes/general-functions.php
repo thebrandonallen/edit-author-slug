@@ -429,14 +429,75 @@ function ba_eas_get_editable_roles() {
 	 */
 	$editable_roles = apply_filters( 'editable_roles', $wp_roles->roles );
 
-	// Filter out caps and set the default slug
+	// Remove user caps
 	foreach ( $editable_roles as $role => $details ) {
 		unset( $editable_roles[$role]['capabilities'] );
-		$editable_roles[$role]['slug'] = sanitize_title( $role );
 	}
 
 	return $editable_roles;
 }
+
+/**
+ * Get an list of default role slugs
+ *
+ * @since 1.0.2
+ *
+ * @uses ba_eas_get_editable_roles() To sanitize the role slug
+ * @uses translate_user_role() To translate default WP role names
+ * @uses sanitize_title() To sanitize the translated role name into a role slug
+ *
+ * @return array Role slugs array
+ */
+function ba_eas_get_default_role_slugs() {
+
+	// Get a filtered list of roles
+	$roles = ba_eas_get_editable_roles();
+
+	// Convert role names into role slugs
+	foreach( $roles as $role => $details ) {
+		$roles[$role]['slug'] = sanitize_title( translate_user_role( $details['name'] ) );
+	}
+
+	return $roles;
+}
+
+/**
+ * Add array_replace_recursive() for users of PHP 5.2.x
+ *
+ * http://php.net/manual/en/function.array-replace-recursive.php#109390
+ *
+ * @since 1.0.2
+ *
+ * @return array Role slugs array
+ */
+if ( ! function_exists( 'array_replace_recursive' ) ) {
+	function array_replace_recursive( $base, $replacements ) {
+		foreach( array_slice( func_get_args(), 1 ) as $replacements ) {
+			$bref_stack = array( &$base );
+			$head_stack = array( $replacements );
+
+			do {
+				end( $bref_stack );
+
+				$bref = &$bref_stack[key( $bref_stack )];
+				$head = array_pop( $head_stack );
+
+				unset( $bref_stack[key( $bref_stack )] );
+
+				foreach( array_keys( $head ) as $key ) {
+					if ( isset( $key, $bref, $bref[$key] ) && is_array( $bref[$key] ) && is_array( $head[$key] ) ) {
+						$bref_stack[] = &$bref[$key];
+						$head_stack[] = $head[$key];
+					} else {
+						$bref[$key] = $head[$key];
+					}
+				}
+			} while( count( $head_stack ) );
+		}
+
+		return $base;
+	}
+} // end function exists check
 
 /**
  * Clean and update the nicename cache.
