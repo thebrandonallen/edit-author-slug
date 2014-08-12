@@ -29,7 +29,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @uses apply_filters() To call the 'ba_eas_show_user_nicename_options_list' hook.
  * @uses esc_html_e() To make sure we're safe to display.
  * @uses checked() To check that box.
- * @uses esc_attr_e() To make sure we're safe to display.
+ * @uses esc_attr() To make sure we're safe to display.
  */
 function ba_eas_show_user_nicename( $user ) {
 
@@ -92,9 +92,9 @@ function ba_eas_show_user_nicename( $user ) {
 						$checked = false;
 					}
 				?>
-				<label title="<?php esc_attr_e( $item ); ?>"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="<?php esc_attr_e( $item ); ?>"<?php echo $checked_text; ?>> <span><?php esc_attr_e( $item ); ?></span></label><br>
+				<label title="<?php echo esc_attr( $item ); ?>"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="<?php echo esc_attr( $item ); ?>"<?php echo $checked_text; ?>> <span><?php echo esc_attr( $item ); ?></span></label><br>
 				<?php } ?>
-				<label title="<?php esc_attr_e( $nicename ); ?>"><input type="radio" id="ba_eas_author_slug_custom_radio" name="ba_eas_author_slug" value="\c\u\s\t\o\m"<?php checked( $checked ); ?>> <span><?php esc_html_e( 'Custom:', 'edit-author-slug' ); ?> </span></label> <input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="<?php esc_attr_e( $nicename ); ?>" class="regular-text" />
+				<label title="<?php echo esc_attr( $nicename ); ?>"><input type="radio" id="ba_eas_author_slug_custom_radio" name="ba_eas_author_slug" value="\c\u\s\t\o\m"<?php checked( $checked ); ?>> <span><?php esc_html_e( 'Custom:', 'edit-author-slug' ); ?> </span></label> <input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="<?php echo esc_attr( $nicename ); ?>" class="regular-text" />
 				</fieldset>
 			</td>
 		</tr></tbody>
@@ -160,7 +160,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
 	// Do we have an author slug?
 	if ( empty( $author_slug ) ) {
-		$errors->add( 'ba_edit_author_slug', __( '<strong>ERROR</strong>: An author slug cannot be blank. Please try again.' ) );
+		$errors->add( 'ba_edit_author_slug', __( '<strong>ERROR</strong>: An author slug cannot be blank. Please try again.', 'edit-author-slug' ) );
 		return;
 	}
 
@@ -178,13 +178,13 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
 		// Do we have an author slug?
 		if ( empty( $author_slug ) ) {
-			$errors->add( 'ba_edit_author_slug', __( '<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different.' ) );
+			$errors->add( 'ba_edit_author_slug', __( '<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different.', 'edit-author-slug' ) );
 			return;
 		}
 
 		// Does this author slug already exist?
 		if ( get_user_by( 'slug', $author_slug ) && (int) get_user_by( 'slug', $author_slug )->ID !== $user->ID ) {
-			$errors->add( 'ba_edit_author_slug', sprintf( __( '<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try something different.' ), '<strong><em>' . esc_attr( $author_slug ) . '</em></strong>' ) );
+			$errors->add( 'ba_edit_author_slug', sprintf( __( '<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try something different.', 'edit-author-slug' ), '<strong><em>' . esc_attr( $author_slug ) . '</em></strong>' ) );
 			return;
 		}
 
@@ -527,14 +527,14 @@ function ba_eas_admin_setting_callback_auto_update_section() {
  *
  * @uses ba_eas() BA_Edit_Author_Slug object
  * @uses apply_filters() To call 'editable_slug' hook
- * @uses esc_attr_e() To sanitize the author base
+ * @uses esc_attr() To sanitize the author base
  */
 function ba_eas_admin_setting_callback_author_base() {
 
 	$author_base = apply_filters( 'editable_slug', ba_eas()->author_base );
 ?>
 
-		<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php esc_attr_e( $author_base ); ?>" class="regular-text code" /> <em><?php _e( "Defaults to 'author'", 'edit-author-slug' ); ?></em>
+		<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php echo esc_attr( $author_base ); ?>" class="regular-text code" /> <em><?php _e( "Defaults to 'author'", 'edit-author-slug' ); ?></em>
 
 <?php
 }
@@ -552,7 +552,7 @@ function ba_eas_admin_setting_callback_do_role_based() {
 ?>
 
 		<input name="_ba_eas_do_role_based" id="_ba_eas_do_role_based" value="1"<?php checked( ba_eas()->do_role_based, '1' ); ?> type="checkbox" />
-		<label for="_ba_eas_do_role_based"><?php esc_html_e( 'Set user\'s Author Base according to their role. (The above "Author Base" setting will be used as a fallback.)' ); ?></label>
+		<label for="_ba_eas_do_role_based"><?php esc_html_e( 'Set user\'s Author Base according to their role. (The above "Author Base" setting will be used as a fallback.)', 'edit-author-slug' ); ?></label>
 
 <?php
 }
@@ -638,7 +638,7 @@ function ba_eas_admin_setting_callback_do_auto_update() {
 ?>
 
 		<input name="_ba_eas_do_auto_update" id="_ba_eas_do_auto_update" value="1"<?php checked( ba_eas()->do_auto_update, '1' ); ?> type="checkbox" />
-		<label for="_ba_eas_do_auto_update"><?php esc_html_e( 'Automatically update Author Slug when a user updates their profile.' ); ?></label>
+		<label for="_ba_eas_do_auto_update"><?php esc_html_e( 'Automatically update Author Slug when a user updates their profile.', 'edit-author-slug' ); ?></label>
 
 <?php
 }
@@ -650,7 +650,7 @@ function ba_eas_admin_setting_callback_do_auto_update() {
  *
  * @uses ba_eas() BA_Edit_Author_Slug object.
  * @uses apply_filters() To call 'ba_eas_default_user_nicename_options_list' hook.
- * @uses esc_attr_e() To sanitize the nicename options.
+ * @uses esc_attr() To sanitize the nicename options.
  * @uses selected() To determine if we're selected.
  */
 function ba_eas_admin_setting_callback_default_user_nicename() {
@@ -680,7 +680,7 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 
 		<select id="_ba_eas_default_user_nicename" name="_ba_eas_default_user_nicename">
 		<?php foreach ( (array) $options as $id => $item ) { ?>
-			<option id="<?php esc_attr_e( $id ); ?>" value="<?php esc_attr_e( $id ); ?>"<?php selected( $structure, $id ); ?>><?php esc_attr_e( $item ); ?></option>
+			<option id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $id ); ?>"<?php selected( $structure, $id ); ?>><?php echo esc_attr( $item ); ?></option>
 		<?php } ?>
 		</select>
 
