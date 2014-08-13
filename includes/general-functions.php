@@ -268,13 +268,9 @@ function ba_eas_author_link( $link = '', $user_id = 0, $nicename = '' ) {
 		// Setup the user
 		$user = get_userdata( $user_id );
 
-		// Return the link if we don't have a user
-		if ( empty( $user->ID ) ) {
-			return $link;
-		}
-
 		// Grab the first listed role
-		if ( !empty( $user->roles ) && is_array( $user->roles ) ) {
+		$role = '';
+		if ( ! empty( $user->roles ) && is_array( $user->roles ) ) {
 			$role = array_shift( $user->roles );
 		}
 
