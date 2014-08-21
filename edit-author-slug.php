@@ -45,12 +45,12 @@
 */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
  * Main Edit Author Slug class
  */
-if ( !class_exists( 'BA_Edit_Author_Slug' ) ) :
+if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 final class BA_Edit_Author_Slug {
 
@@ -157,7 +157,7 @@ final class BA_Edit_Author_Slug {
 	 *
 	 * @since 1.0.0
 	 */
-	public function __unset( $key ) { if ( isset( $this->data->$key ) ) unset( $this->data->$key ); }
+	public function __unset( $key ) { if ( isset( $this->data->$key ) ) { unset( $this->data->$key ); } }
 
 	/**
 	 * Magic method to prevent notices and errors from invalid method calls
@@ -210,7 +210,7 @@ final class BA_Edit_Author_Slug {
 		// Options
 		if ( $base = get_option( '_ba_eas_author_base', 'author' ) ) {
 			// Author base
-			if ( !empty( $base ) ) {
+			if ( ! empty( $base ) ) {
 				$this->author_base = $base;
 			}
 
@@ -220,12 +220,12 @@ final class BA_Edit_Author_Slug {
 		// Pre-0.9 Back compat
 		} elseif ( $options = get_option( 'ba_edit_author_slug' ) ) {
 			// Author base
-			if ( !empty( $options['author_base'] ) ) {
+			if ( ! empty( $options['author_base'] ) ) {
 				$this->author_base = $options['author_base'];
 			}
 
 			// Current DB version
-			if ( !empty( $options['db_version'] ) ) {
+			if ( ! empty( $options['db_version'] ) ) {
 				$this->current_db_version = absint( $options['db_version'] );
 			}
 		}
@@ -235,7 +235,7 @@ final class BA_Edit_Author_Slug {
 
 		// Load the default nicename structure for auto-update
 		$default_user_nicename = get_option( '_ba_eas_default_user_nicename', 'username' );
-		$this->default_user_nicename = ( !empty( $default_user_nicename ) ) ? $default_user_nicename : 'username';
+		$this->default_user_nicename = ( ! empty( $default_user_nicename ) ) ? $default_user_nicename : 'username';
 
 		// Load role-based author slug option
 		$this->do_role_based = absint( get_option( '_ba_eas_do_role_based', 0 ) );
@@ -278,7 +278,7 @@ final class BA_Edit_Author_Slug {
 		register_deactivation_hook( $this->file, 'ba_eas_deactivation' );
 
 		// Author Base Actions
-		add_action( 'after_setup_theme', array( $this, 'set_role_slugs')           );
+		add_action( 'after_setup_theme', array( $this, 'set_role_slugs' )          );
 		add_action( 'init',              array( $this, 'author_base_rewrite' ), 10 );
 		add_action( 'init',              array( $this, 'add_rewrite_tags' ),    20 );
 
@@ -325,7 +325,7 @@ final class BA_Edit_Author_Slug {
 			$GLOBALS['wp_rewrite']->author_base = '%ba_eas_author_role%';
 
 		// Has the author base changed from the default?
-		} elseif ( !empty( $this->author_base ) && 'author' != $this->author_base ) {
+		} elseif ( ! empty( $this->author_base ) && 'author' != $this->author_base ) {
 
 			$GLOBALS['wp_rewrite']->author_base = $this->author_base;
 		}
@@ -359,7 +359,7 @@ final class BA_Edit_Author_Slug {
 	public function add_rewrite_tags() {
 
 		// Should we be here?
-		if ( !ba_eas_do_role_based_author_base() ) {
+		if ( ! ba_eas_do_role_based_author_base() ) {
 			return;
 		}
 

@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * Edit Author Slug Uninstall Functions
@@ -10,11 +10,12 @@
  */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 // Make sure we're uninstalling
-if ( !defined( 'WP_UNINSTALL_PLUGIN') )
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	return false;
+}
 
 // Delete all the options
 delete_option( '_ba_eas_author_base'           );

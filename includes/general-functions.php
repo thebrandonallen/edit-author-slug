@@ -10,7 +10,7 @@
  */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /** Nicename ******************************************************************/
 
@@ -63,7 +63,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	if ( false === $bulk ) {
 
 		// Should we auto-update
-		if ( !ba_eas_do_auto_update() ) {
+		if ( ! ba_eas_do_auto_update() ) {
 			return false;
 		}
 	}
@@ -72,12 +72,12 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	$user = get_userdata( $user_id );
 
 	// Double check we're still good
-	if ( !is_object( $user ) || empty( $user ) ) {
+	if ( ! is_object( $user ) || empty( $user ) ) {
 		return false;
 	}
 
 	// Setup the user_id
-	if ( !empty( $user->ID ) ) {
+	if ( ! empty( $user->ID ) ) {
 		$user_id  = (int) $user->ID;
 
 	// No user_id so bail
@@ -104,11 +104,11 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	$nicename = $current_nicename;
 
 	// Setup the new nicename based on the provided structure
-	switch( $structure ) {
+	switch ( $structure ) {
 
 		case 'username':
 
-			if ( !empty( $user->user_login ) ) {
+			if ( ! empty( $user->user_login ) ) {
 				$nicename = $user->user_login;
 			}
 
@@ -116,7 +116,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 
 		case 'nickname':
 
-			if ( !empty( $user->nickname ) ) {
+			if ( ! empty( $user->nickname ) ) {
 				$nicename = $user->nickname;
 			}
 
@@ -124,7 +124,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 
 		case 'displayname':
 
-			if ( !empty( $user->display_name ) ) {
+			if ( ! empty( $user->display_name ) ) {
 				$nicename = $user->display_name;
 			}
 
@@ -132,7 +132,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 
 		case 'firstname':
 
-			if ( !empty( $user->first_name ) ) {
+			if ( ! empty( $user->first_name ) ) {
 				$nicename = $user->first_name;
 			}
 
@@ -140,7 +140,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 
 		case 'lastname':
 
-			if ( !empty( $user->last_name ) ) {
+			if ( ! empty( $user->last_name ) ) {
 				$nicename = $user->last_name;
 			}
 
@@ -148,7 +148,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 
 		case 'firstlast':
 
-			if ( !empty( $user->first_name ) && !empty( $user->last_name ) ) {
+			if ( ! empty( $user->first_name ) && ! empty( $user->last_name ) ) {
 				$nicename = $user->first_name . '-' . $user->last_name;
 			}
 
@@ -156,7 +156,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 
 		case 'lastfirst':
 
-			if ( !empty( $user->first_name ) && !empty( $user->last_name ) ) {
+			if ( ! empty( $user->first_name ) && ! empty( $user->last_name ) ) {
 				$nicename = $user->last_name . '-' . $user->first_name;
 			}
 
@@ -182,7 +182,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	 * we must fail silently here. Therefore, we only want to update
 	 * the cache if we're successful.
 	 */
-	if ( !empty( $user_id ) && !is_wp_error( $user_id ) ) {
+	if ( ! empty( $user_id ) && ! is_wp_error( $user_id ) ) {
 
 		// Update the nicename cache
 		ba_eas_update_nicename_cache( $user_id, $current_nicename, $nicename );
@@ -275,7 +275,7 @@ function ba_eas_author_link( $link = '', $user_id = 0, $nicename = '' ) {
 		}
 
 		// Make sure we have a valid slug
-		$slug = empty( ba_eas()->role_slugs[$role]['slug'] ) ? ba_eas()->author_base : ba_eas()->role_slugs[$role]['slug'];
+		$slug = empty( ba_eas()->role_slugs[ $role ]['slug'] ) ? ba_eas()->author_base : ba_eas()->role_slugs[ $role ]['slug'];
 
 		// Add the role slug to the link
 		$link = str_replace( '%ba_eas_author_role%', $slug, $link );
@@ -304,7 +304,7 @@ function ba_eas_author_link( $link = '', $user_id = 0, $nicename = '' ) {
 function ba_eas_template_include( $template ) {
 
 	// Bail if we're not doing role-based author bases
-	if ( !ba_eas_do_role_based_author_base() ) {
+	if ( ! ba_eas_do_role_based_author_base() ) {
 		return $template;
 	}
 
@@ -312,7 +312,7 @@ function ba_eas_template_include( $template ) {
 	$author = get_queried_object();
 
 	// Make sure we have a WP_User object
-	if ( !is_a( $author, 'WP_User' ) ) {
+	if ( ! is_a( $author, 'WP_User' ) ) {
 		return $template;
 	}
 
@@ -324,12 +324,12 @@ function ba_eas_template_include( $template ) {
 	if ( false === $nicename_template && false === $id_template ) {
 
 		// Grab the first listed role
-		if ( !empty( $author->roles ) && is_array( $author->roles ) ) {
+		if ( ! empty( $author->roles ) && is_array( $author->roles ) ) {
 			$role = array_shift( $author->roles );
 		}
 
 		// Get the role slug
-		$role_slug = ba_eas()->role_slugs[$role]['slug'];
+		$role_slug = ba_eas()->role_slugs[ $role ]['slug'];
 
 		// Set the templates array
 		$templates = array(
@@ -381,7 +381,7 @@ function ba_eas_author_rewrite_rules( $author_rewrite_rules ) {
 		// We don't need them
 		foreach ( $author_rewrite_rules as $rule => $query ) {
 			if ( false === strpos( $query, 'author_name' ) ) {
-				unset( $author_rewrite_rules[$rule] );
+				unset( $author_rewrite_rules[ $rule ] );
 			}
 		}
 	}
@@ -427,7 +427,7 @@ function ba_eas_get_editable_roles() {
 
 	// Remove user caps
 	foreach ( $editable_roles as $role => $details ) {
-		unset( $editable_roles[$role]['capabilities'] );
+		unset( $editable_roles[ $role ]['capabilities'] );
 	}
 
 	return $editable_roles;
@@ -450,8 +450,8 @@ function ba_eas_get_default_role_slugs() {
 	$roles = ba_eas_get_editable_roles();
 
 	// Convert role names into role slugs
-	foreach( $roles as $role => $details ) {
-		$roles[$role]['slug'] = sanitize_title( translate_user_role( $details['name'] ) );
+	foreach ( $roles as $role => $details ) {
+		$roles[ $role ]['slug'] = sanitize_title( translate_user_role( $details['name'] ) );
 	}
 
 	return $roles;
@@ -468,27 +468,27 @@ function ba_eas_get_default_role_slugs() {
  */
 if ( ! function_exists( 'array_replace_recursive' ) ) {
 	function array_replace_recursive( $base, $replacements ) {
-		foreach( array_slice( func_get_args(), 1 ) as $replacements ) {
+		foreach ( array_slice( func_get_args(), 1 ) as $replacements ) {
 			$bref_stack = array( &$base );
 			$head_stack = array( $replacements );
 
 			do {
 				end( $bref_stack );
 
-				$bref = &$bref_stack[key( $bref_stack )];
+				$bref = &$bref_stack[ key( $bref_stack ) ];
 				$head = array_pop( $head_stack );
 
-				unset( $bref_stack[key( $bref_stack )] );
+				unset( $bref_stack[ key( $bref_stack ) ] );
 
-				foreach( array_keys( $head ) as $key ) {
-					if ( isset( $key, $bref, $bref[$key] ) && is_array( $bref[$key] ) && is_array( $head[$key] ) ) {
-						$bref_stack[] = &$bref[$key];
-						$head_stack[] = $head[$key];
+				foreach ( array_keys( $head ) as $key ) {
+					if ( isset( $key, $bref, $bref[ $key ] ) && is_array( $bref[ $key ] ) && is_array( $head[ $key ] ) ) {
+						$bref_stack[] = &$bref[ $key ];
+						$head_stack[] = $head[ $key ];
 					} else {
-						$bref[$key] = $head[$key];
+						$bref[ $key ] = $head[ $key ];
 					}
 				}
-			} while( count( $head_stack ) );
+			} while ( count( $head_stack ) );
 		}
 
 		return $base;

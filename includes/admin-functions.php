@@ -10,7 +10,7 @@
  */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /** Nicename ******************************************************************/
 
@@ -34,13 +34,13 @@ if ( !defined( 'ABSPATH' ) ) exit;
 function ba_eas_show_user_nicename( $user ) {
 
 	// Return early if the user can't edit the author slug
-	if ( !ba_eas_can_edit_author_slug() ) {
+	if ( ! ba_eas_can_edit_author_slug() ) {
 		return false;
 	}
 
 	// Setup the nicename
 	$nicename = '';
-	if ( !empty( $user->user_nicename ) ) {
+	if ( ! empty( $user->user_nicename ) ) {
 		$nicename = $user->user_nicename;
 	}
 
@@ -51,17 +51,17 @@ function ba_eas_show_user_nicename( $user ) {
 	$options['displayname'] = trim( sanitize_title( $user->display_name ) );
 
 	// Setup the first name
-	if ( !empty( $user->first_name ) ) {
+	if ( ! empty( $user->first_name ) ) {
 		$options['firstname'] = trim( sanitize_title( $user->first_name ) );
 	}
 
 	// Setup the last name
-	if ( !empty( $user->last_name ) ) {
+	if ( ! empty( $user->last_name ) ) {
 		$options['lastname'] = trim( sanitize_title( $user->last_name ) );
 	}
 
 	// Setup the first/last name combos
-	if ( !empty( $options['firstname'] ) && !empty( $options['lastname'] ) ) {
+	if ( ! empty( $options['firstname'] ) && ! empty( $options['lastname'] ) ) {
 		$options['firslast']  = $options['firstname'] . '-' . $options['lastname'];
 		$options['lastfirst'] = $options['lastname'] . '-' . $options['firstname'];
 	}
@@ -88,7 +88,7 @@ function ba_eas_show_user_nicename( $user ) {
 					$checked_text = checked( $item, $nicename, false );
 
 					// Flip the switch if we're checked to block custom from being checked
-					if ( !empty( $checked_text ) ) {
+					if ( ! empty( $checked_text ) ) {
 						$checked = false;
 					}
 				?>
@@ -127,7 +127,7 @@ function ba_eas_show_user_nicename( $user ) {
 function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
 	// We shouldn't be here if we're not updating
-	if ( !$update ) {
+	if ( ! $update ) {
 		return;
 	}
 
@@ -135,7 +135,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	check_admin_referer( 'update-user_' . $user->ID );
 
 	// Bail early if user can't edit the slug
-	if ( !ba_eas_can_edit_author_slug() ) {
+	if ( ! ba_eas_can_edit_author_slug() ) {
 		return;
 	}
 
@@ -148,7 +148,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	$_user = get_userdata( $user->ID );
 
 	// Check for a custom author slug
-	if ( !empty( $_POST['ba_eas_author_slug'] ) && isset( $_POST['ba_eas_author_slug_custom'] ) && '\c\u\s\t\o\m' == stripslashes( $_POST['ba_eas_author_slug'] ) ) {
+	if ( ! empty( $_POST['ba_eas_author_slug'] ) && isset( $_POST['ba_eas_author_slug_custom'] ) && '\c\u\s\t\o\m' == stripslashes( $_POST['ba_eas_author_slug'] ) ) {
 		$_POST['ba_eas_author_slug'] = $_POST['ba_eas_author_slug_custom'];
 	}
 
@@ -265,7 +265,7 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
 	if ( 'ba-eas-author-slug' == $column_name ) {
 		$user = get_userdata( $user_id );
 
-		if ( !empty( $user->user_nicename ) ) {
+		if ( ! empty( $user->user_nicename ) ) {
 			$default = esc_attr( $user->user_nicename );
 		}
 	}
@@ -301,8 +301,9 @@ function ba_eas_show_user_nicename_scripts() {
 	//<![CDATA[
 		jQuery(document).ready(function($){
 			$("input[name='ba_eas_author_slug']").click(function(){
-				if ( "ba_eas_author_slug_custom_radio" != $(this).attr("id") )
+				if ( "ba_eas_author_slug_custom_radio" != $(this).attr("id") ) {
 					$("input[name='ba_eas_author_slug_custom']").val( $(this).val() ).siblings('.example').text( $(this).siblings('span').text() );
+				}
 			});
 			$("input[name='ba_eas_author_slug_custom']").focus(function(){
 				$("#ba_eas_author_slug_custom_radio").attr("checked", "checked");
@@ -325,7 +326,7 @@ function ba_eas_show_user_nicename_scripts() {
 		jQuery(document).ready(function($){
 
 			// Hide the slugs if we're not doing role-based
-			if ( !$("input[name='_ba_eas_do_role_based']").is(':checked') ) {
+			if ( ! $("input[name='_ba_eas_do_role_based']").is(':checked') ) {
 				$("input[name='_ba_eas_do_role_based']").parents('tr').next('tr').addClass('hidden');
 			}
 
@@ -339,7 +340,7 @@ function ba_eas_show_user_nicename_scripts() {
 			});
 
 			// Hide the slugs if we're not doing auto-update
-			if ( !$("input[name='_ba_eas_do_auto_update']").is(':checked') ) {
+			if ( ! $("input[name='_ba_eas_do_auto_update']").is(':checked') ) {
 				$("input[name='_ba_eas_do_auto_update']").parents('tr').next('tr').addClass('hidden');
 			}
 
@@ -399,7 +400,7 @@ function ba_eas_sanitize_author_base( $author_base ) {
 		update_option( '_ba_eas_author_base', $ba_eas->author_base );
 
 		// Update the author_base in the WP_Rewrite object
-		if ( !empty( $ba_eas->author_base ) ) {
+		if ( ! empty( $ba_eas->author_base ) ) {
 			$GLOBALS['wp_rewrite']->author_base = $ba_eas->author_base;
 		}
 	}
@@ -575,7 +576,7 @@ function ba_eas_admin_setting_callback_role_slugs() {
 	$roles = array_replace_recursive( ba_eas()->role_slugs, ba_eas_get_default_role_slugs() );
 
 	// Display the role slug customization fields
-	foreach( $roles as $role => $details ) {
+	foreach ( $roles as $role => $details ) {
 
 		if ( empty( $details['name'] ) ) {
 			continue;
@@ -609,10 +610,10 @@ function ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs = array(
 	$default_role_slugs = ba_eas_get_default_role_slugs();
 
 	// Sanitize the slugs passed via POST
-	foreach( $role_slugs as $role => $role_slug ) {
-		$slug                      = sanitize_title( $role_slug['slug'] );
-		$backup_role_slug          = empty( $default_role_slugs[$role] ) ? sanitize_title( $role ) : $default_role_slugs[$role];
-		$role_slugs[$role]['slug'] = empty( $slug ) ? $backup_role_slug : $slug;
+	foreach ( $role_slugs as $role => $role_slug ) {
+		$slug                        = sanitize_title( $role_slug['slug'] );
+		$backup_role_slug            = empty( $default_role_slugs[ $role ] ) ? sanitize_title( $role ) : $default_role_slugs[ $role ];
+		$role_slugs[ $role ]['slug'] = empty( $slug ) ? $backup_role_slug : $slug;
 	}
 
 	/*
