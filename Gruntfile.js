@@ -106,7 +106,7 @@ module.exports = function(grunt) {
 	});
 
 	// Build tasks.
-	grunt.registerTask( 'build', [ 'makepot', 'string-replace:build' ] );
+	grunt.registerTask( 'build', [ 'string-replace:build', 'makepot' ] );
 
 	// PHPUnit test task.
 	grunt.registerMultiTask( 'phpunit', 'Runs PHPUnit tests, including the multisite tests.', function() {
