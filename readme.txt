@@ -2,8 +2,8 @@
 Contributors: thebrandonallen
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles
 Requires at least: 3.6.1
-Tested up to: 3.9
-Stable tag: 1.0.1
+Tested up to: 4.0
+Stable tag: 1.0.2
 
 Allows an admin (or capable user) to edit the author slug of a user, and change the author base.
 
@@ -53,6 +53,11 @@ While I've made every attempt to prevent this, I may have missed a spot or two. 
 If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums.
 
 == Changelog ==
+
+= 1.0.2 =
+* A number of localization fixes and improvements
+* Role slug improvements
+* Temporary, semi work-around for Co-Authors Plus [https://github.com/Automattic/Co-Authors-Plus/pull/204]
 
 = 1.0.1 =
 * Fix possible syntax error when updating a profile (props Christine https://wordpress.org/support/topic/undefined-property-error-1)
