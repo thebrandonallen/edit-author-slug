@@ -51,6 +51,7 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 
 #### 1.0.3
 I swear I tested this! :(
+
 * Fix custom roles slugs not saving
 
 #### 1.0.2
