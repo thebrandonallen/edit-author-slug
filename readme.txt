@@ -3,7 +3,7 @@ Contributors: thebrandonallen
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles
 Requires at least: 3.6.1
 Tested up to: 4.0
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 
 Allows an admin (or capable user) to edit the author slug of a user, and change the author base.
 
@@ -53,6 +53,10 @@ While I've made every attempt to prevent this, I may have missed a spot or two. 
 If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums.
 
 == Changelog ==
+
+= 1.0.3 =
+I swear I tested this! :(
+* Fix custom roles slugs not saving
 
 = 1.0.2 =
 * A number of localization fixes and improvements

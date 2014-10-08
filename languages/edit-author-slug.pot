@@ -3,16 +3,16 @@
 # Send translations to <wp_plugins [at] brandonallen (dot) org>, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: Edit Author Slug 1.0.2\n"
+"Project-Id-Version: Edit Author Slug 1.0.3\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/edit-author-slug\n"
-"POT-Creation-Date: 2014-09-05 00:00:30+00:00\n"
+"POT-Creation-Date: 2014-10-08 09:31:18+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"X-Generator: grunt-wp-i18n 0.4.7\n"
+"X-Generator: grunt-wp-i18n 0.4.8\n"
 
 #: edit-author-slug.php:125 edit-author-slug.php:132
 msgid "Cheatin&#8217; huh?"
@@ -109,39 +109,39 @@ msgid ""
 "setting will be used as a fallback.)"
 msgstr ""
 
-#: includes/admin-functions.php:647
+#: includes/admin-functions.php:655
 msgid "Automatically update Author Slug when a user updates their profile."
 msgstr ""
 
-#: includes/admin-functions.php:674
+#: includes/admin-functions.php:682
 msgid "username (Default)"
 msgstr ""
 
-#: includes/admin-functions.php:675
+#: includes/admin-functions.php:683
 msgid "nickname"
 msgstr ""
 
-#: includes/admin-functions.php:676
+#: includes/admin-functions.php:684
 msgid "displayname"
 msgstr ""
 
-#: includes/admin-functions.php:677
+#: includes/admin-functions.php:685
 msgid "firstname"
 msgstr ""
 
-#: includes/admin-functions.php:678
+#: includes/admin-functions.php:686
 msgid "lastname"
 msgstr ""
 
-#: includes/admin-functions.php:679
+#: includes/admin-functions.php:687
 msgid "firstname-lastname"
 msgstr ""
 
-#: includes/admin-functions.php:680
+#: includes/admin-functions.php:688
 msgid "lastname-firstname"
 msgstr ""
 
-#: includes/admin-functions.php:712
+#: includes/admin-functions.php:720
 msgid "Settings"
 msgstr ""
 
