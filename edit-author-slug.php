@@ -342,7 +342,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		public function set_role_slugs() {
 
 			// Merge system roles with any customizations we may have
-			$this->role_slugs = array_replace_recursive( get_option( '_ba_eas_role_slugs', array() ), ba_eas_get_default_role_slugs() );
+			$this->role_slugs = array_replace_recursive( ba_eas_get_default_role_slugs(), get_option( '_ba_eas_role_slugs', array() ) );
 		}
 
 		/** Custom Rewrite Rules *****************************************************/
@@ -364,13 +364,13 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			}
 
 			// Get the role slugs to add the rewrite tag
-			$role_slugs = wp_list_pluck( $this->role_slugs, 'slug' );
+			$role_slugs = array_filter( array_values( wp_list_pluck( $this->role_slugs, 'slug' ) ) );
 
 			// Add the author base as a fallback
 			$role_slugs[] = ba_eas()->author_base;
 
 			// Add the role-based rewrite tag, and the expected role slugs
-			add_rewrite_tag( '%ba_eas_author_role%', '(' . implode( '|', array_values( $role_slugs ) ) . ')' );
+			add_rewrite_tag( '%ba_eas_author_role%', '(' . implode( '|', array_unique( $role_slugs ) ) . ')' );
 		}
 	}
 
