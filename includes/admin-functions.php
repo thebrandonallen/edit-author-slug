@@ -173,9 +173,6 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	// Maybe update the author slug?
 	if ( $author_slug != $_user->user_nicename ) {
 
-		// Add the wpdb global only when necessary
-		global $wpdb;
-
 		// Do we have an author slug?
 		if ( empty( $author_slug ) ) {
 			$errors->add( 'ba_edit_author_slug', __( '<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different.', 'edit-author-slug' ) );
