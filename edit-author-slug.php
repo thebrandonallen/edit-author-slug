@@ -278,12 +278,12 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		private function includes() {
 
 			// Load the core functions
-			require_once( $this->plugin_dir . 'includes/general-functions.php' );
+			require_once( $this->plugin_dir . 'includes/functions.php' );
 			require_once( $this->plugin_dir . 'includes/hooks.php'             );
 
 			// Maybe load the admin functions
 			if ( is_admin() ) {
-				require_once( $this->plugin_dir . 'includes/admin-functions.php' );
+				require_once( $this->plugin_dir . 'includes/admin.php' );
 			}
 		}
 
