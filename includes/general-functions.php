@@ -252,7 +252,6 @@ function ba_eas_do_role_based_author_base() {
  *
  * @param string $link
  * @param int $user_id
- * @param string $nicename
  *
  * @uses ba_eas_do_role_based_author_base() To determine if we're doing role-based author bases.
  * @uses get_userdata() WP_User object
@@ -260,7 +259,7 @@ function ba_eas_do_role_based_author_base() {
  *
  * @return string Author archive link
  */
-function ba_eas_author_link( $link = '', $user_id = 0, $nicename = '' ) {
+function ba_eas_author_link( $link = '', $user_id = 0 ) {
 
 	// Add a role slug if we're doing role based author bases
 	if ( ba_eas_do_role_based_author_base() && false !== strpos( $link, '%ba_eas_author_role%' ) ) {

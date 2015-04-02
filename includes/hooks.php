@@ -42,7 +42,7 @@ add_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
 add_action( 'user_register',  'ba_eas_auto_update_user_nicename_single' );
 
 // Author permalink filtering for role-based author bases
-add_filter( 'author_link', 'ba_eas_author_link', 20, 3 );
+add_filter( 'author_link', 'ba_eas_author_link', 20, 2 );
 
 // Filter author rewrite rules
 add_filter( 'author_rewrite_rules', 'ba_eas_author_rewrite_rules' );
