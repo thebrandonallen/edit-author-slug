@@ -25,7 +25,7 @@
  */
 
 /*
-			Copyright 2014  Brandon Allen  (email : wp_plugins ([at]) brandonallen ([dot]) org)
+			Copyright 2015  Brandon Allen  (email : wp_plugins ([at]) brandonallen ([dot]) org)
 
 			This program is free software; you can redistribute it and/or modify
 			it under the terms of the GNU General Public License as published by
@@ -52,6 +52,13 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  */
 if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
+	/**
+	 * Final BA_Edit_Author_Slug class.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @final
+	 */
 	final class BA_Edit_Author_Slug {
 
 		/** Magic *****************************************************************/
@@ -82,11 +89,14 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * @since 1.0.0
 		 *
 		 * @staticvar object $instance
+		 *
 		 * @uses BA_Edit_Author_Slug::setup_globals() Setup the globals needed.
 		 * @uses BA_Edit_Author_Slug::includes() Include the required files.
 		 * @uses BA_Edit_Author_Slug::setup_actions() Setup the hooks and actions.
+		 *
 		 * @see ba_eas()
-		 * @return The one true BA_Edit_Author_Slug
+		 *
+		 * @return object The one true BA_Edit_Author_Slug
 		 */
 		public static function instance() {
 
@@ -383,7 +393,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 	 *
 	 * Example: <?php $ba_eas = ba_eas(); ?>
 	 *
-	 * @return The one true BA_Edit_Author_Slug Instance
+	 * @return BA_Edit_Author_Slug The one true BA_Edit_Author_Slug Instance
 	 */
 	function ba_eas() {
 		return BA_Edit_Author_Slug::instance();

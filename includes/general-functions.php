@@ -364,11 +364,11 @@ function ba_eas_flush_rewrite_rules() {
 	delete_option( 'rewrite_rules' );
 }
 
-/*
+/**
  * Filter out unnecessary rewrite rules from the author
  * rules array.
  *
- * @param array Author rewrite rules
+ * @param array $author_rewrite_rules Author rewrite rules
  *
  * @uses ba_eas_do_role_based_author_base() To determine if we're doing role-based author bases.
  *
@@ -403,10 +403,10 @@ function ba_eas_author_rewrite_rules( $author_rewrite_rules ) {
  *
  * @since 1.0.0
  *
- * @global object $wp_roles WP_Roles object
+ * @global WP_Roles $wp_roles The WP_Roles object.
  * @uses sanitize_title() To sanitize the role slug
  *
- * @return array WP_Roles::roles object
+ * @return array $editable_roles List of editable roles.
  */
 function ba_eas_get_editable_roles() {
 	global $wp_roles;
@@ -421,7 +421,7 @@ function ba_eas_get_editable_roles() {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array WP_Roles::roles List of roles.
+	 * @param array WP_Roles::roles Array of WP_Roles::roles.
 	 */
 	$editable_roles = apply_filters( 'editable_roles', $wp_roles->roles );
 
@@ -457,16 +457,19 @@ function ba_eas_get_default_role_slugs() {
 	return $roles;
 }
 
-/**
- * Add array_replace_recursive() for users of PHP 5.2.x
- *
- * http://php.net/manual/en/function.array-replace-recursive.php#109390
- *
- * @since 1.0.2
- *
- * @return array Role slugs array
- */
 if ( ! function_exists( 'array_replace_recursive' ) ) {
+	/**
+	 * Add array_replace_recursive() for users of PHP 5.2.x
+	 *
+	 * http://php.net/manual/en/function.array-replace-recursive.php#109390
+	 *
+	 * @since 1.0.2
+	 *
+	 * @param array $base
+	 * @param array $replacements
+	 *
+	 * @return array Role slugs array
+	 */
 	function array_replace_recursive( $base, $replacements ) {
 		foreach ( array_slice( func_get_args(), 1 ) as $replacements ) {
 			$bref_stack = array( &$base );

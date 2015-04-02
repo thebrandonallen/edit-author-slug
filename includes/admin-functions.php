@@ -111,9 +111,9 @@ function ba_eas_show_user_nicename( $user ) {
  *
  * @since 0.1.0
  *
- * @param obj $errors WP_Errors object
+ * @param object $errors WP_Errors object
  * @param bool $update Are we updating?
- * @param obj WP_User object
+ * @param WP_User object
  *
  * @uses check_admin_referer() To verify the nonce and check referer.
  * @uses ba_eas_can_edit_author_slug() To verify current user can edit the author slug.
@@ -368,12 +368,14 @@ function ba_eas_show_user_nicename_scripts() {
  *
  * @since 0.8.0
  *
- * @param str $author_base Author base to be sanitized
+ * @param string $author_base Author base to be sanitized
  *
  * @uses ba_eas() BA_Edit_Author_Slug object.
  * @uses sanitize_title() To sanitize the author base.
  * @uses update_option() To update author_base option.
  * @uses ba_eas_flush_rewrite_rules() To flush the rewrite rules in the db.
+ *
+ * @return string $author_base
  */
 function ba_eas_sanitize_author_base( $author_base ) {
 
@@ -597,9 +599,13 @@ function ba_eas_admin_setting_callback_role_slugs() {
  *
  * @since 1.0.0
  *
+ * @param array $role_slugs
+ *
  * @uses ba_eas_get_default_role_slugs() To get the editable roles.
  * @uses sanitize_title() To sanitize the slug.
  * @uses ba_eas() BA_Edit_Author_Slug object.
+ *
+ * @return array $role_slugs
  */
 function ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs = array() ) {
 
@@ -710,6 +716,8 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
  * @uses plugin_basename() To get the plugin basename.
  * @uses add_query_arg() To add the edit-author-slug query arg.
  * @uses admin_url() To get the admin url.
+ *
+ * @return string $links
  */
 function ba_eas_add_settings_link( $links, $file ) {
 
@@ -759,8 +767,8 @@ function ba_eas_install() {
  *
  * @since 0.8.0
  *
- * @global object WPDB object.
- * @uses WPDB::update() To rename the old Edit Author Slug options array.
+ * @global wpdb $wpdb The wpdb object.
+ * @uses wpdb::update() To rename the old Edit Author Slug options array.
  * @uses ba_eas() BA_Edit_Author_Slug object.
  * @uses add_option() To add new Edit Author Slug options.
  * @uses update_option() To update Edit Author Slug options.
