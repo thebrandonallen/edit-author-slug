@@ -58,6 +58,20 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 	 * @since 0.1.0
 	 *
 	 * @final
+	 *
+	 * @property string $version
+	 * @property int $db_version
+	 * @property int $current_db_version
+	 * @property string $file
+	 * @property string $plugin_dir
+	 * @property string $plugin_url
+	 * @property string $plugin_basename
+	 * @property string $domain
+	 * @property string $author_base
+	 * @property int $do_auto_update
+	 * @property string $default_user_nicename
+	 * @property int $do_role_based
+	 * @property array $role_slugs
 	 */
 	final class BA_Edit_Author_Slug {
 
@@ -74,7 +88,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * @since 1.0.0
 		 *
 		 * @see BA_Edit_Author_Slug::setup_globals()
-		 * @var array
+		 * @var object
 		 */
 		private $data;
 
