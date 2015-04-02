@@ -322,25 +322,37 @@ function ba_eas_template_include( $template ) {
 	// If they don't exist, search for a role based template
 	if ( false === $nicename_template && false === $id_template ) {
 
+		// Defaults
+		$role = $role_slug = false;
+
 		// Grab the first listed role
 		if ( ! empty( $author->roles ) && is_array( $author->roles ) ) {
 			$role = array_shift( $author->roles );
 		}
 
 		// Get the role slug
-		$role_slug = ba_eas()->role_slugs[ $role ]['slug'];
+		if ( ! empty( ba_eas()->role_slugs[ $role ]['slug'] ) ) {
+			$role_slug = ba_eas()->role_slugs[ $role ]['slug'];
+		}
 
 		// Set the templates array
-		$templates = array(
-			( empty( $role )      ) ? false : "author-{$role}.php",
-			( empty( $role_slug ) ) ? false : "author-{$role_slug}.php",
-		);
+		$templates = array();
+
+		// Add the role template
+		if ( ! empty( $role ) ) {
+			$templates[] = "author-{$role}.php";
+		}
+
+		// Add the role_slug template
+		if ( ! empty( $role_slug ) ) {
+			$templates[] = "author-{$role_slug}.php";
+		}
 
 		// Check for the template
 		$new_template = locate_template( $templates );
 
 		// If we have a role-based template, let's set it to be loaded
-		if ( '' != $new_template ) {
+		if ( '' !== $new_template ) {
 			$template = $new_template;
 		}
 	}
