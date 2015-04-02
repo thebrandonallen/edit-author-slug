@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  * @uses ba_eas_can_edit_author_slug() To verify current user can edit the author slug.
  * @uses sanitize_title() To sanitize userdata into a new nicename.
  * @uses apply_filters() To call the 'ba_eas_show_user_nicename_options_list' hook.
- * @uses esc_html_e() To make sure we're safe to display.
+ * @uses esc_html_e() To sanitize localized string for display.
  * @uses checked() To check that box.
  * @uses esc_attr() To make sure we're safe to display.
  */
@@ -92,9 +92,9 @@ function ba_eas_show_user_nicename( $user ) {
 						$checked = false;
 					}
 				?>
-				<label title="<?php echo esc_attr( $item ); ?>"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="<?php echo esc_attr( $item ); ?>"<?php echo $checked_text; ?>> <span><?php echo esc_attr( $item ); ?></span></label><br>
+				<label title="<?php echo esc_attr( $item ); ?>"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="<?php echo esc_attr( $item ); ?>"<?php echo $checked_text; ?>> <span><?php echo esc_html( $item ); ?></span></label><br>
 				<?php } ?>
-				<label title="<?php echo esc_attr( $nicename ); ?>"><input type="radio" id="ba_eas_author_slug_custom_radio" name="ba_eas_author_slug" value="\c\u\s\t\o\m"<?php checked( $checked ); ?>> <span><?php esc_html_e( 'Custom:', 'edit-author-slug' ); ?> </span></label> <input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="<?php echo esc_attr( $nicename ); ?>" class="regular-text" />
+				<label title="<?php echo esc_attr( $nicename ); ?>"><input type="radio" id="ba_eas_author_slug_custom" name="ba_eas_author_slug" value="\c\u\s\t\o\m"<?php checked( $checked ); ?>> <span><?php esc_html_e( 'Custom:', 'edit-author-slug' ); ?> </span></label> <input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="<?php echo esc_attr( $nicename ); ?>" class="regular-text" />
 				</fieldset>
 			</td>
 		</tr></tbody>
@@ -122,6 +122,7 @@ function ba_eas_show_user_nicename( $user ) {
  * @uses sanitize_title() Used to sanitize user_nicename.
  * @uses remove_action() To remove the 'ba_eas_auto_update_user_nicename_single' and prevent looping.
  * @uses get_user_by() To see if the nicename is already in use.
+ * @uses esc_html() To sanitize author_slug for display.
  * @uses add_action() To add the 'ba_eas_auto_update_user_nicename_single' back.
  */
 function ba_eas_update_user_nicename( $errors, $update, $user ) {
@@ -181,7 +182,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
 		// Does this author slug already exist?
 		if ( get_user_by( 'slug', $author_slug ) && (int) get_user_by( 'slug', $author_slug )->ID !== $user->ID ) {
-			$errors->add( 'ba_edit_author_slug', sprintf( __( '<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try something different.', 'edit-author-slug' ), '<strong><em>' . esc_attr( $author_slug ) . '</em></strong>' ) );
+			$errors->add( 'ba_edit_author_slug', sprintf( __( '<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try something different.', 'edit-author-slug' ), '<strong><em>' . esc_html( $author_slug ) . '</em></strong>' ) );
 			return;
 		}
 
@@ -428,7 +429,7 @@ function ba_eas_add_settings_menu() {
  *
  * @since 0.9.0
  *
- * @uses _e() To echo localized string.
+ * @uses esc_html_e() To sanitize localized string for display.
  * @uses settings_fields() To output nonce, action, and option_page fields.
  * @uses do_settings_sections() To print out the setting sections/fields.
  * @uses submit_button() To display a nice submit button.
@@ -438,7 +439,7 @@ function ba_eas_settings_page_html() {
 
 	<div class="wrap">
 
-		<h2><?php _e( 'Edit Author Slug Settings', 'edit-author-slug' ); ?></h2>
+		<h2><?php esc_html_e( 'Edit Author Slug Settings', 'edit-author-slug' ); ?></h2>
 
 		<form action="options.php" method="post">
 
@@ -495,12 +496,12 @@ function ba_eas_register_admin_settings() {
  *
  * @since 0.9.0
  *
- * @uses _e() To echo localized string.
+ * @uses esc_html_e() To sanitize localized string for display.
  */
 function ba_eas_admin_setting_callback_author_base_section() {
 ?>
 
-		<p><?php _e( 'Change your author base to something more fun!', 'edit-author-slug' ); ?></p>
+		<p><?php esc_html_e( 'Change your author base to something more fun!', 'edit-author-slug' ); ?></p>
 
 <?php
 }
@@ -510,12 +511,12 @@ function ba_eas_admin_setting_callback_author_base_section() {
  *
  * @since 0.9.0
  *
- * @uses _e() To echo localized string.
+ * @uses esc_html_e() To sanitize localized string for display.
  */
 function ba_eas_admin_setting_callback_auto_update_section() {
 ?>
 
-		<p><?php _e( "Allow Author Slugs to be automatically update, and set the default Author Slug structure for users. Automatic updating will only occur when a user can't edit Author Slugs on their own.", 'edit-author-slug' ); ?> <br /><strong><em><?php _e( 'This could have SEO repercussions if users update their profiles frequently, and it will override any manual editing of the Author Slug you may have previously completed.', 'edit-author-slug' ); ?></em></strong></p>
+		<p><?php esc_html_e( "Allow Author Slugs to be automatically update, and set the default Author Slug structure for users. Automatic updating will only occur when a user can't edit Author Slugs on their own.", 'edit-author-slug' ); ?> <br /><strong><em><?php esc_html_e( 'This could have SEO repercussions if users update their profiles frequently, and it will override any manual editing of the Author Slug you may have previously completed.', 'edit-author-slug' ); ?></em></strong></p>
 
 <?php
 }
@@ -528,13 +529,15 @@ function ba_eas_admin_setting_callback_auto_update_section() {
  * @uses ba_eas() BA_Edit_Author_Slug object
  * @uses apply_filters() To call 'editable_slug' hook
  * @uses esc_attr() To sanitize the author base
+ * @uses esc_html_e() To sanitize localized string for display.
  */
 function ba_eas_admin_setting_callback_author_base() {
 
 	$author_base = apply_filters( 'editable_slug', ba_eas()->author_base );
 ?>
 
-		<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php echo esc_attr( $author_base ); ?>" class="regular-text code" /> <em><?php _e( "Defaults to 'author'", 'edit-author-slug' ); ?></em>
+		<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php echo esc_attr( $author_base ); ?>" class="regular-text code" />
+		<label><em><?php esc_html_e( "Defaults to 'author'", 'edit-author-slug' ); ?></em></label>
 
 <?php
 }
@@ -546,7 +549,7 @@ function ba_eas_admin_setting_callback_author_base() {
  *
  * @uses ba_eas() BA_Edit_Author_Slug object
  * @uses checked() To display the checked attribute
- * @uses esc_html_e() To sanitize localized text for display
+ * @uses esc_html_e() To sanitize localized string for display.
  */
 function ba_eas_admin_setting_callback_do_role_based() {
 ?>
@@ -649,7 +652,7 @@ function ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs = array(
  *
  * @uses ba_eas() BA_Edit_Author_Slug object.
  * @uses checked() To display the checked attribute.
- * @uses esc_html_e() To sanitize localized text for display.
+ * @uses esc_html_e() To sanitize localized string for display.
  */
 function ba_eas_admin_setting_callback_do_auto_update() {
 ?>
@@ -697,7 +700,7 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 
 		<select id="_ba_eas_default_user_nicename" name="_ba_eas_default_user_nicename">
 		<?php foreach ( (array) $options as $id => $item ) { ?>
-			<option id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $id ); ?>"<?php selected( $structure, $id ); ?>><?php echo esc_attr( $item ); ?></option>
+			<option id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $id ); ?>"<?php selected( $structure, $id ); ?>><?php echo esc_html( $item ); ?></option>
 		<?php } ?>
 		</select>
 
@@ -721,8 +724,8 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
  */
 function ba_eas_add_settings_link( $links, $file ) {
 
-	if ( ba_eas()->plugin_basename == $file ) {
-		$settings_link = '<a href="' . add_query_arg( array( 'page' => 'edit-author-slug' ), admin_url( 'options-general.php' ) ) . '">' . __( 'Settings', 'edit-author-slug' ) . '</a>';
+	if ( ba_eas()->plugin_basename === $file ) {
+		$settings_link = '<a href="' . esc_url( add_query_arg( array( 'page' => 'edit-author-slug' ), admin_url( 'options-general.php' ) ) ) . '">' . esc_html__( 'Settings', 'edit-author-slug' ) . '</a>';
 		array_unshift( $links, $settings_link );
 	}
 
