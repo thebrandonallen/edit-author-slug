@@ -1,22 +1,30 @@
 <?php
+
 /**
  * Bootstrap the plugin unit testing environment.
  *
  * @package WordPress
- * @subpackage Edit_Author_Slug
+ * @subpackage Edit Author Slug
  */
 
-// Activates this plugin in WordPress so it can be tested.
-$GLOBALS['wp_tests_options'] = array(
-	'active_plugins' => array( 'edit-author-slug/edit-author-slug.php' ),
-);
-
-// If the develop repo location is defined (as WP_DEVELOP_DIR), use that
-// location. Otherwise, we'll just assume that this plugin is installed in a
-// WordPress develop SVN checkout.
-
-if( false !== getenv( 'WP_DEVELOP_DIR' ) ) {
-	require getenv( 'WP_DEVELOP_DIR' ) . '/tests/phpunit/includes/bootstrap.php';
-} else {
-	require '../../../../tests/phpunit/includes/bootstrap.php';
+// Support for:
+// 1. `WP_DEVELOP_DIR` environment variable
+// 2. Plugin installed inside of WordPress.org developer checkout
+// 3. Tests checked out to /tmp
+if ( false !== getenv( 'WP_DEVELOP_DIR' ) ) {
+	$_tests_dir = getenv( 'WP_DEVELOP_DIR' ) . '/tests/phpunit';
+} elseif ( file_exists( '../../../../tests/phpunit/includes/bootstrap.php' ) ) {
+	$_tests_dir = '../../../../tests/phpunit';
+} elseif ( file_exists( '/tmp/wordpress-tests-lib/includes/bootstrap.php' ) ) {
+	$_tests_dir = '/tmp/wordpress-tests-lib';
 }
+
+require_once $_tests_dir . '/includes/functions.php';
+
+function _manually_load_plugin() {
+	require dirname( __FILE__ ) . '/../edit-author-slug.php';
+}
+tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
+
+require $_tests_dir . '/includes/bootstrap.php';
+
