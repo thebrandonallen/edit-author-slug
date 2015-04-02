@@ -1,5 +1,18 @@
 /* jshint node:true */
 module.exports = function(grunt) {
+	var SOURCE_DIR = '',
+		BUILD_DIR = 'build/',
+
+		EAS_EXCLUDED_MISC = [
+			'!**/.idea/**',
+			'!**/bin/**',
+			'!**/node_modules/**',
+			'!**/tests/**',
+			'!Gruntfile.js*',
+			'!package.json*',
+			'!phpunit.xml*',
+			'!.{editorconfig,gitignore,jshintrc,travis.yml,DS_Store}'
+		];
 
 	// Load tasks.
 	require('matchdep').filterDev('grunt-*').forEach( grunt.loadNpmTasks );
@@ -30,6 +43,19 @@ module.exports = function(grunt) {
 			files: {
 				src: [ '**/*.php', '!node_modules/**/*' ],
 				expand: true
+			}
+		},
+		copy: {
+			files: {
+				files: [
+					{
+						cwd: '',
+						dest: 'build/',
+						dot: true,
+						expand: true,
+						src: ['**', '!**/.{svn,git}/**'].concat( EAS_EXCLUDED_MISC )
+					}
+				]
 			}
 		},
 		jshint: {
@@ -106,7 +132,7 @@ module.exports = function(grunt) {
 	});
 
 	// Build tasks.
-	grunt.registerTask( 'build', [ 'string-replace:build', 'makepot' ] );
+	grunt.registerTask( 'build', [ 'checktextdomain', 'string-replace:build', 'makepot', 'copy:files' ] );
 
 	// PHPUnit test task.
 	grunt.registerMultiTask( 'phpunit', 'Runs PHPUnit tests, including the multisite tests.', function() {
