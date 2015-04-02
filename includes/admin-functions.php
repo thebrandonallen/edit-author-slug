@@ -82,7 +82,7 @@ function ba_eas_show_user_nicename( $user ) {
 			<th scope="row"><?php esc_html_e( 'Author Slug', 'edit-author-slug' ); ?></th>
 			<td>
 				<fieldset><legend class="screen-reader-text"><span><?php esc_html_e( 'Author Slug', 'edit-author-slug' ); ?></span></legend>
-				<?php foreach ( (array) $options as $id => $item ) {
+				<?php foreach ( (array) $options as $item ) {
 
 					// Checked?
 					$checked_text = checked( $item, $nicename, false );
