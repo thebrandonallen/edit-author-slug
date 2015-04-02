@@ -35,7 +35,7 @@ function ba_eas_show_user_nicename( $user ) {
 
 	// Return early if the user can't edit the author slug
 	if ( ! ba_eas_can_edit_author_slug() ) {
-		return false;
+		return;
 	}
 
 	// Setup the nicename
