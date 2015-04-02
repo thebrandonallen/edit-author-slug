@@ -1,7 +1,8 @@
 # Files and folders related to build/test tools
-/phpunit.xml
-/tests/phpunit/build
+/.idea
+/build
+/coverage
 /node_modules
 /npm-debug.log
-/build
-/.idea
+/phpunit.xml
+/tests/phpunit/build

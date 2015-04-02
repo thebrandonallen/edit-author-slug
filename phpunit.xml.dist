@@ -21,5 +21,10 @@
 		<blacklist>
 			<directory suffix=".php">.</directory>
 		</blacklist>
+
+		<whitelist>
+			<directory suffix=".php">./includes</directory>
+			<file>./edit-author-slug.php</file>
+		</whitelist>
 	</filter>
 </phpunit>
