@@ -1,9 +1,70 @@
 <?php
 
 class EAS_UnitTestCase extends WP_UnitTestCase  {
+
+	private $default_user_slugs;
+	private $custom_user_slugs;
+	private $user_slugs_with_extra_role;
+
 	public function setUp() {
 		parent::setUp();
+
 		$GLOBALS['ba_eas'] = ba_eas();
+
+		$this->default_user_slugs = array(
+			'administrator' => array(
+				'name' => 'Administrator',
+				'slug' => 'administrator',
+			),
+			'editor' => array(
+				'name' => 'Editor',
+				'slug' => 'editor',
+			),
+			'author' => array(
+				'name' => 'Author',
+				'slug' => 'author',
+			),
+			'contributor' => array(
+				'name' => 'Contributor',
+				'slug' => 'contributor',
+			),
+			'subscriber' => array(
+				'name' => 'Subscriber',
+				'slug' => 'subscriber',
+			),
+		);
+
+		$this->custom_user_slugs = array(
+			'administrator' => array(
+				'name' => 'Administrator',
+				'slug' => 'jonin',
+			),
+			'editor' => array(
+				'name' => 'Editor',
+				'slug' => 'chunin',
+			),
+			'author' => array(
+				'name' => 'Author',
+				'slug' => 'mystic',
+			),
+			'contributor' => array(
+				'name' => 'Contributor',
+				'slug' => 'junior-genin',
+			),
+			'subscriber' => array(
+				'name' => 'Subscriber',
+				'slug' => 'deshi',
+			),
+		);
+
+		$extra_role = array(
+			'foot-soldier' => array(
+				'name' => 'Foot Soldier',
+				'slug' => 'foot-soldier',
+			)
+		);
+
+		$this->user_slugs_with_extra_role = $this->default_user_slugs + $extra_role;
 	}
 
 	public function tearDown() {
