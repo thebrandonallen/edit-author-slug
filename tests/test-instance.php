@@ -8,6 +8,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 
 	public function tearDown() {
 		parent::tearDown();
+
+		ba_eas()->role_slugs = $this->default_user_slugs;
 	}
 
 	/**
