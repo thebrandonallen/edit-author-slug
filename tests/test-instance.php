@@ -97,9 +97,48 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	/**
 	 * Test that our activation hook is fired.
 	 */
+	function test_add_rewrite_tag() {
+		// Check for return when role-based author base is disabled
+		add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
+
+		$this->assertFalse( (bool) ba_eas()->add_rewrite_tags() );
+
+		remove_filter( 'ba_eas_do_role_based_author_base', '__return_false', 10 );
+
+		// Check that rewrite tags have been added when role-based author base is on
+		$wp_rewrite = $GLOBALS['wp_rewrite'];
+
+		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+
+		// Test for WP default roles/role slugs
+		ba_eas()->add_rewrite_tags();
+		$slugs = '(administrator|editor|author|contributor|subscriber)';
+
+		$this->assertTrue( in_array( '%ba_eas_author_role%', $wp_rewrite->rewritecode ) );
+		$this->assertTrue( in_array( $slugs, $wp_rewrite->rewritereplace ) );
+
+		// Test for WP custom roles/role slugs
+		ba_eas()->role_slugs = $this->custom_user_slugs;
+		ba_eas()->add_rewrite_tags();
+		$slugs = '(jonin|chunin|mystic|junior-genin|deshi|author)';
+
+		$this->assertTrue( in_array( $slugs, $wp_rewrite->rewritereplace ) );
+
+		// Test for WP custom roles/role slugs
+		ba_eas()->role_slugs = $this->user_slugs_with_extra_role;
+		ba_eas()->add_rewrite_tags();
+		$slugs = '(administrator|editor|author|contributor|subscriber|foot-soldier)';
+
+		$this->assertTrue( in_array( $slugs, $wp_rewrite->rewritereplace ) );
+
+		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
+	}
+
+	/**
+	 * Test that our activation hook is fired.
+	 */
 	function test_ba_eas_activation() {
 		ba_eas_activation();
-
 		$this->assertTrue( (bool) did_action( 'ba_eas_activation' ) );
 	}
 
@@ -108,7 +147,6 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	 */
 	function test_ba_eas_deactivation() {
 		ba_eas_deactivation();
-
 		$this->assertTrue( (bool) did_action( 'ba_eas_deactivation' ) );
 	}
 }
