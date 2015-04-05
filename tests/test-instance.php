@@ -41,7 +41,7 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 		// Check for return when role-based author base is disabled
 		add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
 
-		$this->assertFalse( (bool) ba_eas()->add_rewrite_tags() );
+		$this->assertNull( $this->eas->add_rewrite_tags() );
 
 		remove_filter( 'ba_eas_do_role_based_author_base', '__return_false', 10 );
 
