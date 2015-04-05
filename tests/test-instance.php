@@ -6,6 +6,10 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 		$GLOBALS['ba_eas'] = ba_eas();
 	}
 
+	public function tearDown() {
+		parent::tearDown();
+	}
+
 	/**
 	 * Ensure that the plugin has been installed and activated.
 	 */
