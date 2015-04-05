@@ -72,18 +72,12 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	$user = get_userdata( $user_id );
 
 	// Double check we're still good
-	if ( ! is_object( $user ) || empty( $user ) ) {
+	if ( ! is_object( $user ) || empty( $user ) || empty( $user->ID ) ) {
 		return false;
 	}
 
 	// Setup the user_id
-	if ( ! empty( $user->ID ) ) {
-		$user_id  = (int) $user->ID;
-
-	// No user_id so bail
-	} else {
-		return false;
-	}
+	$user_id = (int) $user->ID;
 
 	// Get the default nicename structure
 	$structure = apply_filters( 'ba_eas_auto_update_user_nicename_structure', ba_eas()->default_user_nicename, $user_id );
@@ -94,10 +88,9 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	}
 
 	// Setup the current nicename
-	if ( empty( $user->user_nicename ) ) {
+	$current_nicename = $user->user_login;
+	if ( ! empty( $user->user_nicename ) ) {
 		$current_nicename = $user->user_nicename;
-	} else {
-		$current_nicename = $user->user_login;
 	}
 
 	// Setup default nicename
@@ -167,7 +160,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	$nicename = apply_filters( 'ba_eas_pre_auto_update_user_nicename', sanitize_title( $nicename ), $user_id, $structure );
 
 	// Bail if nothing changed
-	if ( $nicename == $current_nicename ) {
+	if ( $nicename === $current_nicename ) {
 		return $user_id;
 	}
 
