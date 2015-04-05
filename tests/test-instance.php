@@ -83,7 +83,7 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	/**
 	 * Ensure that all of our core actions have been added.
 	 */
-	function test_setup_actions_added() {
+	function test_setup_actions() {
 		$ba_eas = $GLOBALS['ba_eas'];
 
 		$this->assertEquals( 10, has_action( 'activate_' . $ba_eas->plugin_basename, 'ba_eas_activation' ) );
