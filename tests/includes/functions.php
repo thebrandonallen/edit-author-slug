@@ -102,3 +102,36 @@ function ba_eas_tests_return_full_array() {
 		'key' => 'value',
 	);
 }
+
+function ba_eas_tests_nicename_return_username() {
+	return 'username';
+}
+
+function ba_eas_tests_nicename_return_nicename() {
+	return 'nicename';
+}
+
+function ba_eas_tests_nicename_return_nickname() {
+	return 'nickname';
+}
+
+function ba_eas_tests_nicename_return_displayname() {
+	return 'displayname';
+}
+
+function ba_eas_tests_nicename_return_firstname() {
+	return 'firstname';
+}
+
+function ba_eas_tests_nicename_return_lastname() {
+	return 'lastname';
+}
+
+function ba_eas_tests_nicename_return_firstlast() {
+	return 'firstlast';
+}
+
+function ba_eas_tests_nicename_return_lastfirst() {
+	return 'lastfirst';
+}
+

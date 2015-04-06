@@ -1,7 +1,5 @@
 <?php
 
-require_once( dirname( __FILE__ ) . '/functions.php' );
-
 class EAS_UnitTestCase extends WP_UnitTestCase  {
 
 	public function setUp() {
