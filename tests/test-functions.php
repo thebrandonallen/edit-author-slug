@@ -25,6 +25,9 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase  {
 
 	public function tearDown() {
 		parent::tearDown();
+
+		$this->eas->author_based = 'author';
+		$this->eas->role_slugs   = ba_eas_tests_slugs( 'default' );
 	}
 
 	/**
@@ -199,5 +202,43 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase  {
 		add_filter( 'ba_eas_do_role_based_author_base', '__return_empty_string' );
 		$this->assertFalse( ba_eas_do_role_based_author_base() );
 		remove_filter( 'ba_eas_do_role_based_author_base', '__return_empty_string', 10 );
+	}
+
+	function test_author_link() {
+		$author_link            = 'http://example.com/author/mastersplinter/';
+		$role_based_author_link = 'http://example.com/%ba_eas_author_role%/mastersplinter/';
+		$author_link_author     = 'http://example.com/author/mastersplinter/';
+		$author_link_ninja      = 'http://example.com/ninja/mastersplinter/';
+		$author_link_subscriber = 'http://example.com/subscriber/mastersplinter/';
+
+		add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
+
+		// Test role-based author base disabled
+		$link = ba_eas_author_link( $author_link, $this->single_user_id );
+		$this->assertEquals( $author_link, $link );
+
+		remove_filter( 'ba_eas_do_role_based_author_base', '__return_false', 10 );
+
+		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+
+		// Test role-based author based enabled, but no EAS author base
+		$link = ba_eas_author_link( $author_link, $this->single_user_id );
+		$this->assertEquals( $author_link, $link );
+
+		// Test role-based author based enabled, user is subscriber
+		$link = ba_eas_author_link( $role_based_author_link, $this->single_user_id );
+		$this->assertEquals( $author_link_subscriber, $link );
+
+		// Test role-based author based enabled, role slug doesn't exist
+		$this->eas->role_slugs = array();
+		$link = ba_eas_author_link( $role_based_author_link, $this->single_user_id );
+		$this->assertEquals( $author_link_author, $link );
+
+		// Test role-based author based enabled, role slug doesn't exist, custom author base
+		$this->eas->author_base = 'ninja';
+		$link = ba_eas_author_link( $role_based_author_link, $this->single_user_id );
+		$this->assertEquals( $author_link_ninja, $link );
+
+		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
 	}
 }
