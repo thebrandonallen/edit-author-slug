@@ -445,11 +445,3 @@ function ba_eas_deactivation() {
 	// Courtesy flush
 	delete_option( 'rewrite_rules' );
 }
-
-function show_user_roles() {
-	echo '<br /><br />';
-	var_dump( absint( '0' ), absint( 'ab4lk56' ), (bool) '0', (bool) '0a' );
-	//var_dump( array_unique( $values ) );
-	echo '<br /><br />';
-}
-add_action( 'admin_footer', 'show_user_roles' );
