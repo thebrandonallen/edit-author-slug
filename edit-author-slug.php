@@ -110,7 +110,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 *
 		 * @see ba_eas()
 		 *
-		 * @return object The one true BA_Edit_Author_Slug
+		 * @return BA_Edit_Author_Slug|null The one true BA_Edit_Author_Slug
 		 */
 		public static function instance() {
 
@@ -243,6 +243,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			// Pre-0.9 Back compat
 			} elseif ( $options = get_option( 'ba_edit_author_slug' ) ) {
+
 				// Author base
 				if ( ! empty( $options['author_base'] ) ) {
 					$this->author_base = $options['author_base'];
