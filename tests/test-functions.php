@@ -241,4 +241,26 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase  {
 
 		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
 	}
+
+	function test_template_include() {
+
+		add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
+		$this->assertEquals( 'no-role-based', ba_eas_template_include( 'no-role-based' ) );
+		remove_filter( 'ba_eas_do_role_based_author_base', '__return_false', 10 );
+
+		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+
+		$this->assertEquals( 'no-WP_User', ba_eas_template_include( 'no-WP_User' ) );
+
+		$GLOBALS['wp_query']->queried_object = get_userdata( $this->single_user_id );
+		$this->assertEquals( 'author-mastersplinter.php', ba_eas_template_include( 'author-mastersplinter.php' ) );
+		$this->assertEquals( "author-{$this->single_user_id}.php", ba_eas_template_include( "author-{$this->single_user_id}.php" ) );
+		$this->assertEquals( 'role-test', ba_eas_template_include( 'role-test' ) );
+		/**
+		 * @todo Figure out how to fake a template file to complete the test
+		 */
+		$GLOBALS['wp_query']->queried_object = null;
+
+		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
+	}
 }
