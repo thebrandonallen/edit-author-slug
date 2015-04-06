@@ -788,15 +788,7 @@ function ba_eas_upgrade() {
 		return;
 	}
 
-	// 1.0.0
-	if ( $ba_eas->current_db_version < 133 ) {
-		add_option( '_ba_eas_do_auto_update',        $ba_eas->do_auto_update        );
-		add_option( '_ba_eas_default_user_nicename', $ba_eas->default_user_nicename );
-		add_option( '_ba_eas_do_role_based',         $ba_eas->do_role_based         );
-		add_option( '_ba_eas_role_slugs',            $ba_eas->role_slugs            );
-	}
-
-	// 0.8.0
+	// < 0.8.0
 	if ( $ba_eas->current_db_version < 132 ) {
 		// Add new options
 		add_option( '_ba_eas_author_base', $ba_eas->author_base );
@@ -804,6 +796,14 @@ function ba_eas_upgrade() {
 		// Rename the old option for safe keeping
 		global $wpdb;
 		$wpdb->update( $wpdb->options, array( 'option_name' => '_ba_eas_old_options' ), array( 'option_name' => 'ba_edit_author_slug' ) );
+	}
+
+	// < 1.0.0
+	if ( $ba_eas->current_db_version < 133 ) {
+		add_option( '_ba_eas_do_auto_update',        $ba_eas->do_auto_update        );
+		add_option( '_ba_eas_default_user_nicename', $ba_eas->default_user_nicename );
+		add_option( '_ba_eas_do_role_based',         $ba_eas->do_role_based         );
+		add_option( '_ba_eas_role_slugs',            $ba_eas->role_slugs            );
 	}
 
 	// Version bump
