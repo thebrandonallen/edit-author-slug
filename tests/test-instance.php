@@ -10,7 +10,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 
 	public function tearDown() {
 		parent::tearDown();
-		$this->eas->role_slugs = ba_eas_tests_slugs( 'default' );
+		$this->eas->author_base = 'author';
+		$this->eas->role_slugs  = ba_eas_tests_slugs( 'default' );
 	}
 
 	/**
