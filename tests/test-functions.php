@@ -263,4 +263,30 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase  {
 
 		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
 	}
+
+	function test_author_rewrite_rules() {
+
+		$test = array(
+			'with_name_1'    => 'index.php?ba_eas_author_role=$matches[1]&author_name=$matches[2]&feed=$matches[3]',
+			'without_name_1' => 'index.php?ba_eas_author_role=$matches[1]&feed=$matches[2]',
+			'with_name_2'    => 'index.php?ba_eas_author_role=$matches[1]&author_name=$matches[2]',
+			'with_name_3'    => 'index.php?ba_eas_author_role=$matches[1]&author_name=$matches[2]&paged=$matches[3]',
+			'without_name_2' => 'index.php?ba_eas_author_role=$matches[1]&paged=$matches[2]',
+		);
+
+		$expected = array(
+			'with_name_1'    => 'index.php?ba_eas_author_role=$matches[1]&author_name=$matches[2]&feed=$matches[3]',
+			'with_name_2'    => 'index.php?ba_eas_author_role=$matches[1]&author_name=$matches[2]',
+			'with_name_3'    => 'index.php?ba_eas_author_role=$matches[1]&author_name=$matches[2]&paged=$matches[3]',
+		);
+
+		add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
+		$this->assertEquals( $test, ba_eas_author_rewrite_rules( $test ) );
+		remove_filter( 'ba_eas_do_role_based_author_base', '__return_false', 10 );
+
+		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+		$this->assertEquals( $expected, ba_eas_author_rewrite_rules( $test ) );
+		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
+	}
+
 }
