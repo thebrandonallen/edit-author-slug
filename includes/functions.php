@@ -50,7 +50,7 @@ function ba_eas_do_auto_update() {
  * @uses ba_eas_update_nicename_cache() There’s always money in the banana stand!
  * @uses add_action() To re-add the 'ba_eas_auto_update_user_nicename_single' hook.
  *
- * @return int $user_id. False on failure
+ * @return bool|int $user_id. False on failure
  */
 function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 
@@ -197,9 +197,11 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
  * @param int $user_id User id
  *
  * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename.
+ *
+ * @return bool|int $user_id. False on failure
  */
 function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
-	ba_eas_auto_update_user_nicename( $user_id );
+	return ba_eas_auto_update_user_nicename( $user_id );
 }
 
 /**
@@ -212,9 +214,11 @@ function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
  * @param int $user_id User id
  *
  * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename.
+ *
+ * @return bool|int $user_id. False on failure
  */
 function ba_eas_auto_update_user_nicename_bulk( $user_id = 0 ) {
-	ba_eas_auto_update_user_nicename( $user_id, true );
+	return ba_eas_auto_update_user_nicename( $user_id, true );
 }
 
 /** Author Base ***************************************************************/
