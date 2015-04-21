@@ -232,14 +232,14 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			$this->author_base = 'author';
 
 			// Options
-			if ( $base = get_option( '_ba_eas_author_base', 'author' ) ) {
+			if ( $base = get_option( '_ba_eas_author_base' ) ) {
 				// Author base
 				if ( ! empty( $base ) ) {
 					$this->author_base = $base;
 				}
 
 				// Current DB version
-				$this->current_db_version = absint( get_option( '_ba_eas_db_version', 0 ) );
+				$this->current_db_version = absint( get_option( '_ba_eas_db_version' ) );
 
 			// Pre-0.9 Back compat
 			} elseif ( $options = get_option( 'ba_edit_author_slug' ) ) {
