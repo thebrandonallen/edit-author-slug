@@ -22,7 +22,7 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 		$this->assertEquals( 10, has_action( 'activate_' . $this->eas->plugin_basename, 'ba_eas_activation' ) );
 		$this->assertEquals( 10, has_action( 'deactivate_' . $this->eas->plugin_basename, 'ba_eas_deactivation' ) );
 		$this->assertEquals( 10, has_action( 'after_setup_theme', array( $this->eas, 'set_role_slugs' ) ) );
-		$this->assertEquals( 10, has_action( 'init', array( $this->eas, 'author_base_rewrite' ) ) );
+		$this->assertEquals( 4,  has_action( 'init', array( $this->eas, 'author_base_rewrite' ) ) );
 		$this->assertEquals( 20, has_action( 'init', array( $this->eas, 'add_rewrite_tags' ) ) );
 		$this->assertEquals( 0,  has_action( 'init', array( $this->eas, 'load_textdomain' ) ) );
 	}
