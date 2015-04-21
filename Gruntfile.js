@@ -6,6 +6,7 @@ module.exports = function(grunt) {
 		EAS_EXCLUDED_MISC = [
 			'!**/.idea/**',
 			'!**/bin/**',
+			'!**/coverage/**',
 			'!**/node_modules/**',
 			'!**/tests/**',
 			'!Gruntfile.js*',
@@ -69,7 +70,7 @@ module.exports = function(grunt) {
 				options: {
 					domainPath: '/languages',
 					mainFile: 'edit-author-slug.php',
-					potComments: 'Copyright (C) 2014 Brandon Allen\nThis file is distributed under the same license as the Edit Author Slug package.\nSend translations to <wp_plugins [at] brandonallen (dot) org>, 2014.',
+					potComments: 'Copyright (C) 2015 Brandon Allen\nThis file is distributed under the same license as the Edit Author Slug package.\nSend translations to <wp_plugins [at] brandonallen (dot) org>, 2015.',
 					potFilename: 'edit-author-slug.pot',
 					type: 'wp-plugin'
 				}
