@@ -14,16 +14,10 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 		$this->eas->role_slugs  = ba_eas_tests_slugs( 'default' );
 	}
 
-	/**
-	 * Ensure that the plugin has been installed and activated.
-	 */
 	function test_plugin_activated() {
 		$this->assertTrue( class_exists( 'BA_Edit_Author_Slug' ) );
 	}
 
-	/**
-	 * Ensure that all of our core actions have been added.
-	 */
 	function test_setup_actions() {
 		$this->assertEquals( 10, has_action( 'activate_' . $this->eas->plugin_basename, 'ba_eas_activation' ) );
 		$this->assertEquals( 10, has_action( 'deactivate_' . $this->eas->plugin_basename, 'ba_eas_deactivation' ) );
@@ -33,9 +27,6 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 		$this->assertEquals( 0,  has_action( 'init', array( $this->eas, 'load_textdomain' ) ) );
 	}
 
-	/**
-	 * Test that our activation hook is fired.
-	 */
 	function test_add_rewrite_tag() {
 		// Check for return when role-based author base is disabled
 		add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
@@ -73,17 +64,11 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
 	}
 
-	/**
-	 * Test that our activation hook is fired.
-	 */
 	function test_ba_eas_activation() {
 		ba_eas_activation();
 		$this->assertTrue( (bool) did_action( 'ba_eas_activation' ) );
 	}
 
-	/**
-	 * Test that our deactivation hook is fired.
-	 */
 	function test_ba_eas_deactivation() {
 		ba_eas_deactivation();
 		$this->assertTrue( (bool) did_action( 'ba_eas_deactivation' ) );

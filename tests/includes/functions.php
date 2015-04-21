@@ -61,6 +61,63 @@ function ba_eas_tests_slugs( $type ) {
 	return $slugs[ $type ];
 }
 
+function ba_eas_tests_slugs_default( $type ) {
+	return ba_eas_tests_slugs( 'default' );
+}
+
+function ba_eas_tests_slugs_custom( $type ) {
+	return ba_eas_tests_slugs( 'custom' );
+}
+
+function ba_eas_tests_slugs_extra( $type ) {
+	return ba_eas_tests_slugs( 'extra' );
+}
+
+function ba_eas_tests_roles( $type ) {
+
+	$roles = array(
+		'default' => array(
+			'administrator' => array(
+				'name' => 'Administrator',
+			),
+			'editor' => array(
+				'name' => 'Editor',
+			),
+			'author' => array(
+				'name' => 'Author',
+			),
+			'contributor' => array(
+				'name' => 'Contributor',
+			),
+			'subscriber' => array(
+				'name' => 'Subscriber',
+			),
+		),
+	);
+
+	$extra_role = array(
+		'foot-soldier' => array(
+			'name' => 'Foot Soldier',
+		),
+	);
+
+	$roles['extra'] = $roles['default'] + $extra_role;
+
+	return $roles[ $type ];
+}
+
+function ba_eas_tests_roles_default( $type ) {
+	return ba_eas_tests_roles( 'default' );
+}
+
+function ba_eas_tests_roles_custom( $type ) {
+	return ba_eas_tests_roles( 'custom' );
+}
+
+function ba_eas_tests_roles_extra( $type ) {
+	return ba_eas_tests_roles( 'extra' );
+}
+
 function ba_eas_tests_return_null_string() {
 	return 'null';
 }
