@@ -106,15 +106,15 @@ function ba_eas_tests_roles( $type ) {
 	return $roles[ $type ];
 }
 
-function ba_eas_tests_roles_default( $type ) {
+function ba_eas_tests_roles_default() {
 	return ba_eas_tests_roles( 'default' );
 }
 
-function ba_eas_tests_roles_custom( $type ) {
+function ba_eas_tests_roles_custom() {
 	return ba_eas_tests_roles( 'custom' );
 }
 
-function ba_eas_tests_roles_extra( $type ) {
+function ba_eas_tests_roles_extra() {
 	return ba_eas_tests_roles( 'extra' );
 }
 
