@@ -37,34 +37,10 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$this->assertTrue( ba_eas_do_auto_update() );
 		remove_filter( 'ba_eas_do_auto_update', '__return_true', 10 );
 
-		add_filter( 'ba_eas_do_auto_update', 'ba_eas_tests_return_null_string' );
-		$this->assertTrue( ba_eas_do_auto_update() );
-		remove_filter( 'ba_eas_do_auto_update', 'ba_eas_tests_return_null_string', 10 );
-
-		add_filter( 'ba_eas_do_auto_update', 'ba_eas_tests_return_one_int' );
-		$this->assertTrue( ba_eas_do_auto_update() );
-		remove_filter( 'ba_eas_do_auto_update', 'ba_eas_tests_return_one_int', 10 );
-
-		add_filter( 'ba_eas_do_auto_update', 'ba_eas_tests_return_full_array' );
-		$this->assertTrue( ba_eas_do_auto_update() );
-		remove_filter( 'ba_eas_do_auto_update', 'ba_eas_tests_return_full_array', 10 );
-
 		// False tests
 		add_filter( 'ba_eas_do_auto_update', '__return_false' );
 		$this->assertFalse( ba_eas_do_auto_update() );
 		remove_filter( 'ba_eas_do_auto_update', '__return_false', 10 );
-
-		add_filter( 'ba_eas_do_auto_update', '__return_zero' );
-		$this->assertFalse( ba_eas_do_auto_update() );
-		remove_filter( 'ba_eas_do_auto_update', '__return_zero', 10 );
-
-		add_filter( 'ba_eas_do_auto_update', '__return_empty_array' );
-		$this->assertFalse( ba_eas_do_auto_update() );
-		remove_filter( 'ba_eas_do_auto_update', '__return_empty_array', 10 );
-
-		add_filter( 'ba_eas_do_auto_update', '__return_empty_string' );
-		$this->assertFalse( ba_eas_do_auto_update() );
-		remove_filter( 'ba_eas_do_auto_update', '__return_empty_string', 10 );
 	}
 
 	function test_ba_eas_auto_update_user_nicename() {
@@ -165,34 +141,10 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$this->assertTrue( ba_eas_do_role_based_author_base() );
 		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
 
-		add_filter( 'ba_eas_do_role_based_author_base', 'ba_eas_tests_return_null_string' );
-		$this->assertTrue( ba_eas_do_role_based_author_base() );
-		remove_filter( 'ba_eas_do_role_based_author_base', 'ba_eas_tests_return_null_string', 10 );
-
-		add_filter( 'ba_eas_do_role_based_author_base', 'ba_eas_tests_return_one_int' );
-		$this->assertTrue( ba_eas_do_role_based_author_base() );
-		remove_filter( 'ba_eas_do_role_based_author_base', 'ba_eas_tests_return_one_int', 10 );
-
-		add_filter( 'ba_eas_do_role_based_author_base', 'ba_eas_tests_return_full_array' );
-		$this->assertTrue( ba_eas_do_role_based_author_base() );
-		remove_filter( 'ba_eas_do_role_based_author_base', 'ba_eas_tests_return_full_array', 10 );
-
 		// False tests
 		add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
 		$this->assertFalse( ba_eas_do_role_based_author_base() );
 		remove_filter( 'ba_eas_do_role_based_author_base', '__return_false', 10 );
-
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_zero' );
-		$this->assertFalse( ba_eas_do_role_based_author_base() );
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_zero', 10 );
-
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_empty_array' );
-		$this->assertFalse( ba_eas_do_role_based_author_base() );
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_empty_array', 10 );
-
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_empty_string' );
-		$this->assertFalse( ba_eas_do_role_based_author_base() );
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_empty_string', 10 );
 	}
 
 	function test_ba_eas_author_link() {
@@ -327,7 +279,6 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		add_filter( 'ba_eas_do_auto_update', '__return_true' );
 		add_filter( 'ba_eas_auto_update_user_nicename_structure', 'ba_eas_tests_nicename_return_firstlast' );
 		wp_update_user( array( 'ID' => $this->single_user_id, 'user_email' => 'mastersplinter1@example.com' ) );
-		$this->assertNotEquals( $this->single_user_id, wp_cache_get( 'mastersplinter', 'userslugs' ) );
 		$this->assertEquals( $this->single_user_id, wp_cache_get( 'master-splinter', 'userslugs' ) );
 		remove_filter( 'ba_eas_auto_update_user_nicename_structure', 'ba_eas_tests_nicename_return_firstlast', 10 );
 		remove_filter( 'ba_eas_do_auto_update', '__return_true', 10 );
