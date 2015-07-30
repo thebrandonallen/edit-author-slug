@@ -29,6 +29,6 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		add_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
 		$this->assertFalse( ba_eas_can_edit_author_slug() );
-		add_filter( 'ba_eas_can_edit_author_slug', '__return_false', 10 );
+		remove_filter( 'ba_eas_can_edit_author_slug', '__return_false', 10 );
 	}
 }
