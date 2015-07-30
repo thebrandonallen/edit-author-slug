@@ -27,7 +27,10 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 		$this->assertEquals( 0,  has_action( 'init', array( $this->eas, 'load_textdomain' ) ) );
 	}
 
-	function test_add_rewrite_tag() {
+	/**
+	 * @covers BA_Edit_Author_Slug::add_rewrite_tags
+	 */
+	function test_add_rewrite_tags() {
 		// Check for return when role-based author base is disabled
 		add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
 
@@ -64,11 +67,17 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
 	}
 
+	/**
+	 * @covers ::ba_eas_activation
+	 */
 	function test_ba_eas_activation() {
 		ba_eas_activation();
 		$this->assertTrue( (bool) did_action( 'ba_eas_activation' ) );
 	}
 
+	/**
+	 * @covers ::ba_eas_deactivation
+	 */
 	function test_ba_eas_deactivation() {
 		ba_eas_deactivation();
 		$this->assertTrue( (bool) did_action( 'ba_eas_deactivation' ) );
