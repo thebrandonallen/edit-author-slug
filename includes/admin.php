@@ -68,7 +68,7 @@ function ba_eas_show_user_nicename( $user ) {
 
 	// Setup a filterable list of nicename auto-update options,
 	// then filter out any duplicates/empties
-	$options = (array) apply_filters( 'ba_eas_show_user_nicename_options_list', $options );
+	$options = (array) apply_filters( 'ba_eas_show_user_nicename_options_list', $options, $user );
 	$options = array_unique( array_filter( array_map( 'trim', $options ) ) );
 
 	// Set default for checked status
