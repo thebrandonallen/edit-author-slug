@@ -15,6 +15,7 @@ php:
 
 env:
     - WP_VERSION=master
+    - WP_VERSION=4.2
     - WP_VERSION=4.1
     - WP_VERSION=4.0
     - WP_VERSION=3.9
@@ -25,13 +26,13 @@ matrix:
   include:
     - php: 5.2
       env: WP_VERSION=master
-    - php: hhvm
+    - php: 7.0
       env: WP_VERSION=master
-    - php: nightly
+    - php: hhvm
       env: WP_VERSION=master
   allow_failures:
+    - php: 7.0
     - php: hhvm
-    - php: nightly
 
 # Clones WordPress and configures our testing environment.
 before_script:
