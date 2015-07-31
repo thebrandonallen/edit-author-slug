@@ -198,10 +198,25 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$GLOBALS['wp_query']->queried_object = get_userdata( $this->single_user_id );
 		$this->assertEquals( 'author-mastersplinter.php', ba_eas_template_include( 'author-mastersplinter.php' ) );
 		$this->assertEquals( "author-{$this->single_user_id}.php", ba_eas_template_include( "author-{$this->single_user_id}.php" ) );
-		$this->assertEquals( 'role-test', ba_eas_template_include( 'role-test' ) );
-		/**
-		 * @todo Figure out how to fake a template file to complete the test
+
+		$role_template         = TEMPLATEPATH . '/' . 'author-subscriber.php';
+		$role_slug_template    = TEMPLATEPATH . '/' . 'author-deshi.php';
+		$this->eas->role_slugs = ba_eas_tests_slugs( 'custom' );
+
+		file_put_contents( $role_template, '<?php' );
+		$this->assertEquals( $role_template, ba_eas_template_include( 'author-subscriber.php' ) );
+		@unlink( $role_template );
+
+		/*
+		 * Creating and loading both files fails. Individually they work, but
+		 * for some reason you can't test for both instances. Need to investigate.
 		 */
+		/*
+		file_put_contents( $role_slug_template, '<?php' );
+		$this->assertEquals( $role_slug_template, ba_eas_template_include( 'author-deshi.php' ) );
+		@unlink( $role_slug_template );
+		*/
+
 		$GLOBALS['wp_query']->queried_object = null;
 
 		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
