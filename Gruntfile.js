@@ -2,6 +2,8 @@
 module.exports = function(grunt) {
 	var SOURCE_DIR = '',
 		BUILD_DIR = 'build/',
+		CURRENT_TIME = new Date(),
+		CURRENT_YEAR = CURRENT_TIME.getFullYear(),
 
 		EAS_EXCLUDED_MISC = [
 			'!**/.idea/**',
@@ -80,8 +82,14 @@ module.exports = function(grunt) {
 				options: {
 					domainPath: '/languages',
 					mainFile: 'edit-author-slug.php',
-					potComments: 'Copyright (C) 2015 Brandon Allen\nThis file is distributed under the same license as the Edit Author Slug package.\nSend translations to <wp_plugins [at] brandonallen (dot) org>, 2015.',
+					potComments: 'Copyright (C) ' + CURRENT_YEAR + ' Brandon Allen\nThis file is distributed under the same license as the Edit Author Slug package.\nSend translations to <wp_plugins [at] brandonallen (dot) me>.',
 					potFilename: 'edit-author-slug.pot',
+					processPot: function( pot ) {
+						pot.headers['report-msgid-bugs-to'] = 'https://github.com/thebrandonallen/edit-author-slug/issues';
+						pot.headers['last-translator'] = 'BRANDON ALLEN <wp_plugins@brandonallen.me>';
+						pot.headers['language-team'] = 'ENGLISH <wp_plugins@brandonallen.me>';
+						return pot;
+					},
 					type: 'wp-plugin'
 				}
 			}
