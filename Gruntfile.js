@@ -143,7 +143,7 @@ module.exports = function(grunt) {
 	});
 
 	// Build tasks.
-	grunt.registerTask( 'build', [ 'checktextdomain', 'string-replace:build', 'makepot', 'copy:files' ] );
+	grunt.registerTask( 'build', [ 'clean:all', 'checktextdomain', 'string-replace:build', 'makepot', 'copy:files' ] );
 
 	// PHPUnit test task.
 	grunt.registerMultiTask( 'phpunit', 'Runs PHPUnit tests, including the multisite tests.', function() {
