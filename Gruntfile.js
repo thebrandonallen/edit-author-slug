@@ -6,6 +6,7 @@ module.exports = function(grunt) {
 		EAS_EXCLUDED_MISC = [
 			'!**/.idea/**',
 			'!**/bin/**',
+			'!**/build/**',
 			'!**/coverage/**',
 			'!**/node_modules/**',
 			'!**/tests/**',
@@ -42,8 +43,17 @@ module.exports = function(grunt) {
 				]
 			},
 			files: {
-				src: [ '**/*.php', '!node_modules/**/*' ],
+				src: [ '**/*.php' ].concat( EAS_EXCLUDED_MISC ),
 				expand: true
+			}
+		},
+		clean: {
+			all: [ BUILD_DIR ],
+			dynamic: {
+				cwd: BUILD_DIR,
+				dot: true,
+				expand: true,
+				src: []
 			}
 		},
 		copy: {
@@ -143,9 +153,6 @@ module.exports = function(grunt) {
 			opts: { stdio: 'inherit' }
 		}, this.async() );
 	} );
-
-	// Patch task.
-	grunt.renameTask('patch_wordpress', 'patch');
 
 	// Register the default tasks.
 	grunt.registerTask('default', ['watch']);
