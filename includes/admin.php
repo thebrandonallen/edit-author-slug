@@ -172,7 +172,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
 
 	// Maybe update the author slug?
-	if ( $author_slug != $_user->user_nicename ) {
+	if ( $author_slug !== $_user->user_nicename ) {
 
 		// Do we have an author slug?
 		if ( empty( $author_slug ) ) {
@@ -260,7 +260,7 @@ function ba_eas_author_slug_column( $defaults ) {
 function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
 
 	// Set row value to user_nicename if applicable
-	if ( 'ba-eas-author-slug' == $column_name ) {
+	if ( 'ba-eas-author-slug' === $column_name ) {
 		$user = get_userdata( $user_id );
 
 		if ( ! empty( $user->user_nicename ) ) {
@@ -392,7 +392,7 @@ function ba_eas_sanitize_author_base( $author_base ) {
 	}
 
 	// Do we need to update the author_base
-	if ( $author_base != $ba_eas->author_base ) {
+	if ( $author_base !== $ba_eas->author_base ) {
 		// Setup the new author_base global
 		$ba_eas->author_base = $author_base;
 

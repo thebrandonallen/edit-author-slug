@@ -350,7 +350,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 				$GLOBALS['wp_rewrite']->author_base = '%ba_eas_author_role%';
 
 			// Has the author base changed from the default?
-			} elseif ( ! empty( $this->author_base ) && 'author' != $this->author_base ) {
+			} elseif ( ! empty( $this->author_base ) && 'author' !== $this->author_base ) {
 
 				$GLOBALS['wp_rewrite']->author_base = $this->author_base;
 			}
