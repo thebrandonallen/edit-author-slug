@@ -116,6 +116,24 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::ba_eas_author_slug_column
+	 */
+	function test_ba_eas_author_slug_column() {
+		$this->assertArrayHasKey( 'ba-eas-author-slug', ba_eas_author_slug_column( array() ) );
+	}
+
+	/**
+	 * @covers ::ba_eas_author_slug_custom_column
+	 */
+	function test_ba_eas_author_slug_custom_column() {
+		$default = ba_eas_author_slug_custom_column( 'ninja', 'ninjas', $this->new_current_user );
+		$this->assertEquals( 'ninja', $default );
+
+		$default = ba_eas_author_slug_custom_column( 'ninja', 'ba-eas-author-slug', $this->new_current_user );
+		$this->assertEquals( 'mastersplinter', $default );
+	}
+
+	/**
 	 * @covers ::ba_eas_can_edit_author_slug
 	 */
 	function test_ba_eas_can_edit_author_slug() {
@@ -128,5 +146,65 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		add_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
 		$this->assertFalse( ba_eas_can_edit_author_slug() );
 		remove_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
+	}
+
+	/**
+	 * @covers ::ba_eas_sanitize_author_base
+	 */
+	function test_ba_eas_sanitize_author_base() {
+
+		$this->assertEquals( 'author', $GLOBALS['wp_rewrite']->author_base );
+
+		$this->assertEquals( 'author', ba_eas_sanitize_author_base( '' ) );
+
+		$this->assertEquals( 'author', ba_eas_sanitize_author_base( '@' ) );
+
+		$this->assertEquals( 'ninja', ba_eas_sanitize_author_base( 'ninja' ) );
+		$this->assertEquals( 'ninja', $GLOBALS['wp_rewrite']->author_base );
+		$this->assertEquals( false, get_option( 'rewrite_rules' ) );
+	}
+
+	/**
+	 * @covers ::ba_eas_install
+	 */
+	function test_ba_eas_install() {
+		$old_db_version = $this->eas->current_db_version;
+		$this->eas->current_db_version = 0;
+		ba_eas_install();
+
+		$this->assertEquals( $this->eas->author_base, get_option( '_ba_eas_author_base' ) );
+		$this->assertEquals( $this->eas->db_version, get_option( '_ba_eas_db_version' ) );
+		$this->assertEquals( $this->eas->do_auto_update, get_option( '_ba_eas_do_auto_update' ) );
+		$this->assertEquals( $this->eas->default_user_nicename, get_option( '_ba_eas_default_user_nicename' ) );
+		$this->assertEquals( $this->eas->do_role_based, get_option( '_ba_eas_do_role_based' ) );
+		$this->assertEquals( $this->eas->role_slugs, get_option( '_ba_eas_role_slugs' ) );
+
+		$this->eas->current_db_version = $this->eas->db_version;
+		$this->assertNull( ba_eas_install() );
+	}
+
+	/**
+	 * @covers ::ba_eas_upgrade
+	 */
+	function test_ba_eas_upgrade() {
+		$old_db_version = $this->eas->current_db_version;
+		$this->eas->current_db_version = 30;
+
+		update_option( 'ba_edit_author_slug', 'test' );
+
+		ba_eas_upgrade();
+
+		$this->assertEquals( $this->eas->author_base, get_option( '_ba_eas_author_base' ) );
+		$this->assertEquals( $this->eas->db_version, get_option( '_ba_eas_db_version' ) );
+		$this->assertEquals( $this->eas->do_auto_update, get_option( '_ba_eas_do_auto_update' ) );
+		$this->assertEquals( $this->eas->default_user_nicename, get_option( '_ba_eas_default_user_nicename' ) );
+		$this->assertEquals( $this->eas->do_role_based, get_option( '_ba_eas_do_role_based' ) );
+		$this->assertEquals( $this->eas->role_slugs, get_option( '_ba_eas_role_slugs' ) );
+		$this->assertEquals( 'test', get_option( '_ba_eas_old_options' ) );
+		$this->assertEquals( false, get_option( 'ba_edit_author_slug' ) );
+		$this->assertEquals( false, get_option( 'rewrite_rules' ) );
+
+		$this->eas->current_db_version = $this->eas->db_version;
+		$this->assertNull( ba_eas_upgrade() );
 	}
 }
