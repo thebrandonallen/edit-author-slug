@@ -14,10 +14,6 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 		$this->eas->role_slugs  = ba_eas_tests_slugs( 'default' );
 	}
 
-	function test_plugin_activated() {
-		$this->assertTrue( class_exists( 'BA_Edit_Author_Slug' ) );
-	}
-
 	/**
 	 * @covers BA_Edit_Author_Slug::setup_actions
 	 */
