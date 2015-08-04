@@ -8,6 +8,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		$this->old_current_user = get_current_user_id();
 		$this->new_current_user = $this->factory->user->create( array(
+			'user_login' => 'mastersplinter',
 			'role' => 'administrator',
 			'first_name' => 'Master',
 			'last_name' => 'Splinter',
@@ -36,12 +37,12 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_show_user_nicename( wp_get_current_user() );
 		$output = ob_get_clean();
 
-		$this->assertContains( '<label title="user-1"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="user-1" checked=\'checked\'> <span>user-1</span></label>', $output );
+		$this->assertContains( '<label title="mastersplinter"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="mastersplinter" checked=\'checked\'> <span>mastersplinter</span></label>', $output );
 		$this->assertContains( '<label title="master-splinter"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="master-splinter"> <span>master-splinter</span></label>', $output );
 		$this->assertContains( '<label title="master"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="master"> <span>master</span></label>', $output );
 		$this->assertContains( '<label title="splinter"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="splinter"> <span>splinter</span></label>', $output );
 		$this->assertContains( '<label title="splinter-master"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="splinter-master"> <span>splinter-master</span></label>', $output );
-		$this->assertContains( '<label title="user-1"><input type="radio" id="ba_eas_author_slug_custom" name="ba_eas_author_slug" value="\c\u\s\t\o\m"> <span>Custom: </span></label> <input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="user-1" class="regular-text" />', $output );
+		$this->assertContains( '<label title="mastersplinter"><input type="radio" id="ba_eas_author_slug_custom" name="ba_eas_author_slug" value="\c\u\s\t\o\m"> <span>Custom: </span></label> <input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="mastersplinter" class="regular-text" />', $output );
 	}
 
 	/**
