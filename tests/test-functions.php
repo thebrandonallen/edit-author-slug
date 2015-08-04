@@ -141,6 +141,20 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::ba_eas_auto_update_user_nicename_single
+	 */
+	function test_ba_eas_auto_update_user_nicename_single() {
+		$this->markTestIncomplete();
+	}
+
+	/**
+	 * @covers ::ba_eas_auto_update_user_nicename_bulk
+	 */
+	function test_ba_eas_auto_update_user_nicename_bulk() {
+		$this->markTestIncomplete();
+	}
+
+	/**
 	 * @covers ::ba_eas_do_role_based_author_base
 	 */
 	function test_ba_eas_do_role_based_author_base() {
