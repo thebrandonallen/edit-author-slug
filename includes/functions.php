@@ -543,9 +543,11 @@ function ba_eas_update_nicename_cache( $user_id = 0, $old_user_data = '', $new_n
 
 	// Set the old nicename
 	// Note: This check is only for back-compat. You should pass a WP_User object.
-	$old_nicename = $old_user_data;
-	if ( $old_user_data instanceof WP_User ) {
+	if ( isset( $old_user_data->user_nicename ) ) {
 		$old_nicename = $old_user_data->user_nicename;
+	} else {
+		_doing_it_wrong( __FUNCTION__, ' The function ba_eas_update_nicename_cache() expects $old_user_data to be a WP_User object.', 'Edit Author Slug 1.0.4' );
+		$old_nicename = $old_user_data;
 	}
 
 	// Delete the old nicename from the cache

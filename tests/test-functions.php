@@ -361,6 +361,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 	/**
 	 * @covers ::ba_eas_update_nicename_cache
+	 *
+	 * @expectedIncorrectUsage ba_eas_update_nicename_cache
 	 */
 	function test_ba_eas_update_nicename_cache() {
 
@@ -384,5 +386,10 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		ba_eas_update_nicename_cache( $this->single_user_id, $user, 'splintermaster' );
 		$this->assertNotEquals( $this->single_user_id, wp_cache_get( 'mastersplinter', 'userslugs' ) );
 		$this->assertEquals( $this->single_user_id, wp_cache_get( 'splintermaster', 'userslugs' ) );
+
+		$user = get_userdata( $this->single_user_id );
+		ba_eas_update_nicename_cache( $this->single_user_id, 'splintermaster', 'splinter-master' );
+		$this->assertNotEquals( $this->single_user_id, wp_cache_get( 'splintermaster', 'userslugs' ) );
+		$this->assertEquals( $this->single_user_id, wp_cache_get( 'splinter-master', 'userslugs' ) );
 	}
 }
