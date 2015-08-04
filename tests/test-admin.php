@@ -23,6 +23,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	public function tearDown() {
 		parent::tearDown();
 		wp_set_current_user( $this->old_current_user );
+		$GLOBALS['wp_rewrite']->author_base = 'author';
 	}
 
 	/**
