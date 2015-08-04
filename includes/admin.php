@@ -794,8 +794,8 @@ function ba_eas_upgrade() {
 		add_option( '_ba_eas_author_base', $ba_eas->author_base );
 
 		// Rename the old option for safe keeping
-		global $wpdb;
-		$wpdb->update( $wpdb->options, array( 'option_name' => '_ba_eas_old_options' ), array( 'option_name' => 'ba_edit_author_slug' ) );
+		update_option( '_ba_eas_old_options', get_option( 'ba_edit_author_slug' ) );
+		delete_option( 'ba_edit_author_slug' );
 	}
 
 	// < 1.0.0
