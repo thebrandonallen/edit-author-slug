@@ -82,12 +82,12 @@ module.exports = function(grunt) {
 				options: {
 					domainPath: '/languages',
 					mainFile: 'edit-author-slug.php',
-					potComments: 'Copyright (C) ' + CURRENT_YEAR + ' Brandon Allen\nThis file is distributed under the same license as the Edit Author Slug package.\nSend translations to <wp_plugins [at] brandonallen (dot) me>.',
+					potComments: 'Copyright (C) ' + CURRENT_YEAR + ' Brandon Allen\nThis file is distributed under the same license as the Edit Author Slug package.\nSend translations to <plugins [at] brandonallen (dot) me>.',
 					potFilename: 'edit-author-slug.pot',
 					processPot: function( pot ) {
 						pot.headers['report-msgid-bugs-to'] = 'https://github.com/thebrandonallen/edit-author-slug/issues';
-						pot.headers['last-translator'] = 'BRANDON ALLEN <wp_plugins@brandonallen.me>';
-						pot.headers['language-team'] = 'ENGLISH <wp_plugins@brandonallen.me>';
+						pot.headers['last-translator'] = 'BRANDON ALLEN <plugins@brandonallen.me>';
+						pot.headers['language-team'] = 'ENGLISH <plugins@brandonallen.me>';
 						return pot;
 					},
 					type: 'wp-plugin'

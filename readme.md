@@ -26,7 +26,7 @@ Development of this plugin takes place on [GitHub](https://github.com/thebrandon
 #### Translations Available
 * Dutch - props Juliette Reinders Folmer
 
-You can also visit the plugin's homepage at http://brandonallen.org/wordpress/plugins/edit-author-slug/
+You can also visit the plugin's homepage at http://brandonallen.me/wordpress/plugins/edit-author-slug/
 
 ## Installation
 
