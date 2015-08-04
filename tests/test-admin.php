@@ -88,8 +88,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertEquals( 'assertion-2', $user->user_nicename );
 		$this->assertEquals( '<strong>ERROR</strong>: An author slug cannot be blank. Please try again.', $errors->get_error_message( 'ba_edit_author_slug' ) );
 
-		unset( $errors->errors['ba_edit_author_slug'] );
-		unset( $errors->error_data['ba_edit_author_slug'] );
+		unset( $errors );
+		$errors = new WP_Error;
 
 		$_POST = array(
 			'ba_eas_author_slug' => '@',
@@ -99,8 +99,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertEquals( 'assertion-2', $user->user_nicename );
 		$this->assertEquals( '<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different.', $errors->get_error_message( 'ba_edit_author_slug' ) );
 
-		unset( $errors->errors['ba_edit_author_slug'] );
-		unset( $errors->error_data['ba_edit_author_slug'] );
+		unset( $errors );
+		$errors = new WP_Error;
 
 		$_POST = array(
 			'ba_eas_author_slug' => 'admin',
@@ -110,8 +110,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertEquals( 'assertion-2', $user->user_nicename );
 		$this->assertEquals( '<strong>ERROR</strong>: The author slug, <strong><em>admin</em></strong>, already exists. Please try something different.', $errors->get_error_message( 'ba_edit_author_slug' ) );
 
-		unset( $errors->errors['ba_edit_author_slug'] );
-		unset( $errors->error_data['ba_edit_author_slug'] );
+		unset( $errors );
 	}
 
 	/**
