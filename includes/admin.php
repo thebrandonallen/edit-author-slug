@@ -132,16 +132,16 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 		return;
 	}
 
+	// Validate the user_id
+	if ( empty( $user->ID ) ) {
+		return;
+	}
+
 	// Check the nonce
 	check_admin_referer( 'update-user_' . $user->ID );
 
 	// Bail early if user can't edit the slug
 	if ( ! ba_eas_can_edit_author_slug() ) {
-		return;
-	}
-
-	// Validate the user_id
-	if ( empty( $user->ID ) ) {
 		return;
 	}
 
