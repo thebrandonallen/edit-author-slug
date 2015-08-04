@@ -20,7 +20,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 			'last_name'    => 'Splinter',
 		);
 
-		$this->single_user_id = $this->factory->user->create_object( $this->single_user );
+		$this->single_user_id = $this->factory->user->create( $this->single_user );
 	}
 
 	public function tearDown() {
