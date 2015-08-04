@@ -11,7 +11,7 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	public function tearDown() {
 		parent::tearDown();
 		$this->eas->author_base = 'author';
-		$this->eas->role_slugs  = ba_eas_tests_slugs( 'default' );
+		$this->eas->role_slugs  = ba_eas_tests_slugs_default();
 	}
 
 	/**
@@ -48,15 +48,15 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	 * @covers BA_Edit_Author_Slug::set_role_slugs
 	 */
 	function test_set_role_slugs() {
-		$this->assertEquals( $this->eas->role_slugs, ba_eas_tests_slugs( 'default' ) );
+		$this->assertEquals( $this->eas->role_slugs, ba_eas_tests_slugs_default() );
 
-		update_option( '_ba_eas_role_slugs', ba_eas_tests_slugs( 'custom' ) );
+		update_option( '_ba_eas_role_slugs', ba_eas_tests_slugs_custom() );
 		$this->eas->set_role_slugs();
-		$this->assertEquals( $this->eas->role_slugs, ba_eas_tests_slugs( 'custom' ) );
+		$this->assertEquals( $this->eas->role_slugs, ba_eas_tests_slugs_custom() );
 
-		update_option( '_ba_eas_role_slugs', ba_eas_tests_slugs( 'extra' ) );
+		update_option( '_ba_eas_role_slugs', ba_eas_tests_slugs_extra() );
 		$this->eas->set_role_slugs();
-		$this->assertEquals( $this->eas->role_slugs, ba_eas_tests_slugs( 'extra' ) );
+		$this->assertEquals( $this->eas->role_slugs, ba_eas_tests_slugs_extra() );
 	}
 
 	/**
@@ -83,14 +83,14 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 		$this->assertTrue( in_array( $slugs, $wp_rewrite->rewritereplace ) );
 
 		// Test for WP custom roles/role slugs
-		$this->eas->role_slugs = ba_eas_tests_slugs( 'custom' );
+		$this->eas->role_slugs = ba_eas_tests_slugs_custom();
 		$this->eas->add_rewrite_tags();
 		$slugs = '(jonin|chunin|mystic|junior-genin|deshi|author)';
 
 		$this->assertTrue( in_array( $slugs, $wp_rewrite->rewritereplace ) );
 
 		// Test for WP custom roles/role slugs
-		$this->eas->role_slugs = ba_eas_tests_slugs( 'extra' );
+		$this->eas->role_slugs = ba_eas_tests_slugs_extra();
 		$this->eas->add_rewrite_tags();
 		$slugs = '(administrator|editor|author|contributor|subscriber|foot-soldier)';
 

@@ -61,15 +61,15 @@ function ba_eas_tests_slugs( $type ) {
 	return $slugs[ $type ];
 }
 
-function ba_eas_tests_slugs_default( $type ) {
+function ba_eas_tests_slugs_default() {
 	return ba_eas_tests_slugs( 'default' );
 }
 
-function ba_eas_tests_slugs_custom( $type ) {
+function ba_eas_tests_slugs_custom() {
 	return ba_eas_tests_slugs( 'custom' );
 }
 
-function ba_eas_tests_slugs_extra( $type ) {
+function ba_eas_tests_slugs_extra() {
 	return ba_eas_tests_slugs( 'extra' );
 }
 
@@ -117,78 +117,3 @@ function ba_eas_tests_roles_custom() {
 function ba_eas_tests_roles_extra() {
 	return ba_eas_tests_roles( 'extra' );
 }
-
-function ba_eas_tests_return_null_string() {
-	return 'null';
-}
-
-function ba_eas_tests_return_true_string() {
-	return 'true';
-}
-
-function ba_eas_tests_return_false_string() {
-	return 'false';
-}
-
-function ba_eas_tests_return_one_int() {
-	return 1;
-}
-
-function ba_eas_tests_return_one_string() {
-	return '1';
-}
-
-function ba_eas_tests_return_zero_string() {
-	return '0';
-}
-
-function ba_eas_tests_return_number_alpha_string() {
-	return '12ab4lk56';
-}
-
-function ba_eas_tests_return_alpha_number_string() {
-	return 'ab4lk56';
-}
-
-function ba_eas_tests_return_sentence() {
-	return 'This is a sentence.';
-}
-
-function ba_eas_tests_return_full_array() {
-	return array(
-		'key' => 'value',
-	);
-}
-
-function ba_eas_tests_nicename_return_username() {
-	return 'username';
-}
-
-function ba_eas_tests_nicename_return_nicename() {
-	return 'nicename';
-}
-
-function ba_eas_tests_nicename_return_nickname() {
-	return 'nickname';
-}
-
-function ba_eas_tests_nicename_return_displayname() {
-	return 'displayname';
-}
-
-function ba_eas_tests_nicename_return_firstname() {
-	return 'firstname';
-}
-
-function ba_eas_tests_nicename_return_lastname() {
-	return 'lastname';
-}
-
-function ba_eas_tests_nicename_return_firstlast() {
-	return 'firstlast';
-}
-
-function ba_eas_tests_nicename_return_lastfirst() {
-	return 'lastfirst';
-}
-

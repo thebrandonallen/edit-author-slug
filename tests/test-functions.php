@@ -27,7 +27,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		parent::tearDown();
 
 		$this->eas->author_base = 'author';
-		$this->eas->role_slugs  = ba_eas_tests_slugs( 'default' );
+		$this->eas->role_slugs  = ba_eas_tests_slugs_default();
 	}
 
 	/**
@@ -212,7 +212,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		$role_template         = TEMPLATEPATH . '/' . 'author-subscriber.php';
 		$role_slug_template    = TEMPLATEPATH . '/' . 'author-deshi.php';
-		$this->eas->role_slugs = ba_eas_tests_slugs( 'custom' );
+		$this->eas->role_slugs = ba_eas_tests_slugs_custom();
 
 		file_put_contents( $role_template, '<?php' );
 		$this->assertEquals( $role_template, ba_eas_template_include( 'author-subscriber.php' ) );
@@ -280,14 +280,14 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		// Test with empty $wp_roles global
 		global $wp_roles;
 		$wp_roles = array();
-		$this->assertEquals( ba_eas_tests_roles( 'default' ), ba_eas_get_editable_roles() );
+		$this->assertEquals( ba_eas_tests_roles_default(), ba_eas_get_editable_roles() );
 
 		// Test default WP roles
-		$this->assertEquals( ba_eas_tests_roles( 'default' ), ba_eas_get_editable_roles() );
+		$this->assertEquals( ba_eas_tests_roles_default(), ba_eas_get_editable_roles() );
 
 		// Test with extra role
 		add_filter( 'editable_roles', 'ba_eas_tests_roles_extra' );
-		$this->assertEquals( ba_eas_tests_roles( 'extra' ), ba_eas_get_editable_roles() );
+		$this->assertEquals( ba_eas_tests_roles_extra(), ba_eas_get_editable_roles() );
 		remove_filter( 'editable_roles', 'ba_eas_tests_roles_extra', 10 );
 	}
 
@@ -299,14 +299,14 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		// Test with empty $wp_roles global
 		global $wp_roles;
 		$wp_roles = array();
-		$this->assertEquals( ba_eas_tests_slugs( 'default' ), ba_eas_get_default_role_slugs() );
+		$this->assertEquals( ba_eas_tests_slugs_default(), ba_eas_get_default_role_slugs() );
 
 		// Test default WP roles
-		$this->assertEquals( ba_eas_tests_slugs( 'default' ), ba_eas_get_default_role_slugs() );
+		$this->assertEquals( ba_eas_tests_slugs_default(), ba_eas_get_default_role_slugs() );
 
 		// Test with extra role
 		add_filter( 'editable_roles', 'ba_eas_tests_roles_extra' );
-		$this->assertEquals( ba_eas_tests_slugs( 'extra' ), ba_eas_get_default_role_slugs() );
+		$this->assertEquals( ba_eas_tests_slugs_extra(), ba_eas_get_default_role_slugs() );
 		remove_filter( 'editable_roles', 'ba_eas_tests_roles_extra', 10 );
 	}
 
