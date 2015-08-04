@@ -473,6 +473,8 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
 	 *
 	 * @since 1.0.2
 	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @param array $base
 	 * @param array $replacements
 	 *
