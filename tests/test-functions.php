@@ -287,6 +287,37 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		remove_filter( 'editable_roles', 'ba_eas_tests_roles_extra', 10 );
 	}
 
+	/**
+	 * @covers ::array_replace_recursive
+	 */
+	function test_array_replace_recursive() {
+		$base = array(
+			'test-1' => array(
+				'test-1a' => 'test-1a',
+			),
+			'test-2' => 'test-2',
+		);
+
+		$replacements = array(
+			'test-1' => array(
+				'test-1a' => 'new-test-1a',
+				'test-1b' => 'test-1b',
+			),
+			'test-3' => 'test-3',
+		);
+
+		$expected = array(
+			'test-1' => array(
+				'test-1a' => 'new-test-1a',
+				'test-1b' => 'test-1b',
+			),
+			'test-2' => 'test-2',
+			'test-3' => 'test-3',
+		);
+
+		$this->assertEquals( $expected, array_replace_recursive( $base, $replacements ) );
+	}
+
 	function test_ba_eas_update_nicename_cache() {
 
 		$this->assertEquals( $this->single_user_id, wp_cache_get( 'mastersplinter', 'userslugs' ) );
