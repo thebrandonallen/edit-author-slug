@@ -51,6 +51,12 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 
 ## Changelog
 
+### 1.0.5
+* Add WP_User object as a parameter passed to the `ba_eas_show_user_nicename_options_list` filter
+* Add Japanese translation files. Props SmokyJp.
+* Fixed possible (although unlikely) cache invalidation issue
+* Minor code improvements and optimizations.
+
 #### 1.0.4
 * Improve upgrade routine for older installs
 * Improve output escaping
