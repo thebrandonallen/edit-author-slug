@@ -1,18 +1,19 @@
 # Copyright (C) 2015 Brandon Allen
 # This file is distributed under the same license as the Edit Author Slug package.
-# Send translations to <wp_plugins [at] brandonallen (dot) org>, 2015.
+# Send translations to <plugins [at] brandonallen (dot) me>.
 msgid ""
 msgstr ""
-"Project-Id-Version: Edit Author Slug 1.0.4\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/edit-author-slug\n"
-"POT-Creation-Date: 2015-04-21 08:30:26+00:00\n"
+"Project-Id-Version: Edit Author Slug 1.0.5\n"
+"Report-Msgid-Bugs-To: "
+"https://github.com/thebrandonallen/edit-author-slug/issues\n"
+"POT-Creation-Date: 2015-08-05 00:07:46+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"X-Generator: grunt-wp-i18n 0.5.1\n"
+"Last-Translator: BRANDON ALLEN <plugins@brandonallen.me>\n"
+"Language-Team: ENGLISH <plugins@brandonallen.me>\n"
+"X-Generator: grunt-wp-i18n 0.5.3\n"
 
 #: edit-author-slug.php:149 edit-author-slug.php:156
 msgid "Cheatin&#8217; huh?"
@@ -146,7 +147,7 @@ msgid "Settings"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "http://brandonallen.org/wordpress/plugins/edit-author-slug/"
+msgid "http://brandonallen.me/wordpress/plugins/edit-author-slug/"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -162,5 +163,5 @@ msgid "Brandon Allen"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://brandonallen.org/"
+msgid "http://brandonallen.me/"
 msgstr ""
