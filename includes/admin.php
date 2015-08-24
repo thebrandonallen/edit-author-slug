@@ -290,6 +290,11 @@ function ba_eas_show_user_nicename_scripts() {
 	// Get screen object
 	$screen = get_current_screen();
 
+	// Make sure we have a screen object.
+	if ( ! empty( $screen->base ) ) {
+		return;
+	}
+
 	// Add nicename edit js
 	if ( in_array( $screen->base, array( 'user-edit', 'profile' ) ) && ba_eas_can_edit_author_slug() ) {
 ?>
