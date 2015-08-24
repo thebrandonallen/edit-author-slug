@@ -444,7 +444,7 @@ function ba_eas_settings_page_html() {
 
 	<div class="wrap">
 
-		<h2><?php esc_html_e( 'Edit Author Slug Settings', 'edit-author-slug' ); ?></h2>
+		<h1><?php esc_html_e( 'Edit Author Slug Settings', 'edit-author-slug' ); ?></h1>
 
 		<form action="options.php" method="post">
 
