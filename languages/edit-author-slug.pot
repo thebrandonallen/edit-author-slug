@@ -3,10 +3,10 @@
 # Send translations to <plugins [at] brandonallen (dot) me>.
 msgid ""
 msgstr ""
-"Project-Id-Version: Edit Author Slug 1.0.5.1\n"
+"Project-Id-Version: Edit Author Slug 1.0.6\n"
 "Report-Msgid-Bugs-To: "
 "https://github.com/thebrandonallen/edit-author-slug/issues\n"
-"POT-Creation-Date: 2015-08-05 01:16:05+00:00\n"
+"POT-Creation-Date: 2015-09-14 19:13:49+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,7 +34,7 @@ msgid "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'"
 msgstr ""
 
 #: includes/admin.php:82 includes/admin.php:84 includes/admin.php:238
-#: includes/admin.php:490
+#: includes/admin.php:495
 msgid "Author Slug"
 msgstr ""
 
@@ -58,91 +58,91 @@ msgid ""
 "something different."
 msgstr ""
 
-#: includes/admin.php:424 includes/admin.php:442
+#: includes/admin.php:429 includes/admin.php:447
 msgid "Edit Author Slug Settings"
 msgstr ""
 
-#: includes/admin.php:468 includes/admin.php:471
+#: includes/admin.php:473 includes/admin.php:476
 msgid "Author Base"
 msgstr ""
 
-#: includes/admin.php:475
+#: includes/admin.php:480
 msgid "Role-Based Author Base"
 msgstr ""
 
-#: includes/admin.php:479
+#: includes/admin.php:484
 msgid "Role Slugs"
 msgstr ""
 
-#: includes/admin.php:483
+#: includes/admin.php:488
 msgid "Automatic Author Slug Creation"
 msgstr ""
 
-#: includes/admin.php:486
+#: includes/admin.php:491
 msgid "Automatically Update"
 msgstr ""
 
-#: includes/admin.php:504
+#: includes/admin.php:509
 msgid "Change your author base to something more fun!"
 msgstr ""
 
-#: includes/admin.php:519
+#: includes/admin.php:524
 msgid ""
 "Allow Author Slugs to be automatically update, and set the default Author "
 "Slug structure for users. Automatic updating will only occur when a user "
 "can't edit Author Slugs on their own."
 msgstr ""
 
-#: includes/admin.php:519
+#: includes/admin.php:524
 msgid ""
 "This could have SEO repercussions if users update their profiles "
 "frequently, and it will override any manual editing of the Author Slug you "
 "may have previously completed."
 msgstr ""
 
-#: includes/admin.php:540
+#: includes/admin.php:545
 msgid "Defaults to 'author'"
 msgstr ""
 
-#: includes/admin.php:558
+#: includes/admin.php:563
 msgid ""
 "Set user's Author Base according to their role. (The above \"Author Base\" "
 "setting will be used as a fallback.)"
 msgstr ""
 
-#: includes/admin.php:661
+#: includes/admin.php:666
 msgid "Automatically update Author Slug when a user updates their profile."
 msgstr ""
 
-#: includes/admin.php:688
+#: includes/admin.php:693
 msgid "username (Default)"
 msgstr ""
 
-#: includes/admin.php:689
+#: includes/admin.php:694
 msgid "nickname"
 msgstr ""
 
-#: includes/admin.php:690
+#: includes/admin.php:695
 msgid "displayname"
 msgstr ""
 
-#: includes/admin.php:691
+#: includes/admin.php:696
 msgid "firstname"
 msgstr ""
 
-#: includes/admin.php:692
+#: includes/admin.php:697
 msgid "lastname"
 msgstr ""
 
-#: includes/admin.php:693
+#: includes/admin.php:698
 msgid "firstname-lastname"
 msgstr ""
 
-#: includes/admin.php:694
+#: includes/admin.php:699
 msgid "lastname-firstname"
 msgstr ""
 
-#: includes/admin.php:729
+#: includes/admin.php:734
 msgid "Settings"
 msgstr ""
 
