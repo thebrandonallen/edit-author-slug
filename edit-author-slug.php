@@ -233,6 +233,10 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			// Options
 			if ( $base = get_option( '_ba_eas_author_base' ) ) {
+
+				// Sanitize the db value.
+				$base = sanitize_title( $base );
+
 				// Author base
 				if ( ! empty( $base ) ) {
 					$this->author_base = $base;
@@ -244,9 +248,14 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			// Pre-0.9 Back compat
 			} elseif ( $options = get_option( 'ba_edit_author_slug' ) ) {
 
-				// Author base
+				// Sanitize the db value.
 				if ( ! empty( $options['author_base'] ) ) {
-					$this->author_base = $options['author_base'];
+					$base = sanitize_title( $options['author_base'] );
+				}
+
+				// Author base
+				if ( ! empty( $base ) ) {
+					$this->author_base = $base;
 				}
 
 				// Current DB version
