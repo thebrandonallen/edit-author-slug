@@ -120,7 +120,7 @@ function ba_eas_show_user_nicename( $user ) {
  * @uses ba_eas_can_edit_author_slug() To verify current user can edit the author slug.
  * @uses get_userdata() To get the user data.
  * @uses WP_Errors::add() To add Edit Author Slug specific errors.
- * @uses sanitize_title() Used to sanitize user_nicename.
+ * @uses ba_eas_sanitize_nicename() Used to sanitize user_nicename.
  * @uses remove_action() To remove the 'ba_eas_auto_update_user_nicename_single' and prevent looping.
  * @uses get_user_by() To see if the nicename is already in use.
  * @uses esc_html() To sanitize author_slug for display.
@@ -165,26 +165,71 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
 	// Do we have an author slug?
 	if ( empty( $author_slug ) ) {
-		$errors->add( 'ba_edit_author_slug', __( '<strong>ERROR</strong>: An author slug cannot be blank. Please try again.', 'edit-author-slug' ) );
+		$errors->add( 'user_nicename_empty', __( '<strong>ERROR</strong>: An author slug cannot be blank. Please try again.', 'edit-author-slug' ) );
 		return;
 	}
 
-	// Prepare the author slug
-	$author_slug = sanitize_title( $author_slug );
+	// Stash author slug as it was, mostly, passed.
+	$raw_nicename = $author_slug;
 
+	// Check to see if the passed nicename contains any invalid characters.
+	$ascii = ba_eas_nicename_is_ascii( $author_slug );
 
-	// Maybe update the author slug?
+	// Sanitize the author slug.
+	$author_slug = ba_eas_sanitize_nicename( $author_slug );
+
+	/**
+	 * Filters the sanitized user nicename before any final checks are run.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string $author_slug  The sanitized user nicename.
+	 * @param string $raw_nicename The un-sanitized user nicename.
+	 * @param bool   $ascii        True if the nicename contains only characters
+	 *                             that can be converted to allowed ASCII characters.
+	 */
+	$author_slug = apply_filters( 'ba_eas_pre_update_user_nicename', $author_slug, $raw_nicename, $ascii );
+
+	// Bail and throw an error if the nicename contains invalid characters.
+	if ( ! $ascii ) {
+		$errors->add( 'user_nicename_invalid_characters', __( 'An author slug can only contain alphanumeric characters, underscores (_) and dashes (-).', 'edit-author-slug' ) );
+		return;
+	}
+
+	// Bail and throw an error if the nicename is empty after sanitization.
+	if ( empty( $author_slug ) ) {
+		$errors->add( 'user_nicename_invalid', __( '<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different.', 'edit-author-slug' ) );
+		return;
+	}
+
+	// Bail and throw an error if the nicename contains more than 50 characters.
+	if ( mb_strlen( $author_slug ) > 50 ) {
+		$errors->add( 'user_nicename_too_long', __( 'An author slug may not be longer than 50 characters.', 'edit-author-slug' ) );
+		return;
+	}
+
+	// Make sure the passed nicename is different from the user's current nicename.
 	if ( $author_slug !== $_user->user_nicename ) {
 
-		// Do we have an author slug?
-		if ( empty( $author_slug ) ) {
-			$errors->add( 'ba_edit_author_slug', __( '<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different.', 'edit-author-slug' ) );
-			return;
-		}
+		// Bail and throw an error if the nicename already exists.
+		$exists = get_user_by( 'slug', $author_slug );
+		if ( $exists && (int) $exists->ID !== $user->ID ) {
 
-		// Does this author slug already exist?
-		if ( get_user_by( 'slug', $author_slug ) && (int) get_user_by( 'slug', $author_slug )->ID !== $user->ID ) {
-			$errors->add( 'ba_edit_author_slug', sprintf( __( '<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try something different.', 'edit-author-slug' ), '<strong><em>' . esc_html( $author_slug ) . '</em></strong>' ) );
+			// Setup the error message.
+			$message = __(
+				'<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try something different.',
+				'edit-author-slug'
+			);
+
+			// Add the error message.
+			$errors->add(
+				'user_nicename_exists',
+				sprintf(
+					$message,
+					'<strong><em>' . esc_html( $author_slug ) . '</em></strong>'
+				)
+			);
+
 			return;
 		}
 
