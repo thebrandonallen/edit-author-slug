@@ -132,6 +132,9 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 		return;
 	}
 
+	// Don't run the auto-update if the current user can update their own nicename.
+	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
+
 	// We shouldn't be here if we're not updating
 	if ( ! $update ) {
 		return;
@@ -168,8 +171,6 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	// Prepare the author slug
 	$author_slug = sanitize_title( $author_slug );
 
-	// Don't run the auto-update when the current user can update nicenames
-	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
 
 	// Maybe update the author slug?
 	if ( $author_slug !== $_user->user_nicename ) {
