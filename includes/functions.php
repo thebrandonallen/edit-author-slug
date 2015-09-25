@@ -221,6 +221,82 @@ function ba_eas_auto_update_user_nicename_bulk( $user_id = 0 ) {
 	return ba_eas_auto_update_user_nicename( $user_id, true );
 }
 
+/**
+ * Helper function to sanitize a nicename in the same manner as the WP function
+ * `wp_insert_user()`.
+ *
+ * If `$strict` is set to true, this function will result in a nicename that
+ * only contains the alphanumeric characters, underscores (_) and dashes (-).
+ *
+ * @since 1.1.0
+ *
+ * @param string $nicename The nicename being sanitized.
+ * @param bool   $strict   True to return only ASCII characters.
+ *
+ * @uses sanitize_user() To remove any unsafe characters in the nicename.
+ * @uses sanitize_title() To remove HTML/PHP tags, and whitespace.
+ *
+ * @return string The nicename.
+ */
+function ba_eas_sanitize_nicename( $nicename = '', $strict = true ) {
+	return sanitize_title( sanitize_user( $nicename, (bool) $strict ) );
+}
+
+/**
+ * Helper function to escape the nicename in the same manner as other slugs are
+ * escaped in WP.
+ *
+ * @since 1.1.0
+ *
+ * @param string $nicename The nicename being sanitized.
+ *
+ * @uses apply_filters() To call the `editable_slug` hook.
+ *
+ * @return string The nicename.
+ */
+function ba_eas_esc_nicename( $nicename = '' ) {
+	return esc_textarea( urldecode( $nicename ) );
+}
+
+/**
+ * Helper function to trim the nicename to less than 50 characters, and strip
+ * off any leading/trailing hyphens or underscores.
+ *
+ * @since 1.1.0
+ *
+ * @param string $nicename The nicename being sanitized.
+ *
+ * @return string The nicename.
+ */
+function ba_eas_trim_nicename( $nicename = '' ) {
+	return trim( mb_substr( $nicename, 0, 50 ), '-_' );
+}
+
+/**
+ * Helper function to check a nicename for characters that won't be converted
+ * to ASCII characters.
+ *
+ * Before being saved to the db, `wp_insert_user()` converts nicenames by
+ * running them through `sanitize_user()` with the `$strict` parameter set to
+ * `true`, then through `sanitize_title()`. This results in a user nicename that
+ * only contains alphanumeric characters, underscores (_) and dashes (-). Rather
+ * than silently strip invalid characters, this function allows us to inform the
+ * editing user that their passed user nicename contains characters that won't
+ * make it through the `wp_insert_user()` sanitization process.
+ *
+ * @since 1.1.0
+ *
+ * @param string $nicename The nicename to check for invalid characters.
+ *
+ * @uses ba_eas_sanitize_nicename()
+ *
+ * @return bool True if the nicename contains only ASCII characters, or
+ *              characters that can be converted to ASCII.
+ */
+function ba_eas_nicename_is_ascii( $nicename = '' ) {
+	return ba_eas_sanitize_nicename( $nicename ) === ba_eas_sanitize_nicename( $nicename, false );
+}
+
 /** Author Base ***************************************************************/
 
 /**
