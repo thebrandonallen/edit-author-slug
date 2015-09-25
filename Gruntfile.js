@@ -19,7 +19,10 @@ module.exports = function(grunt) {
 		];
 
 	// Load tasks.
-	require('matchdep').filterDev('grunt-*').forEach( grunt.loadNpmTasks );
+	require( 'matchdep' ).filterDev([ 'grunt-*', '!grunt-legacy-util' ]).forEach( grunt.loadNpmTasks );
+
+	// Load legacy utils
+	grunt.util = require( 'grunt-legacy-util' );
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
