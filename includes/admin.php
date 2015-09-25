@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  * @uses ba_eas_trim_nicename() To trim the nicename to 50 characters via `array_map()`.
  * @uses esc_html_e() To sanitize localized string for display.
  * @uses checked() To check that box.
- * @uses esc_attr() To make sure we're safe to display.
+ * @uses ba_eas_esc_nicename() To escape the nicename for display.
  */
 function ba_eas_show_user_nicename( $user ) {
 
@@ -93,9 +93,9 @@ function ba_eas_show_user_nicename( $user ) {
 						$checked = false;
 					}
 				?>
-				<label title="<?php echo esc_attr( $item ); ?>"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="<?php echo esc_attr( $item ); ?>"<?php echo $checked_text; ?>> <span><?php echo esc_html( $item ); ?></span></label><br>
+				<label title="<?php echo ba_eas_esc_nicename( $item ); ?>"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="<?php echo ba_eas_esc_nicename( $item ); ?>" autocapitalize="none" autocorrect="off" maxlength="50"<?php echo $checked_text; ?>> <span><?php echo ba_eas_esc_nicename( $item ); ?></span></label><br>
 				<?php } ?>
-				<label title="<?php echo esc_attr( $nicename ); ?>"><input type="radio" id="ba_eas_author_slug_custom" name="ba_eas_author_slug" value="\c\u\s\t\o\m"<?php checked( $checked ); ?>> <span><?php esc_html_e( 'Custom:', 'edit-author-slug' ); ?> </span></label> <input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="<?php echo esc_attr( $nicename ); ?>" class="regular-text" />
+				<label title="<?php echo ba_eas_esc_nicename( $nicename ); ?>"><input type="radio" id="ba_eas_author_slug_custom" name="ba_eas_author_slug" value="\c\u\s\t\o\m" autocapitalize="none" autocorrect="off" maxlength="50"<?php checked( $checked ); ?>> <span><?php esc_html_e( 'Custom:', 'edit-author-slug' ); ?> </span></label> <input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="<?php echo ba_eas_esc_nicename( $nicename ); ?>" class="regular-text" />
 				</fieldset>
 			</td>
 		</tr></tbody>
