@@ -42,7 +42,7 @@ function ba_eas_do_auto_update() {
  * @uses get_userdata() To get the user object.
  * @uses apply_filters() To call the 'ba_eas_auto_update_user_nicename_structure' hook.
  * @uses ba_eas() BA_Edit_Author_Slug object.
- * @uses sanitize_title() To sanitize the new nicename.
+ * @uses ba_eas_sanitize_nicename() To sanitize the new nicename.
  * @uses apply_filters() To call the 'ba_eas_pre_auto_update_user_nicename' hook.
  * @uses remove_action() To remove the 'ba_eas_auto_update_user_nicename_single' and prevent looping.
  * @uses wp_update_user() Update to new user_nicename.
@@ -157,7 +157,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	}
 
 	// Sanitize the new nicename
-	$nicename = apply_filters( 'ba_eas_pre_auto_update_user_nicename', sanitize_title( $nicename ), $user_id, $structure );
+	$nicename = apply_filters( 'ba_eas_pre_auto_update_user_nicename', ba_eas_sanitize_nicename( $nicename ), $user_id, $structure );
 
 	// Bail if nothing changed
 	if ( $nicename === $current_nicename ) {

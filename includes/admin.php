@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  * @param object $user User data object.
  *
  * @uses ba_eas_can_edit_author_slug() To verify current user can edit the author slug.
- * @uses sanitize_title() To sanitize userdata into a new nicename.
+ * @uses ba_eas_sanitize_nicename() To sanitize userdata into a new nicename.
  * @uses apply_filters() To call the 'ba_eas_show_user_nicename_options_list' hook.
  * @uses esc_html_e() To sanitize localized string for display.
  * @uses checked() To check that box.
@@ -46,18 +46,17 @@ function ba_eas_show_user_nicename( $user ) {
 
 	// Setup options array
 	$options = array();
-	$options['username']    = trim( sanitize_title( $user->user_login   ) );
-	$options['nickname']    = trim( sanitize_title( $user->nickname     ) );
-	$options['displayname'] = trim( sanitize_title( $user->display_name ) );
+	$options['username']    = ba_eas_sanitize_nicename( $user->nickname     );
+	$options['displayname'] = ba_eas_sanitize_nicename( $user->display_name );
 
 	// Setup the first name
 	if ( ! empty( $user->first_name ) ) {
-		$options['firstname'] = trim( sanitize_title( $user->first_name ) );
+		$options['firstname'] = ba_eas_sanitize_nicename( $user->first_name );
 	}
 
 	// Setup the last name
 	if ( ! empty( $user->last_name ) ) {
-		$options['lastname'] = trim( sanitize_title( $user->last_name ) );
+		$options['lastname'] = ba_eas_sanitize_nicename( $user->last_name );
 	}
 
 	// Setup the first/last name combos
