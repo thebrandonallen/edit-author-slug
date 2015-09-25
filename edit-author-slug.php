@@ -267,9 +267,13 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			// Load auto-update option
 			$this->do_auto_update = absint( get_option( '_ba_eas_do_auto_update', 0 ) );
 
-			// Load the default nicename structure for auto-update
-			$default_user_nicename = get_option( '_ba_eas_default_user_nicename', 'username' );
-			$this->default_user_nicename = ( ! empty( $default_user_nicename ) ) ? $default_user_nicename : 'username';
+			// Load the default nicename structure for auto-update.
+			$default_user_nicename = get_option( '_ba_eas_default_user_nicename' );
+			$default_user_nicename = sanitize_key( $default_user_nicename );
+			if ( empty( $default_user_nicename ) ) {
+				$default_user_nicename = 'username';
+			}
+			$this->default_user_nicename = $default_user_nicename;
 
 			// Load role-based author slug option
 			$this->do_role_based = absint( get_option( '_ba_eas_do_role_based', 0 ) );
