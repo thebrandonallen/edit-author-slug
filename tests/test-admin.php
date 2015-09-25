@@ -38,12 +38,12 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_show_user_nicename( wp_get_current_user() );
 		$output = ob_get_clean();
 
-		$this->assertContains( '<label title="mastersplinter"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="mastersplinter" checked=\'checked\'> <span>mastersplinter</span></label>', $output );
-		$this->assertContains( '<label title="master-splinter"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="master-splinter"> <span>master-splinter</span></label>', $output );
-		$this->assertContains( '<label title="master"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="master"> <span>master</span></label>', $output );
-		$this->assertContains( '<label title="splinter"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="splinter"> <span>splinter</span></label>', $output );
-		$this->assertContains( '<label title="splinter-master"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="splinter-master"> <span>splinter-master</span></label>', $output );
-		$this->assertContains( '<label title="mastersplinter"><input type="radio" id="ba_eas_author_slug_custom" name="ba_eas_author_slug" value="\c\u\s\t\o\m"> <span>Custom: </span></label> <input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="mastersplinter" class="regular-text" />', $output );
+		$this->assertContains( '<label title="mastersplinter"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="mastersplinter" autocapitalize="none" autocorrect="off" maxlength="50" checked=\'checked\'> <span>mastersplinter</span></label>', $output );
+		$this->assertContains( '<label title="master-splinter"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="master-splinter" autocapitalize="none" autocorrect="off" maxlength="50"> <span>master-splinter</span></label>', $output );
+		$this->assertContains( '<label title="master"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="master" autocapitalize="none" autocorrect="off" maxlength="50"> <span>master</span></label>', $output );
+		$this->assertContains( '<label title="splinter"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="splinter" autocapitalize="none" autocorrect="off" maxlength="50"> <span>splinter</span></label>', $output );
+		$this->assertContains( '<label title="splinter-master"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="splinter-master" autocapitalize="none" autocorrect="off" maxlength="50"> <span>splinter-master</span></label>', $output );
+		$this->assertContains( '<label title="mastersplinter"><input type="radio" id="ba_eas_author_slug_custom" name="ba_eas_author_slug" value="\c\u\s\t\o\m" autocapitalize="none" autocorrect="off" maxlength="50"> <span>Custom: </span></label> <input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="mastersplinter" class="regular-text" />', $output );
 	}
 
 	/**
@@ -88,7 +88,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
 		$this->assertEquals( 'assertion-2', $user->user_nicename );
-		$this->assertEquals( '<strong>ERROR</strong>: An author slug cannot be blank. Please try again.', $errors->get_error_message( 'ba_edit_author_slug' ) );
+		$this->assertEquals( '<strong>ERROR</strong>: An author slug cannot be blank. Please try again.', $errors->get_error_message( 'user_nicename_empty' ) );
 
 		unset( $errors );
 		$errors = new WP_Error;
@@ -99,7 +99,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
 		$this->assertEquals( 'assertion-2', $user->user_nicename );
-		$this->assertEquals( '<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different.', $errors->get_error_message( 'ba_edit_author_slug' ) );
+		$this->assertEquals( '<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different.', $errors->get_error_message( 'user_nicename_invalid' ) );
 
 		unset( $errors );
 		$errors = new WP_Error;
@@ -110,7 +110,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
 		$this->assertEquals( 'assertion-2', $user->user_nicename );
-		$this->assertEquals( '<strong>ERROR</strong>: The author slug, <strong><em>admin</em></strong>, already exists. Please try something different.', $errors->get_error_message( 'ba_edit_author_slug' ) );
+		$this->assertEquals( '<strong>ERROR</strong>: The author slug, <strong><em>admin</em></strong>, already exists. Please try something different.', $errors->get_error_message( 'user_nicename_exists' ) );
 
 		unset( $errors );
 	}
