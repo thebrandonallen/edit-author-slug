@@ -27,6 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  * @uses ba_eas_can_edit_author_slug() To verify current user can edit the author slug.
  * @uses ba_eas_sanitize_nicename() To sanitize userdata into a new nicename.
  * @uses apply_filters() To call the 'ba_eas_show_user_nicename_options_list' hook.
+ * @uses ba_eas_trim_nicename() To trim the nicename to 50 characters via `array_map()`.
  * @uses esc_html_e() To sanitize localized string for display.
  * @uses checked() To check that box.
  * @uses esc_attr() To make sure we're safe to display.
@@ -65,10 +66,11 @@ function ba_eas_show_user_nicename( $user ) {
 		$options['lastfirst'] = $options['lastname'] . '-' . $options['firstname'];
 	}
 
-	// Setup a filterable list of nicename auto-update options,
-	// then filter out any duplicates/empties
-	$options = (array) apply_filters( 'ba_eas_show_user_nicename_options_list', $options, $user );
-	$options = array_unique( array_filter( array_map( 'trim', $options ) ) );
+	// Setup a filterable list of nicename options, trim to 50 characters, and,
+	// filter out any duplicates or empties.
+	$options = apply_filters( 'ba_eas_show_user_nicename_options_list', $options, $user );
+	$options = array_map( 'ba_eas_trim_nicename', (array) $options );
+	$options = array_unique( array_filter( $options ) );
 
 	// Set default for checked status
 	$checked = true;
