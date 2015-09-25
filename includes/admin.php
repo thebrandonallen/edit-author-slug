@@ -287,16 +287,21 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
  */
 function ba_eas_show_user_nicename_scripts() {
 
+	// Bail if user can't edit their own nicename.
+	if ( ! ba_eas_can_edit_author_slug() ) {
+		return;
+	}
+
 	// Get screen object
 	$screen = get_current_screen();
 
 	// Make sure we have a screen object.
-	if ( ! empty( $screen->base ) ) {
+	if ( empty( $screen->base ) ) {
 		return;
 	}
 
 	// Add nicename edit js
-	if ( in_array( $screen->base, array( 'user-edit', 'profile' ) ) && ba_eas_can_edit_author_slug() ) {
+	if ( in_array( $screen->base, array( 'user-edit', 'profile' ) ) ) {
 ?>
 
 	<!-- Edit Author Slug nicename edit -->
@@ -320,7 +325,7 @@ function ba_eas_show_user_nicename_scripts() {
 	}
 
 	// Add role slug edit js
-	if ( 'settings_page_edit-author-slug' === $screen->base && ba_eas_can_edit_author_slug() ) {
+	if ( 'settings_page_edit-author-slug' === $screen->base ) {
 ?>
 
 	<!-- Edit Author Slug role slug edit -->
