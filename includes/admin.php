@@ -152,13 +152,13 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	$_user = get_userdata( $user->ID );
 
 	// Check for a custom author slug
-	if ( ! empty( $_POST['ba_eas_author_slug'] ) && isset( $_POST['ba_eas_author_slug_custom'] ) && '\c\u\s\t\o\m' === stripslashes( $_POST['ba_eas_author_slug'] ) ) {
+	if ( isset( $_POST['ba_eas_author_slug'] ) && isset( $_POST['ba_eas_author_slug_custom'] ) && '\c\u\s\t\o\m' === stripslashes( $_POST['ba_eas_author_slug'] ) ) {
 		$_POST['ba_eas_author_slug'] = $_POST['ba_eas_author_slug_custom'];
 	}
 
 	// Setup the author slug
 	$author_slug = '';
-	if ( isset( $_POST['ba_eas_author_slug'] ) ) {
+	if ( ! empty( $_POST['ba_eas_author_slug'] ) ) {
 		$author_slug = trim( stripslashes( $_POST['ba_eas_author_slug'] ) );
 	}
 
