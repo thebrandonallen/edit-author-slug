@@ -60,13 +60,9 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 		return false;
 	}
 
-	// If we're not bulk updating, check if we should auto-update
-	if ( false === $bulk ) {
-
-		// Should we auto-update
-		if ( ! ba_eas_do_auto_update() ) {
-			return false;
-		}
+	// Bail if we're not bulk updating and auto-update is disabled.
+	if ( false === $bulk && ! ba_eas_do_auto_update() ) {
+		return false;
 	}
 
 	// Get WP_User object
