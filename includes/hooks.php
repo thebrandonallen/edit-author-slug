@@ -38,8 +38,8 @@ if ( is_admin() ) {
 }
 
 // Nicename auto-update actions.
-add_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
-add_action( 'user_register',  'ba_eas_auto_update_user_nicename_single' );
+add_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
+add_action( 'user_register',  'ba_eas_auto_update_user_nicename' );
 
 // Author permalink filtering for role-based author bases.
 add_filter( 'author_link', 'ba_eas_author_link', 20, 2 );

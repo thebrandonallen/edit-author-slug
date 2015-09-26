@@ -200,6 +200,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
  * @return bool|int $user_id. False on failure.
  */
 function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
+	_deprecated_function( __FUNCTION__, '1.1.0', 'ba_eas_auto_update_user_nicename' );
 	return ba_eas_auto_update_user_nicename( $user_id );
 }
 
