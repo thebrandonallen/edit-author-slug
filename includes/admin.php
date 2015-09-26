@@ -408,14 +408,17 @@ function ba_eas_show_user_nicename_scripts() {
 			// Hide the slugs if we're not doing auto-update.
 			if ( ! $("input[name='_ba_eas_do_auto_update']").is(':checked') ) {
 				$("input[name='_ba_eas_do_auto_update']").parents('tr').next('tr').addClass('hidden');
+				$("input[name='_ba_eas_do_auto_update']").parents('tr').next('tr').next('tr').addClass('hidden');
 			}
 
 			// Watch for clicks on the auto-update option.
 			$("input[name='_ba_eas_do_auto_update']").on('click', function(){
 				if ( $(this).is(':checked') ) {
 					$(this).parents('tr').next('tr').fadeIn('slow', function(){$(this).removeClass('hidden');});
+					$(this).parents('tr').next('tr').next('tr').fadeIn('slow', function(){$(this).removeClass('hidden');});
 				} else {
 					$(this).parents('tr').next('tr').fadeOut('fast', function(){$(this).addClass('hidden');});
+					$(this).parents('tr').next('tr').next('tr').fadeOut('fast', function(){$(this).addClass('hidden');});
 				}
 			});
 		});
