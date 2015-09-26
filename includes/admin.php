@@ -408,17 +408,28 @@ function ba_eas_show_user_nicename_scripts() {
 			// Hide the slugs if we're not doing auto-update.
 			if ( ! $("input[name='_ba_eas_do_auto_update']").is(':checked') ) {
 				$("input[name='_ba_eas_do_auto_update']").parents('tr').next('tr').addClass('hidden');
-				$("input[name='_ba_eas_do_auto_update']").parents('tr').next('tr').next('tr').addClass('hidden');
 			}
 
 			// Watch for clicks on the auto-update option.
 			$("input[name='_ba_eas_do_auto_update']").on('click', function(){
 				if ( $(this).is(':checked') ) {
 					$(this).parents('tr').next('tr').fadeIn('slow', function(){$(this).removeClass('hidden');});
-					$(this).parents('tr').next('tr').next('tr').fadeIn('slow', function(){$(this).removeClass('hidden');});
 				} else {
 					$(this).parents('tr').next('tr').fadeOut('fast', function(){$(this).addClass('hidden');});
-					$(this).parents('tr').next('tr').next('tr').fadeOut('fast', function(){$(this).addClass('hidden');});
+				}
+			});
+
+			// Hide the slugs if we're not doing auto-update.
+			if ( ! $("input[name='_ba_eas_bulk_update']").is(':checked') ) {
+				$("input[name='_ba_eas_bulk_update']").parents('tr').next('tr').addClass('hidden');
+			}
+
+			// Watch for clicks on the auto-update option.
+			$("input[name='_ba_eas_bulk_update']").on('click', function(){
+				if ( $(this).is(':checked') ) {
+					$(this).parents('tr').next('tr').fadeIn('slow', function(){$(this).removeClass('hidden');});
+				} else {
+					$(this).parents('tr').next('tr').fadeOut('fast', function(){$(this).addClass('hidden');});
 				}
 			});
 		});
@@ -600,22 +611,40 @@ function ba_eas_register_admin_settings() {
 	// Default user nicename setting.
 	add_settings_field(
 		'_ba_eas_default_user_nicename',
-		__( 'Author Slug', 'edit-author-slug' ),
+		__( 'Author Slug Structure', 'edit-author-slug' ),
 		'ba_eas_admin_setting_callback_default_user_nicename',
 		'edit-author-slug',
 		'ba_eas_auto_update'
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_default_user_nicename', 'sanitize_key' );
 
+	// Add the Bulk Update section.
+	add_settings_section(
+		'ba_eas_bulk_update',
+		__( 'Bulk Update Author Slugs', 'edit-author-slug' ),
+		'ba_eas_admin_setting_callback_bulk_update_section',
+		'edit-author-slug'
+	);
+
 	// Bulk update.
 	add_settings_field(
-		'_ba_eas_bulk_auto_update',
+		'_ba_eas_bulk_update',
 		__( 'Bulk Update', 'edit-author-slug' ),
-		'ba_eas_admin_setting_callback_bulk_auto_update',
+		'ba_eas_admin_setting_callback_bulk_update',
 		'edit-author-slug',
-		'ba_eas_auto_update'
+		'ba_eas_bulk_update'
 	);
-	register_setting( 'edit-author-slug', '_ba_eas_bulk_auto_update', 'ba_eas_auto_update_user_nicename_bulk' );
+	register_setting( 'edit-author-slug', '_ba_eas_bulk_update', 'ba_eas_auto_update_user_nicename_bulk' );
+
+	// Bulk update.
+	add_settings_field(
+		'_ba_eas_bulk_update_structure',
+		__( 'Author Slug Structure', 'edit-author-slug' ),
+		'ba_eas_admin_setting_callback_bulk_update_structure',
+		'edit-author-slug',
+		'ba_eas_bulk_update'
+	);
+	register_setting( 'edit-author-slug', '_ba_eas_bulk_update_structure', '__return_false' );
 }
 
 /**
@@ -844,11 +873,73 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
  *
  * @return void
  */
-function ba_eas_admin_setting_callback_bulk_auto_update() {
+function ba_eas_admin_setting_callback_bulk_update_section() {
 ?>
 
-		<input name="_ba_eas_bulk_auto_update" id="_ba_eas_bulk_auto_update" value="1" type="checkbox" />
-		<label for="_ba_eas_bulk_auto_update"><?php esc_html_e( 'Update all users according to the auto-update Author Slug setting. This will only be run after clicking "Save Changes".', 'edit-author-slug' ); ?></label>
+		<p><?php esc_html_e( 'Update all users at once based on the specified Author Slug structure.', 'edit-author-slug' ); ?></p>
+
+<?php
+}
+
+/**
+ * Add bulk update option.
+ *
+ * @since 1.1.0
+ *
+ * @uses esc_html_e() To escape the field label.
+ *
+ * @return void
+ */
+function ba_eas_admin_setting_callback_bulk_update() {
+?>
+
+		<input name="_ba_eas_bulk_update" id="_ba_eas_bulk_update" value="1" type="checkbox" />
+		<label for="_ba_eas_bulk_update"><?php esc_html_e( 'Update all users according to the below Author Slug setting. This will only be run after clicking "Save Changes".', 'edit-author-slug' ); ?></label>
+
+<?php
+}
+
+/**
+ * Add default user nicename options.
+ *
+ * @since 0.9.0
+ *
+ * @uses ba_eas() BA_Edit_Author_Slug object.
+ * @uses apply_filters() To call 'ba_eas_default_user_nicename_options_list' hook.
+ * @uses esc_attr() To sanitize the nicename options.
+ * @uses selected() To determine if we're selected.
+ */
+function ba_eas_admin_setting_callback_bulk_update_structure() {
+
+	// Get the nicename structure.
+	$structure = ba_eas()->default_user_nicename;
+
+	// Set to default nicename structure if needed.
+	if ( empty( $structure ) ) {
+		$structure = 'username';
+	}
+
+	// Setup a filterable list of nicename auto-update options.
+	$options = (array) apply_filters( 'ba_eas_default_user_nicename_options_list', array(
+		'username'    => __( 'username (Default)', 'edit-author-slug' ),
+		'nickname'    => __( 'nickname',           'edit-author-slug' ),
+		'displayname' => __( 'displayname',        'edit-author-slug' ),
+		'firstname'   => __( 'firstname',          'edit-author-slug' ),
+		'lastname'    => __( 'lastname',           'edit-author-slug' ),
+		'firstlast'   => __( 'firstname-lastname', 'edit-author-slug' ),
+		'lastfirst'   => __( 'lastname-firstname', 'edit-author-slug' ),
+	) );
+
+	// Filter out any duplicates/empties.
+	$options = array_unique( array_filter( array_map( 'trim', $options ) ) );
+?>
+
+		<label><span class="screen-reader-text"><?php esc_html_e( 'Default bulk update author slug options', 'edit-author-slug' ); ?></span></label>
+		<select id="_ba_eas_bulk_update_structure" name="_ba_eas_bulk_update_structure">
+		<?php foreach ( (array) $options as $id => $item ) { ?>
+			<option id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $id ); ?>"<?php selected( $structure, $id ); ?>><?php echo esc_html( $item ); ?></option>
+		<?php } ?>
+		</select>
 
 <?php
 }

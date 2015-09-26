@@ -35,8 +35,9 @@ function ba_eas_do_auto_update() {
  *
  * @since 0.9.0
  *
- * @param int $user_id User id
- * @param bool $bulk Bulk upgrade flag. Defaults to false
+ * @param int    $user_id   User id.
+ * @param bool   $bulk      Bulk upgrade flag. Defaults to false.
+ * @param string $structure The nicename structure to use during update.
  *
  * @uses ba_eas_do_auto_update() Do we auto-update?.
  * @uses get_userdata() To get the user object.
@@ -51,9 +52,9 @@ function ba_eas_do_auto_update() {
  * @uses ba_eas_update_nicename_cache() There’s always money in the banana stand!
  * @uses add_action() To re-add the 'ba_eas_auto_update_user_nicename' hook.
  *
- * @return bool|int $user_id. False on failure
+ * @return bool|int User id on success. False on failure.
  */
-function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
+function ba_eas_auto_update_user_nicename( $user_id, $bulk = false, $structure = '' ) {
 
 	// Bail if there's no id or object.
 	if ( empty( $user_id ) ) {
@@ -76,8 +77,12 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	// Setup the user_id.
 	$user_id = (int) $user->ID;
 
+	if ( empty( $structure ) ) {
+		$structure = ba_eas()->default_user_nicename;
+	}
+
 	// Get the default nicename structure.
-	$structure = apply_filters( 'ba_eas_auto_update_user_nicename_structure', ba_eas()->default_user_nicename, $user_id );
+	$structure = apply_filters( 'ba_eas_auto_update_user_nicename_structure', $structure, $user_id );
 
 	// Make sure we have a structure.
 	if ( empty( $structure ) ) {
@@ -225,6 +230,14 @@ function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
  */
 function ba_eas_auto_update_user_nicename_bulk( $value = false ) {
 
+	// Default the structure to the auto-update structure.
+	$structure = ba_eas()->default_user_nicename;
+
+	// If a bulk update structure was passed, use that.
+	if ( isset( $_POST['_ba_eas_bulk_update_structure'] ) ) {
+		$structure = sanitize_key( $_POST['_ba_eas_bulk_update_structure'] );
+	}
+
 	// Sanitize the option value.
 	$value = (bool) absint( $value );
 
@@ -248,7 +261,7 @@ function ba_eas_auto_update_user_nicename_bulk( $value = false ) {
 	foreach ( $users as $user_id ) {
 
 		// Maybe update the user nicename.
-		$id = ba_eas_auto_update_user_nicename( $user_id, true );
+		$id = ba_eas_auto_update_user_nicename( $user_id, true, $structure );
 
 		// If updating was a success, the bump the updated count.
 		if ( ! empty( $id ) && ! is_wp_error( $id ) ) {
