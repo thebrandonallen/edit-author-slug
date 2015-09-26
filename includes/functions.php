@@ -161,7 +161,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 
 	// Bail if nothing changed or the nicename is empty.
 	if ( empty( $nicename ) || $nicename === $old_nicename ) {
-		return $user_id;
+		return false;
 	}
 
 	// Remove the auto-update actions so we don't find ourselves in a loop.
