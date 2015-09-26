@@ -446,9 +446,6 @@ function ba_eas_show_user_nicename_scripts() {
 /**
  * Sanitize author base and add to database.
  *
- * This is a workaround until ticket #9296 is resolved
- * (http://core.trac.wordpress.org/ticket/9296)
- *
  * @since 0.8.0
  *
  * @param string $author_base Author base to be sanitized.
