@@ -202,7 +202,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	if ( ! $ascii ) {
 		$errors->add(
 			'user_nicename_invalid_characters',
-			__( 'An author slug can only contain alphanumeric characters, underscores (_) and dashes (-).', 'edit-author-slug' )
+			__( '<strong>ERROR</strong>: An author slug can only contain alphanumeric characters, underscores (_) and dashes (-).', 'edit-author-slug' )
 		);
 		return;
 	}
@@ -220,7 +220,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	if ( mb_strlen( $author_slug ) > 50 ) {
 		$errors->add(
 			'user_nicename_too_long',
-			__( 'An author slug may not be longer than 50 characters.', 'edit-author-slug' )
+			__( '<strong>ERROR</strong>: An author slug may not be longer than 50 characters.', 'edit-author-slug' )
 		);
 		return;
 	}
