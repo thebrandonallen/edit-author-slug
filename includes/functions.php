@@ -73,7 +73,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	$user = get_userdata( $user_id );
 
 	// Double check we're still good
-	if ( ! is_object( $user ) || empty( $user ) || empty( $user->ID ) ) {
+	if ( ! ( $user instanceof WP_User ) || empty( $user->ID ) ) {
 		return false;
 	}
 
