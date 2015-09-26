@@ -604,6 +604,16 @@ function ba_eas_register_admin_settings() {
 		'ba_eas_auto_update'
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_default_user_nicename', 'sanitize_key' );
+
+	// Bulk update.
+	add_settings_field(
+		'_ba_eas_bulk_auto_update',
+		__( 'Bulk Update', 'edit-author-slug' ),
+		'ba_eas_admin_setting_callback_bulk_auto_update',
+		'edit-author-slug',
+		'ba_eas_auto_update'
+	);
+	register_setting( 'edit-author-slug', '_ba_eas_bulk_auto_update', 'ba_eas_auto_update_user_nicename_bulk' );
 }
 
 /**
@@ -819,6 +829,24 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 			<option id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $id ); ?>"<?php selected( $structure, $id ); ?>><?php echo esc_html( $item ); ?></option>
 		<?php } ?>
 		</select>
+
+<?php
+}
+
+/**
+ * Add bulk update option.
+ *
+ * @since 1.1.0
+ *
+ * @uses esc_html_e() To escape the field label.
+ *
+ * @return void
+ */
+function ba_eas_admin_setting_callback_bulk_auto_update() {
+?>
+
+		<input name="_ba_eas_bulk_auto_update" id="_ba_eas_bulk_auto_update" value="1" type="checkbox" />
+		<label for="_ba_eas_bulk_auto_update"><?php esc_html_e( 'Update all users according to the auto-update Author Slug setting. This will only be run after clicking "Save Changes".', 'edit-author-slug' ); ?></label>
 
 <?php
 }

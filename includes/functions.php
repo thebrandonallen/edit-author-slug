@@ -193,8 +193,11 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
  *
  * @since 0.9.0
  *
+ * @deprecated 1.1.0 Use `ba_eas_auto_update_user_nicename()` instead.
+ *
  * @param int $user_id User id.
  *
+ * @uses _deprecated_function() To throw a deprecated warning.
  * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename.
  *
  * @return bool|int $user_id. False on failure.
@@ -207,18 +210,52 @@ function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
 /**
  * Auto-update the user_nicename for a given user.
  *
- * Runs during the bulk upgrade process in the Dashboard
+ * Runs during the bulk upgrade process in the Dashboard.
  *
  * @since 0.9.0
  *
- * @param int $user_id User id
- *
+ * @uses get_users() To get all the user ids.
  * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename.
+ * @uses is_wp_error() To check for an error.
+ * @uses add_settings_error() To add our message about how many users were updated.
  *
- * @return bool|int $user_id. False on failure
+ * @return bool False to prevent the setting from being saved to the db.
  */
-function ba_eas_auto_update_user_nicename_bulk( $user_id = 0 ) {
-	return ba_eas_auto_update_user_nicename( $user_id, true );
+function ba_eas_auto_update_user_nicename_bulk() {
+
+	// Get an array of ids of all users.
+	$users = get_users( array( 'fields' => 'ID' ) );
+
+	// Bail if no users are returned.
+	if ( empty( $users ) ) {
+		return false;
+	}
+
+	// Set the default updated count.
+	$updated = 0;
+
+	// Loop through all the users and maybe update their nicenames.
+	foreach ( $users as $user_id ) {
+
+		// Maybe update the user nicename.
+		$id = ba_eas_auto_update_user_nicename( $user_id, true );
+
+		// If updating was a success, the bump the updated count.
+		if ( ! empty( $id ) && ! is_wp_error( $id ) ) {
+			$updated++;
+		}
+	}
+
+	// Add a message to the settings page denoting user how many users were updated.
+	add_settings_error(
+		'_ba_eas_bulk_auto_update',
+		'bulk_user_nicenames_updated',
+		sprintf( __( '%d user author slug(s) updated.', 'edit-author-slug' ), $updated ),
+		'updated'
+	);
+
+	// Return false to short-circuit the update_option routine, and prevent saving.
+	return false;
 }
 
 /**
