@@ -603,7 +603,7 @@ function ba_eas_register_admin_settings() {
 		'edit-author-slug',
 		'ba_eas_auto_update'
 	);
-	register_setting( 'edit-author-slug', '_ba_eas_default_user_nicename' );
+	register_setting( 'edit-author-slug', '_ba_eas_default_user_nicename', 'sanitize_key' );
 }
 
 /**
