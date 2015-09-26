@@ -76,7 +76,7 @@ function ba_eas_show_user_nicename( $user ) {
 	$checked = true;
 	?>
 
-	<h3><?php esc_html_e( 'Edit Author Slug', 'edit-author-slug' ); ?></h3>
+	<h2><?php esc_html_e( 'Edit Author Slug', 'edit-author-slug' ); ?></h2>
 	<p><?php esc_html_e( 'Choose an Author Slug based on the above profile information, or create your own.', 'edit-author-slug' ); ?> <br /><span class="description"><?php esc_html_e( "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'", 'edit-author-slug' ); ?></span></p>
 	<table class="form-table">
 		<tbody><tr>
