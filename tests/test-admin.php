@@ -138,6 +138,21 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::ba_eas_can_edit_author_slug
+	 */
+	function test_ba_eas_can_edit_author_slug() {
+		$this->assertTrue( ba_eas_can_edit_author_slug() );
+
+		wp_set_current_user( $this->old_current_user );
+		$this->assertFalse( ba_eas_can_edit_author_slug() );
+		wp_set_current_user( $this->new_current_user );
+
+		add_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
+		$this->assertFalse( ba_eas_can_edit_author_slug() );
+		remove_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
+	}
+
+	/**
 	 * @covers ::ba_eas_author_slug_column
 	 */
 	function test_ba_eas_author_slug_column() {
@@ -156,18 +171,10 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::ba_eas_can_edit_author_slug
+	 * @covers ::ba_eas_show_user_nicename_scripts
 	 */
-	function test_ba_eas_can_edit_author_slug() {
-		$this->assertTrue( ba_eas_can_edit_author_slug() );
-
-		wp_set_current_user( $this->old_current_user );
-		$this->assertFalse( ba_eas_can_edit_author_slug() );
-		wp_set_current_user( $this->new_current_user );
-
-		add_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
-		$this->assertFalse( ba_eas_can_edit_author_slug() );
-		remove_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
+	function test_ba_eas_show_user_nicename_scripts() {
+		$this->markTestIncomplete();
 	}
 
 	/**
@@ -184,6 +191,142 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertEquals( 'ninja', ba_eas_sanitize_author_base( 'ninja' ) );
 		$this->assertEquals( 'ninja', $GLOBALS['wp_rewrite']->author_base );
 		$this->assertEquals( false, get_option( 'rewrite_rules' ) );
+
+		// Reset author base
+		ba_eas_sanitize_author_base( 'author' );
+	}
+
+	/**
+	 * @covers ::ba_eas_add_settings_menu
+	 */
+	function test_ba_eas_add_settings_menu() {
+		$current_user = get_current_user_id();
+		wp_set_current_user( $this->factory->user->create( array( 'role' => 'administrator' ) ) );
+		update_option( 'siteurl', 'http://example.com' );
+
+		ba_eas_add_settings_menu();
+
+		$expected = 'http://example.com/wp-admin/options-general.php?page=edit-author-slug';
+
+		$this->assertEquals( $expected, menu_page_url( 'edit-author-slug', false ) );
+
+		wp_set_current_user( $current_user );
+	}
+
+	/**
+	 * @covers ::ba_eas_settings_page_html
+	 */
+	function test_ba_eas_settings_page_html() {
+		$this->markTestIncomplete();
+	}
+
+	/**
+	 * @covers ::ba_eas_register_admin_settings
+	 */
+	function test_ba_eas_register_admin_settings() {
+		global $wp_settings_sections, $wp_settings_fields;
+
+		ba_eas_register_admin_settings();
+
+		// Sections _ba_eas_bulk_auto_update
+		$this->assertEquals( 'ba_eas_author_base', $wp_settings_sections['edit-author-slug']['ba_eas_author_base']['id'] );
+		$this->assertEquals( 'ba_eas_auto_update', $wp_settings_sections['edit-author-slug']['ba_eas_auto_update']['id'] );
+		$this->assertEquals( 'ba_eas_bulk_update', $wp_settings_sections['edit-author-slug']['ba_eas_bulk_update']['id'] );
+
+		// Fields
+		$this->assertEquals( '_ba_eas_author_base', $wp_settings_fields['edit-author-slug']['ba_eas_author_base']['_ba_eas_author_base']['id'] );
+		$this->assertEquals( '_ba_eas_do_role_based', $wp_settings_fields['edit-author-slug']['ba_eas_author_base']['_ba_eas_do_role_based']['id'] );
+		$this->assertEquals( '_ba_eas_role_slugs', $wp_settings_fields['edit-author-slug']['ba_eas_author_base']['_ba_eas_role_slugs']['id'] );
+		$this->assertEquals( '_ba_eas_do_auto_update', $wp_settings_fields['edit-author-slug']['ba_eas_auto_update']['_ba_eas_do_auto_update']['id'] );
+		$this->assertEquals( '_ba_eas_default_user_nicename', $wp_settings_fields['edit-author-slug']['ba_eas_auto_update']['_ba_eas_default_user_nicename']['id'] );
+		$this->assertEquals( '_ba_eas_bulk_update', $wp_settings_fields['edit-author-slug']['ba_eas_bulk_update']['_ba_eas_bulk_update']['id'] );
+		$this->assertEquals( '_ba_eas_bulk_update_structure', $wp_settings_fields['edit-author-slug']['ba_eas_bulk_update']['_ba_eas_bulk_update_structure']['id'] );
+	}
+
+	/**
+	 * @covers ::ba_eas_admin_setting_callback_author_base_section
+	 */
+	function test_ba_eas_admin_setting_callback_author_base_section() {
+		ob_start();
+		ba_eas_admin_setting_callback_author_base_section();
+		$output = ob_get_clean();
+
+		$this->assertContains( 'Change your author base to something more fun!', $output );
+	}
+
+	/**
+	 * @covers ::ba_eas_admin_setting_callback_auto_update_section
+	 */
+	function test_ba_eas_admin_setting_callback_auto_update_section() {
+		ob_start();
+		ba_eas_admin_setting_callback_auto_update_section();
+		$output = ob_get_clean();
+
+		$this->assertContains( "Allow Author Slugs to be automatically updated, and set the default Author Slug structure for users. Automatic updating will only occur when a user can&#039;t edit Author Slugs on their own.", $output );
+	}
+
+	/**
+	 * @covers ::ba_eas_admin_setting_callback_author_base
+	 */
+	function test_ba_eas_admin_setting_callback_author_base() {
+		ob_start();
+		ba_eas_admin_setting_callback_author_base();
+		$output = ob_get_clean();
+
+		$input = '<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="author" class="regular-text code" />';
+		$label = "<em>Defaults to &#039;author&#039;</em>";
+
+		$this->assertContains( $input, $output );
+		$this->assertContains( $label, $output );
+	}
+
+	/**
+	 * @covers ::ba_eas_admin_setting_callback_do_role_based
+	 */
+	function test_ba_eas_admin_setting_callback_do_role_based() {
+		$this->markTestIncomplete();
+	}
+
+	/**
+	 * @covers ::ba_eas_admin_setting_callback_role_slugs
+	 */
+	function test_ba_eas_admin_setting_callback_role_slugs() {
+		$this->markTestIncomplete();
+	}
+
+	/**
+	 * @covers ::ba_eas_admin_setting_sanitize_callback_role_slugs
+	 */
+	function test_ba_eas_admin_setting_sanitize_callback_role_slugs() {
+		$this->markTestIncomplete();
+	}
+
+	/**
+	 * @covers ::ba_eas_admin_setting_callback_do_auto_update
+	 */
+	function test_ba_eas_admin_setting_callback_do_auto_update() {
+		$this->markTestIncomplete();
+	}
+
+	/**
+	 * @covers ::ba_eas_admin_setting_callback_default_user_nicename
+	 */
+	function test_ba_eas_admin_setting_callback_default_user_nicename() {
+		$this->markTestIncomplete();
+	}
+
+	/**
+	 * @covers ::ba_eas_admin_setting_callback_bulk_auto_update
+	 */
+	function test_ba_eas_admin_setting_callback_bulk_auto_update() {
+		$this->markTestIncomplete();
+	}
+
+	/**
+	 * @covers ::ba_eas_add_settings_link
+	 */
+	function test_ba_eas_add_settings_link() {
+		$this->markTestIncomplete();
 	}
 
 	/**
