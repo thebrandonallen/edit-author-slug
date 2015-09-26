@@ -168,7 +168,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		$this->eas->default_user_nicename = 'firstlast';
 
-		ba_eas_auto_update_user_nicename_bulk();
+		ba_eas_auto_update_user_nicename_bulk( '1' );
 
 		$leo = get_userdata( $leo_id );
 		$this->assertEquals( 'leonardo-hamato', $leo->user_nicename );
@@ -181,6 +181,22 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		$mikey = get_userdata( $mikey_id );
 		$this->assertEquals( 'michelangelo-hamato', $mikey->user_nicename );
+
+		$this->eas->default_user_nicename = 'nickname';
+
+		ba_eas_auto_update_user_nicename_bulk( '1' );
+
+		$leo = get_userdata( $leo_id );
+		$this->assertEquals( 'leo', $leo->user_nicename );
+
+		$raph = get_userdata( $raph_id );
+		$this->assertEquals( 'raph', $raph->user_nicename );
+
+		$donnie = get_userdata( $donnie_id );
+		$this->assertEquals( 'donnie', $donnie->user_nicename );
+
+		$mikey = get_userdata( $mikey_id );
+		$this->assertEquals( 'mikey', $mikey->user_nicename );
 
 		$this->eas->default_user_nicename = 'nickname';
 
