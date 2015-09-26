@@ -55,7 +55,7 @@ function ba_eas_do_auto_update() {
  */
 function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 
-	// Bail if there's no id or object
+	// Bail if there's no id or object.
 	if ( empty( $user_id ) ) {
 		return false;
 	}
@@ -65,35 +65,35 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 		return false;
 	}
 
-	// Get WP_User object
+	// Get WP_User object.
 	$user = get_userdata( $user_id );
 
-	// Double check we're still good
+	// Double check we're still good.
 	if ( ! ( $user instanceof WP_User ) || empty( $user->ID ) ) {
 		return false;
 	}
 
-	// Setup the user_id
+	// Setup the user_id.
 	$user_id = (int) $user->ID;
 
-	// Get the default nicename structure
+	// Get the default nicename structure.
 	$structure = apply_filters( 'ba_eas_auto_update_user_nicename_structure', ba_eas()->default_user_nicename, $user_id );
 
-	// Make sure we have a structure
+	// Make sure we have a structure.
 	if ( empty( $structure ) ) {
 		$structure = 'username';
 	}
 
-	// Setup the current nicename
-	$current_nicename = $user->user_login;
+	// Setup the current nicename.
+	$old_nicename = $user->user_login;
 	if ( ! empty( $user->user_nicename ) ) {
-		$current_nicename = $user->user_nicename;
+		$old_nicename = $user->user_nicename;
 	}
 
-	// Setup default nicename
-	$nicename = $current_nicename;
+	// Setup default nicename.
+	$nicename = $old_nicename;
 
-	// Setup the new nicename based on the provided structure
+	// Setup the new nicename based on the provided structure.
 	switch ( $structure ) {
 
 		case 'username':
@@ -160,24 +160,23 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	$nicename = apply_filters( 'ba_eas_pre_auto_update_user_nicename', $nicename, $user_id, $structure );
 
 	// Bail if nothing changed or the nicename is empty.
-	if ( empty( $nicename ) || $nicename === $current_nicename ) {
+	if ( empty( $nicename ) || $nicename === $old_nicename ) {
 		return $user_id;
 	}
 
-	// Remove the auto-update actions so we don't find ourselves in a loop
+	// Remove the auto-update actions so we don't find ourselves in a loop.
 	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
 
-	// Update if there's a change
+	// Update if there's a change.
 	$user_id = wp_update_user( array( 'ID' => $user_id, 'user_nicename' => $nicename ) );
 
 	/*
-	 * Since this is an action taken without the user's knowledge
-	 * we must fail silently here. Therefore, we only want to update
-	 * the cache if we're successful.
+	 * Since this is an action taken without the user's knowledge we must fail
+	 * silently. Therefore, we only want to update the cache if we're successful.
 	 */
 	if ( ! empty( $user_id ) && ! is_wp_error( $user_id ) ) {
 
-		// Update the nicename cache
+		// Update the nicename cache.
 		ba_eas_update_nicename_cache( $user_id, $user, $nicename );
 	}
 
@@ -194,11 +193,11 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
  *
  * @since 0.9.0
  *
- * @param int $user_id User id
+ * @param int $user_id User id.
  *
  * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename.
  *
- * @return bool|int $user_id. False on failure
+ * @return bool|int $user_id. False on failure.
  */
 function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
 	return ba_eas_auto_update_user_nicename( $user_id );

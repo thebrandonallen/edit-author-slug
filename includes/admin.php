@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Edit Author Slug Admin Functions
+ * Edit Author Slug Admin Functions.
  *
  * @package Edit_Author_Slug
  * @subpackage Administration
@@ -9,7 +9,7 @@
  * @author Brandon Allen
  */
 
-// Exit if accessed directly
+// Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /** Nicename ******************************************************************/
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  *
  * @since 0.1.0
  *
- * @param object $user User data object.
+ * @param WP_User $user The WP_User object.
  *
  * @uses ba_eas_can_edit_author_slug() To verify current user can edit the author slug.
  * @uses ba_eas_sanitize_nicename() To sanitize userdata into a new nicename.
@@ -34,33 +34,33 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  */
 function ba_eas_show_user_nicename( $user ) {
 
-	// Return early if the user can't edit the author slug
+	// Return early if the user can't edit the author slug.
 	if ( ! ba_eas_can_edit_author_slug() ) {
 		return;
 	}
 
-	// Setup the nicename
+	// Setup the nicename.
 	$nicename = '';
 	if ( ! empty( $user->user_nicename ) ) {
 		$nicename = $user->user_nicename;
 	}
 
-	// Setup options array
+	// Setup options array.
 	$options = array();
 	$options['username']    = ba_eas_sanitize_nicename( $user->nickname     );
 	$options['displayname'] = ba_eas_sanitize_nicename( $user->display_name );
 
-	// Setup the first name
+	// Setup the first name.
 	if ( ! empty( $user->first_name ) ) {
 		$options['firstname'] = ba_eas_sanitize_nicename( $user->first_name );
 	}
 
-	// Setup the last name
+	// Setup the last name.
 	if ( ! empty( $user->last_name ) ) {
 		$options['lastname'] = ba_eas_sanitize_nicename( $user->last_name );
 	}
 
-	// Setup the first/last name combos
+	// Setup the first/last name combos.
 	if ( ! empty( $options['firstname'] ) && ! empty( $options['lastname'] ) ) {
 		$options['firslast']  = $options['firstname'] . '-' . $options['lastname'];
 		$options['lastfirst'] = $options['lastname'] . '-' . $options['firstname'];
@@ -72,7 +72,7 @@ function ba_eas_show_user_nicename( $user ) {
 	$options = array_map( 'ba_eas_trim_nicename', (array) $options );
 	$options = array_unique( array_filter( $options ) );
 
-	// Set default for checked status
+	// Set default for checked status.
 	$checked = true;
 	?>
 
@@ -88,7 +88,7 @@ function ba_eas_show_user_nicename( $user ) {
 					// Checked?
 					$checked_text = checked( $item, $nicename, false );
 
-					// Flip the switch if we're checked to block custom from being checked
+					// Flip the switch if we're checked to block custom from being checked.
 					if ( ! empty( $checked_text ) ) {
 						$checked = false;
 					}
@@ -107,14 +107,14 @@ function ba_eas_show_user_nicename( $user ) {
 /**
  * Prepare the user nicename for updating if applicable.
  *
- * The actual updating is handled by WP as long as no errors are thrown
- * by WP, some third party, or us.
+ * The actual updating is handled by WP as long as no errors are thrown by WP,
+ * some third party, or us.
  *
  * @since 0.1.0
  *
- * @param object $errors WP_Errors object
- * @param bool $update Are we updating?
- * @param WP_User object
+ * @param WP_Errors $errors The WP_Errors object.
+ * @param bool      $update Are we updating?
+ * @param WP_User   $user   The WP_User object.
  *
  * @uses check_admin_referer() To verify the nonce and check referer.
  * @uses ba_eas_can_edit_author_slug() To verify current user can edit the author slug.
@@ -136,28 +136,28 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	// Don't run the auto-update if the current user can update their own nicename.
 	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
 
-	// We shouldn't be here if we're not updating
+	// We shouldn't be here if we're not updating.
 	if ( ! $update ) {
 		return;
 	}
 
-	// Validate the user_id
+	// Validate the user_id.
 	if ( empty( $user->ID ) ) {
 		return;
 	}
 
-	// Check the nonce
+	// Check the nonce.
 	check_admin_referer( 'update-user_' . $user->ID );
 
-	// Stash the original user object
+	// Stash the original user object.
 	$_user = get_userdata( $user->ID );
 
-	// Check for a custom author slug
+	// Check for a custom author slug.
 	if ( isset( $_POST['ba_eas_author_slug'] ) && isset( $_POST['ba_eas_author_slug_custom'] ) && '\c\u\s\t\o\m' === stripslashes( $_POST['ba_eas_author_slug'] ) ) {
 		$_POST['ba_eas_author_slug'] = $_POST['ba_eas_author_slug_custom'];
 	}
 
-	// Setup the author slug
+	// Setup the author slug.
 	$author_slug = '';
 	if ( ! empty( $_POST['ba_eas_author_slug'] ) ) {
 		$author_slug = trim( stripslashes( $_POST['ba_eas_author_slug'] ) );
@@ -165,7 +165,10 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
 	// Do we have an author slug?
 	if ( empty( $author_slug ) ) {
-		$errors->add( 'user_nicename_empty', __( '<strong>ERROR</strong>: An author slug cannot be blank. Please try again.', 'edit-author-slug' ) );
+		$errors->add(
+			'user_nicename_empty',
+			__( '<strong>ERROR</strong>: An author slug cannot be blank. Please try again.', 'edit-author-slug' )
+		);
 		return;
 	}
 
@@ -188,23 +191,37 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	 * @param bool   $ascii        True if the nicename contains only characters
 	 *                             that can be converted to allowed ASCII characters.
 	 */
-	$author_slug = apply_filters( 'ba_eas_pre_update_user_nicename', $author_slug, $raw_nicename, $ascii );
+	$author_slug = apply_filters(
+		'ba_eas_pre_update_user_nicename',
+		$author_slug,
+		$raw_nicename,
+		$ascii
+	);
 
 	// Bail and throw an error if the nicename contains invalid characters.
 	if ( ! $ascii ) {
-		$errors->add( 'user_nicename_invalid_characters', __( 'An author slug can only contain alphanumeric characters, underscores (_) and dashes (-).', 'edit-author-slug' ) );
+		$errors->add(
+			'user_nicename_invalid_characters',
+			__( 'An author slug can only contain alphanumeric characters, underscores (_) and dashes (-).', 'edit-author-slug' )
+		);
 		return;
 	}
 
 	// Bail and throw an error if the nicename is empty after sanitization.
 	if ( empty( $author_slug ) ) {
-		$errors->add( 'user_nicename_invalid', __( '<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different.', 'edit-author-slug' ) );
+		$errors->add(
+			'user_nicename_invalid',
+			__( '<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different.', 'edit-author-slug' )
+		);
 		return;
 	}
 
 	// Bail and throw an error if the nicename contains more than 50 characters.
 	if ( mb_strlen( $author_slug ) > 50 ) {
-		$errors->add( 'user_nicename_too_long', __( 'An author slug may not be longer than 50 characters.', 'edit-author-slug' ) );
+		$errors->add(
+			'user_nicename_too_long',
+			__( 'An author slug may not be longer than 50 characters.', 'edit-author-slug' )
+		);
 		return;
 	}
 
@@ -266,18 +283,15 @@ function ba_eas_can_edit_author_slug() {
 }
 
 /**
- * Add 'Author Slug' column to Users page.
- *
- * Adds the 'Author Slug' column and column heading
- * to the page Users > Authors & Users.
+ * Adds the 'Author Slug' column and column heading to the users list table.
  *
  * @since 0.5.0
  *
- * @param array $defaults Array of current columns/column headings
+ * @param array $defaults Array of current columns/column headings.
  *
- * @uses esc_html__() To sanitize the author slug column title.
+ * @uses esc_html__() To escape and localize the author slug column title.
  *
- * @return array $defaults Array of current columns/column headings
+ * @return array $defaults Array of current columns/column headings.
  */
 function ba_eas_author_slug_column( $defaults ) {
 
@@ -290,17 +304,16 @@ function ba_eas_author_slug_column( $defaults ) {
 /**
  * Fill in user_nicename for 'Author Slug' column.
  *
- * Adds the user's corresponding user_nicename to the
- * 'Author Slug' column.
+ * Adds the user's corresponding user_nicename to the 'Author Slug' column.
  *
  * @since 0.5.0
  *
  * @param string $default Value for column data. Defaults to ''.
- * @param string $column_name Column name currently being filtered
- * @param int $user_id User ID
+ * @param string $column_name Column name currently being filtered.
+ * @param int $user_id User ID.
  *
- * @uses get_userdata() To get the user data
- * @uses esc_attr() To sanitize the user_nicename
+ * @uses get_userdata() To get the user data.
+ * @uses esc_attr() To sanitize the user_nicename.
  *
  * @return string $default Value for column data. Defaults to ''.
  */
@@ -321,11 +334,10 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
 /**
  * Add javascript to appropriate admin pages.
  *
- * Add javascript to user-edit.php and profile.php pages to
- * update custom field when other radio buttons are selected.
+ * Add javascript to user-edit.php and profile.php pages to update custom field
+ * when other radio buttons are selected.
  *
- * Add javascript to Edit Author Slug settings page to
- * show/hide the role slugs.
+ * Add javascript to Edit Author Slug settings page to show/hide the role slugs.
  *
  * @since 0.9.0
  *
@@ -339,7 +351,7 @@ function ba_eas_show_user_nicename_scripts() {
 		return;
 	}
 
-	// Get screen object
+	// Get screen object.
 	$screen = get_current_screen();
 
 	// Make sure we have a screen object.
@@ -347,7 +359,7 @@ function ba_eas_show_user_nicename_scripts() {
 		return;
 	}
 
-	// Add nicename edit js
+	// Add nicename edit js.
 	if ( in_array( $screen->base, array( 'user-edit', 'profile' ) ) ) {
 ?>
 
@@ -380,12 +392,12 @@ function ba_eas_show_user_nicename_scripts() {
 	//<![CDATA[
 		jQuery(document).ready(function($){
 
-			// Hide the slugs if we're not doing role-based
+			// Hide the slugs if we're not doing role-based.
 			if ( ! $("input[name='_ba_eas_do_role_based']").is(':checked') ) {
 				$("input[name='_ba_eas_do_role_based']").parents('tr').next('tr').addClass('hidden');
 			}
 
-			// Watch for clicks on the role-based option
+			// Watch for clicks on the role-based option.
 			$("input[name='_ba_eas_do_role_based']").on('click', function(){
 				if ( $(this).is(':checked') ) {
 					$(this).parents('tr').next('tr').fadeIn('slow', function(){$(this).removeClass('hidden');});
@@ -394,12 +406,12 @@ function ba_eas_show_user_nicename_scripts() {
 				}
 			});
 
-			// Hide the slugs if we're not doing auto-update
+			// Hide the slugs if we're not doing auto-update.
 			if ( ! $("input[name='_ba_eas_do_auto_update']").is(':checked') ) {
 				$("input[name='_ba_eas_do_auto_update']").parents('tr').next('tr').addClass('hidden');
 			}
 
-			// Watch for clicks on the auto-update option
+			// Watch for clicks on the auto-update option.
 			$("input[name='_ba_eas_do_auto_update']").on('click', function(){
 				if ( $(this).is(':checked') ) {
 					$(this).parents('tr').next('tr').fadeIn('slow', function(){$(this).removeClass('hidden');});
@@ -416,7 +428,7 @@ function ba_eas_show_user_nicename_scripts() {
 	}
 }
 
-/** Author Base **************************************************************/
+/** Author Base ***************************************************************/
 
 /**
  * Sanitize author base and add to database.
@@ -426,43 +438,43 @@ function ba_eas_show_user_nicename_scripts() {
  *
  * @since 0.8.0
  *
- * @param string $author_base Author base to be sanitized
+ * @param string $author_base Author base to be sanitized.
  *
  * @uses ba_eas() BA_Edit_Author_Slug object.
  * @uses sanitize_title() To sanitize the author base.
  * @uses update_option() To update author_base option.
  * @uses ba_eas_flush_rewrite_rules() To flush the rewrite rules in the db.
  *
- * @return string $author_base
+ * @return string The author base.
  */
 function ba_eas_sanitize_author_base( $author_base ) {
 
-	// Edit Author Slug instance
+	// Edit Author Slug instance.
 	$ba_eas = ba_eas();
 
-	// Sanitize the author base
+	// Sanitize the author base.
 	$author_base = trim( sanitize_title( $author_base ) );
 
-	// Make sure we have something
+	// Make sure we have something.
 	if ( empty( $author_base ) ) {
 		$author_base = 'author';
 	}
 
-	// Do we need to update the author_base
+	// Do we need to update the author_base.
 	if ( $author_base !== $ba_eas->author_base ) {
-		// Setup the new author_base global
+		// Setup the new author_base global.
 		$ba_eas->author_base = $author_base;
 
-		// Update options with new author_base
+		// Update options with new author_base.
 		update_option( '_ba_eas_author_base', $ba_eas->author_base );
 
-		// Update the author_base in the WP_Rewrite object
+		// Update the author_base in the WP_Rewrite object.
 		if ( ! empty( $ba_eas->author_base ) ) {
 			$GLOBALS['wp_rewrite']->author_base = $ba_eas->author_base;
 		}
 	}
 
-	// Courtesy flush
+	// Courtesy flush.
 	ba_eas_flush_rewrite_rules();
 
 	return $author_base;
@@ -478,7 +490,13 @@ function ba_eas_sanitize_author_base( $author_base ) {
  * @uses add_options_page() To add the Edit Author Slug options page.
  */
 function ba_eas_add_settings_menu() {
-	add_options_page( __( 'Edit Author Slug Settings', 'edit-author-slug' ), __( 'Edit Author Slug', 'edit-author-slug' ), 'edit_users', 'edit-author-slug', 'ba_eas_settings_page_html' );
+	add_options_page(
+		__( 'Edit Author Slug Settings', 'edit-author-slug' ),
+		__( 'Edit Author Slug', 'edit-author-slug' ),
+		'edit_users',
+		'edit-author-slug',
+		'ba_eas_settings_page_html'
+	);
 }
 
 /**
@@ -521,30 +539,70 @@ function ba_eas_settings_page_html() {
  * @uses register_setting() To add a settings to whitelist to be updated on submit.
  */
 function ba_eas_register_admin_settings() {
-	// Add the Author Base section
-	add_settings_section( 'ba_eas_author_base', __( 'Author Base', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_author_base_section', 'edit-author-slug' );
+	// Add the Author Base section.
+	add_settings_section(
+		'ba_eas_author_base',
+		__( 'Author Base', 'edit-author-slug' ),
+		'ba_eas_admin_setting_callback_author_base_section',
+		'edit-author-slug'
+	);
 
-	// Author Base setting
-	add_settings_field( '_ba_eas_author_base', __( 'Author Base', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_author_base', 'edit-author-slug', 'ba_eas_author_base' );
+	// Author Base setting.
+	add_settings_field(
+		'_ba_eas_author_base',
+		__( 'Author Base', 'edit-author-slug' ),
+		'ba_eas_admin_setting_callback_author_base',
+		'edit-author-slug',
+		'ba_eas_author_base'
+	);
 	register_setting( 'edit-author-slug', '_ba_eas_author_base', 'ba_eas_sanitize_author_base' );
 
-	// Role-Based Author Base setting
-	add_settings_field( '_ba_eas_do_role_based', __( 'Role-Based Author Base', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_do_role_based', 'edit-author-slug', 'ba_eas_author_base' );
+	// Role-Based Author Base setting.
+	add_settings_field(
+		'_ba_eas_do_role_based',
+		__( 'Role-Based Author Base', 'edit-author-slug' ),
+		'ba_eas_admin_setting_callback_do_role_based',
+		'edit-author-slug',
+		'ba_eas_author_base'
+	);
 	register_setting( 'edit-author-slug', '_ba_eas_do_role_based', 'intval' );
 
-	// Role-Based Author Base slugs
-	add_settings_field( '_ba_eas_role_slugs', __( 'Role Slugs', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_role_slugs', 'edit-author-slug', 'ba_eas_author_base' );
+	// Role-Based Author Base slugs.
+	add_settings_field(
+		'_ba_eas_role_slugs',
+		__( 'Role Slugs', 'edit-author-slug' ),
+		'ba_eas_admin_setting_callback_role_slugs',
+		'edit-author-slug',
+		'ba_eas_author_base'
+	);
 	register_setting( 'edit-author-slug', '_ba_eas_role_slugs', 'ba_eas_admin_setting_sanitize_callback_role_slugs' );
 
-	// Add the default user nicename section
-	add_settings_section( 'ba_eas_auto_update', __( 'Automatic Author Slug Creation', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_auto_update_section', 'edit-author-slug' );
+	// Add the default user nicename section.
+	add_settings_section(
+		'ba_eas_auto_update',
+		__( 'Automatic Author Slug Creation', 'edit-author-slug' ),
+		'ba_eas_admin_setting_callback_auto_update_section',
+		'edit-author-slug'
+	);
 
-	// Auto-update on/off
-	add_settings_field( '_ba_eas_do_auto_update', __( 'Automatically Update', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_do_auto_update', 'edit-author-slug', 'ba_eas_auto_update' );
+	// Auto-update on/off.
+	add_settings_field(
+		'_ba_eas_do_auto_update',
+		__( 'Automatically Update', 'edit-author-slug' ),
+		'ba_eas_admin_setting_callback_do_auto_update',
+		'edit-author-slug',
+		'ba_eas_auto_update'
+	);
 	register_setting( 'edit-author-slug', '_ba_eas_do_auto_update', 'intval' );
 
-	// Default user nicename setting
-	add_settings_field( '_ba_eas_default_user_nicename', __( 'Author Slug', 'edit-author-slug' ), 'ba_eas_admin_setting_callback_default_user_nicename', 'edit-author-slug', 'ba_eas_auto_update' );
+	// Default user nicename setting.
+	add_settings_field(
+		'_ba_eas_default_user_nicename',
+		__( 'Author Slug', 'edit-author-slug' ),
+		'ba_eas_admin_setting_callback_default_user_nicename',
+		'edit-author-slug',
+		'ba_eas_auto_update'
+	);
 	register_setting( 'edit-author-slug', '_ba_eas_default_user_nicename' );
 }
 
@@ -583,9 +641,9 @@ function ba_eas_admin_setting_callback_auto_update_section() {
  *
  * @since 0.9.0
  *
- * @uses ba_eas() BA_Edit_Author_Slug object
- * @uses apply_filters() To call 'editable_slug' hook
- * @uses esc_attr() To sanitize the author base
+ * @uses ba_eas() BA_Edit_Author_Slug object.
+ * @uses apply_filters() To call `editable_slug` hook.
+ * @uses esc_attr() To sanitize the author base.
  * @uses esc_html_e() To sanitize localized string for display.
  */
 function ba_eas_admin_setting_callback_author_base() {
@@ -604,14 +662,14 @@ function ba_eas_admin_setting_callback_author_base() {
  *
  * @since 1.0.0
  *
- * @uses ba_eas() BA_Edit_Author_Slug object
- * @uses checked() To display the checked attribute
+ * @uses ba_eas() BA_Edit_Author_Slug object.
+ * @uses checked() To display the checked attribute.
  * @uses esc_html_e() To sanitize localized string for display.
  */
 function ba_eas_admin_setting_callback_do_role_based() {
 ?>
 
-		<input name="_ba_eas_do_role_based" id="_ba_eas_do_role_based" value="1"<?php checked( ba_eas()->do_role_based, '1' ); ?> type="checkbox" />
+		<input name="_ba_eas_do_role_based" id="_ba_eas_do_role_based" value="1"<?php checked( ba_eas()->do_role_based ); ?> type="checkbox" />
 		<label for="_ba_eas_do_role_based"><?php esc_html_e( 'Set user\'s Author Base according to their role. (The above "Author Base" setting will be used as a fallback.)', 'edit-author-slug' ); ?></label>
 
 <?php
@@ -631,17 +689,17 @@ function ba_eas_admin_setting_callback_do_role_based() {
  */
 function ba_eas_admin_setting_callback_role_slugs() {
 
-	// Make sure we didn't pick up any dynamic roles between now and initialization
+	// Make sure we didn't pick up any dynamic roles between now and initialization.
 	$roles = array_replace_recursive( ba_eas_get_default_role_slugs(), ba_eas()->role_slugs );
 
-	// Display the role slug customization fields
+	// Display the role slug customization fields.
 	foreach ( $roles as $role => $details ) {
 
 		if ( empty( $details['name'] ) ) {
 			continue;
 		}
 
-		// Check for empty slugs from picking up a dynamic role
+		// Check for empty slugs from picking up a dynamic role.
 		if ( empty( $details['slug'] ) ) {
 			$details['slug'] = sanitize_title( translate_user_role( $details['name'] ) );
 		}
@@ -669,14 +727,14 @@ function ba_eas_admin_setting_callback_role_slugs() {
  */
 function ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs = array() ) {
 
-	// Get default role slugs
+	// Get default role slugs.
 	$defaults = ba_eas_get_default_role_slugs();
 
-	// Sanitize the slugs passed via POST
+	// Sanitize the slugs passed via POST.
 	foreach ( $role_slugs as $role => $details ) {
 		$slug = sanitize_title( $details['slug'] );
 
-		// Make sure we have a slug
+		// Make sure we have a slug.
 		if ( empty( $slug ) ) {
 			$slug = ba_eas()->author_base;
 
@@ -690,13 +748,13 @@ function ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs = array(
 
 	/*
 	 * Merge our new settings with what's stored in the db. This is needed because
-	 * the editable_roles filter may mean that lower level admins don't have access
-	 * to all roles. This could lead to lower level admins stamping out
+	 * the editable_roles filter may mean that lower level admins don't have
+	 * access to all roles. This could lead to lower level admins stamping out
 	 * customizations that only a higher level admin can (and has already) set.
 	 */
 	$role_slugs = array_replace_recursive( ba_eas()->role_slugs, $role_slugs );
 
-	// Set BA_Edit_Author_Slug::role_slugs for later use
+	// Set BA_Edit_Author_Slug::role_slugs for later use.
 	ba_eas()->role_slugs = $role_slugs;
 
 	return $role_slugs;
@@ -714,7 +772,7 @@ function ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs = array(
 function ba_eas_admin_setting_callback_do_auto_update() {
 ?>
 
-		<input name="_ba_eas_do_auto_update" id="_ba_eas_do_auto_update" value="1"<?php checked( ba_eas()->do_auto_update, '1' ); ?> type="checkbox" />
+		<input name="_ba_eas_do_auto_update" id="_ba_eas_do_auto_update" value="1"<?php checked( ba_eas()->do_auto_update ); ?> type="checkbox" />
 		<label for="_ba_eas_do_auto_update"><?php esc_html_e( 'Automatically update Author Slug when a user updates their profile.', 'edit-author-slug' ); ?></label>
 
 <?php
@@ -732,15 +790,15 @@ function ba_eas_admin_setting_callback_do_auto_update() {
  */
 function ba_eas_admin_setting_callback_default_user_nicename() {
 
-	// Get the nicename structure
+	// Get the nicename structure.
 	$structure = ba_eas()->default_user_nicename;
 
-	// Set to default nicename structure if needed
+	// Set to default nicename structure if needed.
 	if ( empty( $structure ) ) {
 		$structure = 'username';
 	}
 
-	// Setup a filterable list of nicename auto-update options
+	// Setup a filterable list of nicename auto-update options.
 	$options = (array) apply_filters( 'ba_eas_default_user_nicename_options_list', array(
 		'username'    => __( 'username (Default)', 'edit-author-slug' ),
 		'nickname'    => __( 'nickname',           'edit-author-slug' ),
@@ -751,7 +809,7 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 		'lastfirst'   => __( 'lastname-firstname', 'edit-author-slug' ),
 	) );
 
-	// Filter out any duplicates/empties
+	// Filter out any duplicates/empties.
 	$options = array_unique( array_filter( array_map( 'trim', $options ) ) );
 ?>
 
@@ -804,15 +862,15 @@ function ba_eas_add_settings_link( $links, $file ) {
  */
 function ba_eas_install() {
 
-	// Edit Author Slug instance
+	// Edit Author Slug instance.
 	$ba_eas = ba_eas();
 
-	// Bail if it's not a new install
+	// Bail if it's not a new install.
 	if ( 0 !== $ba_eas->current_db_version ) {
 		return;
 	}
 
-	// Add the options
+	// Add the options.
 	add_option( '_ba_eas_author_base',           $ba_eas->author_base           );
 	add_option( '_ba_eas_db_version',            $ba_eas->db_version            );
 	add_option( '_ba_eas_do_auto_update',        $ba_eas->do_auto_update        );
@@ -837,25 +895,25 @@ function ba_eas_install() {
  */
 function ba_eas_upgrade() {
 
-	// Edit Author Slug instance
+	// Edit Author Slug instance.
 	$ba_eas = ba_eas();
 
-	// We're up-to-date, so let's move on
+	// We're up-to-date, so let's move on.
 	if ( $ba_eas->current_db_version === $ba_eas->db_version ) {
 		return;
 	}
 
-	// < 0.8.0
+	// < 0.8.0.
 	if ( $ba_eas->current_db_version < 132 ) {
-		// Add new options
+		// Add new options.
 		add_option( '_ba_eas_author_base', $ba_eas->author_base );
 
-		// Rename the old option for safe keeping
+		// Rename the old option for safe keeping.
 		update_option( '_ba_eas_old_options', get_option( 'ba_edit_author_slug' ) );
 		delete_option( 'ba_edit_author_slug' );
 	}
 
-	// < 1.0.0
+	// < 1.0.0.
 	if ( $ba_eas->current_db_version < 133 ) {
 		add_option( '_ba_eas_do_auto_update',        $ba_eas->do_auto_update        );
 		add_option( '_ba_eas_default_user_nicename', $ba_eas->default_user_nicename );
@@ -863,9 +921,9 @@ function ba_eas_upgrade() {
 		add_option( '_ba_eas_role_slugs',            $ba_eas->role_slugs            );
 	}
 
-	// Version bump
+	// Version bump.
 	update_option( '_ba_eas_db_version', $ba_eas->db_version );
 
-	// Courtesy flush
+	// Courtesy flush.
 	ba_eas_flush_rewrite_rules();
 }
