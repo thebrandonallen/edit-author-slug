@@ -755,7 +755,7 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 	$options = array_unique( array_filter( array_map( 'trim', $options ) ) );
 ?>
 
-		<label><span class="screen-reader-text">Default author slug options</span></label>
+		<label><span class="screen-reader-text"><?php esc_html_e( 'Default author slug options', 'edit-author-slug' ); ?></span></label>
 		<select id="_ba_eas_default_user_nicename" name="_ba_eas_default_user_nicename">
 		<?php foreach ( (array) $options as $id => $item ) { ?>
 			<option id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $id ); ?>"<?php selected( $structure, $id ); ?>><?php echo esc_html( $item ); ?></option>
