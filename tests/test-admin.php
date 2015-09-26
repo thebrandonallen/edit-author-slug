@@ -284,14 +284,30 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_admin_setting_callback_do_role_based
 	 */
 	function test_ba_eas_admin_setting_callback_do_role_based() {
-		$this->markTestIncomplete();
+		ob_start();
+		ba_eas_admin_setting_callback_do_role_based();
+		$output = ob_get_clean();
+
+		$input = '<input name="_ba_eas_do_role_based" id="_ba_eas_do_role_based" value="1" type="checkbox" />';
+		$label = 'Set user&#039;s Author Base according to their role. (The above &quot;Author Base&quot; setting will be used as a fallback.)';
+
+		$this->assertContains( $input, $output );
+		$this->assertContains( $label, $output );
 	}
 
 	/**
 	 * @covers ::ba_eas_admin_setting_callback_role_slugs
 	 */
 	function test_ba_eas_admin_setting_callback_role_slugs() {
-		$this->markTestIncomplete();
+		ob_start();
+		ba_eas_admin_setting_callback_role_slugs();
+		$output = ob_get_clean();
+
+		$input = '<input name="_ba_eas_role_slugs[administrator][slug]" id="_ba_eas_role_slugs[administrator][slug]" type="text" value="administrator" class="regular-text code" />';
+		$label = 'Administrator';
+
+		$this->assertContains( $input, $output );
+		$this->assertContains( $label, $output );
 	}
 
 	/**
@@ -305,7 +321,15 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_admin_setting_callback_do_auto_update
 	 */
 	function test_ba_eas_admin_setting_callback_do_auto_update() {
-		$this->markTestIncomplete();
+		ob_start();
+		ba_eas_admin_setting_callback_do_auto_update();
+		$output = ob_get_clean();
+
+		$input = '<input name="_ba_eas_do_auto_update" id="_ba_eas_do_auto_update" value="1" type="checkbox" />';
+		$label = 'Automatically update Author Slug when a user updates their profile.';
+
+		$this->assertContains( $input, $output );
+		$this->assertContains( $label, $output );
 	}
 
 	/**
@@ -316,9 +340,35 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::ba_eas_admin_setting_callback_bulk_auto_update
+	 * @covers ::ba_eas_admin_setting_callback_bulk_update_section
 	 */
-	function test_ba_eas_admin_setting_callback_bulk_auto_update() {
+	function test_ba_eas_admin_setting_callback_bulk_update_section() {
+		ob_start();
+		ba_eas_admin_setting_callback_bulk_update_section();
+		$output = ob_get_clean();
+
+		$this->assertContains( 'Update all users at once based on the specified Author Slug structure.', $output );
+	}
+
+	/**
+	 * @covers ::ba_eas_admin_setting_callback_bulk_update
+	 */
+	function test_ba_eas_admin_setting_callback_bulk_update() {
+		ob_start();
+		ba_eas_admin_setting_callback_bulk_update();
+		$output = ob_get_clean();
+
+		$input = '<input name="_ba_eas_bulk_update" id="_ba_eas_bulk_update" value="1" type="checkbox" />';
+		$label = 'Update all users according to the below Author Slug setting. This will only be run after clicking &quot;Save Changes&quot;.';
+
+		$this->assertContains( $input, $output );
+		$this->assertContains( $label, $output );
+	}
+
+	/**
+	 * @covers ::ba_eas_admin_setting_callback_bulk_update_structure
+	 */
+	function test_ba_eas_admin_setting_callback_bulk_update_structure() {
 		$this->markTestIncomplete();
 	}
 
