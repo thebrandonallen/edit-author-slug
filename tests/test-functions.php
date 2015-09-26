@@ -133,7 +133,70 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 * @covers ::ba_eas_auto_update_user_nicename_bulk
 	 */
 	function test_ba_eas_auto_update_user_nicename_bulk() {
-		$this->markTestIncomplete();
+		$leo_id = $this->factory->user->create( array(
+			'user_login' => 'leonardo',
+			'user_pass'  => '1234',
+			'user_email' => 'leonardo@example.com',
+			'nickname'   => 'Leo',
+			'first_name' => 'Leonardo',
+			'last_name'  => 'Hamato',
+		) );
+		$raph_id = $this->factory->user->create( array(
+			'user_login' => 'raphael',
+			'user_pass'  => '1234',
+			'user_email' => 'raphael@example.com',
+			'nickname'   => 'Raph',
+			'first_name' => 'Raphael',
+			'last_name'  => 'Hamato',
+		) );
+		$donnie_id = $this->factory->user->create( array(
+			'user_login' => 'donatello',
+			'user_pass'  => '1234',
+			'user_email' => 'donatello@example.com',
+			'nickname'   => 'Donnie',
+			'first_name' => 'Donatello',
+			'last_name'  => 'Hamato',
+		) );
+		$mikey_id = $this->factory->user->create( array(
+			'user_login' => 'michelangelo',
+			'user_pass'  => '1234',
+			'user_email' => 'michelangelo@example.com',
+			'nickname'   => 'Mikey',
+			'first_name' => 'Michelangelo',
+			'last_name'  => 'Hamato',
+		) );
+
+		$this->eas->default_user_nicename = 'firstlast';
+
+		ba_eas_auto_update_user_nicename_bulk();
+
+		$leo = get_userdata( $leo_id );
+		$this->assertEquals( 'leonardo-hamato', $leo->user_nicename );
+
+		$raph = get_userdata( $raph_id );
+		$this->assertEquals( 'raphael-hamato', $raph->user_nicename );
+
+		$donnie = get_userdata( $donnie_id );
+		$this->assertEquals( 'donatello-hamato', $donnie->user_nicename );
+
+		$mikey = get_userdata( $mikey_id );
+		$this->assertEquals( 'michelangelo-hamato', $mikey->user_nicename );
+
+		$this->eas->default_user_nicename = 'nickname';
+
+		ba_eas_auto_update_user_nicename_bulk();
+
+		$leo = get_userdata( $leo_id );
+		$this->assertEquals( 'leo', $leo->user_nicename );
+
+		$raph = get_userdata( $raph_id );
+		$this->assertEquals( 'raph', $raph->user_nicename );
+
+		$donnie = get_userdata( $donnie_id );
+		$this->assertEquals( 'donnie', $donnie->user_nicename );
+
+		$mikey = get_userdata( $mikey_id );
+		$this->assertEquals( 'mikey', $mikey->user_nicename );
 	}
 
 	/**
