@@ -140,8 +140,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 *
 		 * @see BA_Edit_Author_Slug::instance()
 		 * @see ba_eas();
-		 *
-		 * @return void
 		 */
 		private function __construct() { /* Do nothing here */ }
 
