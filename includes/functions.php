@@ -170,6 +170,9 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	// Update if there's a change.
 	$user_id = wp_update_user( array( 'ID' => $user_id, 'user_nicename' => $nicename ) );
 
+	// Add it back in case other plugins do some updating.
+	add_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
+
 	/*
 	 * Since this is an action taken without the user's knowledge we must fail
 	 * silently. Therefore, we only want to update the cache if we're successful.
@@ -179,9 +182,6 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 		// Update the nicename cache.
 		ba_eas_update_nicename_cache( $user_id, $user, $nicename );
 	}
-
-	// Add it back in case other plugins do some updating
-	add_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
 
 	return $user_id;
 }
