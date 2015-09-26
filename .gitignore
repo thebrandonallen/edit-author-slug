@@ -6,3 +6,6 @@
 /npm-debug.log
 /phpunit.xml
 /tests/phpunit/build
+
+# Filesystem files and folders
+.DS_Store
