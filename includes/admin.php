@@ -121,10 +121,9 @@ function ba_eas_show_user_nicename( $user ) {
  * @uses get_userdata() To get the user data.
  * @uses WP_Errors::add() To add Edit Author Slug specific errors.
  * @uses ba_eas_sanitize_nicename() Used to sanitize user_nicename.
- * @uses remove_action() To remove the 'ba_eas_auto_update_user_nicename_single' and prevent looping.
+ * @uses remove_action() To remove the 'ba_eas_auto_update_user_nicename' and prevent looping.
  * @uses get_user_by() To see if the nicename is already in use.
  * @uses esc_html() To sanitize author_slug for display.
- * @uses add_action() To add the 'ba_eas_auto_update_user_nicename_single' back.
  */
 function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
@@ -134,7 +133,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	}
 
 	// Don't run the auto-update if the current user can update their own nicename.
-	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
+	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
 
 	// We shouldn't be here if we're not updating.
 	if ( ! $update ) {

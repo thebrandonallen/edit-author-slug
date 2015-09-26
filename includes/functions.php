@@ -45,11 +45,11 @@ function ba_eas_do_auto_update() {
  * @uses ba_eas_sanitize_nicename() To sanitize the new nicename.
  * @uses ba_eas_trim_nicename() To trim the new nicename to 50 characters.
  * @uses apply_filters() To call the 'ba_eas_pre_auto_update_user_nicename' hook.
- * @uses remove_action() To remove the 'ba_eas_auto_update_user_nicename_single' and prevent looping.
+ * @uses remove_action() To remove the 'ba_eas_auto_update_user_nicename' and prevent looping.
  * @uses wp_update_user() Update to new user_nicename.
  * @uses is_wp_error() To make sure update_user was successful before we clear the cache.
  * @uses ba_eas_update_nicename_cache() There’s always money in the banana stand!
- * @uses add_action() To re-add the 'ba_eas_auto_update_user_nicename_single' hook.
+ * @uses add_action() To re-add the 'ba_eas_auto_update_user_nicename' hook.
  *
  * @return bool|int $user_id. False on failure
  */
@@ -165,13 +165,13 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false ) {
 	}
 
 	// Remove the auto-update actions so we don't find ourselves in a loop.
-	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
+	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
 
 	// Update if there's a change.
 	$user_id = wp_update_user( array( 'ID' => $user_id, 'user_nicename' => $nicename ) );
 
 	// Add it back in case other plugins do some updating.
-	add_action( 'profile_update', 'ba_eas_auto_update_user_nicename_single' );
+	add_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
 
 	/*
 	 * Since this is an action taken without the user's knowledge we must fail
