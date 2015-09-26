@@ -232,6 +232,45 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::ba_eas_sanitize_nicename
+	 */
+	function test_ba_eas_sanitize_nicename() {
+		$this->assertEquals( 'leonardo-hamato', ba_eas_sanitize_nicename( 'Leonardo Hamato' ) );
+		$this->assertEquals( '', ba_eas_sanitize_nicename( '\ ' ) );
+		$this->assertEquals( '', ba_eas_sanitize_nicename( '作者' ) );
+		$this->assertEquals( '%e4%bd%9c%e8%80%85', ba_eas_sanitize_nicename( '作者', false ) );
+	}
+
+	/**
+	 * @covers ::ba_eas_esc_nicename
+	 */
+	function test_ba_eas_esc_nicename() {
+		$this->assertEquals( 'leonardo-hamato', ba_eas_esc_nicename( 'leonardo-hamato' ) );
+		$this->assertEquals( 'leonardo_hamato', ba_eas_esc_nicename( 'leonardo_hamato' ) );
+
+		$nicename = ba_eas_sanitize_nicename( '作者', false );
+		$this->assertEquals( '作者', ba_eas_esc_nicename( $nicename ) );
+	}
+
+	/**
+	 * @covers ::ba_eas_trim_nicename
+	 */
+	function test_ba_eas_trim_nicename() {
+		$this->assertEquals( 'leonardo-hamato', ba_eas_trim_nicename( 'leonardo-hamato' ) );
+		$this->assertEquals( 'this-is-a-really-really-really-really-long-user-ni', ba_eas_trim_nicename( 'this-is-a-really-really-really-really-long-user-nicename' ) );
+		$this->assertEquals( 'this-is-a-really-really-really-really-looong-user', ba_eas_trim_nicename( 'this-is-a-really-really-really-really-looong-user-nicename' ) );
+	}
+
+	/**
+	 * @covers ::ba_eas_nicename_is_ascii
+	 */
+	function test_ba_eas_nicename_is_ascii() {
+		$this->assertTrue( ba_eas_nicename_is_ascii( 'leonardo-hamato' ) );
+		$this->assertTrue( ba_eas_nicename_is_ascii( 'āēīōūǖĀĒĪŌŪǕ' ) );
+		$this->assertFalse( ba_eas_nicename_is_ascii( '作者' ) );
+	}
+
+	/**
 	 * @covers ::ba_eas_do_role_based_author_base
 	 */
 	function test_ba_eas_do_role_based_author_base() {
