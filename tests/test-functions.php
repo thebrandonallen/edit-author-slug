@@ -229,6 +229,24 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		$mikey = get_userdata( $mikey_id );
 		$this->assertEquals( 'michelangelo-hamato', $mikey->user_nicename );
+
+		$_POST = array( '_ba_eas_bulk_update_structure' => 'nickname' );
+
+		add_filter( 'ba_eas_auto_update_user_nicename_bulk_user_ids', '__return_empty_array' );
+		ba_eas_auto_update_user_nicename_bulk( true );
+		remove_filter( 'ba_eas_auto_update_user_nicename_bulk_user_ids', '__return_empty_array' );
+
+		$leo = get_userdata( $leo_id );
+		$this->assertEquals( 'leonardo-hamato', $leo->user_nicename );
+
+		$raph = get_userdata( $raph_id );
+		$this->assertEquals( 'raphael-hamato', $raph->user_nicename );
+
+		$donnie = get_userdata( $donnie_id );
+		$this->assertEquals( 'donatello-hamato', $donnie->user_nicename );
+
+		$mikey = get_userdata( $mikey_id );
+		$this->assertEquals( 'michelangelo-hamato', $mikey->user_nicename );
 	}
 
 	/**

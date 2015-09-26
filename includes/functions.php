@@ -249,6 +249,8 @@ function ba_eas_auto_update_user_nicename_bulk( $value = false ) {
 	// Get an array of ids of all users.
 	$users = get_users( array( 'fields' => 'ID' ) );
 
+	$users = (array) apply_filters( 'ba_eas_auto_update_user_nicename_bulk_user_ids', $users );
+
 	// Bail if no users are returned.
 	if ( empty( $users ) ) {
 		return false;
