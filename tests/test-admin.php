@@ -94,12 +94,34 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$errors = new WP_Error;
 
 		$_POST = array(
+			'ba_eas_author_slug' => '作者',
+		);
+
+		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
+		$this->assertEquals( 'assertion-2', $user->user_nicename );
+		$this->assertEquals( '<strong>ERROR</strong>: An author slug can only contain alphanumeric characters, underscores (_) and dashes (-).', $errors->get_error_message( 'user_nicename_invalid_characters' ) );
+
+		unset( $errors );
+		$errors = new WP_Error;
+
+		$_POST = array(
 			'ba_eas_author_slug' => '@',
 		);
 
 		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
 		$this->assertEquals( 'assertion-2', $user->user_nicename );
 		$this->assertEquals( '<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different.', $errors->get_error_message( 'user_nicename_invalid' ) );
+
+		unset( $errors );
+		$errors = new WP_Error;
+
+		$_POST = array(
+			'ba_eas_author_slug' => 'this-is-a-really-really-really-really-long-user-nicename',
+		);
+
+		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
+		$this->assertEquals( 'assertion-2', $user->user_nicename );
+		$this->assertEquals( '<strong>ERROR</strong>: An author slug may not be longer than 50 characters.', $errors->get_error_message( 'user_nicename_too_long' ) );
 
 		unset( $errors );
 		$errors = new WP_Error;
