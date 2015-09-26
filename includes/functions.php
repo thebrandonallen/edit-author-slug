@@ -214,6 +214,8 @@ function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
  *
  * @since 0.9.0
  *
+ * @param string $value The option value passed to the settings API.
+ *
  * @uses get_users() To get all the user ids.
  * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename.
  * @uses is_wp_error() To check for an error.
@@ -221,7 +223,15 @@ function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
  *
  * @return bool False to prevent the setting from being saved to the db.
  */
-function ba_eas_auto_update_user_nicename_bulk() {
+function ba_eas_auto_update_user_nicename_bulk( $value = false ) {
+
+	// Sanitize the option value.
+	$value = (bool) absint( $value );
+
+	// Bail if the user didn't ask to run the bulk update.
+	if ( ! $value ) {
+		return false;
+	}
 
 	// Get an array of ids of all users.
 	$users = get_users( array( 'fields' => 'ID' ) );
