@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  *
  * @since 0.9.0
  *
- * @uses ba_eas() BA_Edit_Author_Slug object
+ * @uses ba_eas() To get the BA_Edit_Author_Slug object.
  * @uses apply_filters() To call 'ba_eas_do_auto_update' hook
  *
  * @return bool True if auto-update enabled
@@ -42,7 +42,7 @@ function ba_eas_do_auto_update() {
  * @uses ba_eas_do_auto_update() Do we auto-update?.
  * @uses get_userdata() To get the user object.
  * @uses apply_filters() To call the 'ba_eas_auto_update_user_nicename_structure' hook.
- * @uses ba_eas() BA_Edit_Author_Slug object.
+ * @uses ba_eas() To get the BA_Edit_Author_Slug object.
  * @uses ba_eas_sanitize_nicename() To sanitize the new nicename.
  * @uses ba_eas_trim_nicename() To trim the new nicename to 50 characters.
  * @uses apply_filters() To call the 'ba_eas_pre_auto_update_user_nicename' hook.
@@ -366,7 +366,7 @@ function ba_eas_nicename_is_ascii( $nicename = '' ) {
  *
  * @since 1.0.0
  *
- * @uses ba_eas() BA_Edit_Author_Slug object
+ * @uses ba_eas() To get the BA_Edit_Author_Slug object.
  * @uses apply_filters() To call 'ba_eas_do_role_based_author_base' hook.
  *
  * @return bool True if role-based author base enabled.
@@ -390,7 +390,7 @@ function ba_eas_do_role_based_author_base() {
  *
  * @uses ba_eas_do_role_based_author_base() To determine if we're doing role-based author bases.
  * @uses get_userdata() WP_User object
- * @uses ba_eas() BA_Edit_Author_Slug object
+ * @uses ba_eas() To get the BA_Edit_Author_Slug object.
  *
  * @return string Author archive link
  */
@@ -430,7 +430,7 @@ function ba_eas_author_link( $link = '', $user_id = 0 ) {
  * @param string $template Current template according to template hierarchy
  *
  * @uses get_queried_object() To get the queried object (should be WP_User object).
- * @uses ba_eas() BA_Edit_Author_Slug object
+ * @uses ba_eas() To get the BA_Edit_Author_Slug object.
  * @uses locate_template() To see if we have role-based templates.
  *
  * @return string Author archive link
