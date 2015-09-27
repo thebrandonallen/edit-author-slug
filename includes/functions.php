@@ -419,43 +419,44 @@ function ba_eas_author_link( $link = '', $user_id = 0 ) {
 /**
  * Allow author templates to be based on role.
  *
- * Instead of only using author-{user_nicename}.php, author-{ID}.php, and author.php
- * for templates, this allows author-{role}.php or author-{role-slug}.php to be used as well.
+ * Instead of only using author-{user_nicename}.php, author-{ID}.php, and
+ * author.php for templates, this allows author-{role}.php or
+ * author-{role-slug}.php to be used as well.
  *
  * @since 1.0.0
  *
- * @param string $template Current template according to template hierarchy
+ * @param string $template Current template according to template hierarchy.
  *
  * @uses get_queried_object() To get the queried object (should be WP_User object).
  * @uses ba_eas() To get the BA_Edit_Author_Slug object.
  * @uses locate_template() To see if we have role-based templates.
  *
- * @return string Author archive link
+ * @return string Author archive link.
  */
 function ba_eas_template_include( $template ) {
 
-	// Bail if we're not doing role-based author bases
+	// Bail if we're not doing role-based author bases.
 	if ( ! ba_eas_do_role_based_author_base() ) {
 		return $template;
 	}
 
-	// Get queried object, should be a WP_User object
+	// Get queried object, should be a WP_User object.
 	$author = get_queried_object();
 
-	// Make sure we have a WP_User object
+	// Make sure we have a WP_User object.
 	if ( ! is_a( $author, 'WP_User' ) ) {
 		return $template;
 	}
 
-	// nicename and ID templates should take priority, so we need to check for their existence
+	// nicename and ID templates should take priority, so we need to check for their existence.
 	$nicename_template = strpos( $template, "author-{$author->user_nicename}.php" );
 	$id_template       = strpos( $template, "author-{$author->ID}.php"            );
 
-	// If they don't exist, search for a role based template
+	// If they don't exist, search for a role based template.
 	if ( false === $nicename_template && false === $id_template ) {
 
-		// Defaults
-		$role = $role_slug = false;
+		// Defaults.
+		$role = $role_slug = '';
 
 		// Grab the first listed role.
 		$role = ba_eas_get_user_role( $author->roles, $author->ID );
@@ -465,23 +466,23 @@ function ba_eas_template_include( $template ) {
 			$role_slug = ba_eas()->role_slugs[ $role ]['slug'];
 		}
 
-		// Set the templates array
+		// Set the templates array.
 		$templates = array();
 
-		// Add the role template
+		// Add the role template.
 		if ( ! empty( $role ) ) {
 			$templates[] = "author-{$role}.php";
 		}
 
-		// Add the role_slug template
+		// Add the role_slug template.
 		if ( ! empty( $role_slug ) ) {
 			$templates[] = "author-{$role_slug}.php";
 		}
 
-		// Check for the template
+		// Check for the template.
 		$new_template = locate_template( $templates );
 
-		// If we have a role-based template, let's set it to be loaded
+		// If we have a role-based template, let's set it to be loaded.
 		if ( '' !== $new_template ) {
 			$template = $new_template;
 		}
