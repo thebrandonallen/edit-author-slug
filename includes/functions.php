@@ -403,10 +403,7 @@ function ba_eas_author_link( $link = '', $user_id = 0 ) {
 		$user = get_userdata( $user_id );
 
 		// Grab the first listed role
-		$role = '';
-		if ( ! empty( $user->roles ) && is_array( $user->roles ) ) {
-			$role = array_shift( $user->roles );
-		}
+		$role = ba_eas_get_user_role( $user->roles, $user_id );
 
 		// Make sure we have a valid slug
 		$slug = empty( ba_eas()->role_slugs[ $role ]['slug'] ) ? ba_eas()->author_base : ba_eas()->role_slugs[ $role ]['slug'];
@@ -460,10 +457,8 @@ function ba_eas_template_include( $template ) {
 		// Defaults
 		$role = $role_slug = false;
 
-		// Grab the first listed role
-		if ( ! empty( $author->roles ) && is_array( $author->roles ) ) {
-			$role = array_shift( $author->roles );
-		}
+		// Grab the first listed role.
+		$role = ba_eas_get_user_role( $author->roles, $author->ID );
 
 		// Get the role slug
 		if ( ! empty( ba_eas()->role_slugs[ $role ]['slug'] ) ) {
@@ -533,6 +528,51 @@ function ba_eas_author_rewrite_rules( $author_rewrite_rules ) {
 	}
 
 	return $author_rewrite_rules;
+}
+
+/**
+ * Return the first listed role of a user's role array.
+ *
+ * @since 1.1.0
+ *
+ * @param array $roles   An array of user roles.
+ * @param int   $user_id The user id.
+ *
+ * @uses get_userdata() To get the WP_User object.
+ * @uses apply_filters() To call the `ba_eas_get_user_role` hook.
+ *
+ * @return string
+ */
+function ba_eas_get_user_role( $roles = array(), $user_id = 0 ) {
+
+	// Set the default role to empty.
+	$role = '';
+
+	// Grab the first listed role.
+	if ( ! empty( $roles ) && is_array( $roles ) ) {
+		$role = array_shift( $roles );
+
+	// If no roles were passed, try using the user id to get them.
+	} elseif ( ! empty( $user_id ) ) {
+
+		// Get the WP_User object.
+		$user = get_userdata( $user_id );
+
+		// If the roles aren't empty, grab the first listed role.
+		if ( ! empty( $user->roles ) ) {
+			$role = array_shift( $user->roles );
+		}
+	}
+
+	/**
+	 * Filters the author role.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string $role    The first listed user role.
+	 * @param int    $user_id The user id.
+	 */
+	return apply_filters( 'ba_eas_get_user_role', $role, $user_id );
 }
 
 /**
