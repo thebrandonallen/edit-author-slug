@@ -283,7 +283,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			}
 
 			// Load auto-update option.
-			$this->do_auto_update = absint( get_option( '_ba_eas_do_auto_update', 0 ) );
+			$this->do_auto_update = (bool) absint( get_option( '_ba_eas_do_auto_update', 0 ) );
 
 			// Load the default nicename structure for auto-update.
 			$default_user_nicename = get_option( '_ba_eas_default_user_nicename' );
@@ -294,7 +294,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			$this->default_user_nicename = $default_user_nicename;
 
 			// Load role-based author slug option.
-			$this->do_role_based = absint( get_option( '_ba_eas_do_role_based', 0 ) );
+			$this->do_role_based = (bool) absint( get_option( '_ba_eas_do_role_based', 0 ) );
 
 			// Load role-based author slug option.
 			$this->role_slugs = array();
