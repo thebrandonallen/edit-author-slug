@@ -26,8 +26,6 @@ Development of this plugin takes place on [GitHub](https://github.com/thebrandon
 #### Translations Available
 * Dutch - props Juliette Reinders Folmer
 
-You can also visit the plugin's homepage at http://brandonallen.me/wordpress/plugins/edit-author-slug/
-
 == Installation ==
 
 1. Upload `edit-author-slug` folder to your WordPress plugins directory (typically 'wp-content/plugins')
