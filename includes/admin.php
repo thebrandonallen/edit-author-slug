@@ -165,13 +165,13 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	}
 
 	// Setup the author slug.
-	$author_slug = '';
+	$user_nicename = '';
 	if ( ! empty( $_POST['ba_eas_author_slug'] ) ) {
-		$author_slug = trim( stripslashes( $_POST['ba_eas_author_slug'] ) );
+		$user_nicename = trim( stripslashes( $_POST['ba_eas_author_slug'] ) );
 	}
 
 	// Do we have an author slug?
-	if ( empty( $author_slug ) ) {
+	if ( empty( $user_nicename ) ) {
 		$errors->add(
 			'user_nicename_empty',
 			__( '<strong>ERROR</strong>: An author slug cannot be blank. Please try again.', 'edit-author-slug' )
@@ -180,30 +180,40 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	}
 
 	// Stash author slug as it was, mostly, passed.
-	$raw_nicename = $author_slug;
+	$raw_nicename = $user_nicename;
 
 	// Check to see if the passed nicename contains any invalid characters.
-	$ascii = ba_eas_nicename_is_ascii( $author_slug );
+	$ascii = ba_eas_nicename_is_ascii( $user_nicename );
 
-	// Sanitize the author slug.
-	$author_slug = ba_eas_sanitize_nicename( $author_slug );
+	// Sanitize the author slug and cache the pre-filtered, sanitized version.
+	$user_nicename = $raw_nicename_sanitized = ba_eas_sanitize_nicename( $user_nicename );
 
 	/**
 	 * Filters the sanitized user nicename before any final checks are run.
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param string $author_slug  The sanitized user nicename.
-	 * @param string $raw_nicename The un-sanitized user nicename.
-	 * @param bool   $ascii        True if the nicename contains only characters
-	 *                             that can be converted to allowed ASCII characters.
+	 * @param string $user_nicename The sanitized user nicename.
+	 * @param int    $user_id       The user id.
+	 * @param string $raw_nicename  The un-sanitized user nicename.
+	 * @param bool   $ascii         True if the nicename contains only characters
+	 *                              that can be converted to allowed ASCII characters.
 	 */
-	$author_slug = apply_filters(
+	$user_nicename = ba_eas_sanitize_nicename( apply_filters(
 		'ba_eas_pre_update_user_nicename',
-		$author_slug,
+		$user_nicename,
+		$user->ID,
 		$raw_nicename,
 		$ascii
-	);
+	) );
+
+	// Was the nicename filtered?
+	$changed = ( $raw_nicename_sanitized !== $user_nicename );
+
+	// Reset `$ascii` if the nicename was filtered.
+	if ( $changed ) {
+		$ascii = ba_eas_nicename_is_ascii( $user_nicename );
+	}
 
 	// Bail and throw an error if the nicename contains invalid characters.
 	if ( ! $ascii ) {
@@ -215,7 +225,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	}
 
 	// Bail and throw an error if the nicename is empty after sanitization.
-	if ( empty( $author_slug ) ) {
+	if ( empty( $user_nicename ) ) {
 		$errors->add(
 			'user_nicename_invalid',
 			__( '<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different.', 'edit-author-slug' )
@@ -224,7 +234,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	}
 
 	// Bail and throw an error if the nicename contains more than 50 characters.
-	if ( mb_strlen( $author_slug ) > 50 ) {
+	if ( mb_strlen( $user_nicename ) > 50 ) {
 		$errors->add(
 			'user_nicename_too_long',
 			__( '<strong>ERROR</strong>: An author slug may not be longer than 50 characters.', 'edit-author-slug' )
@@ -233,10 +243,10 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	}
 
 	// Make sure the passed nicename is different from the user's current nicename.
-	if ( $author_slug !== $_user->user_nicename ) {
+	if ( $user_nicename !== $_user->user_nicename ) {
 
 		// Bail and throw an error if the nicename already exists.
-		$exists = get_user_by( 'slug', $author_slug );
+		$exists = get_user_by( 'slug', $user_nicename );
 		if ( $exists && (int) $exists->ID !== $user->ID ) {
 
 			// Setup the error message.
@@ -250,7 +260,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 				'user_nicename_exists',
 				sprintf(
 					$message,
-					'<strong><em>' . esc_html( $author_slug ) . '</em></strong>'
+					'<strong><em>' . ba_eas_esc_nicename( $user_nicename ) . '</em></strong>'
 				)
 			);
 
@@ -258,7 +268,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 		}
 
 		// Looks like we made it, so let's update
-		$user->user_nicename = $author_slug;
+		$user->user_nicename = $user_nicename;
 
 		// Update the nicename cache
 		add_action( 'profile_update', 'ba_eas_update_nicename_cache', 10, 2 );
