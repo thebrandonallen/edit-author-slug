@@ -467,15 +467,21 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 endif; //end class BA_Edit_Author_Slug
 
 /**
- * Runs on Edit Author Slug activation
+ * Runs on Edit Author Slug activation.
  *
  * @since 0.7.0
  *
- * @uses do_action() Calls 'ba_eas_activation' hook.
+ * @uses do_action() Calls `ba_eas_activation` hook.
  *
  * @return void
  */
 function ba_eas_activation() {
+
+	/**
+	 * Fires on Edit Author Slug activation.
+	 *
+	 * @since 0.7.0
+	 */
 	do_action( 'ba_eas_activation' );
 
 	// Pre-emptive courtesy flush in case of existing author base.
@@ -483,17 +489,23 @@ function ba_eas_activation() {
 }
 
 /**
- * Runs on Edit Author Slug deactivation
+ * Runs on Edit Author Slug deactivation.
  *
  * @since 0.7.0
  *
- * @uses do_action() Calls 'ba_eas_deactivation' hook.
+ * @uses do_action() Calls `ba_eas_deactivation` hook.
  *
  * @return void
  */
 function ba_eas_deactivation() {
+
+	/**
+	 * Fires on Edit Author Slug deactivation.
+	 *
+	 * @since 0.7.0
+	 */
 	do_action( 'ba_eas_deactivation' );
 
-	// Courtesy flush
+	// Courtesy flush.
 	delete_option( 'rewrite_rules' );
 }
