@@ -66,9 +66,17 @@ function ba_eas_show_user_nicename( $user ) {
 		$options['lastfirst'] = $options['lastname'] . '-' . $options['firstname'];
 	}
 
-	// Setup a filterable list of nicename options, trim to 50 characters, and,
-	// filter out any duplicates or empties.
+	/**
+	 * Filters the array of user nicename options.
+	 *
+	 * @since 0.9.0
+	 *
+	 * @param array   $options An array of of user nicename options.
+	 * @param WP_User $user    The WP_User object.
+	 */
 	$options = apply_filters( 'ba_eas_show_user_nicename_options_list', $options, $user );
+
+	// Trim nicenames to 50 characters, and filter out any duplicates or empties.
 	$options = array_map( 'ba_eas_trim_nicename', (array) $options );
 	$options = array_unique( array_filter( $options ) );
 
@@ -270,14 +278,21 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
  */
 function ba_eas_can_edit_author_slug() {
 
-	// Default to false
+	// Default to false.
 	$retval = false;
 
-	// True if user is allowed to edit the author slug
+	// True if user is allowed to edit the author slug.
 	if ( is_super_admin() || current_user_can( 'edit_users' ) || current_user_can( 'edit_author_slug' ) ) {
 		$retval = true;
 	}
 
+	/**
+	 * Filters the return of `ba_eas_can_edit_author_slug()`.
+	 *
+	 * @since 0.8.0
+	 *
+	 * @param bool $retval True if a user can edit the author slug.
+	 */
 	return (bool) apply_filters( 'ba_eas_can_edit_author_slug', $retval );
 }
 
@@ -836,7 +851,13 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 		$structure = 'username';
 	}
 
-	// Setup a filterable list of nicename auto-update options.
+	/**
+	 * Filters the array of user nicename structure options.
+	 *
+	 * @since 0.9.0
+	 *
+	 * @param array $options An array of of user nicename structure options.
+	 */
 	$options = (array) apply_filters( 'ba_eas_default_user_nicename_options_list', array(
 		'username'    => __( 'username (Default)', 'edit-author-slug' ),
 		'nickname'    => __( 'nickname',           'edit-author-slug' ),
@@ -916,7 +937,7 @@ function ba_eas_admin_setting_callback_bulk_update_structure() {
 		$structure = 'username';
 	}
 
-	// Setup a filterable list of nicename auto-update options.
+	/* Documented in `ba_eas_admin_setting_callback_default_user_nicename()` */
 	$options = (array) apply_filters( 'ba_eas_default_user_nicename_options_list', array(
 		'username'    => __( 'username (Default)', 'edit-author-slug' ),
 		'nickname'    => __( 'nickname',           'edit-author-slug' ),

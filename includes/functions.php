@@ -20,13 +20,19 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  * @since 0.9.0
  *
  * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses apply_filters() To call 'ba_eas_do_auto_update' hook
+ * @uses apply_filters() To call 'ba_eas_do_auto_update' hook.
  *
- * @return bool True if auto-update enabled
+ * @return bool True if auto-update enabled.
  */
 function ba_eas_do_auto_update() {
 
-	// Return a bool of the auto-update option value
+	/**
+	 * Filters the return of the `do_auto_update` option.
+	 *
+	 * @since 0.9.0
+	 *
+	 * @param bool $do_auto_update The `do_auto_update` option.
+	 */
 	return (bool) apply_filters( 'ba_eas_do_auto_update', ba_eas()->do_auto_update );
 }
 
@@ -39,7 +45,7 @@ function ba_eas_do_auto_update() {
  * @param bool   $bulk      Bulk upgrade flag. Defaults to false.
  * @param string $structure The nicename structure to use during update.
  *
- * @uses ba_eas_do_auto_update() Do we auto-update?.
+ * @uses ba_eas_do_auto_update() Do we auto-update?
  * @uses get_userdata() To get the user object.
  * @uses apply_filters() To call the 'ba_eas_auto_update_user_nicename_structure' hook.
  * @uses ba_eas() To get the BA_Edit_Author_Slug object.
@@ -81,7 +87,14 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false, $structure =
 		$structure = ba_eas()->default_user_nicename;
 	}
 
-	// Get the default nicename structure.
+	/**
+	 * Filters the auto-update user nicename structure.
+	 *
+	 * @since 0.9.0
+	 *
+	 * @param string $structure The auto-update structure.
+	 * @param int    $user_id   The user id.
+	 */
 	$structure = apply_filters( 'ba_eas_auto_update_user_nicename_structure', $structure, $user_id );
 
 	// Make sure we have a structure.
@@ -161,7 +174,15 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false, $structure =
 	// Sanitize and trim the new user nicename.
 	$nicename = ba_eas_trim_nicename( ba_eas_sanitize_nicename( $nicename ) );
 
-	// Sanitize the new nicename.
+	/**
+	 * Filters the auto-updated user nicename before being saved.
+	 *
+	 * @since 0.9.0
+	 *
+	 * @param string $nicename  The new user nicename.
+	 * @param int    $user_id   The user id.
+	 * @param string $structure The auto-update structure.
+	 */
 	$nicename = apply_filters( 'ba_eas_pre_auto_update_user_nicename', $nicename, $user_id, $structure );
 
 	// Bail if nothing changed or the nicename is empty.
@@ -249,6 +270,13 @@ function ba_eas_auto_update_user_nicename_bulk( $value = false ) {
 	// Get an array of ids of all users.
 	$users = get_users( array( 'fields' => 'ID' ) );
 
+	/**
+	 * Filters the array of user ids who will have their user nicenames updated.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param array $users The array of user ids to update.
+	 */
 	$users = (array) apply_filters( 'ba_eas_auto_update_user_nicename_bulk_user_ids', $users );
 
 	// Bail if no users are returned.
@@ -373,7 +401,13 @@ function ba_eas_nicename_is_ascii( $nicename = '' ) {
  */
 function ba_eas_do_role_based_author_base() {
 
-	// Return a bool of the role-based author base option value
+	/**
+	 * Filters the return of the `do_role_based` option.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param bool $do_role_based The `do_role_based` option.
+	 */
 	return (bool) apply_filters( 'ba_eas_do_role_based_author_base', ba_eas()->do_role_based );
 }
 
