@@ -455,13 +455,11 @@ function ba_eas_template_include( $template ) {
 	// If they don't exist, search for a role based template.
 	if ( false === $nicename_template && false === $id_template ) {
 
-		// Defaults.
-		$role = $role_slug = '';
-
 		// Grab the first listed role.
 		$role = ba_eas_get_user_role( $author->roles, $author->ID );
 
-		// Get the role slug
+		// Get the role slug.
+		$role_slug = '';
 		if ( ! empty( ba_eas()->role_slugs[ $role ]['slug'] ) ) {
 			$role_slug = ba_eas()->role_slugs[ $role ]['slug'];
 		}
