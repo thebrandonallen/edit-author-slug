@@ -126,7 +126,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 				$instance->setup_actions();
 			}
 
-			// Always return the instance
+			// Always return the instance.
 			return $instance;
 		}
 
@@ -380,7 +380,8 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 *
 		 * @since 0.4.0
 		 *
-		 * @uses ba_eas_do_role_based_author_base() To check if we're doing role-based author bases.
+		 * @uses ba_eas_do_role_based_author_base() To check if we're doing
+		 *                                          role-based author bases.
 		 *
 		 * @return void
 		 */
@@ -421,7 +422,8 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 *
 		 * @since 1.0.0
 		 *
-		 * @uses ba_eas_do_role_based_author_base() To check if we're doing role-based author bases.
+		 * @uses ba_eas_do_role_based_author_base() To check if we're doing
+		 *                                          role-based author bases.
 		 * @uses wp_list_pluck() To get only the role slugs.
 		 * @uses add_rewrite_tag() To add the rewrite tags.
 		 *
@@ -447,8 +449,8 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 	}
 
 	/**
-	 * The main function responsible for returning the one true BA_Edit_Author_Slug Instance
-	 * to functions everywhere.
+	 * The main function responsible for returning the one true BA_Edit_Author_Slug
+	 * Instance to functions everywhere.
 	 *
 	 * Use this function like you would a global variable, except without needing
 	 * to declare the global.
@@ -464,14 +466,14 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 	// Places everyone! The show is starting!
 	ba_eas();
 
-endif; //end class BA_Edit_Author_Slug
+endif; //end class BA_Edit_Author_Slug.
 
 /**
  * Runs on Edit Author Slug activation.
  *
  * @since 0.7.0
  *
- * @uses do_action() Calls `ba_eas_activation` hook.
+ * @uses do_action() To call the `ba_eas_activation` hook.
  *
  * @return void
  */
@@ -493,7 +495,7 @@ function ba_eas_activation() {
  *
  * @since 0.7.0
  *
- * @uses do_action() Calls `ba_eas_deactivation` hook.
+ * @uses do_action() To call the `ba_eas_deactivation` hook.
  *
  * @return void
  */

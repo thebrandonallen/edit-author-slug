@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  *
  * @uses ba_eas_can_edit_author_slug() To verify current user can edit the author slug.
  * @uses ba_eas_sanitize_nicename() To sanitize userdata into a new nicename.
- * @uses apply_filters() To call the 'ba_eas_show_user_nicename_options_list' hook.
+ * @uses apply_filters() To call the `ba_eas_show_user_nicename_options_list` hook.
  * @uses ba_eas_trim_nicename() To trim the nicename to 50 characters via `array_map()`.
  * @uses esc_html_e() To sanitize localized string for display.
  * @uses checked() To check that box.
@@ -129,7 +129,7 @@ function ba_eas_show_user_nicename( $user ) {
  * @uses get_userdata() To get the user data.
  * @uses WP_Errors::add() To add Edit Author Slug specific errors.
  * @uses ba_eas_sanitize_nicename() Used to sanitize user_nicename.
- * @uses remove_action() To remove the 'ba_eas_auto_update_user_nicename' and prevent looping.
+ * @uses remove_action() To remove the `ba_eas_auto_update_user_nicename` and prevent looping.
  * @uses get_user_by() To see if the nicename is already in use.
  * @uses esc_html() To sanitize author_slug for display.
  */
@@ -267,10 +267,10 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 			return;
 		}
 
-		// Looks like we made it, so let's update
+		// Looks like we made it, so let's update.
 		$user->user_nicename = $user_nicename;
 
-		// Update the nicename cache
+		// Update the nicename cache.
 		add_action( 'profile_update', 'ba_eas_update_nicename_cache', 10, 2 );
 	}
 }
@@ -282,7 +282,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
  *
  * @uses is_super_admin() To check if super admin.
  * @uses current_user_can() To check for 'edit_users' and 'edit_author_slug' caps.
- * @uses apply_filters() To call 'ba_eas_can_edit_author_slug' hook.
+ * @uses apply_filters() To call `ba_eas_can_edit_author_slug` hook.
  *
  * @return bool True if edit privileges. Defaults to false.
  */
@@ -315,11 +315,11 @@ function ba_eas_can_edit_author_slug() {
  *
  * @uses esc_html__() To escape and localize the author slug column title.
  *
- * @return array $defaults Array of current columns/column headings.
+ * @return array Array of current columns/column headings.
  */
 function ba_eas_author_slug_column( $defaults ) {
 
-	// Set the new column name to "Author Slug"
+	// Set the new column name to "Author Slug".
 	$defaults['ba-eas-author-slug'] = esc_html__( 'Author Slug', 'edit-author-slug' );
 
 	return $defaults;
@@ -332,18 +332,18 @@ function ba_eas_author_slug_column( $defaults ) {
  *
  * @since 0.5.0
  *
- * @param string $default Value for column data. Defaults to ''.
+ * @param string $default     Value for column data. Defaults to empty string.
  * @param string $column_name Column name currently being filtered.
- * @param int $user_id User ID.
+ * @param int    $user_id     The user id.
  *
  * @uses get_userdata() To get the user data.
  * @uses esc_attr() To sanitize the user_nicename.
  *
- * @return string $default Value for column data. Defaults to ''.
+ * @return string Value for column data. Defaults to empty string.
  */
 function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
 
-	// Set row value to user_nicename if applicable
+	// Set row value to user_nicename if applicable.
 	if ( 'ba-eas-author-slug' === $column_name ) {
 		$user = get_userdata( $user_id );
 
@@ -407,7 +407,7 @@ function ba_eas_show_user_nicename_scripts() {
 <?php
 	}
 
-	// Add role slug edit js
+	// Add role slug edit js.
 	if ( 'settings_page_edit-author-slug' === $screen->base ) {
 ?>
 
@@ -541,8 +541,8 @@ function ba_eas_add_settings_menu() {
  *
  * @uses esc_html_e() To sanitize localized string for display.
  * @uses settings_fields() To output nonce, action, and option_page fields.
- * @uses do_settings_sections() To print out the setting sections/fields.
- * @uses submit_button() To display a nice submit button.
+ * @uses do_settings_sections() To output the setting sections/fields.
+ * @uses submit_button() To output a nice submit button.
  */
 function ba_eas_settings_page_html() {
 ?>
@@ -780,13 +780,13 @@ function ba_eas_admin_setting_callback_role_slugs() {
  *
  * @since 1.0.0
  *
- * @param array $role_slugs
+ * @param array $role_slugs An array of role slugs.
  *
  * @uses ba_eas_get_default_role_slugs() To get the editable roles.
  * @uses sanitize_title() To sanitize the slug.
  * @uses ba_eas() To get the BA_Edit_Author_Slug object.
  *
- * @return array $role_slugs
+ * @return array An array of sanitized, role-based author slugs.
  */
 function ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs = array() ) {
 
@@ -847,7 +847,7 @@ function ba_eas_admin_setting_callback_do_auto_update() {
  * @since 0.9.0
  *
  * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses apply_filters() To call 'ba_eas_default_user_nicename_options_list' hook.
+ * @uses apply_filters() To call `ba_eas_default_user_nicename_options_list` hook.
  * @uses esc_attr() To sanitize the nicename options.
  * @uses selected() To determine if we're selected.
  */
@@ -933,7 +933,7 @@ function ba_eas_admin_setting_callback_bulk_update() {
  * @since 0.9.0
  *
  * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses apply_filters() To call 'ba_eas_default_user_nicename_options_list' hook.
+ * @uses apply_filters() To call `ba_eas_default_user_nicename_options_list` hook.
  * @uses esc_attr() To sanitize the nicename options.
  * @uses selected() To determine if we're selected.
  */
@@ -977,15 +977,15 @@ function ba_eas_admin_setting_callback_bulk_update_structure() {
  *
  * @since 0.9.1
  *
- * @param array $links Links array in which we would prepend our link.
- * @param string $file Current plugin basename.
+ * @param array  $links Links array in which we would prepend our link.
+ * @param string $file  Current plugin basename.
  *
  * @uses ba_eas() To get the BA_Edit_Author_Slug object.
  * @uses plugin_basename() To get the plugin basename.
  * @uses add_query_arg() To add the edit-author-slug query arg.
  * @uses admin_url() To get the admin url.
  *
- * @return string $links
+ * @return string The array of plugin action links.
  */
 function ba_eas_add_settings_link( $links, $file ) {
 
@@ -1035,7 +1035,6 @@ function ba_eas_install() {
  *
  * @since 0.8.0
  *
- * @global wpdb $wpdb The wpdb object.
  * @uses wpdb::update() To rename the old Edit Author Slug options array.
  * @uses ba_eas() To get the BA_Edit_Author_Slug object.
  * @uses add_option() To add new Edit Author Slug options.

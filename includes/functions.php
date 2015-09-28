@@ -9,7 +9,7 @@
  * @author Brandon Allen
  */
 
-// Exit if accessed directly
+// Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /** Nicename ******************************************************************/
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  * @since 0.9.0
  *
  * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses apply_filters() To call 'ba_eas_do_auto_update' hook.
+ * @uses apply_filters() To call `ba_eas_do_auto_update` hook.
  *
  * @return bool True if auto-update enabled.
  */
@@ -47,16 +47,16 @@ function ba_eas_do_auto_update() {
  *
  * @uses ba_eas_do_auto_update() Do we auto-update?
  * @uses get_userdata() To get the user object.
- * @uses apply_filters() To call the 'ba_eas_auto_update_user_nicename_structure' hook.
+ * @uses apply_filters() To call the `ba_eas_auto_update_user_nicename_structure` hook.
  * @uses ba_eas() To get the BA_Edit_Author_Slug object.
  * @uses ba_eas_sanitize_nicename() To sanitize the new nicename.
  * @uses ba_eas_trim_nicename() To trim the new nicename to 50 characters.
- * @uses apply_filters() To call the 'ba_eas_pre_auto_update_user_nicename' hook.
- * @uses remove_action() To remove the 'ba_eas_auto_update_user_nicename' and prevent looping.
+ * @uses apply_filters() To call the `ba_eas_pre_auto_update_user_nicename` hook.
+ * @uses remove_action() To remove the `ba_eas_auto_update_user_nicename` and prevent looping.
  * @uses wp_update_user() Update to new user_nicename.
  * @uses is_wp_error() To make sure update_user was successful before we clear the cache.
  * @uses ba_eas_update_nicename_cache() There’s always money in the banana stand!
- * @uses add_action() To re-add the 'ba_eas_auto_update_user_nicename' hook.
+ * @uses add_action() To re-add the `ba_eas_auto_update_user_nicename` hook.
  *
  * @return bool|int User id on success. False on failure.
  */
@@ -221,7 +221,7 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false, $structure =
  *
  * @deprecated 1.1.0 Use `ba_eas_auto_update_user_nicename()` instead.
  *
- * @param int $user_id User id.
+ * @param int $user_id The user id.
  *
  * @uses _deprecated_function() To throw a deprecated warning.
  * @uses ba_eas_auto_update_user_nicename() To auto-update the nicename.
@@ -378,7 +378,7 @@ function ba_eas_trim_nicename( $nicename = '' ) {
  *
  * @param string $nicename The nicename to check for invalid characters.
  *
- * @uses ba_eas_sanitize_nicename()
+ * @uses ba_eas_sanitize_nicename() To sanitize the nicename.
  *
  * @return bool True if the nicename contains only ASCII characters, or
  *              characters that can be converted to ASCII.
@@ -395,7 +395,7 @@ function ba_eas_nicename_is_ascii( $nicename = '' ) {
  * @since 1.0.0
  *
  * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses apply_filters() To call 'ba_eas_do_role_based_author_base' hook.
+ * @uses apply_filters() To call `ba_eas_do_role_based_author_base` hook.
  *
  * @return bool True if role-based author base enabled.
  */
@@ -414,39 +414,40 @@ function ba_eas_do_role_based_author_base() {
 /**
  * Replaces author role rewrite tag with the role of the user.
  *
- * If the user has more than one role, the first role listed in
- * WP_User::$roles will be used.
+ * If the user has more than one role, the first role listed in the WP_User::$roles
+ * array will be used.
  *
  * @since 1.0.0
  *
- * @param string $link
- * @param int $user_id
+ * @param string $link    The author link with user role as author base.
+ * @param int    $user_id The user id.
  *
- * @uses ba_eas_do_role_based_author_base() To determine if we're doing role-based author bases.
- * @uses get_userdata() WP_User object
+ * @uses ba_eas_do_role_based_author_base() To determine if we're doing
+ *                                          role-based author bases.
+ * @uses get_userdata() To get the WP_User object.
  * @uses ba_eas() To get the BA_Edit_Author_Slug object.
  *
- * @return string Author archive link
+ * @return string Author archive link.
  */
 function ba_eas_author_link( $link = '', $user_id = 0 ) {
 
-	// Add a role slug if we're doing role based author bases
+	// Add a role slug if we're doing role based author bases.
 	if ( ba_eas_do_role_based_author_base() && false !== strpos( $link, '%ba_eas_author_role%' ) ) {
 
-		// Setup the user
+		// Setup the user.
 		$user = get_userdata( $user_id );
 
-		// Grab the first listed role
+		// Grab the first listed role.
 		$role = ba_eas_get_user_role( $user->roles, $user_id );
 
-		// Make sure we have a valid slug
+		// Make sure we have a valid slug.
 		$slug = empty( ba_eas()->role_slugs[ $role ]['slug'] ) ? ba_eas()->author_base : ba_eas()->role_slugs[ $role ]['slug'];
 
-		// Add the role slug to the link
+		// Add the role slug to the link.
 		$link = str_replace( '%ba_eas_author_role%', $slug, $link );
 	}
 
-	// Return the link
+	// Return the link.
 	return $link;
 }
 
@@ -532,7 +533,7 @@ function ba_eas_template_include( $template ) {
  *
  * @since 0.9.5
  *
- * @uses delete_option() To auto-update the nicename
+ * @uses delete_option() To auto-update the nicename.
  */
 function ba_eas_flush_rewrite_rules() {
 	delete_option( 'rewrite_rules' );
@@ -544,15 +545,15 @@ function ba_eas_flush_rewrite_rules() {
  *
  * @param array $author_rewrite_rules Author rewrite rules
  *
- * @uses ba_eas_do_role_based_author_base() To determine if we're doing role-based author bases.
+ * @uses ba_eas_do_role_based_author_base() To determine if we're doing
+ *                                          role-based author bases.
  *
- * @return array Author rewrite rules
+ * @return array Author rewrite rules.
  */
 function ba_eas_author_rewrite_rules( $author_rewrite_rules ) {
 
 	if ( ba_eas_do_role_based_author_base() ) {
-		// Filter out the rules without the author_name parameter
-		// We don't need them
+		// Filter out the rules without the author_name parameter. We don't need them.
 		foreach ( $author_rewrite_rules as $rule => $query ) {
 			if ( false === strpos( $query, 'author_name' ) ) {
 				unset( $author_rewrite_rules[ $rule ] );
@@ -574,7 +575,7 @@ function ba_eas_author_rewrite_rules( $author_rewrite_rules ) {
  * @uses get_userdata() To get the WP_User object.
  * @uses apply_filters() To call the `ba_eas_get_user_role` hook.
  *
- * @return string
+ * @return string The user's first listed role.
  */
 function ba_eas_get_user_role( $roles = array(), $user_id = 0 ) {
 
@@ -623,14 +624,15 @@ function ba_eas_get_user_role( $roles = array(), $user_id = 0 ) {
  * @since 1.0.0
  *
  * @global WP_Roles $wp_roles The WP_Roles object.
- * @uses sanitize_title() To sanitize the role slug
+ *
+ * @uses sanitize_title() To sanitize the role slug.
  *
  * @return array $editable_roles List of editable roles.
  */
 function ba_eas_get_editable_roles() {
 	global $wp_roles;
 
-	// Make sure wp_roles has been set
+	// Make sure wp_roles has been set.
 	if ( empty( $wp_roles ) ) {
 		$wp_roles = new WP_Roles();
 	}
@@ -640,11 +642,11 @@ function ba_eas_get_editable_roles() {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array WP_Roles::roles Array of WP_Roles::roles.
+	 * @param array $roles The return of WP_Roles::roles.
 	 */
 	$editable_roles = apply_filters( 'editable_roles', $wp_roles->roles );
 
-	// Remove user caps
+	// Remove user caps.
 	foreach ( $editable_roles as $role => $details ) {
 		unset( $editable_roles[ $role ]['capabilities'] );
 	}
@@ -657,18 +659,18 @@ function ba_eas_get_editable_roles() {
  *
  * @since 1.0.2
  *
- * @uses ba_eas_get_editable_roles() To sanitize the role slug
- * @uses translate_user_role() To translate default WP role names
- * @uses sanitize_title() To sanitize the translated role name into a role slug
+ * @uses ba_eas_get_editable_roles() To sanitize the role slug.
+ * @uses translate_user_role() To translate default WP role names.
+ * @uses sanitize_title() To sanitize the translated role name into a role slug.
  *
- * @return array Role slugs array
+ * @return array Role slugs array.
  */
 function ba_eas_get_default_role_slugs() {
 
-	// Get a filtered list of roles
+	// Get a filtered list of roles.
 	$roles = ba_eas_get_editable_roles();
 
-	// Convert role names into role slugs
+	// Convert role names into role slugs.
 	foreach ( $roles as $role => $details ) {
 		$roles[ $role ]['slug'] = sanitize_title( translate_user_role( $details['name'] ) );
 	}
@@ -717,24 +719,24 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
 
 		return $base;
 	}
-} // end function exists check
+} // end function exists check.
 
 /**
  * Clean and update the nicename cache.
  *
  * @since 1.0.0
  *
- * @param int $user_id
- * @param object $old_user_data WP_User object.
- * @param string $new_nicename
+ * @param int    $user_id       The user id.
+ * @param object $old_user_data The WP_User object.
+ * @param string $new_nicename  The new user nicename.
  *
- * @uses get_userdata() To get a WP_User object.
+ * @uses get_userdata() To get the WP_User object.
  * @uses wp_cache_delete() To delete the old nicename from cache.
  * @uses wp_cache_add() To add the new nicename to cache.
  */
 function ba_eas_update_nicename_cache( $user_id = 0, $old_user_data = '', $new_nicename = '' ) {
 
-	// Bail if there's no user
+	// Bail if there's no user.
 	if ( empty( $user_id ) && empty( $old_user_data->ID ) ) {
 		return;
 	}
@@ -744,15 +746,15 @@ function ba_eas_update_nicename_cache( $user_id = 0, $old_user_data = '', $new_n
 		$user_id = $old_user_data->ID;
 	}
 
-	// We got here via 'profile_update'
+	// We got here via `profile_update`.
 	if ( empty( $new_nicename ) ) {
 
-		// Get the new nicename
+		// Get the new nicename.
 		$user = get_userdata( $user_id );
 		$new_nicename = $user->user_nicename;
 	}
 
-	// Set the old nicename
+	// Set the old nicename.
 	// Note: This check is only for back-compat. You should pass a WP_User object.
 	if ( isset( $old_user_data->user_nicename ) ) {
 		$old_nicename = $old_user_data->user_nicename;
@@ -761,9 +763,9 @@ function ba_eas_update_nicename_cache( $user_id = 0, $old_user_data = '', $new_n
 		$old_nicename = $old_user_data;
 	}
 
-	// Delete the old nicename from the cache
+	// Delete the old nicename from the cache.
 	wp_cache_delete( $old_nicename, 'userslugs' );
 
-	// Add the new nicename to the cache
+	// Add the new nicename to the cache.
 	wp_cache_add( $new_nicename, $user_id, 'userslugs' );
 }
