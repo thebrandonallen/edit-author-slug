@@ -11,7 +11,7 @@
     "grunt-legacy-util": "^0.2.0",
     "grunt-string-replace": "^1.2.0",
     "grunt-wp-i18n": "^0.5.3",
-    "matchdep": "~0.3.0"
+    "matchdep": "^1.0.0"
   },
   "license": "GPL-2.0+",
   "name": "edit-author-slug",
@@ -19,5 +19,5 @@
     "type": "git",
     "url": "https://github.com/thebrandonallen/edit-author-slug.git"
   },
-  "version": "1.0.6"
+  "version": "1.1.0"
 }
