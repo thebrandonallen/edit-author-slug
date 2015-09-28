@@ -365,105 +365,36 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
  *
  * @since 0.9.0
  *
- * @uses get_current_screen() To determine our current location in the admin.
  * @uses ba_eas_can_edit_author_slug() To determine if the user can edit the author slug.
+ * @uses wp_register_script() To register our js file.
+ * @uses ba_eas() To get the `$plugin_url` and `$version` properties.
+ * @uses wp_enqueue_script() To enqueue our js file.
  */
-function ba_eas_show_user_nicename_scripts() {
+function ba_eas_show_user_nicename_scripts( $hook_suffix = '' ) {
 
-	// Bail if user can't edit their own nicename.
-	if ( ! ba_eas_can_edit_author_slug() ) {
+	// Set an array of pages to add our js.
+	$user_pages = array(
+		'profile.php',
+		'user-edit.php',
+		'settings_page_edit-author-slug',
+	);
+
+	// Bail if we shouldn't add our js.
+	if ( ! in_array( $hook_suffix, $user_pages ) || ! ba_eas_can_edit_author_slug() ) {
 		return;
 	}
 
-	// Get screen object.
-	$screen = get_current_screen();
+	// Decide whether to load the dev version of the js.
+	$min = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : 'min.';
 
-	// Make sure we have a screen object.
-	if ( empty( $screen->base ) ) {
-		return;
-	}
-
-	// Add nicename edit js.
-	if ( in_array( $screen->base, array( 'user-edit', 'profile' ) ) ) {
-?>
-
-	<!-- Edit Author Slug nicename edit -->
-	<script type="text/javascript">
-	//<![CDATA[
-		jQuery(document).ready(function($){
-			$("input[name='ba_eas_author_slug']").click(function(){
-				if ( "ba_eas_author_slug_custom_radio" != $(this).attr("id") ) {
-					$("input[name='ba_eas_author_slug_custom']").val( $(this).val() ).siblings('.example').text( $(this).siblings('span').text() );
-				}
-			});
-			$("input[name='ba_eas_author_slug_custom']").focus(function(){
-				$("#ba_eas_author_slug_custom_radio").attr("checked", "checked");
-			});
-		});
-	//]]>
-	</script>
-	<!-- end Edit Author Slug nicename edit -->
-
-<?php
-	}
-
-	// Add role slug edit js.
-	if ( 'settings_page_edit-author-slug' === $screen->base ) {
-?>
-
-	<!-- Edit Author Slug role slug edit -->
-	<script type="text/javascript">
-	//<![CDATA[
-		jQuery(document).ready(function($){
-
-			// Hide the slugs if we're not doing role-based.
-			if ( ! $("input[name='_ba_eas_do_role_based']").is(':checked') ) {
-				$("input[name='_ba_eas_do_role_based']").parents('tr').next('tr').addClass('hidden');
-			}
-
-			// Watch for clicks on the role-based option.
-			$("input[name='_ba_eas_do_role_based']").on('click', function(){
-				if ( $(this).is(':checked') ) {
-					$(this).parents('tr').next('tr').fadeIn('slow', function(){$(this).removeClass('hidden');});
-				} else {
-					$(this).parents('tr').next('tr').fadeOut('fast', function(){$(this).addClass('hidden');});
-				}
-			});
-
-			// Hide the slugs if we're not doing auto-update.
-			if ( ! $("input[name='_ba_eas_do_auto_update']").is(':checked') ) {
-				$("input[name='_ba_eas_do_auto_update']").parents('tr').next('tr').addClass('hidden');
-			}
-
-			// Watch for clicks on the auto-update option.
-			$("input[name='_ba_eas_do_auto_update']").on('click', function(){
-				if ( $(this).is(':checked') ) {
-					$(this).parents('tr').next('tr').fadeIn('slow', function(){$(this).removeClass('hidden');});
-				} else {
-					$(this).parents('tr').next('tr').fadeOut('fast', function(){$(this).addClass('hidden');});
-				}
-			});
-
-			// Hide the slugs if we're not doing auto-update.
-			if ( ! $("input[name='_ba_eas_bulk_update']").is(':checked') ) {
-				$("input[name='_ba_eas_bulk_update']").parents('tr').next('tr').addClass('hidden');
-			}
-
-			// Watch for clicks on the auto-update option.
-			$("input[name='_ba_eas_bulk_update']").on('click', function(){
-				if ( $(this).is(':checked') ) {
-					$(this).parents('tr').next('tr').fadeIn('slow', function(){$(this).removeClass('hidden');});
-				} else {
-					$(this).parents('tr').next('tr').fadeOut('fast', function(){$(this).addClass('hidden');});
-				}
-			});
-		});
-	//]]>
-	</script>
-	<!-- end Edit Author Slug role slug edit -->
-
-<?php
-	}
+	// Add our js to the appropriate pages.
+	wp_register_script(
+		'edit-author-slug',
+		ba_eas()->plugin_url . "js/edit-author-slug{$min}.js",
+		array( 'jquery' ),
+		ba_eas()->version
+	);
+	wp_enqueue_script( 'edit-author-slug' );
 }
 
 /** Author Base ***************************************************************/

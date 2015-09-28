@@ -25,7 +25,7 @@ if ( is_admin() ) {
 	add_action( 'edit_user_profile',          'ba_eas_show_user_nicename'          );
 	add_action( 'show_user_profile',          'ba_eas_show_user_nicename'          );
 	add_action( 'user_profile_update_errors', 'ba_eas_update_user_nicename', 10, 3 );
-	add_action( 'admin_head',                 'ba_eas_show_user_nicename_scripts'  );
+	add_action( 'admin_enqueue_scripts',      'ba_eas_show_user_nicename_scripts'  );
 
 	// Nicename column filters.
 	add_filter( 'manage_users_columns',       'ba_eas_author_slug_column'               );

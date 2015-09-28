@@ -5,6 +5,10 @@ module.exports = function(grunt) {
 		CURRENT_TIME = new Date(),
 		CURRENT_YEAR = CURRENT_TIME.getFullYear(),
 
+		EAS_JS = [
+			'js/*.js'
+		],
+
 		EAS_EXCLUDED_MISC = [
 			'!**/.idea/**',
 			'!**/bin/**',
@@ -75,10 +79,64 @@ module.exports = function(grunt) {
 			}
 		},
 		jshint: {
-			options: {
-				jshintrc: '.jshintrc'
+			options: grunt.file.readJSON( '.jshintrc' ),
+			grunt: {
+				src: ['Gruntfile.js']
 			},
-			all: ['Gruntfile.js']
+			core: {
+				expand: true,
+				cwd: SOURCE_DIR,
+				src: EAS_JS,
+
+				/**
+				 * Limit JSHint's run to a single specified file:
+				 *
+				 * grunt jshint:core --file=filename.js
+				 *
+				 * Optionally, include the file path:
+				 *
+				 * grunt jshint:core --file=path/to/filename.js
+				 *
+				 * @param {String} filepath
+				 * @returns {Bool}
+				 */
+				filter: function( filepath ) {
+					var index, file = grunt.option( 'file' );
+
+					// Don't filter when no target file is specified
+					if ( ! file ) {
+						return true;
+					}
+
+					// Normalise filepath for Windows
+					filepath = filepath.replace( /\\/g, '/' );
+					index = filepath.lastIndexOf( '/' + file );
+
+					// Match only the filename passed from cli
+					if ( filepath === file || ( -1 !== index && index === filepath.length - ( file.length + 1 ) ) ) {
+						return true;
+					}
+
+					return false;
+				}
+			}
+		},
+		jsvalidate:{
+			options:{
+				globals: {},
+				esprimaOptions:{},
+				verbose: false
+			},
+			build: {
+				files: {
+					src: [BUILD_DIR + EAS_JS]
+				}
+			},
+			src: {
+				files: {
+					src: [SOURCE_DIR + EAS_JS].concat( EAS_EXCLUDED_MISC )
+				}
+			}
 		},
 		makepot: {
 			target: {
@@ -163,6 +221,21 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+		uglify: {
+			core: {
+				cwd: BUILD_DIR,
+				dest: BUILD_DIR,
+				extDot: 'last',
+				expand: true,
+				ext: '.min.js',
+				src: EAS_JS
+			},
+			options: {
+				banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+				'<%= grunt.template.today("UTC:yyyy-mm-dd h:MM:ss TT Z") %> - ' +
+				'https://github.com/thebrandonallen/edit-author-slug/ */\n'
+			}
+		},
 		watch: {
 			js: {
 				files: ['Gruntfile.js'],
@@ -172,7 +245,8 @@ module.exports = function(grunt) {
 	});
 
 	// Build tasks.
-	grunt.registerTask( 'build', [ 'clean:all', 'checktextdomain', 'string-replace:build', 'makepot', 'copy:files' ] );
+	grunt.registerTask( 'src',   [ 'jsvalidate:src', 'jshint:core' ] );
+	grunt.registerTask( 'build', [ 'clean:all', 'checktextdomain', 'string-replace:build', 'jshint:core', 'makepot', 'copy:files', 'uglify', 'jsvalidate:build' ] );
 
 	// PHPUnit test task.
 	grunt.registerMultiTask( 'phpunit', 'Runs PHPUnit tests, including the multisite tests.', function() {

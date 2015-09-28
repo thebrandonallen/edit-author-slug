@@ -7,10 +7,8 @@
 	"expr": true,
 	"immed": true,
 	"noarg": true,
-	"onevar": true,
 	"quotmark": "single",
-	"trailing": true,
-	"undef": false,
+	"undef": true,
 	"unused": true,
 
 	"browser": true,
