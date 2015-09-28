@@ -87,10 +87,28 @@ module.exports = function(grunt) {
 					mainFile: 'edit-author-slug.php',
 					potComments: 'Copyright (C) ' + CURRENT_YEAR + ' Brandon Allen\nThis file is distributed under the same license as the Edit Author Slug package.\nSend translations to <plugins [at] brandonallen (dot) me>.',
 					potFilename: 'edit-author-slug.pot',
+					potHeaders: {
+						poedit: true,
+						'report-msgid-bugs-to': 'https://github.com/thebrandonallen/edit-author-slug/issues',
+						'last-translator': 'BRANDON ALLEN <plugins@brandonallen.me>',
+						'language-team': 'ENGLISH <plugins@brandonallen.me>'
+					},
 					processPot: function( pot ) {
-						pot.headers['report-msgid-bugs-to'] = 'https://github.com/thebrandonallen/edit-author-slug/issues';
-						pot.headers['last-translator'] = 'BRANDON ALLEN <plugins@brandonallen.me>';
-						pot.headers['language-team'] = 'ENGLISH <plugins@brandonallen.me>';
+						var translation, // Exclude meta data from pot.
+							excluded_meta = [
+								'Plugin Name of the plugin/theme',
+								'Plugin URI of the plugin/theme',
+								'Author of the plugin/theme',
+								'Author URI of the plugin/theme'
+								];
+									for ( translation in pot.translations[''] ) {
+										if ( 'undefined' !== typeof pot.translations[''][ translation ].comments.extracted ) {
+											if ( excluded_meta.indexOf( pot.translations[''][ translation ].comments.extracted ) >= 0 ) {
+												console.log( 'Excluded meta: ' + pot.translations[''][ translation ].comments.extracted );
+													delete pot.translations[''][ translation ];
+												}
+											}
+										}
 						return pot;
 					},
 					type: 'wp-plugin'
