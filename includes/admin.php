@@ -702,13 +702,16 @@ function ba_eas_admin_setting_callback_role_slugs() {
 			continue;
 		}
 
-		// Check for empty slugs from picking up a dynamic role.
+		// Sanitize the slug.
+		$details['slug'] = sanitize_title( $details['slug'] );
+
+		// Check for empty slugs when picking up a dynamic role.
 		if ( empty( $details['slug'] ) ) {
 			$details['slug'] = sanitize_title( translate_user_role( $details['name'] ) );
 		}
 ?>
 
-		<input name="_ba_eas_role_slugs[<?php echo esc_attr( $role ); ?>][slug]" id="_ba_eas_role_slugs[<?php echo esc_attr( $role ); ?>][slug]" type="text" value="<?php echo sanitize_title( $details['slug'] ); ?>" class="regular-text code" />
+		<input name="_ba_eas_role_slugs[<?php echo esc_attr( $role ); ?>][slug]" id="_ba_eas_role_slugs[<?php echo esc_attr( $role ); ?>][slug]" type="text" value="<?php echo ba_eas_esc_nicename( $details['slug'] ); ?>" class="regular-text code" />
 		<label for="_ba_eas_role_slugs[<?php echo esc_attr( $role ); ?>][slug]"><?php echo esc_html( translate_user_role( $details['name'] ) ); ?></label><br />
 
 <?php
