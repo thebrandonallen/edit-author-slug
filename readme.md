@@ -4,6 +4,8 @@
 **Requires at least:** 3.8.11  
 **Tested up to:** 4.3.1  
 **Stable tag:** 1.0.6
+**License:** GPLv2 or later  
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 Allows an admin (or capable user) to edit the author slug of a user, and change the author base.
 
