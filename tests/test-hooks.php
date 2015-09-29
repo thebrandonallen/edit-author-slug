@@ -25,7 +25,7 @@ class BA_EAS_Tests_Hooks extends WP_UnitTestCase {
 		$this->assertEquals( 10, has_action( 'edit_user_profile', 'ba_eas_show_user_nicename' ) );
 		$this->assertEquals( 10, has_action( 'show_user_profile', 'ba_eas_show_user_nicename' ) );
 		$this->assertEquals( 10, has_action( 'user_profile_update_errors', 'ba_eas_update_user_nicename' ) );
-		$this->assertEquals( 10, has_action( 'admin_head', 'ba_eas_show_user_nicename_scripts' ) );
+		$this->assertEquals( 10, has_action( 'admin_enqueue_scripts', 'ba_eas_show_user_nicename_scripts' ) );
 		$this->assertEquals( 10, has_action( 'manage_users_columns', 'ba_eas_author_slug_column' ) );
 		$this->assertEquals( 10, has_action( 'manage_users_custom_column', 'ba_eas_author_slug_custom_column' ) );
 		$this->assertEquals( 10, has_action( 'admin_menu', 'ba_eas_add_settings_menu' ) );
