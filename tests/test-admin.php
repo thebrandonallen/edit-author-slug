@@ -38,12 +38,37 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_show_user_nicename( wp_get_current_user() );
 		$output = ob_get_clean();
 
-		$this->assertContains( '<label title="mastersplinter"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="mastersplinter" autocapitalize="none" autocorrect="off" maxlength="50" checked=\'checked\'> <span>mastersplinter</span></label>', $output );
-		$this->assertContains( '<label title="master-splinter"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="master-splinter" autocapitalize="none" autocorrect="off" maxlength="50"> <span>master-splinter</span></label>', $output );
-		$this->assertContains( '<label title="master"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="master" autocapitalize="none" autocorrect="off" maxlength="50"> <span>master</span></label>', $output );
-		$this->assertContains( '<label title="splinter"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="splinter" autocapitalize="none" autocorrect="off" maxlength="50"> <span>splinter</span></label>', $output );
-		$this->assertContains( '<label title="splinter-master"><input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="splinter-master" autocapitalize="none" autocorrect="off" maxlength="50"> <span>splinter-master</span></label>', $output );
-		$this->assertContains( '<label title="mastersplinter"><input type="radio" id="ba_eas_author_slug_custom" name="ba_eas_author_slug" value="\c\u\s\t\o\m" autocapitalize="none" autocorrect="off" maxlength="50"> <span>Custom: </span></label> <input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="mastersplinter" class="regular-text" />', $output );
+		// masterplinter
+		$this->assertContains( '<label title="mastersplinter">', $output );
+		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="mastersplinter" autocapitalize="none" autocorrect="off" maxlength="50" checked=\'checked\'>', $output );
+		$this->assertContains( '<span>mastersplinter</span>', $output );
+
+		// master-splinter
+		$this->assertContains( '<label title="master-splinter">', $output );
+		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="master-splinter" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
+		$this->assertContains( '<span>master-splinter</span>', $output );
+
+		// master
+		$this->assertContains( '<label title="master">', $output );
+		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="master" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
+		$this->assertContains( '<span>master</span>', $output );
+
+		// splinter
+		$this->assertContains( '<label title="splinter">', $output );
+		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="splinter" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
+		$this->assertContains( '<span>splinter</span>', $output );
+
+		// splinter-master
+		$this->assertContains( '<label title="splinter-master">', $output );
+		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="splinter-master" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
+		$this->assertContains( '<span>splinter-master</span>', $output );
+
+		// Custom
+		$this->assertContains( '<label for="ba_eas_author_slug_custom_radio">', $output );
+		$this->assertContains( '<input type="radio" id="ba_eas_author_slug_custom_radio" name="ba_eas_author_slug" value="\c\u\s\t\o\m" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
+		$this->assertContains( '<span class="screen-reader-text">Enter a custom author slug in the following field</span>', $output );
+		$this->assertContains( '<label for="ba_eas_author_slug_custom" class="screen-reader-text">Custom author slug:</label>', $output );
+		$this->assertContains( '<input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="mastersplinter" class="regular-text" />', $output );
 	}
 
 	/**
