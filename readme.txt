@@ -31,11 +31,11 @@ Development of this plugin takes place on [GitHub](https://github.com/thebrandon
 == Installation ==
 
 1. Upload `edit-author-slug` folder to your WordPress plugins directory (typically 'wp-content/plugins')
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Go to Users > Your Profile, or Users > All Users > (username), and edit the author slug.
-1. Click "Update Profile" or "Update User"
-1. Go to Settings > Edit Author Slug to edit settings
-1. Click "Save Changes"
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Go to Users > Your Profile, or Users > All Users > (username), and edit the author slug.
+4. Click "Update Profile" or "Update User"
+5. Go to Settings > Edit Author Slug to edit settings
+6. Click "Save Changes"
 
 == Screenshots ==
 
@@ -55,6 +55,12 @@ While I've made every attempt to prevent this, I may have missed a spot or two. 
 If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums.
 
 == Changelog ==
+
+= 1.1.0 =
+* Added the ability to update all author slugs at once with the "Bulk Update" tool.
+* Greatly improved the checks and error messages when manually updating an author slug for a user.
+* Further accessibility improvements to match WP 4.3.
+* Improved validation of author slugs to better match that of WP.
 
 = 1.0.6 =
 * Fix potential, although unlikely, persistent XSS vulnerability.
