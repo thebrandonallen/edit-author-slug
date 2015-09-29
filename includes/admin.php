@@ -103,13 +103,13 @@ function ba_eas_show_user_nicename( $user ) {
 				?>
 				<label title="<?php echo ba_eas_esc_nicename( $item ); ?>">
 					<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="<?php echo ba_eas_esc_nicename( $item ); ?>" autocapitalize="none" autocorrect="off" maxlength="50"<?php echo $checked_text; ?>>
-						<span><?php echo ba_eas_esc_nicename( $item ); ?></span>
+					<span><?php echo ba_eas_esc_nicename( $item ); ?></span>
 				</label><br />
 				<?php } ?>
 				<label for="ba_eas_author_slug_custom_radio">
 					<input type="radio" id="ba_eas_author_slug_custom_radio" name="ba_eas_author_slug" value="\c\u\s\t\o\m" autocapitalize="none" autocorrect="off" maxlength="50"<?php checked( $checked ); ?>>
 					<?php esc_html_e( 'Custom:', 'edit-author-slug' ); ?>
-						<span class="screen-reader-text"><?php esc_html_e( 'Enter a custom author slug in the following field', 'edit-author-slug' ); ?> </span>
+					<span class="screen-reader-text"><?php esc_html_e( 'Enter a custom author slug in the following field', 'edit-author-slug' ); ?></span>
 				</label>
 				<label for="ba_eas_author_slug_custom" class="screen-reader-text"><?php esc_html_e( 'Custom author slug:', 'edit-author-slug' ); ?></label>
 				<input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="<?php echo ba_eas_esc_nicename( $nicename ); ?>" class="regular-text" />
