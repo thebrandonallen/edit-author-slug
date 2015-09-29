@@ -3,10 +3,10 @@
 # Send translations to <plugins [at] brandonallen (dot) me>.
 msgid ""
 msgstr ""
-"Project-Id-Version: Edit Author Slug 1.1.0\n"
+"Project-Id-Version: Edit Author Slug 1.1.1\n"
 "Report-Msgid-Bugs-To: "
 "https://github.com/thebrandonallen/edit-author-slug/issues\n"
-"POT-Creation-Date: 2015-09-29 04:58:20+00:00\n"
+"POT-Creation-Date: 2015-09-29 06:30:41+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -146,57 +146,57 @@ msgid ""
 "setting will be used as a fallback.)"
 msgstr ""
 
-#: includes/admin.php:779
+#: includes/admin.php:782
 msgid "Automatically update Author Slug when a user updates their profile."
 msgstr ""
 
-#: includes/admin.php:812 includes/admin.php:892
+#: includes/admin.php:815 includes/admin.php:895
 msgid "username (Default)"
 msgstr ""
 
-#: includes/admin.php:813 includes/admin.php:893
+#: includes/admin.php:816 includes/admin.php:896
 msgid "nickname"
 msgstr ""
 
-#: includes/admin.php:814 includes/admin.php:894
+#: includes/admin.php:817 includes/admin.php:897
 msgid "displayname"
 msgstr ""
 
-#: includes/admin.php:815 includes/admin.php:895
+#: includes/admin.php:818 includes/admin.php:898
 msgid "firstname"
 msgstr ""
 
-#: includes/admin.php:816 includes/admin.php:896
+#: includes/admin.php:819 includes/admin.php:899
 msgid "lastname"
 msgstr ""
 
-#: includes/admin.php:817 includes/admin.php:897
+#: includes/admin.php:820 includes/admin.php:900
 msgid "firstname-lastname"
 msgstr ""
 
-#: includes/admin.php:818 includes/admin.php:898
+#: includes/admin.php:821 includes/admin.php:901
 msgid "lastname-firstname"
 msgstr ""
 
-#: includes/admin.php:825
+#: includes/admin.php:828
 msgid "Default author slug options"
 msgstr ""
 
-#: includes/admin.php:847
+#: includes/admin.php:850
 msgid "Update all users at once based on the specified Author Slug structure."
 msgstr ""
 
-#: includes/admin.php:865
+#: includes/admin.php:868
 msgid ""
 "Update all users according to the below Author Slug setting. This will only "
 "be run after clicking \"Save Changes\"."
 msgstr ""
 
-#: includes/admin.php:905
+#: includes/admin.php:908
 msgid "Default bulk update author slug options"
 msgstr ""
 
-#: includes/admin.php:933
+#: includes/admin.php:936
 msgid "Settings"
 msgstr ""
 

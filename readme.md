@@ -3,7 +3,7 @@
 **Tags:** author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles  
 **Requires at least:** 3.8.11  
 **Tested up to:** 4.3.1  
-**Stable tag:** 1.1.0  
+**Stable tag:** 1.1.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,6 +52,9 @@ While I've made every attempt to prevent this, I may have missed a spot or two. 
 If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums.
 
 ## Changelog
+
+### 1.1.1
+* Fix a few minor output escaping issues missed in the 1.1.0 release.
 
 ### 1.1.0
 * Added the ability to update all author slugs at once with the "Bulk Update" tool.
