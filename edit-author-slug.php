@@ -19,7 +19,7 @@
  * Tested With: 3.8.10, 3.9.8, 4.0.7, 4.1.7, 4.2.4, 4.3
  * Author: Brandon Allen
  * Author URI: https://github.com/thebrandonallen/
- * License: GPL2+
+ * License: GPLv2 or later
  * Text Domain: edit-author-slug
  * Domain Path: /languages
  */
