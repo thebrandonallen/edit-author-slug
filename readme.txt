@@ -3,7 +3,7 @@ Contributors: thebrandonallen
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles
 Requires at least: 3.8.11
 Tested up to: 4.3.1
-Stable tag: 1.0.6
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
