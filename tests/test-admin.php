@@ -313,7 +313,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_admin_setting_callback_do_role_based();
 		$output = ob_get_clean();
 
-		$input = '<input name="_ba_eas_do_role_based" id="_ba_eas_do_role_based" value="1" type="checkbox" />';
+		$input = '<input class="eas-checkbox" name="_ba_eas_do_role_based" id="_ba_eas_do_role_based" value="1" type="checkbox" />';
 		$label = 'Set user&#039;s Author Base according to their role. (The above &quot;Author Base&quot; setting will be used as a fallback.)';
 
 		$this->assertContains( $input, $output );
@@ -350,7 +350,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_admin_setting_callback_do_auto_update();
 		$output = ob_get_clean();
 
-		$input = '<input name="_ba_eas_do_auto_update" id="_ba_eas_do_auto_update" value="1" type="checkbox" />';
+		$input = '<input class="eas-checkbox" name="_ba_eas_do_auto_update" id="_ba_eas_do_auto_update" value="1" type="checkbox" />';
 		$label = 'Automatically update Author Slug when a user updates their profile.';
 
 		$this->assertContains( $input, $output );
@@ -383,7 +383,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_admin_setting_callback_bulk_update();
 		$output = ob_get_clean();
 
-		$input = '<input name="_ba_eas_bulk_update" id="_ba_eas_bulk_update" value="1" type="checkbox" />';
+		$input = '<input class="eas-checkbox" name="_ba_eas_bulk_update" id="_ba_eas_bulk_update" value="1" type="checkbox" />';
 		$label = 'Update all users according to the below Author Slug setting. This will only be run after clicking &quot;Save Changes&quot;.';
 
 		$this->assertContains( $input, $output );

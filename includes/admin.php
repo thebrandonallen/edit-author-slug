@@ -672,7 +672,7 @@ function ba_eas_admin_setting_callback_author_base() {
 function ba_eas_admin_setting_callback_do_role_based() {
 ?>
 
-		<input name="_ba_eas_do_role_based" id="_ba_eas_do_role_based" value="1"<?php checked( ba_eas()->do_role_based ); ?> type="checkbox" />
+		<input class="eas-checkbox" name="_ba_eas_do_role_based" id="_ba_eas_do_role_based" value="1"<?php checked( ba_eas()->do_role_based ); ?> type="checkbox" />
 		<label for="_ba_eas_do_role_based"><?php esc_html_e( 'Set user\'s Author Base according to their role. (The above "Author Base" setting will be used as a fallback.)', 'edit-author-slug' ); ?></label>
 
 <?php
@@ -775,7 +775,7 @@ function ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs = array(
 function ba_eas_admin_setting_callback_do_auto_update() {
 ?>
 
-		<input name="_ba_eas_do_auto_update" id="_ba_eas_do_auto_update" value="1"<?php checked( ba_eas()->do_auto_update ); ?> type="checkbox" />
+		<input class="eas-checkbox" name="_ba_eas_do_auto_update" id="_ba_eas_do_auto_update" value="1"<?php checked( ba_eas()->do_auto_update ); ?> type="checkbox" />
 		<label for="_ba_eas_do_auto_update"><?php esc_html_e( 'Automatically update Author Slug when a user updates their profile.', 'edit-author-slug' ); ?></label>
 
 <?php
@@ -861,7 +861,7 @@ function ba_eas_admin_setting_callback_bulk_update_section() {
 function ba_eas_admin_setting_callback_bulk_update() {
 ?>
 
-		<input name="_ba_eas_bulk_update" id="_ba_eas_bulk_update" value="1" type="checkbox" />
+		<input class="eas-checkbox" name="_ba_eas_bulk_update" id="_ba_eas_bulk_update" value="1" type="checkbox" />
 		<label for="_ba_eas_bulk_update"><?php esc_html_e( 'Update all users according to the below Author Slug setting. This will only be run after clicking "Save Changes".', 'edit-author-slug' ); ?></label>
 
 <?php

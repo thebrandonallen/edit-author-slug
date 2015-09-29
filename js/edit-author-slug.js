@@ -13,40 +13,10 @@ jQuery(document).ready(function($){
 	});
 
 	// Hide the slugs if we're not doing role-based.
-	if ( ! $('input[name="_ba_eas_do_role_based"]').is(':checked') ) {
-		$('input[name="_ba_eas_do_role_based"]').parents('tr').next('tr').addClass('hidden');
-	}
+	$('input[class="eas-checkbox"]').not(':checked').parents('tr').next('tr').addClass('hidden');
 
 	// Watch for clicks on the role-based option.
-	$('input[name="_ba_eas_do_role_based"]').on('click', function(){
-		if ( $(this).is(':checked') ) {
-			$(this).parents('tr').next('tr').fadeIn('slow', function(){$(this).removeClass('hidden');});
-		} else {
-			$(this).parents('tr').next('tr').fadeOut('fast', function(){$(this).addClass('hidden');});
-		}
-	});
-
-	// Hide the slugs if we're not doing auto-update.
-	if ( ! $('input[name="_ba_eas_do_auto_update"]').is(':checked') ) {
-		$('input[name="_ba_eas_do_auto_update"]').parents('tr').next('tr').addClass('hidden');
-	}
-
-	// Watch for clicks on the auto-update option.
-	$('input[name="_ba_eas_do_auto_update"]').on('click', function(){
-		if ( $(this).is(':checked') ) {
-			$(this).parents('tr').next('tr').fadeIn('slow', function(){$(this).removeClass('hidden');});
-		} else {
-			$(this).parents('tr').next('tr').fadeOut('fast', function(){$(this).addClass('hidden');});
-		}
-	});
-
-	// Hide the slugs if we're not doing bulk update.
-	if ( ! $('input[name="_ba_eas_bulk_update"]').is(':checked') ) {
-		$('input[name="_ba_eas_bulk_update"]').parents('tr').next('tr').addClass('hidden');
-	}
-
-	// Watch for clicks on the bulk update option.
-	$('input[name="_ba_eas_bulk_update"]').on('click', function(){
+	$('input[class="eas-checkbox"]').on('click', function(){
 		if ( $(this).is(':checked') ) {
 			$(this).parents('tr').next('tr').fadeIn('slow', function(){$(this).removeClass('hidden');});
 		} else {
