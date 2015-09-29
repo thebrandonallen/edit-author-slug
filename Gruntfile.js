@@ -9,6 +9,10 @@ module.exports = function(grunt) {
 			'js/*.js'
 		],
 
+		EAS_EXCLUDED_JS = [
+			'!js/*.min.js'
+		],
+
 		EAS_EXCLUDED_MISC = [
 			'!**/.idea/**',
 			'!**/bin/**',
@@ -86,7 +90,7 @@ module.exports = function(grunt) {
 			core: {
 				expand: true,
 				cwd: SOURCE_DIR,
-				src: EAS_JS,
+				src: [EAS_JS].concat( EAS_EXCLUDED_JS ),
 
 				/**
 				 * Limit JSHint's run to a single specified file:
@@ -134,7 +138,7 @@ module.exports = function(grunt) {
 			},
 			src: {
 				files: {
-					src: [SOURCE_DIR + EAS_JS].concat( EAS_EXCLUDED_MISC )
+					src: [SOURCE_DIR + EAS_JS]
 				}
 			}
 		},
@@ -223,12 +227,12 @@ module.exports = function(grunt) {
 		},
 		uglify: {
 			core: {
-				cwd: BUILD_DIR,
-				dest: BUILD_DIR,
+				cwd: SOURCE_DIR,
+				dest: SOURCE_DIR,
 				extDot: 'last',
 				expand: true,
 				ext: '.min.js',
-				src: EAS_JS
+				src: [EAS_JS].concat( EAS_EXCLUDED_JS )
 			},
 			options: {
 				banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
@@ -246,7 +250,7 @@ module.exports = function(grunt) {
 
 	// Build tasks.
 	grunt.registerTask( 'src',   [ 'jsvalidate:src', 'jshint:core' ] );
-	grunt.registerTask( 'build', [ 'clean:all', 'checktextdomain', 'string-replace:build', 'jshint:core', 'makepot', 'copy:files', 'uglify', 'jsvalidate:build' ] );
+	grunt.registerTask( 'build', [ 'clean:all', 'checktextdomain', 'string-replace:build', 'uglify', 'makepot', 'copy:files', 'jsvalidate:build' ] );
 
 	// PHPUnit test task.
 	grunt.registerMultiTask( 'phpunit', 'Runs PHPUnit tests, including the multisite tests.', function() {

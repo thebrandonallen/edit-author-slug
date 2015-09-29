@@ -12,10 +12,10 @@ jQuery(document).ready(function($){
 		$('#ba_eas_author_slug_custom_radio').attr('checked', 'checked');
 	});
 
-	// Hide the slugs if we're not doing role-based.
+	// Hide the related fields if `eas-checkbox` is not checked.
 	$('input[class="eas-checkbox"]').not(':checked').parents('tr').next('tr').addClass('hidden');
 
-	// Watch for clicks on the role-based option.
+	// Watch for clicks on the `eas-checkbox` options.
 	$('input[class="eas-checkbox"]').on('click', function(){
 		if ( $(this).is(':checked') ) {
 			$(this).parents('tr').next('tr').fadeIn('slow', function(){$(this).removeClass('hidden');});
