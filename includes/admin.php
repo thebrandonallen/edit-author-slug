@@ -357,7 +357,7 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
 		$user = get_userdata( $user_id );
 
 		if ( ! empty( $user->user_nicename ) ) {
-			$default = esc_html( $user->user_nicename );
+			$default = ba_eas_esc_nicename( $user->user_nicename );
 		}
 	}
 
