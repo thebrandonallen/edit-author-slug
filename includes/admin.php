@@ -394,7 +394,7 @@ function ba_eas_show_user_nicename_scripts( $hook_suffix = '' ) {
 	}
 
 	// Decide whether to load the dev version of the js.
-	$min = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : 'min.';
+	$min = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 	// Add our js to the appropriate pages.
 	wp_register_script(
