@@ -169,6 +169,14 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false, $structure =
 			}
 
 			break;
+
+		case 'id':
+
+			if ( ! empty( $user->ID) ) {
+				$nicename = $user->ID;
+			}
+
+			break;
 	}
 
 	// Sanitize and trim the new user nicename.
