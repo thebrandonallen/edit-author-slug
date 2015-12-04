@@ -12,9 +12,11 @@ php:
     - 5.4
     - 5.5
     - 5.6
+    - 7.0
 
 env:
     - WP_VERSION=master
+    - WP_VERSION=4.3
     - WP_VERSION=4.2
     - WP_VERSION=4.1
     - WP_VERSION=4.0
@@ -26,12 +28,23 @@ matrix:
   include:
     - php: 5.2
       env: WP_VERSION=master
-    - php: 7.0
+    - php: nightly
       env: WP_VERSION=master
     - php: hhvm
       env: WP_VERSION=master
-  allow_failures:
+  exclude:
     - php: 7.0
+      env: WP_VERSION=4.2
+    - php: 7.0
+      env: WP_VERSION=4.1
+    - php: 7.0
+      env: WP_VERSION=4.0
+    - php: 7.0
+      env: WP_VERSION=3.9
+    - php: 7.0
+      env: WP_VERSION=3.8
+  allow_failures:
+    - php: nightly
     - php: hhvm
 
 # Clones WordPress and configures our testing environment.
