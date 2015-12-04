@@ -1,5 +1,4 @@
 # Files and folders related to build/test tools
-/.idea
 /build
 /coverage
 /node_modules
