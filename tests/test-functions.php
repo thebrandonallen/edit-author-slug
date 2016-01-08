@@ -2,7 +2,6 @@
 
 class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
-	private $single_user = null;
 	private $single_user_id = null;
 
 	public function setUp() {
@@ -10,7 +9,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		$this->eas = ba_eas();
 
-		$this->single_user = array(
+		$this->single_user_id = $this->factory->user->create( array(
 			'user_login'   => 'mastersplinter',
 			'user_pass'    => '1234',
 			'user_email'   => 'mastersplinter@example.com',
@@ -18,9 +17,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 			'nickname'     => 'Sensei',
 			'first_name'   => 'Master',
 			'last_name'    => 'Splinter',
-		);
-
-		$this->single_user_id = $this->factory->user->create( $this->single_user );
+		) );
 	}
 
 	public function tearDown() {
