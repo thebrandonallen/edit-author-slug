@@ -223,6 +223,17 @@ module.exports = function(grunt) {
 						replacement: '$1<%= pkg.version %>'
 					}]
 				}
+			},
+			readme: {
+				files: {
+					'readme.md': 'readme.md'
+				},
+				options: {
+					replacements: [{
+						pattern: /# Edit Author Slug #/gim,
+						replacement: '# Edit Author Slug [![Build Status](https://travis-ci.org/thebrandonallen/edit-author-slug.svg?branch=master)](https://travis-ci.org/thebrandonallen/edit-author-slug) #'
+					}]
+				}
 			}
 		},
 		uglify: {
@@ -245,12 +256,20 @@ module.exports = function(grunt) {
 				files: ['Gruntfile.js'],
 				tasks: ['jshint']
 			}
+		},
+		wp_readme_to_markdown: {
+			default: {
+				files: {
+					'readme.md': 'readme.txt'
+				}
+			}
 		}
 	});
 
 	// Build tasks.
-	grunt.registerTask( 'src',   [ 'jsvalidate:src', 'jshint:core' ] );
-	grunt.registerTask( 'build', [ 'clean:all', 'checktextdomain', 'string-replace:build', 'uglify', 'makepot', 'copy:files', 'jsvalidate:build' ] );
+	grunt.registerTask( 'readme', [ 'wp_readme_to_markdown', 'string-replace:readme' ] );
+	grunt.registerTask( 'src',    [ 'jsvalidate:src', 'jshint:core' ] );
+	grunt.registerTask( 'build',  [ 'clean:all', 'checktextdomain', 'string-replace:build', 'readme', 'uglify', 'makepot', 'copy:files', 'jsvalidate:build' ] );
 
 	// PHPUnit test task.
 	grunt.registerMultiTask( 'phpunit', 'Runs PHPUnit tests, including the multisite tests.', function() {
