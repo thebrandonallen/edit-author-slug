@@ -272,8 +272,18 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 */
 	function test_ba_eas_trim_nicename() {
 		$this->assertEquals( 'leonardo-hamato', ba_eas_trim_nicename( 'leonardo-hamato' ) );
-		$this->assertEquals( 'this-is-a-really-really-really-really-long-user-ni', ba_eas_trim_nicename( 'this-is-a-really-really-really-really-long-user-nicename' ) );
-		$this->assertEquals( 'this-is-a-really-really-really-really-looong-user', ba_eas_trim_nicename( 'this-is-a-really-really-really-really-looong-user-nicename' ) );
+
+		// A nicename over 50 characters.
+		$this->assertEquals(
+			'this-is-a-really-really-really-really-long-user-ni',
+			ba_eas_trim_nicename( 'this-is-a-really-really-really-really-long-user-nicename' )
+		);
+
+		// A nicename over 50 characters that ends with a dash after trimming.
+		$this->assertEquals(
+			'this-is-a-really-really-really-really-looong-user',
+			ba_eas_trim_nicename( 'this-is-a-really-really-really-really-looong-user-nicename' )
+		);
 	}
 
 	/**
