@@ -682,12 +682,21 @@ function ba_eas_admin_setting_callback_do_role_based() {
  */
 function ba_eas_admin_setting_callback_role_slugs() {
 
+	// Get the default role slugs.
+	$defaults = ba_eas_get_default_role_slugs();
+
 	// Make sure we didn't pick up any dynamic roles between now and initialization.
-	$roles = array_replace_recursive( ba_eas_get_default_role_slugs(), ba_eas()->role_slugs );
+	$roles = array_replace_recursive( $defaults, ba_eas()->role_slugs );
 
 	// Display the role slug customization fields.
 	foreach ( $roles as $role => $details ) {
 
+		// Don't display a role slug if the role has been removed.
+		if ( empty( $defaults[ $role ] ) ) {
+			continue;
+		}
+
+		// Don't display a role slug, if the user can't see a name.
 		if ( empty( $details['name'] ) ) {
 			continue;
 		}
@@ -728,27 +737,33 @@ function ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs = array(
 
 	// Sanitize the slugs passed via POST.
 	foreach ( $role_slugs as $role => $details ) {
+
+		// If the role has been removed, we don't need to save it.
+		if ( empty( $defaults[ $role ] ) ) {
+			unset( $role_slugs[ $role ] );
+			continue;
+		}
+
+		// Sanitize the passed role slug.
 		$slug = sanitize_title( $details['slug'] );
 
 		// Make sure we have a slug.
-		if ( empty( $slug ) ) {
-			$slug = ba_eas()->author_base;
-
-			if ( ! empty( $defaults[ $role ]['slug'] ) ) {
-				$slug = $defaults[ $role ]['slug'];
-			}
+		if ( empty( $slug ) && ! empty( $defaults[ $role ]['slug'] ) ) {
+			$slug = $defaults[ $role ]['slug'];
 		}
 
-		$role_slugs[ $role ]['slug'] = $slug;
+		// Remove the role if we don't have a slug.
+		if ( empty( $slug ) ) {
+			unset( $role_slugs[ $role ] );
+
+		// We made it through, so set the slug.
+		} else {
+			$role_slugs[ $role ]['slug'] = $slug;
+		}
 	}
 
-	/*
-	 * Merge our new settings with what's stored in the db. This is needed because
-	 * the editable_roles filter may mean that lower level admins don't have
-	 * access to all roles. This could lead to lower level admins stamping out
-	 * customizations that only a higher level admin can (and has already) set.
-	 */
-	$role_slugs = array_replace_recursive( ba_eas()->role_slugs, $role_slugs );
+	// Merge our changes to make sure we've got everything.
+	$role_slugs = array_replace_recursive( $defaults, $role_slugs );
 
 	// Set BA_Edit_Author_Slug::role_slugs for later use.
 	ba_eas()->role_slugs = $role_slugs;

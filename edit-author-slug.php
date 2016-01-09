@@ -449,8 +449,23 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 */
 		public function set_role_slugs() {
 
+			// Get the default role slugs.
+			$defaults = ba_eas_get_default_role_slugs();
+
 			// Merge system roles with any customizations we may have.
-			$this->role_slugs = array_replace_recursive( ba_eas_get_default_role_slugs(), get_option( '_ba_eas_role_slugs', array() ) );
+			$role_slugs = array_replace_recursive(
+				$defaults,
+				get_option( '_ba_eas_role_slugs', array() )
+			);
+
+			foreach ( $role_slugs as $role => $details ) {
+
+				if ( ! empty( $default[ $role ] ) ) {
+					unset( $role_slugs[ $role ] );
+				}
+			}
+
+			$this->role_slugs = $role_slugs;
 		}
 
 		/** Custom Rewrite Rules **********************************************/
