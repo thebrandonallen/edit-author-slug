@@ -530,7 +530,7 @@ function ba_eas_register_admin_settings() {
 		'edit-author-slug',
 		'ba_eas_author_base'
 	);
-	register_setting( 'edit-author-slug', '_ba_eas_author_base', 'ba_eas_sanitize_author_base' );
+	register_setting( 'edit-author-slug', '_ba_eas_author_base', 'ba_eas_admin_setting_sanitize_callback_author_base' );
 
 	// Role-Based Author Base setting.
 	add_settings_field(
@@ -622,6 +622,45 @@ function ba_eas_admin_setting_callback_author_base_section() {
 		<p><?php esc_html_e( 'Change your author base to something more fun!', 'edit-author-slug' ); ?></p>
 
 <?php
+}
+
+/**
+ * Sanitize the author base and update options/globals where appropriate.
+ *
+ * Rewrite rules are also flushed.
+ *
+ * @since 1.3.0
+ *
+ * @param string $author_base Defaults to `author`.
+ *
+ * @return string The sanitized author base.
+ */
+function ba_eas_admin_setting_sanitize_callback_author_base( $author_base = 'author' ) {
+
+	// Edit Author Slug instance.
+	$ba_eas = ba_eas();
+
+	// Sanitize the author base.
+	$author_base = sanitize_title( $author_base );
+
+	// Do we need to update the author_base.
+	if ( $author_base !== $ba_eas->author_base ) {
+		// Setup the new author_base global.
+		$ba_eas->author_base = $author_base;
+
+		// Update options with new author_base.
+		update_option( '_ba_eas_author_base', $author_base );
+
+		// Update the author_base in the WP_Rewrite object.
+		if ( ! empty( $author_base ) ) {
+			$GLOBALS['wp_rewrite']->author_base = $author_base;
+		}
+	}
+
+	// Courtesy flush.
+	ba_eas_flush_rewrite_rules();
+
+	return $author_base;
 }
 
 /**
