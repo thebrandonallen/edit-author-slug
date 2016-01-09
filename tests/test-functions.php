@@ -439,6 +439,13 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::ba_eas_get_roles
+	 */
+	function test_ba_eas_get_roles() {
+		$this->markTestIncomplete();
+	}
+
+	/**
 	 * @covers ::ba_eas_get_editable_roles
 	 */
 	function test_ba_eas_get_editable_roles() {

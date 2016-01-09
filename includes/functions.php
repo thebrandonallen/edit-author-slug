@@ -639,6 +639,33 @@ function ba_eas_get_wp_roles() {
 }
 
 /**
+ * Return an array of WP roles.
+ *
+ * The capabilities array for each role have been removed.
+ *
+ * @since 1.3.0
+ *
+ * @global WP_Roles $wp_roles
+ *
+ * @return array
+ */
+function ba_eas_get_roles() {
+
+	// Get the `WP_Roles` object.
+	$wp_roles = ba_eas_get_wp_roles();
+
+	// Pull out just the roles array.
+	$_wp_roles = $wp_roles->roles;
+
+	// Remove user caps.
+	foreach ( $_wp_roles as $role => $details ) {
+		unset( $_wp_roles[ $role ]['capabilities'] );
+	}
+
+	return $_wp_roles;
+}
+
+/**
  * Fetch a filtered list of user roles that the current user is
  * allowed to edit.
  *
@@ -692,7 +719,7 @@ function ba_eas_get_editable_roles() {
  *
  * @since 1.0.2
  *
- * @uses ba_eas_get_editable_roles() To sanitize the role slug.
+ * @uses ba_eas_get_roles() To get an array of WP roles.
  * @uses translate_user_role() To translate default WP role names.
  * @uses sanitize_title() To sanitize the translated role name into a role slug.
  *
@@ -700,8 +727,8 @@ function ba_eas_get_editable_roles() {
  */
 function ba_eas_get_default_role_slugs() {
 
-	// Get a filtered list of roles.
-	$roles = ba_eas_get_editable_roles();
+	// Get the array of WP roles.
+	$roles = ba_eas_get_roles();
 
 	// Convert role names into role slugs.
 	foreach ( $roles as $role => $details ) {
