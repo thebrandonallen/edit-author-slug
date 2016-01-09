@@ -257,6 +257,18 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::ba_eas_sanitize_author_base
+	 */
+	function test_ba_eas_sanitize_author_base() {
+
+		$this->assertEquals( 'author', ba_eas_sanitize_author_base( '' ) );
+
+		$this->assertEquals( 'author/base', ba_eas_sanitize_author_base( 'author//base' ) );
+
+		$this->assertEquals( 'ninja', ba_eas_sanitize_author_base( 'ninja' ) );
+	}
+
+	/**
 	 * @covers ::ba_eas_esc_nicename
 	 */
 	function test_ba_eas_esc_nicename() {

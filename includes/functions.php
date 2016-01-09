@@ -333,6 +333,20 @@ function ba_eas_sanitize_nicename( $nicename = '', $strict = true ) {
 }
 
 /**
+ * Sanitize author base and add to database.
+ *
+ * @since 0.8.0
+ * @since 1.3.0 Removed all non-sanitization code.
+ *
+ * @param string $author_base Author base to be sanitized.
+ *
+ * @return string The author base.
+ */
+function ba_eas_sanitize_author_base( $author_base = 'author' ) {
+	return ba_eas()->sanitize_author_base( $author_base );
+}
+
+/**
  * Helper function to escape the nicename in the same manner as other slugs are
  * escaped in WP.
  *

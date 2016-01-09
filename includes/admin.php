@@ -406,55 +406,6 @@ function ba_eas_show_user_nicename_scripts( $hook_suffix = '' ) {
 	wp_enqueue_script( 'edit-author-slug' );
 }
 
-/** Author Base ***************************************************************/
-
-/**
- * Sanitize author base and add to database.
- *
- * @since 0.8.0
- *
- * @param string $author_base Author base to be sanitized.
- *
- * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses sanitize_title() To sanitize the author base.
- * @uses update_option() To update author_base option.
- * @uses ba_eas_flush_rewrite_rules() To flush the rewrite rules in the db.
- *
- * @return string The author base.
- */
-function ba_eas_sanitize_author_base( $author_base ) {
-
-	// Edit Author Slug instance.
-	$ba_eas = ba_eas();
-
-	// Sanitize the author base.
-	$author_base = trim( sanitize_title( $author_base ) );
-
-	// Make sure we have something.
-	if ( empty( $author_base ) ) {
-		$author_base = 'author';
-	}
-
-	// Do we need to update the author_base.
-	if ( $author_base !== $ba_eas->author_base ) {
-		// Setup the new author_base global.
-		$ba_eas->author_base = $author_base;
-
-		// Update options with new author_base.
-		update_option( '_ba_eas_author_base', $ba_eas->author_base );
-
-		// Update the author_base in the WP_Rewrite object.
-		if ( ! empty( $ba_eas->author_base ) ) {
-			$GLOBALS['wp_rewrite']->author_base = $ba_eas->author_base;
-		}
-	}
-
-	// Courtesy flush.
-	ba_eas_flush_rewrite_rules();
-
-	return $author_base;
-}
-
 /** Settings *****************************************************************/
 
 /**
@@ -641,7 +592,7 @@ function ba_eas_admin_setting_sanitize_callback_author_base( $author_base = 'aut
 	$ba_eas = ba_eas();
 
 	// Sanitize the author base.
-	$author_base = sanitize_title( $author_base );
+	$author_base = ba_eas_sanitize_author_base( $author_base );
 
 	// Do we need to update the author_base.
 	if ( $author_base !== $ba_eas->author_base ) {
@@ -690,7 +641,7 @@ function ba_eas_admin_setting_callback_auto_update_section() {
  */
 function ba_eas_admin_setting_callback_author_base() {
 
-	$author_base = ba_eas_esc_nicename( ba_eas()->author_base );
+	$author_base = ba_eas_sanitize_author_base( ba_eas()->author_base );
 ?>
 
 		<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php echo $author_base; ?>" class="regular-text code" />

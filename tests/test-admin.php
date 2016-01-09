@@ -203,25 +203,6 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::ba_eas_sanitize_author_base
-	 */
-	function test_ba_eas_sanitize_author_base() {
-
-		$this->assertEquals( 'author', $GLOBALS['wp_rewrite']->author_base );
-
-		$this->assertEquals( 'author', ba_eas_sanitize_author_base( '' ) );
-
-		$this->assertEquals( 'author', ba_eas_sanitize_author_base( '@' ) );
-
-		$this->assertEquals( 'ninja', ba_eas_sanitize_author_base( 'ninja' ) );
-		$this->assertEquals( 'ninja', $GLOBALS['wp_rewrite']->author_base );
-		$this->assertEquals( false, get_option( 'rewrite_rules' ) );
-
-		// Reset author base
-		ba_eas_sanitize_author_base( 'author' );
-	}
-
-	/**
 	 * @covers ::ba_eas_add_settings_menu
 	 */
 	function test_ba_eas_add_settings_menu() {
