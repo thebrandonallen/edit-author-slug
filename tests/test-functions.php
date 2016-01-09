@@ -488,11 +488,6 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		// Test default WP roles
 		$this->assertEquals( ba_eas_tests_slugs_default(), ba_eas_get_default_role_slugs() );
-
-		// Test with extra role
-		add_filter( 'editable_roles', 'ba_eas_tests_roles_extra' );
-		$this->assertEquals( ba_eas_tests_slugs_extra(), ba_eas_get_default_role_slugs() );
-		remove_filter( 'editable_roles', 'ba_eas_tests_roles_extra', 10 );
 	}
 
 	/**
