@@ -610,6 +610,35 @@ function ba_eas_get_user_role( $roles = array(), $user_id = 0 ) {
 }
 
 /**
+ * Returns the WP_Roles object.
+ *
+ * WP 4.3 added the `wp_roles()` function to facilitate the instantiation of the
+ * WP_Roles object. This is a wrapper function for `wp_roles()` with a fallback
+ * for those on WP < 4.3.
+ *
+ * @global WP_Roles $wp_roles
+ *
+ * @return WP_Roles
+ */
+function ba_eas_get_wp_roles() {
+
+	if ( function_exists( 'wp_roles' ) ) {
+		$wp_roles = wp_roles();
+
+	} else {
+
+		global $wp_roles;
+
+		// Make sure the `$wp_roles` global has been set.
+		if ( ! isset( $wp_roles ) ) {
+			$wp_roles = new WP_Roles();
+		}
+	}
+
+	return $wp_roles;
+}
+
+/**
  * Fetch a filtered list of user roles that the current user is
  * allowed to edit.
  *
@@ -630,11 +659,13 @@ function ba_eas_get_user_role( $roles = array(), $user_id = 0 ) {
  * @return array $editable_roles List of editable roles.
  */
 function ba_eas_get_editable_roles() {
-	global $wp_roles;
 
-	// Make sure wp_roles has been set.
-	if ( empty( $wp_roles ) ) {
-		$wp_roles = new WP_Roles();
+	// Get the `WP_Roles` object.
+	$wp_roles = ba_eas_get_wp_roles();
+
+	$roles = array();
+	if ( ! empty( $wp_roles->roles ) ) {
+		$roles = $wp_roles->roles;
 	}
 
 	/**
@@ -644,11 +675,13 @@ function ba_eas_get_editable_roles() {
 	 *
 	 * @param array $roles The return of WP_Roles::roles.
 	 */
-	$editable_roles = apply_filters( 'editable_roles', $wp_roles->roles );
+	$editable_roles = apply_filters( 'editable_roles', $roles );
 
 	// Remove user caps.
-	foreach ( $editable_roles as $role => $details ) {
-		unset( $editable_roles[ $role ]['capabilities'] );
+	if ( ! empty( $editable_roles ) ) {
+		foreach ( $editable_roles as $role => $details ) {
+			unset( $editable_roles[ $role ]['capabilities'] );
+		}
 	}
 
 	return $editable_roles;

@@ -432,13 +432,20 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::ba_eas_get_wp_roles
+	 */
+	function test_ba_eas_get_wp_roles() {
+		$this->markTestIncomplete();
+	}
+
+	/**
 	 * @covers ::ba_eas_get_editable_roles
 	 */
 	function test_ba_eas_get_editable_roles() {
 
 		// Test with empty $wp_roles global
 		global $wp_roles;
-		$wp_roles = array();
+		unset( $wp_roles );
 		$this->assertEquals( ba_eas_tests_roles_default(), ba_eas_get_editable_roles() );
 
 		// Test default WP roles
@@ -457,7 +464,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		// Test with empty $wp_roles global
 		global $wp_roles;
-		$wp_roles = array();
+		unset( $wp_roles );
 		$this->assertEquals( ba_eas_tests_slugs_default(), ba_eas_get_default_role_slugs() );
 
 		// Test default WP roles
