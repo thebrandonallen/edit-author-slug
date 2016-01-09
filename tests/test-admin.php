@@ -321,15 +321,82 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_admin_setting_callback_role_slugs
 	 */
 	function test_ba_eas_admin_setting_callback_role_slugs() {
+
+		// Add the ninja role.
+		add_role( 'ninja', 'Ninja' );
+
 		ob_start();
 		ba_eas_admin_setting_callback_role_slugs();
 		$output = ob_get_clean();
 
 		$input = '<input name="_ba_eas_role_slugs[administrator][slug]" id="_ba_eas_role_slugs[administrator][slug]" type="text" value="administrator" class="regular-text code" />';
-		$label = 'Administrator';
-
+		$label = '>Administrator</label';
 		$this->assertContains( $input, $output );
 		$this->assertContains( $label, $output );
+
+		$input = 'name="_ba_eas_role_slugs[editor][slug]"';
+		$label = '>Editor</label';
+		$this->assertContains( $input, $output );
+		$this->assertContains( $label, $output );
+
+		$input = 'name="_ba_eas_role_slugs[contributor][slug]"';
+		$label = '>Contributor</label';
+		$this->assertContains( $input, $output );
+		$this->assertContains( $label, $output );
+
+		$input = 'name="_ba_eas_role_slugs[author][slug]"';
+		$label = '>Author</label';
+		$this->assertContains( $input, $output );
+		$this->assertContains( $label, $output );
+
+		$input = 'name="_ba_eas_role_slugs[subscriber][slug]"';
+		$label = '>Subscriber</label';
+		$this->assertContains( $input, $output );
+		$this->assertContains( $label, $output );
+
+		$input = 'name="_ba_eas_role_slugs[ninja][slug]"';
+		$label = '>Ninja</label';
+		$this->assertContains( $input, $output );
+		$this->assertContains( $label, $output );
+
+		ba_eas()->role_slugs = array(
+			'administrator' => array(
+				'name' => 'Administrator',
+				'slug' => 'administrator',
+			),
+			'editor' => array(
+				'name' => 'Editor',
+				'slug' => 'editor',
+			),
+			'contributor' => array(
+				'name' => 'Contributor',
+				'slug' => 'contributor',
+			),
+			'author' => array(
+				'name' => 'Author',
+				'slug' => 'author',
+			),
+			'subscriber' => array(
+				'name' => 'Subscriber',
+				'slug' => 'subscriber',
+			),
+			'ninja' => array(
+				'name' => 'Ninja',
+				'slug' => 'ninja',
+			),
+		);
+
+		// Remove the ninja role.
+		remove_role( 'ninja' );
+
+		ob_start();
+		ba_eas_admin_setting_callback_role_slugs();
+		$output = ob_get_clean();
+
+		$input = 'name="_ba_eas_role_slugs[ninja][slug]"';
+		$label = 'Ninja';
+		$this->assertNotContains( $input, $output );
+		$this->assertNotContains( $label, $output );
 	}
 
 	/**
