@@ -580,7 +580,7 @@ function ba_eas_admin_setting_callback_author_base_section() {
  *
  * Rewrite rules are also flushed.
  *
- * @since 1.3.0
+ * @since 1.2.0
  *
  * @param string $author_base Defaults to `author`.
  *

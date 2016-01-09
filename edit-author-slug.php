@@ -375,7 +375,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		/**
 		 * Sanitize author base and add to database.
 		 *
-		 * @since 1.3.0
+		 * @since 1.2.0
 		 *
 		 * @param string $author_base Author base to be sanitized.
 		 *

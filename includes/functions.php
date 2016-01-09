@@ -336,7 +336,7 @@ function ba_eas_sanitize_nicename( $nicename = '', $strict = true ) {
  * Sanitize author base and add to database.
  *
  * @since 0.8.0
- * @since 1.3.0 Removed all non-sanitization code.
+ * @since 1.2.0 Removed all non-sanitization code.
  *
  * @param string $author_base Author base to be sanitized.
  *
@@ -657,7 +657,7 @@ function ba_eas_get_wp_roles() {
  *
  * The capabilities array for each role have been removed.
  *
- * @since 1.3.0
+ * @since 1.2.0
  *
  * @global WP_Roles $wp_roles
  *
