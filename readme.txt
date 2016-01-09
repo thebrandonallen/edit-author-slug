@@ -13,17 +13,15 @@ Allows an admin (or capable user) to edit the author slug of a user, and change 
 
 This plugin allows an Admin to change the author slug (a.k.a. - nicename), without having to actually enter the database. You can also change the Author Base (the '/author/' portion of the author URLs). Two new fields will be added to your Dashboard. The "Edit Author Slug" field can be found under Users > Your Profile or Users > Authors & Users (Users > Users in WP 3.0). The "Author Base" field can be found under Settings > Edit Author Slug. This allows you to craft the perfect URL structure for you Author pages. For your convenience, an Author Slug column is added to make it easier to determine if one needs to change the Author Slug.
 
-WordPress default structure
-http://example.com/author/username/
+WordPress default structure *http://example.com/author/username/*.
 
-Edit Author Slug allows for
-http://example.com/ninja/master-ninja/
+Edit Author Slug allows for *http://example.com/ninja/master-ninja/*.
 
-or using a role-based author base
-http://example.com/ida/master-splinter/ (for an Administrator Role)
-http://example.com/koga/leonardo/ (for a Subscriber Role)
+Using a role-based author base would allow for *http://example.com/ida/master-splinter/* (for an Administrator Role), or *http://example.com/koga/leonardo/* (for a Subscriber Role).
 
 Development of this plugin takes place on [GitHub](https://github.com/thebrandonallen/edit-author-slug/ "Edit Author Slug on Github"). Pull requests are always welcome!
+
+Translations should be submitted to [Translate WordPress](https://translate.wordpress.org/projects/wp-plugins/edit-author-slug).
 
 == Installation ==
 
