@@ -644,7 +644,7 @@ function ba_eas_admin_setting_callback_author_base() {
 	$author_base = ba_eas_sanitize_author_base( ba_eas()->author_base );
 ?>
 
-		<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php echo $author_base; ?>" class="regular-text code" />
+		<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php echo esc_attr( $author_base ); ?>" class="regular-text code" />
 		<label><em><?php esc_html_e( "Defaults to 'author'", 'edit-author-slug' ); ?></em></label>
 
 <?php
