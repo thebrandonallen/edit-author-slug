@@ -54,9 +54,11 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 		$this->eas->set_role_slugs();
 		$this->assertEquals( $this->eas->role_slugs, ba_eas_tests_slugs_custom() );
 
+		add_role( 'foot-soldier', 'Foot Soldier' );
 		update_option( '_ba_eas_role_slugs', ba_eas_tests_slugs_extra() );
 		$this->eas->set_role_slugs();
 		$this->assertEquals( $this->eas->role_slugs, ba_eas_tests_slugs_extra() );
+		remove_role( 'foot-soldier' );
 	}
 
 	/**
