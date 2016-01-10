@@ -460,7 +460,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			foreach ( $role_slugs as $role => $details ) {
 
-				if ( ! empty( $default[ $role ] ) ) {
+				if ( empty( $defaults[ $role ] ) ) {
 					unset( $role_slugs[ $role ] );
 				}
 			}
