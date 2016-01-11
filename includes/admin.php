@@ -22,14 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  * @since 0.1.0
  *
  * @param WP_User $user The WP_User object.
- *
- * @uses ba_eas_can_edit_author_slug() To verify current user can edit the author slug.
- * @uses ba_eas_sanitize_nicename() To sanitize userdata into a new nicename.
- * @uses apply_filters() To call the `ba_eas_show_user_nicename_options_list` hook.
- * @uses ba_eas_trim_nicename() To trim the nicename to 50 characters via `array_map()`.
- * @uses esc_html_e() To sanitize localized string for display.
- * @uses checked() To check that box.
- * @uses ba_eas_esc_nicename() To escape the nicename for display.
  */
 function ba_eas_show_user_nicename( $user ) {
 
@@ -131,15 +123,6 @@ function ba_eas_show_user_nicename( $user ) {
  * @param WP_Errors $errors The WP_Errors object.
  * @param bool      $update Are we updating?
  * @param WP_User   $user   The WP_User object.
- *
- * @uses check_admin_referer() To verify the nonce and check referer.
- * @uses ba_eas_can_edit_author_slug() To verify current user can edit the author slug.
- * @uses get_userdata() To get the user data.
- * @uses WP_Errors::add() To add Edit Author Slug specific errors.
- * @uses ba_eas_sanitize_nicename() Used to sanitize user_nicename.
- * @uses remove_action() To remove the `ba_eas_auto_update_user_nicename` and prevent looping.
- * @uses get_user_by() To see if the nicename is already in use.
- * @uses esc_html() To sanitize author_slug for display.
  */
 function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
@@ -288,10 +271,6 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
  *
  * @since 0.8.0
  *
- * @uses is_super_admin() To check if super admin.
- * @uses current_user_can() To check for 'edit_users' and 'edit_author_slug' caps.
- * @uses apply_filters() To call `ba_eas_can_edit_author_slug` hook.
- *
  * @return bool True if edit privileges. Defaults to false.
  */
 function ba_eas_can_edit_author_slug() {
@@ -321,8 +300,6 @@ function ba_eas_can_edit_author_slug() {
  *
  * @param array $defaults Array of current columns/column headings.
  *
- * @uses esc_html__() To escape and localize the author slug column title.
- *
  * @return array Array of current columns/column headings.
  */
 function ba_eas_author_slug_column( $defaults ) {
@@ -343,9 +320,6 @@ function ba_eas_author_slug_column( $defaults ) {
  * @param string $default     Value for column data. Defaults to empty string.
  * @param string $column_name Column name currently being filtered.
  * @param int    $user_id     The user id.
- *
- * @uses get_userdata() To get the user data.
- * @uses esc_attr() To sanitize the user_nicename.
  *
  * @return string Value for column data. Defaults to empty string.
  */
@@ -372,11 +346,6 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
  * Add javascript to Edit Author Slug settings page to show/hide the role slugs.
  *
  * @since 0.9.0
- *
- * @uses ba_eas_can_edit_author_slug() To determine if the user can edit the author slug.
- * @uses wp_register_script() To register our js file.
- * @uses ba_eas() To get the `$plugin_url` and `$version` properties.
- * @uses wp_enqueue_script() To enqueue our js file.
  */
 function ba_eas_show_user_nicename_scripts( $hook_suffix = '' ) {
 
@@ -411,8 +380,6 @@ function ba_eas_show_user_nicename_scripts( $hook_suffix = '' ) {
  * Add the Edit Author Slug Settings Menu.
  *
  * @since 0.9.0
- *
- * @uses add_options_page() To add the Edit Author Slug options page.
  */
 function ba_eas_add_settings_menu() {
 	add_options_page(
@@ -428,11 +395,6 @@ function ba_eas_add_settings_menu() {
  * Output HTML for settings page.
  *
  * @since 0.9.0
- *
- * @uses esc_html_e() To sanitize localized string for display.
- * @uses settings_fields() To output nonce, action, and option_page fields.
- * @uses do_settings_sections() To output the setting sections/fields.
- * @uses submit_button() To output a nice submit button.
  */
 function ba_eas_settings_page_html() {
 ?>
@@ -458,10 +420,6 @@ function ba_eas_settings_page_html() {
  * Add Author Base settings settings page.
  *
  * @since 0.9.0
- *
- * @uses add_settings_section() To add a settings section.
- * @uses add_settings_field() To add a settings field.
- * @uses register_setting() To add a settings to whitelist to be updated on submit.
  */
 function ba_eas_register_admin_settings() {
 	// Add the Author Base section.
@@ -563,8 +521,6 @@ function ba_eas_register_admin_settings() {
  * Add Author Base settings section.
  *
  * @since 0.9.0
- *
- * @uses esc_html_e() To sanitize localized string for display.
  */
 function ba_eas_admin_setting_callback_author_base_section() {
 ?>
@@ -617,8 +573,6 @@ function ba_eas_admin_setting_sanitize_callback_author_base( $author_base = 'aut
  * Add default user nicename settings section.
  *
  * @since 0.9.0
- *
- * @uses esc_html_e() To sanitize localized string for display.
  */
 function ba_eas_admin_setting_callback_auto_update_section() {
 ?>
@@ -632,11 +586,6 @@ function ba_eas_admin_setting_callback_auto_update_section() {
  * Add Author Base settings field.
  *
  * @since 0.9.0
- *
- * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses apply_filters() To call `editable_slug` hook.
- * @uses esc_attr() To sanitize the author base.
- * @uses esc_html_e() To sanitize localized string for display.
  */
 function ba_eas_admin_setting_callback_author_base() {
 
@@ -653,10 +602,6 @@ function ba_eas_admin_setting_callback_author_base() {
  * Add Role-Based Author Base checkbox.
  *
  * @since 1.0.0
- *
- * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses checked() To display the checked attribute.
- * @uses esc_html_e() To sanitize localized string for display.
  */
 function ba_eas_admin_setting_callback_do_role_based() {
 ?>
@@ -671,13 +616,6 @@ function ba_eas_admin_setting_callback_do_role_based() {
  * Output the Role-Based Author Base slugs for editing.
  *
  * @since 1.0.0
- *
- * @uses ba_eas() To get the role slugs object.
- * @uses ba_eas_get_default_role_slugs() To get the editable roles.
- * @uses translate_user_role() To translate the impossible.
- * @uses sanitize_title() To sanitize the role slugs.
- * @uses esc_attr() To sanitize role slugs for display.
- * @uses esc_html() To sanitize localized text for display.
  */
 function ba_eas_admin_setting_callback_role_slugs() {
 
@@ -722,10 +660,6 @@ function ba_eas_admin_setting_callback_role_slugs() {
  * @since 1.0.0
  *
  * @param array $role_slugs An array of role slugs.
- *
- * @uses ba_eas_get_default_role_slugs() To get the editable roles.
- * @uses sanitize_title() To sanitize the slug.
- * @uses ba_eas() To get the BA_Edit_Author_Slug object.
  *
  * @return array An array of sanitized, role-based author slugs.
  */
@@ -774,10 +708,6 @@ function ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs = array(
  * Add auto-update checkbox.
  *
  * @since 0.9.0
- *
- * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses checked() To display the checked attribute.
- * @uses esc_html_e() To sanitize localized string for display.
  */
 function ba_eas_admin_setting_callback_do_auto_update() {
 ?>
@@ -792,11 +722,6 @@ function ba_eas_admin_setting_callback_do_auto_update() {
  * Add default user nicename options.
  *
  * @since 0.9.0
- *
- * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses apply_filters() To call `ba_eas_default_user_nicename_options_list` hook.
- * @uses esc_attr() To sanitize the nicename options.
- * @uses selected() To determine if we're selected.
  */
 function ba_eas_admin_setting_callback_default_user_nicename() {
 
@@ -844,8 +769,6 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
  *
  * @since 1.1.0
  *
- * @uses esc_html_e() To escape the field label.
- *
  * @return void
  */
 function ba_eas_admin_setting_callback_bulk_update_section() {
@@ -860,8 +783,6 @@ function ba_eas_admin_setting_callback_bulk_update_section() {
  * Add bulk update option.
  *
  * @since 1.1.0
- *
- * @uses esc_html_e() To escape the field label.
  *
  * @return void
  */
@@ -878,11 +799,6 @@ function ba_eas_admin_setting_callback_bulk_update() {
  * Add default user nicename options.
  *
  * @since 0.9.0
- *
- * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses apply_filters() To call `ba_eas_default_user_nicename_options_list` hook.
- * @uses esc_attr() To sanitize the nicename options.
- * @uses selected() To determine if we're selected.
  */
 function ba_eas_admin_setting_callback_bulk_update_structure() {
 
@@ -927,11 +843,6 @@ function ba_eas_admin_setting_callback_bulk_update_structure() {
  * @param array  $links Links array in which we would prepend our link.
  * @param string $file  Current plugin basename.
  *
- * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses plugin_basename() To get the plugin basename.
- * @uses add_query_arg() To add the edit-author-slug query arg.
- * @uses admin_url() To get the admin url.
- *
  * @return string The array of plugin action links.
  */
 function ba_eas_add_settings_link( $links, $file ) {
@@ -952,9 +863,6 @@ function ba_eas_add_settings_link( $links, $file ) {
  * Add options on install to reduce calls to the db.
  *
  * @since 1.0.0
- *
- * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses add_option() To add Edit Author Slug options.
  */
 function ba_eas_install() {
 
@@ -981,12 +889,6 @@ function ba_eas_install() {
  * Just cleans up some options for now.
  *
  * @since 0.8.0
- *
- * @uses wpdb::update() To rename the old Edit Author Slug options array.
- * @uses ba_eas() To get the BA_Edit_Author_Slug object.
- * @uses add_option() To add new Edit Author Slug options.
- * @uses update_option() To update Edit Author Slug options.
- * @uses ba_eas_flush_rewrite_rules() To flush rewrite rules after version bump.
  */
 function ba_eas_upgrade() {
 

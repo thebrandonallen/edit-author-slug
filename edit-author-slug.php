@@ -104,10 +104,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 *
 		 * @staticvar object $instance
 		 *
-		 * @uses BA_Edit_Author_Slug::setup_globals() Setup the globals needed.
-		 * @uses BA_Edit_Author_Slug::includes() Include the required files.
-		 * @uses BA_Edit_Author_Slug::setup_actions() Setup the hooks and actions.
-		 *
 		 * @see ba_eas()
 		 *
 		 * @return BA_Edit_Author_Slug|null The one true BA_Edit_Author_Slug.
@@ -212,12 +208,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 *
 		 * @since 0.7.0
 		 *
-		 * @uses plugin_dir_path() To generate Edit Author Slug plugin path.
-		 * @uses plugin_dir_url() To generate Edit Author Slug plugin url.
-		 * @uses plugin_basename() To get the plugin basename.
-		 * @uses get_option() To get the Edit Author Slug options.
-		 * @uses absint() To cast db variables as absolute integers.
-		 *
 		 * @return void
 		 */
 		private function setup_globals() {
@@ -304,8 +294,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 *
 		 * @since 0.7.0
 		 *
-		 * @uses is_admin() To load admin specific functions.
-		 *
 		 * @return void
 		 */
 		private function includes() {
@@ -324,10 +312,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * Display Author slug edit field on User/Profile edit page.
 		 *
 		 * @since 0.7.0
-		 *
-		 * @uses register_activation_hook() To register the activation hook.
-		 * @uses register_deactivation_hook() To register the deactivation hook.
-		 * @uses add_action() To call various hooks.
 		 *
 		 * @return void
 		 */
@@ -358,9 +342,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * (ie - wp-content/languages/plugins).
 		 *
 		 * @since 0.9.6
-		 *
-		 * @uses load_plugin_textdomain() To load the textdomain inside the
-		 *                                'plugin/languages' folder.
 		 *
 		 * @return void
 		 */
@@ -417,9 +398,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 *
 		 * @since 0.4.0
 		 *
-		 * @uses ba_eas_do_role_based_author_base() To check if we're doing
-		 *                                          role-based author bases.
-		 *
 		 * @return void
 		 */
 		public function author_base_rewrite() {
@@ -440,9 +418,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * Set the role_slugs global
 		 *
 		 * @since 1.0.0
-		 *
-		 * @uses ba_eas_get_default_role_slugs() To get an array of default role slugs.
-		 * @uses get_option() To get the custom role slugs array.
 		 *
 		 * @return void
 		 */
@@ -473,11 +448,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * Add the Edit Author Slug rewrite tags
 		 *
 		 * @since 1.0.0
-		 *
-		 * @uses ba_eas_do_role_based_author_base() To check if we're doing
-		 *                                          role-based author bases.
-		 * @uses wp_list_pluck() To get only the role slugs.
-		 * @uses add_rewrite_tag() To add the rewrite tags.
 		 *
 		 * @return void
 		 */
@@ -525,8 +495,6 @@ endif; //end class BA_Edit_Author_Slug.
  *
  * @since 0.7.0
  *
- * @uses do_action() To call the `ba_eas_activation` hook.
- *
  * @return void
  */
 function ba_eas_activation() {
@@ -546,8 +514,6 @@ function ba_eas_activation() {
  * Runs on Edit Author Slug deactivation.
  *
  * @since 0.7.0
- *
- * @uses do_action() To call the `ba_eas_deactivation` hook.
  *
  * @return void
  */
