@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Edit Author Slug Filters & Actions.
  *
