@@ -455,7 +455,7 @@ function ba_eas_template_include( $template ) {
 
 	// nicename and ID templates should take priority, so we need to check for their existence.
 	$nicename_template = strpos( $template, "author-{$author->user_nicename}.php" );
-	$id_template       = strpos( $template, "author-{$author->ID}.php"            );
+	$id_template       = strpos( $template, "author-{$author->ID}.php" );
 
 	// If they don't exist, search for a role based template.
 	if ( false === $nicename_template && false === $id_template ) {

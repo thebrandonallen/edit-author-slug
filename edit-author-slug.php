@@ -226,7 +226,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			$this->file            = __FILE__;
 			$this->plugin_dir      = plugin_dir_path( $this->file );
-			$this->plugin_url      = plugin_dir_url(  $this->file );
+			$this->plugin_url      = plugin_dir_url( $this->file );
 			$this->plugin_basename = plugin_basename( $this->file );
 
 			/** Miscellaneous *************************************************/
@@ -300,7 +300,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			// Load the core functions.
 			require_once( $this->plugin_dir . 'includes/functions.php' );
-			require_once( $this->plugin_dir . 'includes/hooks.php'             );
+			require_once( $this->plugin_dir . 'includes/hooks.php' );
 
 			// Maybe load the admin functions.
 			if ( is_admin() ) {
@@ -317,13 +317,13 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 */
 		private function setup_actions() {
 			// Register Edit Author Slug activation/deactivation sequences.
-			register_activation_hook(   $this->file, 'ba_eas_activation'   );
+			register_activation_hook( $this->file, 'ba_eas_activation' );
 			register_deactivation_hook( $this->file, 'ba_eas_deactivation' );
 
 			// Author Base Actions.
-			add_action( 'after_setup_theme', array( $this, 'set_role_slugs' )          );
-			add_action( 'init',              array( $this, 'author_base_rewrite' ), 4  );
-			add_action( 'init',              array( $this, 'add_rewrite_tags' ),    20 );
+			add_action( 'after_setup_theme', array( $this, 'set_role_slugs' ) );
+			add_action( 'init',              array( $this, 'author_base_rewrite' ), 4 );
+			add_action( 'init',              array( $this, 'add_rewrite_tags' ), 20 );
 
 			// Localize.
 			add_action( 'init', array( $this, 'load_textdomain' ), 0 );

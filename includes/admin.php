@@ -38,7 +38,7 @@ function ba_eas_show_user_nicename( $user ) {
 
 	// Setup options array.
 	$options = array();
-	$options['username']    = ba_eas_sanitize_nicename( $user->nickname     );
+	$options['username']    = ba_eas_sanitize_nicename( $user->nickname );
 	$options['displayname'] = ba_eas_sanitize_nicename( $user->display_name );
 
 	// Setup the first name.
@@ -875,12 +875,12 @@ function ba_eas_install() {
 	}
 
 	// Add the options.
-	add_option( '_ba_eas_author_base',           $ba_eas->author_base           );
-	add_option( '_ba_eas_db_version',            $ba_eas->db_version            );
-	add_option( '_ba_eas_do_auto_update',        $ba_eas->do_auto_update        );
+	add_option( '_ba_eas_author_base',           $ba_eas->author_base );
+	add_option( '_ba_eas_db_version',            $ba_eas->db_version );
+	add_option( '_ba_eas_do_auto_update',        $ba_eas->do_auto_update );
 	add_option( '_ba_eas_default_user_nicename', $ba_eas->default_user_nicename );
-	add_option( '_ba_eas_do_role_based',         $ba_eas->do_role_based         );
-	add_option( '_ba_eas_role_slugs',            $ba_eas->role_slugs            );
+	add_option( '_ba_eas_do_role_based',         $ba_eas->do_role_based );
+	add_option( '_ba_eas_role_slugs',            $ba_eas->role_slugs );
 }
 
 /**
@@ -912,10 +912,10 @@ function ba_eas_upgrade() {
 
 	// < 1.0.0.
 	if ( $ba_eas->current_db_version < 133 ) {
-		add_option( '_ba_eas_do_auto_update',        $ba_eas->do_auto_update        );
+		add_option( '_ba_eas_do_auto_update',        $ba_eas->do_auto_update );
 		add_option( '_ba_eas_default_user_nicename', $ba_eas->default_user_nicename );
-		add_option( '_ba_eas_do_role_based',         $ba_eas->do_role_based         );
-		add_option( '_ba_eas_role_slugs',            $ba_eas->role_slugs            );
+		add_option( '_ba_eas_do_role_based',         $ba_eas->do_role_based );
+		add_option( '_ba_eas_role_slugs',            $ba_eas->role_slugs );
 	}
 
 	// Version bump.
