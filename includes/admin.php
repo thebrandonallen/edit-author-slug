@@ -150,15 +150,19 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	// Stash the original user object.
 	$_user = get_userdata( $user->ID );
 
-	// Check for a custom author slug.
-	if ( isset( $_POST['ba_eas_author_slug'] ) && isset( $_POST['ba_eas_author_slug_custom'] ) && '\c\u\s\t\o\m' === stripslashes( $_POST['ba_eas_author_slug'] ) ) {
-		$_POST['ba_eas_author_slug'] = $_POST['ba_eas_author_slug_custom'];
+	$user_nicename = $user_nicename_custom = '';
+
+	if ( isset( $_POST['ba_eas_author_slug'] ) ) {
+		$user_nicename = trim( wp_unslash( $_POST['ba_eas_author_slug'] ) );
 	}
 
-	// Setup the author slug.
-	$user_nicename = '';
-	if ( ! empty( $_POST['ba_eas_author_slug'] ) ) {
-		$user_nicename = trim( stripslashes( $_POST['ba_eas_author_slug'] ) );
+	if ( isset( $_POST['ba_eas_author_slug_custom'] ) ) {
+		$user_nicename_custom = trim( wp_unslash( $_POST['ba_eas_author_slug_custom'] ) );
+	}
+
+	// Check for a custom author slug.
+	if ( '\c\u\s\t\o\m' === $user_nicename ) {
+		$user_nicename = $user_nicename_custom;
 	}
 
 	// Do we have an author slug?
