@@ -66,6 +66,10 @@ function ba_eas_show_user_nicename( $user ) {
 		$options['lastfirst'] = $options['lastname'] . '-' . $options['firstname'];
 	}
 
+	// Setup the last name.
+	if ( ! empty( $user->ID ) ) {
+		$options['id'] = ba_eas_sanitize_nicename( $user->ID );
+	}
 	/**
 	 * Filters the array of user nicename options.
 	 *
@@ -824,6 +828,7 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 		'lastname'    => __( 'lastname',           'edit-author-slug' ),
 		'firstlast'   => __( 'firstname-lastname', 'edit-author-slug' ),
 		'lastfirst'   => __( 'lastname-firstname', 'edit-author-slug' ),
+		'id'          => __( 'id',                 'edit-author-slug' ),
 	) );
 
 	// Filter out any duplicates/empties.
@@ -904,6 +909,7 @@ function ba_eas_admin_setting_callback_bulk_update_structure() {
 		'lastname'    => __( 'lastname',           'edit-author-slug' ),
 		'firstlast'   => __( 'firstname-lastname', 'edit-author-slug' ),
 		'lastfirst'   => __( 'lastname-firstname', 'edit-author-slug' ),
+		'id'          => __( 'id',                 'edit-author-slug' ),
 	) );
 
 	// Filter out any duplicates/empties.
