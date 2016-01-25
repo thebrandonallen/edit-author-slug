@@ -128,17 +128,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		/** Magic Methods *****************************************************/
 
 		/**
-		 * A dummy constructor to prevent BA_Edit_Author_Slug from being loaded
-		 * more than once.
-		 *
-		 * @since 0.7.0
-		 *
-		 * @see BA_Edit_Author_Slug::instance()
-		 * @see ba_eas();
-		 */
-		private function __construct() { /* Do nothing here */ }
-
-		/**
 		 * A dummy magic method to prevent BA_Edit_Author_Slug from being cloned.
 		 *
 		 * @since 1.0.0
