@@ -263,11 +263,6 @@ function ba_eas_auto_update_user_nicename_bulk( $value = false ) {
 	 */
 	$users = (array) apply_filters( 'ba_eas_auto_update_user_nicename_bulk_user_ids', $users );
 
-	// Bail if no users are returned.
-	if ( empty( $users ) ) {
-		return false;
-	}
-
 	// Set the default updated count.
 	$updated = 0;
 
