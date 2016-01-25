@@ -232,6 +232,9 @@ function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
  */
 function ba_eas_auto_update_user_nicename_bulk( $value = false ) {
 
+	// Nonce check.
+	check_admin_referer( 'edit-author-slug-options' );
+
 	// Default the structure to the auto-update structure.
 	$structure = ba_eas()->default_user_nicename;
 
