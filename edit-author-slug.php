@@ -204,21 +204,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			}
 		}
 
-		/**
-		 * Magic method to prevent notices and errors from invalid method calls.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string $name The method name being called.
-		 * @param array  $args The method arguments.
-		 *
-		 * @return null
-		 */
-		public function __call( $name = '', $args = array() ) {
-			unset( $name, $args );
-			return null;
-		}
-
 		/* Private Methods ****************************************************/
 
 		/**
