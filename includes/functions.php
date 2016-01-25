@@ -9,7 +9,7 @@
  */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+defined( 'ABSPATH' ) || exit;
 
 /** Nicename ******************************************************************/
 
@@ -453,7 +453,7 @@ function ba_eas_template_include( $template ) {
 		return $template;
 	}
 
-	// nicename and ID templates should take priority, so we need to check for their existence.
+	// Nicename and ID templates should take priority, so we need to check for their existence.
 	$nicename_template = strpos( $template, "author-{$author->user_nicename}.php" );
 	$id_template       = strpos( $template, "author-{$author->ID}.php" );
 
@@ -511,7 +511,7 @@ function ba_eas_flush_rewrite_rules() {
  * Filter out unnecessary rewrite rules from the author
  * rules array.
  *
- * @param array $author_rewrite_rules Author rewrite rules
+ * @param array $author_rewrite_rules Author rewrite rules.
  *
  * @return array Author rewrite rules.
  */
@@ -704,10 +704,10 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
 	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @param array $base
-	 * @param array $replacements
+	 * @param array $base         The default array.
+	 * @param array $replacements The new array.
 	 *
-	 * @return array Role slugs array
+	 * @return array Role slugs array.
 	 */
 	function array_replace_recursive( $base, $replacements ) {
 		foreach ( array_slice( func_get_args(), 1 ) as $replacements ) {

@@ -9,7 +9,7 @@
  */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+defined( 'ABSPATH' ) || exit;
 
 /** Nicename ******************************************************************/
 
@@ -121,7 +121,7 @@ function ba_eas_show_user_nicename( $user ) {
  * @since 0.1.0
  *
  * @param WP_Errors $errors The WP_Errors object.
- * @param bool      $update Are we updating?
+ * @param bool      $update True if user is being updated.
  * @param WP_User   $user   The WP_User object.
  */
 function ba_eas_update_user_nicename( $errors, $update, $user ) {
@@ -350,6 +350,10 @@ function ba_eas_author_slug_custom_column( $default, $column_name, $user_id ) {
  * Add javascript to Edit Author Slug settings page to show/hide the role slugs.
  *
  * @since 0.9.0
+ *
+ * @param string $hook_suffix The current admin page.
+ *
+ * @return void
  */
 function ba_eas_show_user_nicename_scripts( $hook_suffix = '' ) {
 

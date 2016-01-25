@@ -9,7 +9,7 @@
  */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+defined( 'ABSPATH' ) || exit;
 
 // Make sure we're uninstalling.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {

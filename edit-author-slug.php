@@ -44,7 +44,7 @@
 */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Main Edit Author Slug class.
@@ -145,7 +145,9 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 *
 		 * @return void
 		 */
-		public function __clone() { _doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'edit-author-slug' ), '1.0' ); }
+		public function __clone() {
+			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'edit-author-slug' ), '1.0' );
+		}
 
 		/**
 		 * A dummy magic method to prevent BA_Edit_Author_Slug from being unserialized.
@@ -154,54 +156,81 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 *
 		 * @return void
 		 */
-		public function __wakeup() { _doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'edit-author-slug' ), '1.0' ); }
+		public function __wakeup() {
+			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'edit-author-slug' ), '1.0' );
+		}
 
 		/**
 		 * Magic method for checking the existence of a certain custom field.
 		 *
 		 * @since 1.0.0
 		 *
+		 * @param string $key The object property to check.
+		 *
 		 * @return bool True if the field is set.
 		 */
-		public function __isset( $key ) { return isset( $this->data->$key ); }
+		public function __isset( $key ) {
+			return isset( $this->data->$key );
+		}
 
 		/**
 		 * Magic method for getting BA_Edit_Author_Slug variables.
 		 *
 		 * @since 1.0.0
 		 *
+		 * @param string $key The object property to retrieve.
+		 *
 		 * @return mixed The field value if it exists. Null otherwise.
 		 */
-		public function __get( $key ) { return isset( $this->data->$key ) ? $this->data->$key : null; }
+		public function __get( $key ) {
+			return isset( $this->data->$key ) ? $this->data->$key : null;
+		}
 
 		/**
 		 * Magic method for setting BA_Edit_Author_Slug variables.
 		 *
 		 * @since 1.0.0
 		 *
+		 * @param string $key   The object property to set.
+		 * @param mixed  $value The new value for the object property.
+		 *
 		 * @return void
 		 */
-		public function __set( $key, $value ) { $this->data->$key = $value; }
+		public function __set( $key, $value ) {
+			$this->data->$key = $value;
+		}
 
 		/**
 		 * Magic method for unsetting BA_Edit_Author_Slug variables.
 		 *
 		 * @since 1.0.0
 		 *
+		 * @param string $key The object property to unset.
+		 *
 		 * @return void
 		 */
-		public function __unset( $key ) { if ( isset( $this->data->$key ) ) { unset( $this->data->$key ); } }
+		public function __unset( $key ) {
+			if ( isset( $this->data->$key ) ) {
+				unset( $this->data->$key );
+			}
+		}
 
 		/**
 		 * Magic method to prevent notices and errors from invalid method calls.
 		 *
 		 * @since 1.0.0
 		 *
-		 * @return void
+		 * @param string $name The method name being called.
+		 * @param array  $args The method arguments.
+		 *
+		 * @return null
 		 */
-		public function __call( $name = '', $args = array() ) { unset( $name, $args ); return null; }
+		public function __call( $name = '', $args = array() ) {
+			unset( $name, $args );
+			return null;
+		}
 
-		/** Private Methods ***************************************************/
+		/* Private Methods ****************************************************/
 
 		/**
 		 * Edit Author Slug global variables.
@@ -212,28 +241,28 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 */
 		private function setup_globals() {
 
-			/** Magic *********************************************************/
+			/* Magic **********************************************************/
 
 			$this->data = new stdClass();
 
-			/** Versions ******************************************************/
+			/* Versions *******************************************************/
 
 			$this->version            = '1.1.2';
 			$this->db_version         = 133;
 			$this->current_db_version = 0;
 
-			/** Paths *********************************************************/
+			/* Paths **********************************************************/
 
 			$this->file            = __FILE__;
 			$this->plugin_dir      = plugin_dir_path( $this->file );
 			$this->plugin_url      = plugin_dir_url( $this->file );
 			$this->plugin_basename = plugin_basename( $this->file );
 
-			/** Miscellaneous *************************************************/
+			/* Miscellaneous **************************************************/
 
 			$this->domain = 'edit-author-slug';
 
-			/** Options *******************************************************/
+			/* Options ********************************************************/
 
 			// Setup author base.
 			$this->author_base = 'author';
@@ -488,7 +517,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 	// Places everyone! The show is starting!
 	ba_eas();
 
-endif; //end class BA_Edit_Author_Slug.
+endif; // End class BA_Edit_Author_Slug.
 
 /**
  * Runs on Edit Author Slug activation.
