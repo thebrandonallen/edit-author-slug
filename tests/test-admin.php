@@ -63,6 +63,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="splinter-master" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span>splinter-master</span>', $output );
 
+		// userid
+		$this->assertContains( '<label title="' . $this->new_current_user . '">', $output );
+		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="' . $this->new_current_user . '" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
+		$this->assertContains( '<span>' . $this->new_current_user . '</span>', $output );
+
 		// Custom
 		$this->assertContains( '<label for="ba_eas_author_slug_custom_radio">', $output );
 		$this->assertContains( '<input type="radio" id="ba_eas_author_slug_custom_radio" name="ba_eas_author_slug" value="\c\u\s\t\o\m" autocapitalize="none" autocorrect="off" maxlength="50">', $output );

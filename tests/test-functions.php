@@ -109,12 +109,18 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$user    = get_userdata( $this->single_user_id );
 		$this->assertEquals( 'splinter-master', $user->user_nicename );
 
+		// Update using lastfirst
+		$this->eas->default_user_nicename = 'userid';
+		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
+		$user    = get_userdata( $this->single_user_id );
+		$this->assertEquals( $this->single_user_id, $user->user_nicename );
+
 		// Update using random string as structure, shouldn't update, so
 		// user_nicename should be same as previous test ('splinter-master')
 		$this->eas->default_user_nicename = 'Cowabunga Dude!';
 		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
 		$user    = get_userdata( $this->single_user_id );
-		$this->assertEquals( 'splinter-master', $user->user_nicename );
+		$this->assertEquals( $this->single_user_id, $user->user_nicename );
 
 		remove_filter( 'ba_eas_do_auto_update', '__return_true', 10 );
 	}

@@ -57,6 +57,9 @@ function ba_eas_show_user_nicename( $user ) {
 		$options['lastfirst'] = $options['lastname'] . '-' . $options['firstname'];
 	}
 
+	// Setup the user id.
+	$options['userid'] = (int) $user->ID;
+
 	/**
 	 * Filters the array of user nicename options.
 	 *
@@ -860,6 +863,7 @@ function ba_eas_default_user_nicename_options_list() {
 		'lastname'    => __( 'lastname',           'edit-author-slug' ),
 		'firstlast'   => __( 'firstname-lastname', 'edit-author-slug' ),
 		'lastfirst'   => __( 'lastname-firstname', 'edit-author-slug' ),
+		'userid'      => __( 'userid',             'edit-author-slug' ),
 	) );
 
 	return (array) $options;
