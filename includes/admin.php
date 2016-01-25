@@ -741,25 +741,8 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 		$structure = 'username';
 	}
 
-	/**
-	 * Filters the array of user nicename structure options.
-	 *
-	 * @since 0.9.0
-	 *
-	 * @param array $options An array of of user nicename structure options.
-	 */
-	$options = (array) apply_filters( 'ba_eas_default_user_nicename_options_list', array(
-		'username'    => __( 'username (Default)', 'edit-author-slug' ),
-		'nickname'    => __( 'nickname',           'edit-author-slug' ),
-		'displayname' => __( 'displayname',        'edit-author-slug' ),
-		'firstname'   => __( 'firstname',          'edit-author-slug' ),
-		'lastname'    => __( 'lastname',           'edit-author-slug' ),
-		'firstlast'   => __( 'firstname-lastname', 'edit-author-slug' ),
-		'lastfirst'   => __( 'lastname-firstname', 'edit-author-slug' ),
-	) );
-
-	// Filter out any duplicates/empties.
-	$options = array_unique( array_filter( array_map( 'trim', $options ) ) );
+	// Get the default nicename options.
+	$options = ba_eas_default_user_nicename_options_list();
 ?>
 
 		<label><span class="screen-reader-text"><?php esc_html_e( 'Default author slug options', 'edit-author-slug' ); ?></span></label>
@@ -818,19 +801,8 @@ function ba_eas_admin_setting_callback_bulk_update_structure() {
 		$structure = 'username';
 	}
 
-	/* Documented in `ba_eas_admin_setting_callback_default_user_nicename()` */
-	$options = (array) apply_filters( 'ba_eas_default_user_nicename_options_list', array(
-		'username'    => __( 'username (Default)', 'edit-author-slug' ),
-		'nickname'    => __( 'nickname',           'edit-author-slug' ),
-		'displayname' => __( 'displayname',        'edit-author-slug' ),
-		'firstname'   => __( 'firstname',          'edit-author-slug' ),
-		'lastname'    => __( 'lastname',           'edit-author-slug' ),
-		'firstlast'   => __( 'firstname-lastname', 'edit-author-slug' ),
-		'lastfirst'   => __( 'lastname-firstname', 'edit-author-slug' ),
-	) );
-
-	// Filter out any duplicates/empties.
-	$options = array_unique( array_filter( array_map( 'trim', $options ) ) );
+	// Get the default nicename options.
+	$options = ba_eas_default_user_nicename_options_list();
 ?>
 
 		<label><span class="screen-reader-text"><?php esc_html_e( 'Default bulk update author slug options', 'edit-author-slug' ); ?></span></label>
@@ -861,6 +833,36 @@ function ba_eas_add_settings_link( $links, $file ) {
 	}
 
 	return $links;
+}
+
+/**
+ * Returns the default nicename options list.
+ *
+ * @since 1.2.0
+ *
+ * @return array
+ */
+function ba_eas_default_user_nicename_options_list() {
+
+	/**
+	 * Filters the array of user nicename structure options.
+	 *
+	 * @since 0.9.0
+	 * @since 1.2.0 Moved filter into it's own wrapper function.
+	 *
+	 * @param array $options An array of of user nicename structure options.
+	 */
+	$options = apply_filters( 'ba_eas_default_user_nicename_options_list', array(
+		'username'    => __( 'username (Default)', 'edit-author-slug' ),
+		'nickname'    => __( 'nickname',           'edit-author-slug' ),
+		'displayname' => __( 'displayname',        'edit-author-slug' ),
+		'firstname'   => __( 'firstname',          'edit-author-slug' ),
+		'lastname'    => __( 'lastname',           'edit-author-slug' ),
+		'firstlast'   => __( 'firstname-lastname', 'edit-author-slug' ),
+		'lastfirst'   => __( 'lastname-firstname', 'edit-author-slug' ),
+	) );
+
+	return (array) $options;
 }
 
 /** Install/Upgrade ***********************************************************/
