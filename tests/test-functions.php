@@ -169,6 +169,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 			'last_name'  => 'Hamato',
 		) );
 
+		$_REQUEST = array( '_wpnonce' => wp_create_nonce( 'edit-author-slug-options' ) );
+
 		$this->eas->default_user_nicename = 'firstlast';
 
 		ba_eas_auto_update_user_nicename_bulk( '1' );
