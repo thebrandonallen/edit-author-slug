@@ -447,7 +447,8 @@ function ba_eas_register_admin_settings() {
 		__( 'Author Base', 'edit-author-slug' ),
 		'ba_eas_admin_setting_callback_author_base',
 		'edit-author-slug',
-		'ba_eas_author_base'
+		'ba_eas_author_base',
+		array( 'label_for' => '_ba_eas_author_base' )
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_author_base', 'ba_eas_admin_setting_sanitize_callback_author_base' );
 
@@ -457,7 +458,8 @@ function ba_eas_register_admin_settings() {
 		__( 'Role-Based Author Base', 'edit-author-slug' ),
 		'ba_eas_admin_setting_callback_do_role_based',
 		'edit-author-slug',
-		'ba_eas_author_base'
+		'ba_eas_author_base',
+		array( 'label_for' => '_ba_eas_do_role_based' )
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_do_role_based', 'intval' );
 
@@ -485,7 +487,8 @@ function ba_eas_register_admin_settings() {
 		__( 'Automatically Update', 'edit-author-slug' ),
 		'ba_eas_admin_setting_callback_do_auto_update',
 		'edit-author-slug',
-		'ba_eas_auto_update'
+		'ba_eas_auto_update',
+		array( 'label_for' => '_ba_eas_do_auto_update' )
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_do_auto_update', 'intval' );
 
@@ -495,7 +498,8 @@ function ba_eas_register_admin_settings() {
 		__( 'Author Slug Structure', 'edit-author-slug' ),
 		'ba_eas_admin_setting_callback_default_user_nicename',
 		'edit-author-slug',
-		'ba_eas_auto_update'
+		'ba_eas_auto_update',
+		array( 'label_for' => '_ba_eas_default_user_nicename' )
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_default_user_nicename', 'sanitize_key' );
 
@@ -513,7 +517,8 @@ function ba_eas_register_admin_settings() {
 		__( 'Bulk Update', 'edit-author-slug' ),
 		'ba_eas_admin_setting_callback_bulk_update',
 		'edit-author-slug',
-		'ba_eas_bulk_update'
+		'ba_eas_bulk_update',
+		array( 'label_for' => '_ba_eas_bulk_update' )
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_bulk_update', 'ba_eas_auto_update_user_nicename_bulk' );
 
@@ -523,7 +528,8 @@ function ba_eas_register_admin_settings() {
 		__( 'Author Slug Structure', 'edit-author-slug' ),
 		'ba_eas_admin_setting_callback_bulk_update_structure',
 		'edit-author-slug',
-		'ba_eas_bulk_update'
+		'ba_eas_bulk_update',
+		array( 'label_for' => '_ba_eas_bulk_update_structure' )
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_bulk_update_structure', '__return_false' );
 }
@@ -604,7 +610,7 @@ function ba_eas_admin_setting_callback_author_base() {
 ?>
 
 		<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php echo esc_attr( $author_base ); ?>" class="regular-text code" />
-		<label><em><?php esc_html_e( "Defaults to 'author'", 'edit-author-slug' ); ?></em></label>
+		<em><?php esc_html_e( "Defaults to 'author'", 'edit-author-slug' ); ?></em>
 
 <?php
 }
@@ -618,7 +624,7 @@ function ba_eas_admin_setting_callback_do_role_based() {
 ?>
 
 		<input class="eas-checkbox" name="_ba_eas_do_role_based" id="_ba_eas_do_role_based" value="1"<?php checked( ba_eas()->do_role_based ); ?> type="checkbox" />
-		<label for="_ba_eas_do_role_based"><?php esc_html_e( 'Set user\'s Author Base according to their role. (The above "Author Base" setting will be used as a fallback.)', 'edit-author-slug' ); ?></label>
+		<?php esc_html_e( 'Set user\'s Author Base according to their role. (The above "Author Base" setting will be used as a fallback.)', 'edit-author-slug' ); ?>
 
 <?php
 }
@@ -724,7 +730,7 @@ function ba_eas_admin_setting_callback_do_auto_update() {
 ?>
 
 		<input class="eas-checkbox" name="_ba_eas_do_auto_update" id="_ba_eas_do_auto_update" value="1"<?php checked( ba_eas()->do_auto_update ); ?> type="checkbox" />
-		<label for="_ba_eas_do_auto_update"><?php esc_html_e( 'Automatically update Author Slug when a user updates their profile.', 'edit-author-slug' ); ?></label>
+		<?php esc_html_e( 'Automatically update Author Slug when a user updates their profile.', 'edit-author-slug' ); ?>
 
 <?php
 }
@@ -748,7 +754,7 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 	$options = ba_eas_default_user_nicename_options_list();
 ?>
 
-		<label><span class="screen-reader-text"><?php esc_html_e( 'Default author slug options', 'edit-author-slug' ); ?></span></label>
+		<span class="screen-reader-text"><?php esc_html_e( 'Default author slug options', 'edit-author-slug' ); ?></span>
 		<select id="_ba_eas_default_user_nicename" name="_ba_eas_default_user_nicename">
 		<?php foreach ( (array) $options as $id => $item ) { ?>
 			<option id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $id ); ?>"<?php selected( $structure, $id ); ?>><?php echo esc_html( $item ); ?></option>
@@ -784,7 +790,7 @@ function ba_eas_admin_setting_callback_bulk_update() {
 ?>
 
 		<input class="eas-checkbox" name="_ba_eas_bulk_update" id="_ba_eas_bulk_update" value="1" type="checkbox" />
-		<label for="_ba_eas_bulk_update"><?php esc_html_e( 'Update all users according to the below Author Slug setting. This will only be run after clicking "Save Changes".', 'edit-author-slug' ); ?></label>
+		<?php esc_html_e( 'Update all users according to the below Author Slug setting. This will only be run after clicking "Save Changes".', 'edit-author-slug' ); ?>
 
 <?php
 }
@@ -808,7 +814,7 @@ function ba_eas_admin_setting_callback_bulk_update_structure() {
 	$options = ba_eas_default_user_nicename_options_list();
 ?>
 
-		<label><span class="screen-reader-text"><?php esc_html_e( 'Default bulk update author slug options', 'edit-author-slug' ); ?></span></label>
+		<span class="screen-reader-text"><?php esc_html_e( 'Default bulk update author slug options', 'edit-author-slug' ); ?></span>
 		<select id="_ba_eas_bulk_update_structure" name="_ba_eas_bulk_update_structure">
 		<?php foreach ( (array) $options as $id => $item ) { ?>
 			<option id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $id ); ?>"<?php selected( $structure, $id ); ?>><?php echo esc_html( $item ); ?></option>
