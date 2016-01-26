@@ -607,10 +607,22 @@ function ba_eas_admin_setting_callback_auto_update_section() {
 function ba_eas_admin_setting_callback_author_base() {
 
 	$author_base = ba_eas_sanitize_author_base( ba_eas()->author_base );
+
+	// Build the demo author link.
+	$author_link = esc_url( home_url( '/' ) );
+
+	if ( ! ba_eas()->remove_front ) {
+		$author_link = $author_link . '<span class="eas-demo-author-base-front">' . esc_html( trim( $GLOBALS['wp_rewrite']->front, '/' ) ) . '</span>/';
+	}
+
+	$author_link = $author_link . '<span class="eas-demo-author-base">' . $author_base . '</span>';
+	$author_link = $author_link . user_trailingslashit( '/author-slug' );
 ?>
 
 		<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php echo esc_attr( $author_base ); ?>" class="regular-text code" />
 		<em><?php esc_html_e( "Defaults to 'author'", 'edit-author-slug' ); ?></em>
+		<br /><br />
+		<strong>Demo:</strong> <em><?php echo $author_link; ?></em>
 
 <?php
 }
