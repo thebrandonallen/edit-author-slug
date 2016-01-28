@@ -420,7 +420,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$this->assertEquals( 'test', get_option( 'rewrite_rules' ) );
 
 		ba_eas_flush_rewrite_rules();
-		$this->assertFalse( get_option( 'rewrite_rules' ) );
+		$this->assertEmpty( get_option( 'rewrite_rules' ) );
 	}
 
 	/**

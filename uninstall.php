@@ -27,4 +27,4 @@ delete_option( '_ba_eas_old_options' );
 delete_option( '_ba_eas_role_slugs' );
 
 // Final flush for good measure.
-delete_option( 'rewrite_rules' );
+update_option( 'rewrite_rules', '' );

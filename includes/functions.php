@@ -508,7 +508,7 @@ function ba_eas_template_include( $template ) {
  * @since 0.9.5
  */
 function ba_eas_flush_rewrite_rules() {
-	delete_option( 'rewrite_rules' );
+	update_option( 'rewrite_rules', '' );
 }
 
 /**
