@@ -1,7 +1,7 @@
 === Edit Author Slug ===
 Contributors: thebrandonallen
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles
-Requires at least: 3.9.10
+Requires at least: 4.0.9
 Tested up to: 4.4.1
 Stable tag: 1.1.2
 License: GPLv2 or later
