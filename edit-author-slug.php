@@ -67,6 +67,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 	 * @property string $plugin_basename
 	 * @property string $domain
 	 * @property string $author_base
+	 * @property bool $remove_front
 	 * @property int $do_auto_update
 	 * @property string $default_user_nicename
 	 * @property int $do_role_based
@@ -273,6 +274,9 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 					$this->current_db_version = absint( $options['db_version'] );
 				}
 			}
+
+			// Load the remove front option.
+			$this->remove_front = (bool) absint( get_option( '_ba_eas_remove_front', 0 ) );
 
 			// Load auto-update option.
 			$this->do_auto_update = (bool) absint( get_option( '_ba_eas_do_auto_update', 0 ) );
