@@ -266,17 +266,6 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::ba_eas_admin_setting_callback_auto_update_section
-	 */
-	function test_ba_eas_admin_setting_callback_auto_update_section() {
-		ob_start();
-		ba_eas_admin_setting_callback_auto_update_section();
-		$output = ob_get_clean();
-
-		$this->assertContains( "Allow Author Slugs to be automatically updated, and set the default Author Slug structure for users. Automatic updating will only occur when a user can&#039;t edit Author Slugs on their own.", $output );
-	}
-
-	/**
 	 * @covers ::ba_eas_admin_setting_callback_author_base
 	 */
 	function test_ba_eas_admin_setting_callback_author_base() {
@@ -289,6 +278,24 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		$this->assertContains( $input, $output );
 		$this->assertContains( $label, $output );
+	}
+
+	/**
+	 * @covers ::ba_eas_admin_setting_callback_remove_front
+	 */
+	function test_ba_eas_admin_setting_callback_remove_front() {
+		$this->markTestIncomplete();
+	}
+
+	/**
+	 * @covers ::ba_eas_admin_setting_callback_auto_update_section
+	 */
+	function test_ba_eas_admin_setting_callback_auto_update_section() {
+		ob_start();
+		ba_eas_admin_setting_callback_auto_update_section();
+		$output = ob_get_clean();
+
+		$this->assertContains( "Allow Author Slugs to be automatically updated, and set the default Author Slug structure for users. Automatic updating will only occur when a user can&#039;t edit Author Slugs on their own.", $output );
 	}
 
 	/**
@@ -454,6 +461,20 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_add_settings_link
 	 */
 	function test_ba_eas_add_settings_link() {
+		$this->markTestIncomplete();
+	}
+
+	/**
+	 * @covers ::ba_eas_default_user_nicename_options_list
+	 */
+	function test_ba_eas_default_user_nicename_options_list() {
+		$this->markTestIncomplete();
+	}
+
+	/**
+	 * @covers ::ba_eas_settings_updateds
+	 */
+	function test_ba_eas_settings_updated() {
 		$this->markTestIncomplete();
 	}
 

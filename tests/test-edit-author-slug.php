@@ -15,6 +15,13 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	}
 
 	/**
+	 * @covers BA_Edit_Author_Slug::setup_globals
+	 */
+	function test_setup_globals() {
+		$this->markTestIncomplete();
+	}
+
+	/**
 	 * @covers BA_Edit_Author_Slug::setup_actions
 	 */
 	function test_setup_actions() {
@@ -36,6 +43,20 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	}
 
 	/**
+	 * @covers BA_Edit_Author_Slug::options_back_compat
+	 */
+	function test_options_back_compat() {
+		$this->markTestIncomplete();
+	}
+
+	/**
+	 * @covers BA_Edit_Author_Slug::load_textdomain
+	 */
+	function test_load_textdomain() {
+		$this->markTestIncomplete();
+	}
+
+	/**
 	 * @covers BA_Edit_Author_Slug::set_role_slugs
 	 */
 	function test_set_role_slugs() {
@@ -50,6 +71,9 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 		$this->eas->set_role_slugs();
 		$this->assertEquals( $this->eas->role_slugs, ba_eas_tests_slugs_extra() );
 		remove_role( 'foot-soldier' );
+
+		$this->eas->set_role_slugs();
+		$this->assertEquals( $this->eas->role_slugs, ba_eas_tests_slugs_default() );
 	}
 
 	/**

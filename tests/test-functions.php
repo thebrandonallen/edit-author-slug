@@ -30,6 +30,24 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Copy of WP's function from 4.4.0. Can be removed when 4.4.0 is the
+	 * minimum version.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @global WP_Rewrite $wp_rewrite
+	 *
+	 * @param string $structure Optional. Permalink structure to set. Default empty.
+	 */
+	public function set_permalink_structure( $structure = '' ) {
+		global $wp_rewrite;
+
+		$wp_rewrite->init();
+		$wp_rewrite->set_permalink_structure( $structure );
+		$wp_rewrite->flush_rules();
+	}
+
+	/**
 	 * @covers ::ba_eas_do_auto_update
 	 */
 	function test_ba_eas_do_auto_update() {
@@ -129,9 +147,11 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 	/**
 	 * @covers ::ba_eas_auto_update_user_nicename_single
+	 *
+	 * @expectedDeprecated ba_eas_auto_update_user_nicename_single
 	 */
 	function test_ba_eas_auto_update_user_nicename_single() {
-		$this->markTestIncomplete();
+		ba_eas_auto_update_user_nicename_single();
 	}
 
 	/**
@@ -333,6 +353,48 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$this->eas->author_base = 'ninja';
 		ba_eas_wp_rewrite_overrides();
 		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, 'ninja' );
+
+
+		$this->set_permalink_structure( '/archives/%post_id%/');
+		$GLOBALS['wp_rewrite']->get_author_permastruct();
+		$this->assertEquals( '/archives/ninja/%author%', $GLOBALS['wp_rewrite']->author_structure );
+		$this->eas->remove_front = true;
+		ba_eas_wp_rewrite_overrides();
+		$this->assertEquals( '/ninja/%author%', $GLOBALS['wp_rewrite']->author_structure );
+		$GLOBALS['wp_rewrite']->front = '/';
+		$this->eas->remove_front = false;
+	}
+
+	/**
+	 * @covers ::ba_eas_remove_front
+	 */
+	function test_ba_eas_remove_front() {
+		$this->assertFalse( ba_eas_remove_front() );
+
+		$this->eas->remove_front = true;
+		$this->assertTrue( ba_eas_remove_front() );
+
+		add_filter( 'ba_eas_remove_front', '__return_false' );
+		$this->assertFalse( ba_eas_remove_front() );
+		remove_filter( 'ba_eas_remove_front', '__return_false' );
+		$this->eas->remove_front = false;
+
+	}
+
+	/**
+	 * @covers ::ba_eas_has_front
+	 */
+	function test_ba_eas_has_front() {
+		$this->assertFalse( ba_eas_has_front() );
+
+		$GLOBALS['wp_rewrite']->front = '/test/';
+		$this->assertTrue( ba_eas_has_front() );
+
+		add_filter( 'ba_eas_has_front', '__return_false' );
+		$this->assertFalse( ba_eas_has_front() );
+		remove_filter( 'ba_eas_has_front', '__return_false' );
+		$GLOBALS['wp_rewrite']->front = '/';
+
 	}
 
 	/**
@@ -340,15 +402,15 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 */
 	function test_ba_eas_do_role_based_author_base() {
 
+		// False tests
+		//add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
+		$this->assertFalse( ba_eas_do_role_based_author_base() );
+		//remove_filter( 'ba_eas_do_role_based_author_base', '__return_false', 10 );
+
 		// True tests
 		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
 		$this->assertTrue( ba_eas_do_role_based_author_base() );
 		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
-
-		// False tests
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
-		$this->assertFalse( ba_eas_do_role_based_author_base() );
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_false', 10 );
 	}
 
 	/**
@@ -390,6 +452,16 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$this->assertEquals( $author_link_ninja, $link );
 
 		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
+
+		add_filter( 'ba_eas_remove_front', '__return_true' );
+		add_filter( 'ba_eas_has_front', '__return_true' );
+
+		$this->set_permalink_structure( '/archives/%post_id%/');
+		$link = ba_eas_author_link( 'http://example.com/archives/author/mastersplinter/', $this->single_user_id );
+		$this->assertEquals( 'http://example.com/author/mastersplinter/', $link );
+
+		remove_filter( 'ba_eas_has_front', '__return_true' );
+		remove_filter( 'ba_eas_remove_front', '__return_true' );
 	}
 
 	/**
@@ -469,6 +541,13 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
 		$this->assertEquals( $expected, ba_eas_author_rewrite_rules( $test ) );
 		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
+	}
+
+	/**
+	 * @covers ::ba_eas_get_user_roles
+	 */
+	function test_ba_eas_get_user_roles() {
+		$this->markTestIncomplete();
 	}
 
 	/**
