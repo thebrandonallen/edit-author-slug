@@ -131,12 +131,7 @@ module.exports = function(grunt) {
 				esprimaOptions:{},
 				verbose: false
 			},
-			build: {
-				files: {
-					src: [BUILD_DIR + EAS_JS]
-				}
-			},
-			src: {
+			core: {
 				files: {
 					src: [SOURCE_DIR + EAS_JS]
 				}
@@ -268,7 +263,7 @@ module.exports = function(grunt) {
 
 	// Build tasks.
 	grunt.registerTask( 'readme', [ 'wp_readme_to_markdown', 'string-replace:readme' ] );
-	grunt.registerTask( 'src',    [ 'jsvalidate:src', 'jshint:core' ] );
+	grunt.registerTask( 'src',    [ 'jsvalidate:core', 'jshint:core' ] );
 	grunt.registerTask( 'build',  [ 'clean:all', 'checktextdomain', 'string-replace:build', 'readme', 'uglify', 'makepot', 'copy:files', 'jsvalidate:build' ] );
 
 	// PHPUnit test task.
