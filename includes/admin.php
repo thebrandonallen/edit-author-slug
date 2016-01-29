@@ -878,14 +878,14 @@ function ba_eas_default_user_nicename_options_list() {
 	 * @param array $options An array of of user nicename structure options.
 	 */
 	$options = apply_filters( 'ba_eas_default_user_nicename_options_list', array(
-		'username'    => __( 'username (Default)', 'edit-author-slug' ),
-		'nickname'    => __( 'nickname',           'edit-author-slug' ),
-		'displayname' => __( 'displayname',        'edit-author-slug' ),
-		'firstname'   => __( 'firstname',          'edit-author-slug' ),
-		'lastname'    => __( 'lastname',           'edit-author-slug' ),
-		'firstlast'   => __( 'firstname-lastname', 'edit-author-slug' ),
-		'lastfirst'   => __( 'lastname-firstname', 'edit-author-slug' ),
-		'userid'      => __( 'userid',             'edit-author-slug' ),
+		'username'    => __( 'username (Default)',    'edit-author-slug' ),
+		'nickname'    => __( 'nickname',              'edit-author-slug' ),
+		'displayname' => __( 'displayname',           'edit-author-slug' ),
+		'firstname'   => __( 'firstname',             'edit-author-slug' ),
+		'lastname'    => __( 'lastname',              'edit-author-slug' ),
+		'firstlast'   => __( 'firstname-lastname',    'edit-author-slug' ),
+		'lastfirst'   => __( 'lastname-firstname',    'edit-author-slug' ),
+		'userid'      => __( 'userid (Experimental)', 'edit-author-slug' ),
 	) );
 
 	return (array) $options;
