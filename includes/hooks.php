@@ -14,8 +14,12 @@ defined( 'ABSPATH' ) || exit;
 // Admin.
 if ( is_admin() ) {
 
-	// Install.
+	// Activation.
 	add_action( 'ba_eas_activation', 'ba_eas_install' );
+	add_action( 'ba_eas_activation', 'ba_eas_flush_rewrite_rules' );
+
+	// Deactivation.
+	add_action( 'ba_eas_deactivation', 'ba_eas_flush_rewrite_rules' );
 
 	// Upgrade.
 	add_action( 'admin_init', 'ba_eas_upgrade', 999 );
@@ -36,7 +40,8 @@ if ( is_admin() ) {
 	add_filter( 'plugin_action_links', 'ba_eas_add_settings_link', 10, 2 );
 
 	// Settings updated.
-	add_action( 'admin_action_update',    'ba_eas_settings_updated' );
+	add_action( 'admin_action_update',     'ba_eas_settings_updated' );
+	add_action( 'ba_eas_settings_updated', 'ba_eas_flush_rewrite_rules' );
 }
 
 // Nicename auto-update actions.

@@ -508,9 +508,6 @@ function ba_eas_activation() {
 	 * @since 0.7.0
 	 */
 	do_action( 'ba_eas_activation' );
-
-	// Pre-emptive courtesy flush in case of existing author base.
-	ba_eas_flush_rewrite_rules();
 }
 
 /**
@@ -528,7 +525,4 @@ function ba_eas_deactivation() {
 	 * @since 0.7.0
 	 */
 	do_action( 'ba_eas_deactivation' );
-
-	// Courtesy flush.
-	delete_option( 'rewrite_rules' );
 }

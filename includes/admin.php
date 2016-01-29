@@ -580,9 +580,6 @@ function ba_eas_admin_setting_sanitize_callback_author_base( $author_base = 'aut
 		}
 	}
 
-	// Courtesy flush.
-	ba_eas_flush_rewrite_rules();
-
 	return $author_base;
 }
 
