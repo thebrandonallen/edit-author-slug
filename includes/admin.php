@@ -450,7 +450,7 @@ function ba_eas_register_admin_settings() {
 		'ba_eas_author_base',
 		array( 'label_for' => '_ba_eas_author_base' )
 	);
-	register_setting( 'edit-author-slug', '_ba_eas_author_base', 'ba_eas_admin_setting_sanitize_callback_author_base' );
+	register_setting( 'edit-author-slug', '_ba_eas_author_base', 'ba_eas_sanitize_author_base' );
 
 	// Role-Based Author Base setting.
 	add_settings_field(
