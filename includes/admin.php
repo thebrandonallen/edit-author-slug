@@ -887,6 +887,41 @@ function ba_eas_default_user_nicename_options_list() {
 	return (array) $options;
 }
 
+/**
+ * Checks to see that we are updating Edit Author Slug settings. If so, we call
+ * `ba_eas_settings_updated` hook.
+ *
+ * This function is called by `admin_action_update` which tells us that the
+ * *intention* is to update. Unfortunately, we can't tell if there are errors at
+ * this point, and there are no (good) hooks to determine this. The benefit to
+ * method, however, is that we can check the nonce for better security than
+ * the other methods. This way, the `ba_eas_settings_updated` is only called if
+ * it's safe to do so.
+ *
+ * @since 1.2.0
+ *
+ * @return void
+ */
+function ba_eas_settings_updated() {
+
+	// Make sure we're on the Edit Author Slug settings page.
+	if ( ! isset( $_REQUEST['option_page'] ) || 'edit-author-slug' !== $_REQUEST['option_page'] ) {
+		return;
+	}
+
+	// Check that a valid nonce was passed.
+	if ( ! isset( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'edit-author-slug-options' ) ) {
+		return;
+	}
+
+	/**
+	 * Fires when `$POST['action'] = update` on our settings page.
+	 *
+	 * @since 1.2.0
+	 */
+	do_action( 'ba_eas_settings_updated' );
+}
+
 /** Install/Upgrade ***********************************************************/
 
 /**

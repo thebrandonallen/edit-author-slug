@@ -34,6 +34,9 @@ if ( is_admin() ) {
 	add_action( 'admin_menu',          'ba_eas_add_settings_menu' );
 	add_action( 'admin_init',          'ba_eas_register_admin_settings' );
 	add_filter( 'plugin_action_links', 'ba_eas_add_settings_link', 10, 2 );
+
+	// Settings updated.
+	add_action( 'admin_action_update',    'ba_eas_settings_updated' );
 }
 
 // Nicename auto-update actions.
