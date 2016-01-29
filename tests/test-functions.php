@@ -48,6 +48,19 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Filters the return of user role filters.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param string $role
+	 *
+	 * @return string
+	 */
+	public function user_role_filter( $role = '' ) {
+		return 'test';
+	}
+
+	/**
 	 * @covers ::ba_eas_do_auto_update
 	 */
 	function test_ba_eas_do_auto_update() {
@@ -544,24 +557,37 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::ba_eas_get_user_roles
+	 * @covers ::ba_eas_get_user_role
 	 */
-	function test_ba_eas_get_user_roles() {
-		$this->markTestIncomplete();
+	function test_ba_eas_get_user_role() {
+
+		// Passed roles array.
+		$role = ba_eas_get_user_role( array( 'administrator', 'foot-soldier' ), $this->single_user_id );
+		$this->assertEquals( 'administrator', $role );
+
+		// No passed roles array.
+		$role = ba_eas_get_user_role( array(), $this->single_user_id );
+		$this->assertEquals( 'subscriber', $role );
+
+		// No passed roles array.
+		add_filter( 'ba_eas_get_user_role', array( $this, 'user_role_filter' )  );
+		$role = ba_eas_get_user_role( array(), $this->single_user_id );
+		$this->assertEquals( 'test', $role );
+		remove_filter( 'ba_eas_get_user_role', array( $this, 'user_role_filter' )  );
 	}
 
 	/**
 	 * @covers ::ba_eas_get_wp_roles
 	 */
 	function test_ba_eas_get_wp_roles() {
-		$this->markTestIncomplete();
+		$this->assertTrue( ba_eas_get_wp_roles() instanceof WP_Roles );
 	}
 
 	/**
 	 * @covers ::ba_eas_get_roles
 	 */
 	function test_ba_eas_get_roles() {
-		$this->markTestIncomplete();
+		$this->assertEquals( ba_eas_tests_roles_default(), ba_eas_get_roles() );
 	}
 
 	/**
