@@ -190,7 +190,7 @@ module.exports = function(grunt) {
 		'string-replace': {
 			dev: {
 				files: {
-					'edit-author-slug.php': 'edit-author-slug.php',
+					'edit-author-slug.php': 'edit-author-slug.php'
 				},
 				options: {
 					replacements: [{
@@ -258,7 +258,7 @@ module.exports = function(grunt) {
 			}
 		},
 		wp_readme_to_markdown: {
-			default: {
+			core: {
 				files: {
 					'readme.md': 'readme.txt'
 				}
