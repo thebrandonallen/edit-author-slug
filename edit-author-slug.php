@@ -57,40 +57,134 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 	 * @since 0.1.0
 	 *
 	 * @final
-	 *
-	 * @property string $version
-	 * @property int $db_version
-	 * @property int $current_db_version
-	 * @property string $file
-	 * @property string $plugin_dir
-	 * @property string $plugin_url
-	 * @property string $plugin_basename
-	 * @property string $domain
-	 * @property string $author_base
-	 * @property bool $remove_front
-	 * @property int $do_auto_update
-	 * @property string $default_user_nicename
-	 * @property int $do_role_based
-	 * @property array $role_slugs
 	 */
 	final class BA_Edit_Author_Slug {
 
-		/** Magic *************************************************************/
+		/**
+		 * The plugin version.
+		 *
+		 * @since  0.8.0
+		 * @access public
+		 * @var    string
+		 */
+		public $version = '1.1.2';
 
 		/**
-		 * Edit Author Slug uses many variables, several of which can be filtered
-		 * to customize the way it operates. Most of these variables are stored
-		 * in a private array that gets updated with the help of PHP magic methods.
+		 * The database version.
 		 *
-		 * This is a precautionary measure, to avoid potential errors produced by
-		 * unanticipated direct manipulation of Edit Author Slug's run-time data.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @see BA_Edit_Author_Slug::setup_globals()
-		 * @var object
+		 * @since  0.8.0
+		 * @access public
+		 * @var    int
 		 */
-		private $data;
+		public $db_version = 133;
+
+		/**
+		 * The current installed database version.
+		 *
+		 * @since  0.8.0
+		 * @access public
+		 * @var    int
+		 */
+		public $current_db_version = 0;
+
+		/**
+		 * The path to this file.
+		 *
+		 * @since  0.7.0
+		 * @access public
+		 * @var    string
+		 */
+		public $file = __FILE__;
+
+		/**
+		 * The path to the Edit AUthor Slug directory.
+		 *
+		 * @since  0.7.0
+		 * @access public
+		 * @var    string
+		 */
+		public $plugin_dir = '';
+
+		/**
+		 * The URL for the Edit Author Slug directory.
+		 *
+		 * @since  0.7.0
+		 * @access public
+		 * @var    string
+		 */
+		public $plugin_url = '';
+
+		/**
+		 * The basename for the Edit Author Slug directory.
+		 *
+		 * @since  0.8.0
+		 * @access public
+		 * @var    string
+		 */
+		public $plugin_basename = '';
+
+		/**
+		 * The text domain for Edit Author Slug.
+		 *
+		 * @since  0.9.6
+		 * @access public
+		 * @var    string
+		 */
+		public $domain = 'edit-author-slug';
+
+		/**
+		 * The author base.
+		 *
+		 * @since  0.7.0
+		 * @access public
+		 * @var    string
+		 */
+		public $author_base = 'author';
+
+		/**
+		 * The remove front option.
+		 *
+		 * @since  1.2.0
+		 * @access public
+		 * @var    bool
+		 */
+		public $remove_front = false;
+
+		/**
+		 * The auto update option.
+		 *
+		 * @since  1.0.0
+		 * @access public
+		 * @var    bool
+		 */
+		public $do_auto_update = false;
+
+		/**
+		 * The default user nicename option.
+		 *
+		 * @since  1.0.0
+		 * @access public
+		 * @var    string
+		 */
+		public $default_user_nicename = 'username';
+
+		/**
+		 * The role-based option.
+		 *
+		 * @since  1.0.0
+		 * @access public
+		 * @var    bool
+		 */
+		public $do_role_based = false;
+
+		/**
+		 * The role slugs array.
+		 *
+		 * @since  1.0.0
+		 * @access public
+		 * @var    array
+		 */
+		public $role_slugs = array();
 
 		/** Singleton *********************************************************/
 
@@ -151,61 +245,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'edit-author-slug' ), '1.0' );
 		}
 
-		/**
-		 * Magic method for checking the existence of a certain custom field.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string $key The object property to check.
-		 *
-		 * @return bool True if the field is set.
-		 */
-		public function __isset( $key ) {
-			return isset( $this->data->$key );
-		}
-
-		/**
-		 * Magic method for getting BA_Edit_Author_Slug variables.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string $key The object property to retrieve.
-		 *
-		 * @return mixed The field value if it exists. Null otherwise.
-		 */
-		public function __get( $key ) {
-			return isset( $this->data->$key ) ? $this->data->$key : null;
-		}
-
-		/**
-		 * Magic method for setting BA_Edit_Author_Slug variables.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string $key   The object property to set.
-		 * @param mixed  $value The new value for the object property.
-		 *
-		 * @return void
-		 */
-		public function __set( $key, $value ) {
-			$this->data->$key = $value;
-		}
-
-		/**
-		 * Magic method for unsetting BA_Edit_Author_Slug variables.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string $key The object property to unset.
-		 *
-		 * @return void
-		 */
-		public function __unset( $key ) {
-			if ( isset( $this->data->$key ) ) {
-				unset( $this->data->$key );
-			}
-		}
-
 		/* Private Methods ****************************************************/
 
 		/**
@@ -217,31 +256,13 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 */
 		private function setup_globals() {
 
-			/* Magic **********************************************************/
-
-			$this->data = new stdClass();
-
-			/* Versions *******************************************************/
-
-			$this->version            = '1.1.2';
-			$this->db_version         = 133;
-			$this->current_db_version = 0;
-
 			/* Paths **********************************************************/
 
-			$this->file            = __FILE__;
 			$this->plugin_dir      = plugin_dir_path( $this->file );
 			$this->plugin_url      = plugin_dir_url( $this->file );
 			$this->plugin_basename = plugin_basename( $this->file );
 
-			/* Miscellaneous **************************************************/
-
-			$this->domain = 'edit-author-slug';
-
 			/* Options ********************************************************/
-
-			// Setup author base.
-			$this->author_base = 'author';
 
 			// Load the remove front option.
 			$this->remove_front = (bool) absint( get_option( '_ba_eas_remove_front', 0 ) );
@@ -253,15 +274,11 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			$default_user_nicename = get_option( '_ba_eas_default_user_nicename' );
 			$default_user_nicename = sanitize_key( $default_user_nicename );
 			if ( empty( $default_user_nicename ) ) {
-				$default_user_nicename = 'username';
+				$this->default_user_nicename = $default_user_nicename;
 			}
-			$this->default_user_nicename = $default_user_nicename;
 
 			// Load role-based author slug option.
 			$this->do_role_based = (bool) absint( get_option( '_ba_eas_do_role_based', 0 ) );
-
-			// Load role-based author slug option.
-			$this->role_slugs = array();
 		}
 
 		/**
