@@ -435,11 +435,14 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertNotContains( $label, $output );
 
 		// Empty name.
-		$this->eas->role_slugs['administrator']['name'] = '';
+		$role_slugs = $this->eas->role_slugs;
+		$role_slugs['administrator']['name'] = '';
+		$this->eas->role_slugs = $role_slugs;
 		ob_start();
 		ba_eas_admin_setting_callback_role_slugs();
 		$output = ob_get_clean();
-		$this->eas->role_slugs['administrator']['name'] = 'Administrator';
+		$role_slugs['administrator']['name'] = 'Administrator';
+		$this->eas->role_slugs = $role_slugs;
 
 		$input = 'name="_ba_eas_role_slugs[administrator][slug]"';
 		$label = 'Administrator';
@@ -447,11 +450,14 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertNotContains( $label, $output );
 
 		// Empty slug
-		$this->eas->role_slugs['administrator']['slug'] = '';
+		$role_slugs = $this->eas->role_slugs;
+		$role_slugs['administrator']['slug'] = '';
+		$this->eas->role_slugs = $role_slugs;
 		ob_start();
 		ba_eas_admin_setting_callback_role_slugs();
 		$output = ob_get_clean();
-		$this->eas->role_slugs['administrator']['slug'] = 'administrator';
+		$role_slugs['administrator']['slug'] = 'Administrator';
+		$this->eas->role_slugs = $role_slugs;
 
 		$input = 'name="_ba_eas_role_slugs[administrator][slug]"';
 		$label = 'Administrator';
