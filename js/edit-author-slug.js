@@ -31,7 +31,7 @@ jQuery(document).ready(function($){
 
 	// Watch for clicks on the `eas-checkbox` options.
 	$('input[class="eas-checkbox"]').on('click', function(){
-		if ( $(this).is(':checked') ) {
+		if ( $(this).prop('checked') ) {
 			$(this).parents('tr').next('tr').fadeIn('slow', function(){$(this).removeClass('hidden');});
 		} else {
 			$(this).parents('tr').next('tr').fadeOut('fast', function(){$(this).addClass('hidden');});
