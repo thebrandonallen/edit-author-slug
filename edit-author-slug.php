@@ -451,7 +451,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 	 *
 	 * Example: <?php $ba_eas = ba_eas(); ?>
 	 *
-	 * @return BA_Edit_Author_Slug The one true BA_Edit_Author_Slug Instance.
+	 * @return BA_Edit_Author_Slug|null The one true BA_Edit_Author_Slug Instance.
 	 */
 	function ba_eas() {
 		return BA_Edit_Author_Slug::instance();
