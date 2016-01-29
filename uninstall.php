@@ -25,6 +25,7 @@ delete_option( '_ba_eas_do_auto_update' );
 delete_option( '_ba_eas_do_role_based' );
 delete_option( '_ba_eas_old_options' );
 delete_option( '_ba_eas_role_slugs' );
+delete_option( '_ba_eas_remove_front' );
 
 // Final flush for good measure.
 update_option( 'rewrite_rules', '' );
