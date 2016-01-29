@@ -204,7 +204,14 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_show_user_nicename_scripts
 	 */
 	function test_ba_eas_show_user_nicename_scripts() {
-		$this->markTestIncomplete();
+
+		// Valid page.
+		ba_eas_show_user_nicename_scripts( 'profile.php' );
+		$this->assertNotEmpty( $GLOBALS['wp_scripts']->registered['edit-author-slug'] );
+
+		// Invalid page.
+		ba_eas_show_user_nicename_scripts( 'admin.php' );
+		$this->assertNotEmpty( $GLOBALS['wp_scripts']->registered['edit-author-slug'] );
 	}
 
 	/**
@@ -228,7 +235,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_settings_page_html
 	 */
 	function test_ba_eas_settings_page_html() {
-		$this->markTestIncomplete();
+		ob_start();
+		ba_eas_settings_page_html();
+		$output = ob_get_clean();
+
+		$this->assertContains( '<h1>Edit Author Slug Settings</h1>', $output );
 	}
 
 	/**
@@ -284,7 +295,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_admin_setting_callback_remove_front
 	 */
 	function test_ba_eas_admin_setting_callback_remove_front() {
-		$this->markTestIncomplete();
+		ob_start();
+		ba_eas_admin_setting_callback_remove_front();
+		$output = ob_get_clean();
+
+		$this->assertContains( '<input name="_ba_eas_remove_front" id="_ba_eas_remove_front" value="1" type="checkbox" />', $output );
 	}
 
 	/**
@@ -393,6 +408,30 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$label = 'Ninja';
 		$this->assertNotContains( $input, $output );
 		$this->assertNotContains( $label, $output );
+
+		// Empty name.
+		ba_eas()->role_slugs['administrator']['name'] = '';
+		ob_start();
+		ba_eas_admin_setting_callback_role_slugs();
+		$output = ob_get_clean();
+		$this->eas->role_slugs['administrator']['name'] = 'Administrator';
+
+		$input = 'name="_ba_eas_role_slugs[administrator][slug]"';
+		$label = 'Administrator';
+		$this->assertNotContains( $input, $output );
+		$this->assertNotContains( $label, $output );
+
+		// Empty slug
+		ba_eas()->role_slugs['administrator']['slug'] = '';
+		ob_start();
+		ba_eas_admin_setting_callback_role_slugs();
+		$output = ob_get_clean();
+		$this->eas->role_slugs['administrator']['slug'] = 'administrator';
+
+		$input = 'name="_ba_eas_role_slugs[administrator][slug]"';
+		$label = 'Administrator';
+		$this->assertContains( $input, $output );
+		$this->assertContains( $label, $output );
 	}
 
 	/**
@@ -421,7 +460,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_admin_setting_callback_default_user_nicename
 	 */
 	function test_ba_eas_admin_setting_callback_default_user_nicename() {
-		$this->markTestIncomplete();
+		ob_start();
+		ba_eas_admin_setting_callback_default_user_nicename();
+		$output = ob_get_clean();
+
+		$this->assertContains( '<select id="_ba_eas_default_user_nicename" name="_ba_eas_default_user_nicename">', $output );
 	}
 
 	/**
@@ -454,7 +497,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_admin_setting_callback_bulk_update_structure
 	 */
 	function test_ba_eas_admin_setting_callback_bulk_update_structure() {
-		$this->markTestIncomplete();
+		ob_start();
+		ba_eas_admin_setting_callback_bulk_update_structure();
+		$output = ob_get_clean();
+
+		$this->assertContains( '<select id="_ba_eas_bulk_update_structure" name="_ba_eas_bulk_update_structure">', $output );
 	}
 
 	/**
@@ -468,7 +515,18 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_default_user_nicename_options_list
 	 */
 	function test_ba_eas_default_user_nicename_options_list() {
-		$this->markTestIncomplete();
+		$options = array(
+			'username'    => __( 'username (Default)',    'edit-author-slug' ),
+			'nickname'    => __( 'nickname',              'edit-author-slug' ),
+			'displayname' => __( 'displayname',           'edit-author-slug' ),
+			'firstname'   => __( 'firstname',             'edit-author-slug' ),
+			'lastname'    => __( 'lastname',              'edit-author-slug' ),
+			'firstlast'   => __( 'firstname-lastname',    'edit-author-slug' ),
+			'lastfirst'   => __( 'lastname-firstname',    'edit-author-slug' ),
+			'userid'      => __( 'userid (Experimental)', 'edit-author-slug' ),
+		);
+
+		$this->assertSame( $options, ba_eas_default_user_nicename_options_list() );
 	}
 
 	/**
