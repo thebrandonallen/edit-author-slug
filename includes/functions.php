@@ -403,6 +403,25 @@ function ba_eas_wp_rewrite_overrides() {
 }
 
 /**
+ * Determines if `WP_Rewrite::front` is anything other than `/`.
+ *
+ * @since 1.2.0
+ *
+ * @return bool
+ */
+function ba_eas_has_front() {
+
+	/**
+	 * Filters the return of the `ba_eas_has_front` option.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param bool $has_front The `remove_front` option.
+	 */
+	return (bool) apply_filters( 'ba_eas_has_front', '/' !== $GLOBALS['wp_rewrite']->front );
+}
+
+/**
  * Determines if we should do a role-based author base
  *
  * @since 1.0.0
