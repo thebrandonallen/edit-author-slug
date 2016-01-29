@@ -561,24 +561,6 @@ function ba_eas_admin_setting_callback_author_base_section() {
 }
 
 /**
- * Sanitize the author base and update options/globals where appropriate.
- *
- * Rewrite rules are also flushed.
- *
- * @since 1.2.0
- *
- * @deprecated 1.2.0
- *
- * @param string $author_base Defaults to `author`.
- *
- * @return string The sanitized author base.
- */
-function ba_eas_admin_setting_sanitize_callback_author_base( $author_base = 'author' ) {
-	_deprecated_function( __FUNCTION__, '1.2.0' );
-	return ba_eas_sanitize_author_base( $author_base );
-}
-
-/**
  * Add default user nicename settings section.
  *
  * @since 0.9.0

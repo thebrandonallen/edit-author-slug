@@ -292,15 +292,6 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::ba_eas_admin_setting_sanitize_callback_author_base
-	 *
-	 * @expectedDeprecated ba_eas_admin_setting_sanitize_callback_author_base
-	 */
-	function test_ba_eas_admin_setting_sanitize_callback_author_base() {
-		ba_eas_admin_setting_sanitize_callback_author_base();
-	}
-
-	/**
 	 * @covers ::ba_eas_admin_setting_callback_do_role_based
 	 */
 	function test_ba_eas_admin_setting_callback_do_role_based() {
