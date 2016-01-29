@@ -319,7 +319,32 @@ function ba_eas_sanitize_nicename( $nicename = '', $strict = true ) {
  * @return string The author base.
  */
 function ba_eas_sanitize_author_base( $author_base = 'author' ) {
-	return ba_eas()->sanitize_author_base( $author_base );
+
+	// Store the author base as passed.
+	$original_author_base = $author_base;
+
+	// Only do extra sanitization when needed.
+	if ( ! empty( $author_base ) || 'author' !== $author_base ) {
+
+		// Split the author base string on forward slashes.
+		$parts = array_filter( explode( '/', $author_base ) );
+
+		// Sanitize the parts, and put them back together.
+		$author_base = implode( '/', array_map( 'sanitize_title', $parts ) );
+	}
+
+	// Always default to `author`.
+	if ( empty( $author_base ) ) {
+		$author_base = 'author';
+	}
+
+	/**
+	 * Filters the sanitized author base.
+	 *
+	 * @param string $author_base          The sanitized author base.
+	 * @param string $original_author_base The unsanitized author base.
+	 */
+	return apply_filters( 'ba_eas_sanitize_author_base', $author_base, $original_author_base );
 }
 
 /**

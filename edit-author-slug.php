@@ -318,7 +318,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			if ( $base = get_option( '_ba_eas_author_base' ) ) {
 
 				// Sanitize the db value.
-				$base = $this->sanitize_author_base( $base );
+				$base = ba_eas_sanitize_author_base( $base );
 
 				// Author base.
 				if ( ! empty( $base ) ) {
@@ -333,7 +333,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 				// Sanitize the db value.
 				if ( ! empty( $options['author_base'] ) ) {
-					$base = $this->sanitize_author_base( $options['author_base'] );
+					$base = ba_eas_sanitize_author_base( $options['author_base'] );
 				}
 
 				// Author base.
@@ -369,44 +369,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			// Look in wp-content/plugins/edit-author-slug/languages first.
 			// Fallback to wp-content/languages/plugins.
 			load_plugin_textdomain( $this->domain, false, dirname( $this->plugin_basename ) . '/languages/' );
-		}
-
-		/**
-		 * Sanitize author base and add to database.
-		 *
-		 * @since 1.2.0
-		 *
-		 * @param string $author_base Author base to be sanitized.
-		 *
-		 * @return string The author base.
-		 */
-		public function sanitize_author_base( $author_base = 'author' ) {
-
-			// Store the author base as passed.
-			$original_author_base = $author_base;
-
-			// Only do extra sanitization when needed.
-			if ( ! empty( $author_base ) || 'author' !== $author_base ) {
-
-				// Split the author base string on forward slashes.
-				$parts = array_filter( explode( '/', $author_base ) );
-
-				// Sanitize the parts, and put them back together.
-				$author_base = implode( '/', array_map( 'sanitize_title', $parts ) );
-			}
-
-			// Always default to `author`.
-			if ( empty( $author_base ) ) {
-				$author_base = 'author';
-			}
-
-			/**
-			 * Filters the sanitized author base.
-			 *
-			 * @param string $author_base          The sanitized author base.
-			 * @param string $original_author_base The unsanitized author base.
-			 */
-			return apply_filters( 'ba_eas_sanitize_author_base', $author_base, $original_author_base );
 		}
 
 		/**
