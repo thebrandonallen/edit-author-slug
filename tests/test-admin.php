@@ -293,18 +293,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
 	 * @covers ::ba_eas_admin_setting_sanitize_callback_author_base
+	 *
+	 * @expectedDeprecated ba_eas_admin_setting_sanitize_callback_author_base
 	 */
 	function test_ba_eas_admin_setting_sanitize_callback_author_base() {
-
-		$this->assertEquals( 'author', $GLOBALS['wp_rewrite']->author_base );
-
-		ba_eas_admin_setting_sanitize_callback_author_base( 'ninja' );
-		$this->assertEquals( 'ninja', $GLOBALS['wp_rewrite']->author_base );
-		$this->assertEquals( 'ninja', get_option( '_ba_eas_author_base' ) );
-		$this->assertEquals( 'ninja', ba_eas()->author_base );
-
-		// Reset author base
-		ba_eas_admin_setting_sanitize_callback_author_base( 'author' );
+		ba_eas_admin_setting_sanitize_callback_author_base();
 	}
 
 	/**

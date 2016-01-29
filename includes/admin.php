@@ -554,33 +554,15 @@ function ba_eas_admin_setting_callback_author_base_section() {
  *
  * @since 1.2.0
  *
+ * @deprecated 1.2.0
+ *
  * @param string $author_base Defaults to `author`.
  *
  * @return string The sanitized author base.
  */
 function ba_eas_admin_setting_sanitize_callback_author_base( $author_base = 'author' ) {
-
-	// Edit Author Slug instance.
-	$ba_eas = ba_eas();
-
-	// Sanitize the author base.
-	$author_base = ba_eas_sanitize_author_base( $author_base );
-
-	// Do we need to update the author_base.
-	if ( $author_base !== $ba_eas->author_base ) {
-		// Setup the new author_base global.
-		$ba_eas->author_base = $author_base;
-
-		// Update options with new author_base.
-		update_option( '_ba_eas_author_base', $author_base );
-
-		// Update the author_base in the WP_Rewrite object.
-		if ( ! empty( $author_base ) ) {
-			$GLOBALS['wp_rewrite']->author_base = $author_base;
-		}
-	}
-
-	return $author_base;
+	_deprecated_function( __FUNCTION__, '1.2.0' );
+	return ba_eas_sanitize_author_base( $author_base );
 }
 
 /**
