@@ -53,8 +53,10 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 
 = 1.2.0 =
 * Allow forward slashes in the author base.
-* Improve display on the settings page and storing of role slugs.
+* Improve display on the settings page, and storing, of role slugs.
 * Packaged translations are now removed. Anyone interested in translating the plugin should do so at [Translate WordPress](https://translate.wordpress.org/projects/wp-plugins/edit-author-slug).
+* EXPERIMENTAL: Added the ability to set the author slug to a user's numeric id. While I have tested this, I can't be sure that no one's site will implode.
+* Added ability to remove the front portion of author links.
 
 = 1.1.2 =
 * Fix loading of minified JS in the admin. Props nuyensgert.
