@@ -27,6 +27,19 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Helper function to filter the return of nicename filters.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param string $nicename
+	 *
+	 * @return string
+	 */
+	public function user_nicename_filter( $nicename = '' ) {
+		return 'test';
+	}
+
+	/**
 	 * @covers ::ba_eas_show_user_nicename
 	 */
 	function test_ba_eas_show_user_nicename() {
@@ -163,6 +176,18 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
 		$this->assertEquals( 'assertion-2', $user->user_nicename );
 		$this->assertEquals( '<strong>ERROR</strong>: The author slug, <strong><em>admin</em></strong>, already exists. Please try something different.', $errors->get_error_message( 'user_nicename_exists' ) );
+
+		unset( $errors );
+		$errors = new WP_Error;
+
+		$_POST = array(
+			'ba_eas_author_slug' => 'admin',
+		);
+
+		add_filter( 'ba_eas_pre_update_user_nicename', array( $this, 'user_nicename_filter' ) );
+		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
+		$this->assertEquals( 'test', $user->user_nicename );
+		remove_filter( 'ba_eas_pre_update_user_nicename', array( $this, 'user_nicename_filter' ) );
 
 		unset( $errors );
 	}
@@ -508,7 +533,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_add_settings_link
 	 */
 	function test_ba_eas_add_settings_link() {
-		$this->markTestIncomplete();
+		$links = ba_eas_add_settings_link( array(), ba_eas()->plugin_basename );
+		$this->assertEquals( '<a href="http://example.org/wp-admin/options-general.php?page=edit-author-slug">Settings</a>', $links[0] );
 	}
 
 	/**
@@ -530,10 +556,37 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::ba_eas_settings_updateds
+	 * @covers ::ba_eas_settings_updated
 	 */
 	function test_ba_eas_settings_updated() {
-		$this->markTestIncomplete();
+
+		// Legitimate request.
+		$_REQUEST = array(
+			'_wpnonce' => wp_create_nonce( 'edit-author-slug-options' ),
+			'option_page' => 'edit-author-slug',
+		);
+
+		ba_eas_settings_updated();
+		$this->assertSame( 1, did_action( 'ba_eas_settings_updated' ) );
+
+		// Bad nonce.
+		$_REQUEST = array(
+			'_wpnonce' => wp_create_nonce( 'edit-author-slug-settings' ),
+			'option_page' => 'edit-author-slug',
+		);
+
+		ba_eas_settings_updated();
+		$this->assertSame( 1, did_action( 'ba_eas_settings_updated' ) );
+
+		// Wrong page.
+		$_REQUEST = array(
+			'_wpnonce' => wp_create_nonce( 'edit-author-slug-options' ),
+			'option_page' => 'test',
+		);
+
+		ba_eas_settings_updated();
+		$this->assertSame( 1, did_action( 'ba_eas_settings_updated' ) );
+
 	}
 
 	/**
