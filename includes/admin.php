@@ -452,6 +452,19 @@ function ba_eas_register_admin_settings() {
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_author_base', 'ba_eas_sanitize_author_base' );
 
+	// Remove front setting.
+	if ( ba_eas_has_front() ) {
+		add_settings_field(
+			'_ba_eas_remove_front',
+			__( 'Remove Front', 'edit-author-slug' ),
+			'ba_eas_admin_setting_callback_remove_front',
+			'edit-author-slug',
+			'ba_eas_author_base',
+			array( 'label_for' => '_ba_eas_remove_front' )
+		);
+		register_setting( 'edit-author-slug', '_ba_eas_remove_front', 'intval' );
+	}
+
 	// Role-Based Author Base setting.
 	add_settings_field(
 		'_ba_eas_do_role_based',
@@ -589,11 +602,7 @@ function ba_eas_admin_setting_callback_author_base() {
 
 	// Build the demo author link.
 	$author_link = esc_url( home_url( '/' ) );
-
-	if ( ! ba_eas()->remove_front ) {
-		$author_link = $author_link . '<span class="eas-demo-author-base-front">' . esc_html( trim( $GLOBALS['wp_rewrite']->front, '/' ) ) . '</span>/';
-	}
-
+	$author_link = $author_link . '<span class="eas-demo-author-base-front">' . esc_html( trim( $GLOBALS['wp_rewrite']->front, '/' ) ) . '/</span>';
 	$author_link = $author_link . '<span class="eas-demo-author-base">' . $author_base . '</span>';
 	$author_link = $author_link . user_trailingslashit( '/author-slug' );
 ?>
@@ -602,6 +611,22 @@ function ba_eas_admin_setting_callback_author_base() {
 		<em><?php esc_html_e( "Defaults to 'author'", 'edit-author-slug' ); ?></em>
 		<br /><br />
 		<strong>Demo:</strong> <em><?php echo $author_link; ?></em>
+
+<?php
+}
+
+/**
+ * Add the remove front settings field.
+ *
+ * @since 1.2.0
+ *
+ * @return void
+ */
+function ba_eas_admin_setting_callback_remove_front() {
+?>
+
+		<input name="_ba_eas_remove_front" id="_ba_eas_remove_front" value="1"<?php checked( ba_eas()->remove_front ); ?> type="checkbox" />
+		<?php esc_html_e( 'Remove the "front" portion of the author permalink structure.', 'edit-author-slug' ); ?>
 
 <?php
 }

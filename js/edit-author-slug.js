@@ -1,5 +1,19 @@
 jQuery(document).ready(function($){
 
+	// Front show/hide.
+	if ( $('input[name="_ba_eas_remove_front"]').prop('checked') ) {
+		$('span[class="eas-demo-author-base-front"]').addClass('hidden');
+	}
+	
+	// Watch for clicks on the `_ba_eas_remove_front` checkbox.
+	$('input[name="_ba_eas_remove_front"]').on('click', function(){
+		if ( $(this).prop('checked') ) {
+			$('span[class="eas-demo-author-base-front"]').fadeOut('fast', function(){$(this).addClass('hidden');});
+		} else {
+			$('span[class="eas-demo-author-base-front hidden"]').fadeIn('slow', function(){$(this).removeClass('hidden');});
+		}
+	});
+	
 	// Make example nicenames clickable.
 	$('input[name="ba_eas_author_slug"]').click(function(){
 		if ( 'ba_eas_author_slug_custom_radio' !== $(this).attr('id') ) {
