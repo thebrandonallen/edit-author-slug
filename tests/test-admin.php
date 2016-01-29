@@ -395,7 +395,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertContains( $input, $output );
 		$this->assertContains( $label, $output );
 
-		ba_eas()->role_slugs = array(
+		$this->eas->role_slugs = array(
 			'administrator' => array(
 				'name' => 'Administrator',
 				'slug' => 'administrator',
@@ -435,7 +435,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertNotContains( $label, $output );
 
 		// Empty name.
-		ba_eas()->role_slugs['administrator']['name'] = '';
+		$this->eas->role_slugs['administrator']['name'] = '';
 		ob_start();
 		ba_eas_admin_setting_callback_role_slugs();
 		$output = ob_get_clean();
@@ -447,7 +447,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertNotContains( $label, $output );
 
 		// Empty slug
-		ba_eas()->role_slugs['administrator']['slug'] = '';
+		$this->eas->role_slugs['administrator']['slug'] = '';
 		ob_start();
 		ba_eas_admin_setting_callback_role_slugs();
 		$output = ob_get_clean();
@@ -533,7 +533,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_add_settings_link
 	 */
 	function test_ba_eas_add_settings_link() {
-		$links = ba_eas_add_settings_link( array(), ba_eas()->plugin_basename );
+		$links = ba_eas_add_settings_link( array(), $this->eas->plugin_basename );
 		$this->assertEquals( '<a href="http://example.org/wp-admin/options-general.php?page=edit-author-slug">Settings</a>', $links[0] );
 	}
 
