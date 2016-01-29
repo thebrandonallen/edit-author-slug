@@ -221,6 +221,22 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			return $instance;
 		}
 
+		/**
+		 * Magic method to prevent notices and errors from invalid method calls.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $name The method name being called.
+		 * @param array  $args The method arguments.
+		 *
+		 * @return null
+		 */
+		public function __call( $name = '', $args = array() ) {
+			_doing_it_wrong( "BA_Edit_Author_Slug::{$name}", esc_html__( 'Method does not exist.', 'edit-author-slug' ), '1.0.0' );
+			unset( $name, $args );
+			return null;
+		}
+
 		/** Magic Methods *****************************************************/
 
 		/**
