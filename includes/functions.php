@@ -403,6 +403,25 @@ function ba_eas_wp_rewrite_overrides() {
 }
 
 /**
+ * Determines if we should remove the `front` portion of the author structure.
+ *
+ * @since 1.2.0
+ *
+ * @return bool
+ */
+function ba_eas_remove_front() {
+
+	/**
+	 * Filters the return of the `remove_front` option.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param bool $remove_front The `remove_front` option.
+	 */
+	return (bool) apply_filters( 'ba_eas_remove_front', ba_eas()->remove_front );
+}
+
+/**
  * Determines if `WP_Rewrite::front` is anything other than `/`.
  *
  * @since 1.2.0
