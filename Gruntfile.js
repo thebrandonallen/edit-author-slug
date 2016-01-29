@@ -82,6 +82,15 @@ module.exports = function(grunt) {
 				]
 			}
 		},
+		jscs: {
+			core: {
+				src: [ EAS_JS ].concat( EAS_EXCLUDED_JS ),
+				options: {
+					preset: 'wordpress',
+					fix: true
+				}
+			}
+		},
 		jshint: {
 			options: grunt.file.readJSON( '.jshintrc' ),
 			grunt: {
@@ -263,7 +272,7 @@ module.exports = function(grunt) {
 
 	// Build tasks.
 	grunt.registerTask( 'readme', [ 'wp_readme_to_markdown', 'string-replace:readme' ] );
-	grunt.registerTask( 'src',    [ 'jsvalidate:core', 'jshint:core' ] );
+	grunt.registerTask( 'src',    [ 'jsvalidate:core', 'jshint:core', 'jscs:core' ] );
 	grunt.registerTask( 'build',  [ 'clean:all', 'checktextdomain', 'string-replace:build', 'readme', 'uglify', 'makepot', 'copy:files', 'jsvalidate:build' ] );
 
 	// PHPUnit test task.
