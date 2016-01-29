@@ -23,8 +23,10 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	public function tearDown() {
 		parent::tearDown();
 
-		$this->eas->author_base = 'author';
-		$this->eas->role_slugs  = ba_eas_tests_slugs_default();
+		// Reset some globals to their defaults.
+		$this->eas->author_base             = 'author';
+		$this->eas->role_slugs              = ba_eas_tests_slugs_default();
+		$GLOBALS['wp_rewrite']->author_base = 'author';
 	}
 
 	/**
@@ -313,6 +315,24 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$this->assertTrue( ba_eas_nicename_is_ascii( 'leonardo-hamato' ) );
 		$this->assertTrue( ba_eas_nicename_is_ascii( 'āēīōūǖĀĒĪŌŪǕ' ) );
 		$this->assertFalse( ba_eas_nicename_is_ascii( '作者' ) );
+	}
+
+	/**
+	 * @covers ::ba_eas_wp_rewrite_overrides
+	 */
+	function test_ba_eas_wp_rewrite_overrides() {
+		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, 'author' );
+
+		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+
+		ba_eas_wp_rewrite_overrides();
+		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, '%ba_eas_author_role%' );
+
+		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
+
+		$this->eas->author_base = 'ninja';
+		ba_eas_wp_rewrite_overrides();
+		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, 'ninja' );
 	}
 
 	/**

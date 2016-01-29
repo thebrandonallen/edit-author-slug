@@ -376,6 +376,33 @@ function ba_eas_nicename_is_ascii( $nicename = '' ) {
 /** Author Base ***************************************************************/
 
 /**
+ * Overrides the WP_Rewrite properties, `author_base` and `author_structure`,
+ * when appropriate.
+ *
+ * @since 1.2.0
+ *
+ * @return void
+ */
+function ba_eas_wp_rewrite_overrides() {
+
+	// Set default author base.
+	$author_base = 'author';
+
+	// Set to our author base if it exists.
+	if ( ! empty( ba_eas()->author_base ) ) {
+		$author_base = ba_eas()->author_base;
+	}
+
+	// If doing role-based, set accordingly.
+	if ( ba_eas_do_role_based_author_base() ) {
+		$author_base = '%ba_eas_author_role%';
+	}
+
+	// Override WP_Rewrite::author_base with our new value.
+	$GLOBALS['wp_rewrite']->author_base = $author_base;
+}
+
+/**
  * Determines if we should do a role-based author base
  *
  * @since 1.0.0

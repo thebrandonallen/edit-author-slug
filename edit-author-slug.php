@@ -325,7 +325,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			// Author Base Actions.
 			add_action( 'after_setup_theme', array( $this, 'set_role_slugs' ) );
-			add_action( 'init',              array( $this, 'author_base_rewrite' ), 4 );
+			add_action( 'init',              'ba_eas_wp_rewrite_overrides', 4 );
 			add_action( 'init',              array( $this, 'add_rewrite_tags' ), 20 );
 
 			// Localize.
