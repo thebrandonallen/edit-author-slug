@@ -28,20 +28,11 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 
 	/**
 	 * @covers BA_Edit_Author_Slug::author_base_rewrite
+	 *
+	 * @expectedDeprecated BA_Edit_Author_Slug::author_base_rewrite
 	 */
 	function test_author_base_rewrite() {
-		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, 'author' );
-
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
-
 		$this->eas->author_base_rewrite();
-		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, '%ba_eas_author_role%' );
-
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
-
-		$this->eas->author_base = 'ninja';
-		$this->eas->author_base_rewrite();
-		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, 'ninja' );
 	}
 
 	/**

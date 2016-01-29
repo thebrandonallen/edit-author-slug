@@ -404,17 +404,8 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * @return void
 		 */
 		public function author_base_rewrite() {
-
-			// Are we doing a role-based author base?
-			if ( ba_eas_do_role_based_author_base() ) {
-
-				$GLOBALS['wp_rewrite']->author_base = '%ba_eas_author_role%';
-
-			// Has the author base changed from the default?
-			} elseif ( ! empty( $this->author_base ) && 'author' !== $this->author_base ) {
-
-				$GLOBALS['wp_rewrite']->author_base = $this->author_base;
-			}
+			_deprecated_function( __METHOD__, '1.2.0', 'ba_eas_wp_rewrite_overrides' );
+			ba_eas_wp_rewrite_overrides();
 		}
 
 		/**
