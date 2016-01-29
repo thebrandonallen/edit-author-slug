@@ -400,6 +400,11 @@ function ba_eas_wp_rewrite_overrides() {
 
 	// Override WP_Rewrite::author_base with our new value.
 	$GLOBALS['wp_rewrite']->author_base = $author_base;
+
+	// Override `WP_Rewrite::author_structure` with our new value.
+	if ( ba_eas_remove_front() && ba_eas_has_front() ) {
+		$GLOBALS['wp_rewrite']->author_structure = '/' . $author_base . '/%author%';
+	}
 }
 
 /**
@@ -488,6 +493,11 @@ function ba_eas_author_link( $link = '', $user_id = 0 ) {
 
 		// Add the role slug to the link.
 		$link = str_replace( '%ba_eas_author_role%', $slug, $link );
+	}
+
+	// Remove front if applicable.
+	if ( ba_eas_has_front() && ba_eas_remove_front() ) {
+		$link = str_replace( $GLOBALS['wp_rewrite']->front, '/', $link );
 	}
 
 	// Return the link.
