@@ -198,7 +198,7 @@ module.exports = function(grunt) {
 				},
 				options: {
 					replacements: [{
-						pattern: /(\$this->version.*)'(.*)';/gm, // For plugin version variable
+						pattern: /(\public\ \$version.*)'(.*)';/gm, // For plugin version variable
 						replacement: '$1\'<%= pkg.version %>\';'
 					},
 					{
@@ -210,12 +210,11 @@ module.exports = function(grunt) {
 			build: {
 				files: {
 					'edit-author-slug.php': 'edit-author-slug.php',
-					'readme.md': 'readme.md',
 					'readme.txt': 'readme.txt'
 				},
 				options: {
 					replacements: [{
-						pattern: /(\$this->version.*)'(.*)';/gm, // For plugin version variable
+						pattern: /(\public\ \$version.*)'(.*)';/gm, // For plugin version variable
 						replacement: '$1\'<%= pkg.version %>\';'
 					},
 					{
