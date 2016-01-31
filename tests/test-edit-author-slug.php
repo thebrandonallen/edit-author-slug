@@ -34,15 +34,6 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	}
 
 	/**
-	 * @covers BA_Edit_Author_Slug::author_base_rewrite
-	 *
-	 * @expectedDeprecated BA_Edit_Author_Slug::author_base_rewrite
-	 */
-	function test_author_base_rewrite() {
-		$this->eas->author_base_rewrite();
-	}
-
-	/**
 	 * @covers BA_Edit_Author_Slug::options_back_compat
 	 */
 	function test_options_back_compat() {

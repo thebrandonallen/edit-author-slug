@@ -232,7 +232,14 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * @return null
 		 */
 		public function __call( $name = '', $args = array() ) {
-			_doing_it_wrong( "BA_Edit_Author_Slug::{$name}", esc_html__( 'Method does not exist.', 'edit-author-slug' ), '1.0.0' );
+
+			if ( 'author_base_rewrite' === $name ) {
+				_deprecated_function( 'BA_Edit_Author_Slug::author_base_rewrite', '1.2.0', 'ba_eas_wp_rewrite_overrides' );
+				ba_eas_wp_rewrite_overrides();
+			} else {
+				_doing_it_wrong( "BA_Edit_Author_Slug::{$name}", esc_html__( 'Method does not exist.', 'edit-author-slug' ), '1.0.0' );
+			}
+
 			unset( $name, $args );
 			return null;
 		}
@@ -406,21 +413,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			// Look in wp-content/plugins/edit-author-slug/languages first.
 			// Fallback to wp-content/languages/plugins.
 			load_plugin_textdomain( $this->domain, false, dirname( $this->plugin_basename ) . '/languages/' );
-		}
-
-		/**
-		 * Rewrite Author Base according to user's setting.
-		 *
-		 * Rewrites Author Base to user's setting from the
-		 * Author Base field on Options > Permalinks.
-		 *
-		 * @since 0.4.0
-		 *
-		 * @return void
-		 */
-		public function author_base_rewrite() {
-			_deprecated_function( __METHOD__, '1.2.0', 'ba_eas_wp_rewrite_overrides' );
-			ba_eas_wp_rewrite_overrides();
 		}
 
 		/**
