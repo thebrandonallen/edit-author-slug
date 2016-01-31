@@ -272,7 +272,7 @@ module.exports = function(grunt) {
 	// Build tasks.
 	grunt.registerTask( 'readme', [ 'wp_readme_to_markdown', 'string-replace:readme' ] );
 	grunt.registerTask( 'src',    [ 'jsvalidate:core', 'jshint:core', 'jscs:core' ] );
-	grunt.registerTask( 'build',  [ 'clean:all', 'checktextdomain', 'string-replace:build', 'readme', 'uglify', 'makepot', 'copy:files', 'jsvalidate:build' ] );
+	grunt.registerTask( 'build',  [ 'clean:all', 'checktextdomain', 'string-replace:build', 'readme', 'uglify', 'makepot', 'copy:files' ] );
 
 	// PHPUnit test task.
 	grunt.registerMultiTask( 'phpunit', 'Runs PHPUnit tests, including the multisite tests.', function() {
