@@ -244,9 +244,11 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 *
 		 * @since 1.0.0
 		 *
+		 * @codeCoverageIgnore
+		 *
 		 * @return void
 		 */
-		public function __clone() {
+		private function __clone() {
 			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'edit-author-slug' ), '1.0' );
 		}
 
@@ -255,9 +257,11 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 *
 		 * @since 1.0.0
 		 *
+		 * @codeCoverageIgnore
+		 *
 		 * @return void
 		 */
-		public function __wakeup() {
+		private function __wakeup() {
 			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'edit-author-slug' ), '1.0' );
 		}
 
