@@ -76,7 +76,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * @access public
 		 * @var    int
 		 */
-		public $db_version = 133;
+		public $db_version = 411;
 
 		/**
 		 * The current installed database version.
