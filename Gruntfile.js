@@ -18,6 +18,7 @@ module.exports = function(grunt) {
 			'!**/bin/**',
 			'!**/build/**',
 			'!**/coverage/**',
+			'!**/nbproject/**',
 			'!**/node_modules/**',
 			'!**/tests/**',
 			'!Gruntfile.js*',
