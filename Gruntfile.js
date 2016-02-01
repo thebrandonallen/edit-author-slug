@@ -82,6 +82,15 @@ module.exports = function(grunt) {
 				]
 			}
 		},
+		jscs: {
+			core: {
+				src: [ EAS_JS ].concat( EAS_EXCLUDED_JS ),
+				options: {
+					preset: 'wordpress',
+					fix: true
+				}
+			}
+		},
 		jshint: {
 			options: grunt.file.readJSON( '.jshintrc' ),
 			grunt: {
@@ -131,12 +140,7 @@ module.exports = function(grunt) {
 				esprimaOptions:{},
 				verbose: false
 			},
-			build: {
-				files: {
-					src: [BUILD_DIR + EAS_JS]
-				}
-			},
-			src: {
+			core: {
 				files: {
 					src: [SOURCE_DIR + EAS_JS]
 				}
@@ -147,7 +151,7 @@ module.exports = function(grunt) {
 				options: {
 					domainPath: '/languages',
 					mainFile: 'edit-author-slug.php',
-					potComments: 'Copyright (C) ' + CURRENT_YEAR + ' Brandon Allen\nThis file is distributed under the same license as the Edit Author Slug package.\nSend translations to <plugins [at] brandonallen (dot) me>.',
+					potComments: 'Copyright (C) ' + CURRENT_YEAR + ' Brandon Allen\nThis file is distributed under the same license as the Edit Author Slug package.\nSubmit translations to https://translate.wordpress.org/projects/wp-plugins/edit-author-slug.',
 					potFilename: 'edit-author-slug.pot',
 					potHeaders: {
 						poedit: true,
@@ -190,11 +194,11 @@ module.exports = function(grunt) {
 		'string-replace': {
 			dev: {
 				files: {
-					'edit-author-slug.php': 'edit-author-slug.php',
+					'edit-author-slug.php': 'edit-author-slug.php'
 				},
 				options: {
 					replacements: [{
-						pattern: /(\$this->version.*)'(.*)';/gm, // For plugin version variable
+						pattern: /(\public\ \$version.*)'(.*)';/gm, // For plugin version variable
 						replacement: '$1\'<%= pkg.version %>\';'
 					},
 					{
@@ -206,12 +210,11 @@ module.exports = function(grunt) {
 			build: {
 				files: {
 					'edit-author-slug.php': 'edit-author-slug.php',
-					'readme.md': 'readme.md',
 					'readme.txt': 'readme.txt'
 				},
 				options: {
 					replacements: [{
-						pattern: /(\$this->version.*)'(.*)';/gm, // For plugin version variable
+						pattern: /(\public\ \$version.*)'(.*)';/gm, // For plugin version variable
 						replacement: '$1\'<%= pkg.version %>\';'
 					},
 					{
@@ -258,7 +261,7 @@ module.exports = function(grunt) {
 			}
 		},
 		wp_readme_to_markdown: {
-			default: {
+			core: {
 				files: {
 					'readme.md': 'readme.txt'
 				}
@@ -268,8 +271,8 @@ module.exports = function(grunt) {
 
 	// Build tasks.
 	grunt.registerTask( 'readme', [ 'wp_readme_to_markdown', 'string-replace:readme' ] );
-	grunt.registerTask( 'src',    [ 'jsvalidate:src', 'jshint:core' ] );
-	grunt.registerTask( 'build',  [ 'clean:all', 'checktextdomain', 'string-replace:build', 'readme', 'uglify', 'makepot', 'copy:files', 'jsvalidate:build' ] );
+	grunt.registerTask( 'src',    [ 'jsvalidate:core', 'jshint:core', 'jscs:core' ] );
+	grunt.registerTask( 'build',  [ 'clean:all', 'checktextdomain', 'string-replace:build', 'readme', 'uglify', 'makepot', 'copy:files' ] );
 
 	// PHPUnit test task.
 	grunt.registerMultiTask( 'phpunit', 'Runs PHPUnit tests, including the multisite tests.', function() {

@@ -15,33 +15,49 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	}
 
 	/**
+	 * @covers BA_Edit_Author_Slug::__call
+	 *
+	 * @expectedDeprecated     BA_Edit_Author_Slug::author_base_rewrite
+	 * @expectedIncorrectUsage BA_Edit_Author_Slug::fake_method
+	 */
+	public function test__call() {
+
+		$this->eas->__call( 'author_base_rewrite' );
+
+		$this->assertNull( $this->eas->__call( 'fake_method' ) );
+	}
+
+	/**
+	 * @covers BA_Edit_Author_Slug::setup_globals
+	 */
+	function test_setup_globals() {
+		$this->markTestIncomplete();
+	}
+
+	/**
 	 * @covers BA_Edit_Author_Slug::setup_actions
 	 */
 	function test_setup_actions() {
 		$this->assertEquals( 10, has_action( 'activate_' . $this->eas->plugin_basename, 'ba_eas_activation' ) );
 		$this->assertEquals( 10, has_action( 'deactivate_' . $this->eas->plugin_basename, 'ba_eas_deactivation' ) );
 		$this->assertEquals( 10, has_action( 'after_setup_theme', array( $this->eas, 'set_role_slugs' ) ) );
-		$this->assertEquals( 4,  has_action( 'init', array( $this->eas, 'author_base_rewrite' ) ) );
+		$this->assertEquals( 4,  has_action( 'init', 'ba_eas_wp_rewrite_overrides' ) );
 		$this->assertEquals( 20, has_action( 'init', array( $this->eas, 'add_rewrite_tags' ) ) );
-		$this->assertEquals( 0,  has_action( 'init', array( $this->eas, 'load_textdomain' ) ) );
+		$this->assertEquals( 10, has_action( 'plugins_loaded', array( $this->eas, 'load_textdomain' ) ) );
 	}
 
 	/**
-	 * @covers BA_Edit_Author_Slug::author_base_rewrite
+	 * @covers BA_Edit_Author_Slug::options_back_compat
 	 */
-	function test_author_base_rewrite() {
-		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, 'author' );
+	function test_options_back_compat() {
+		$this->markTestIncomplete();
+	}
 
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
-
-		$this->eas->author_base_rewrite();
-		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, '%ba_eas_author_role%' );
-
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
-
-		$this->eas->author_base = 'ninja';
-		$this->eas->author_base_rewrite();
-		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, 'ninja' );
+	/**
+	 * @covers BA_Edit_Author_Slug::load_textdomain
+	 */
+	function test_load_textdomain() {
+		$this->eas->load_textdomain();
 	}
 
 	/**
@@ -54,9 +70,14 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 		$this->eas->set_role_slugs();
 		$this->assertEquals( $this->eas->role_slugs, ba_eas_tests_slugs_custom() );
 
+		add_role( 'foot-soldier', 'Foot Soldier' );
 		update_option( '_ba_eas_role_slugs', ba_eas_tests_slugs_extra() );
 		$this->eas->set_role_slugs();
 		$this->assertEquals( $this->eas->role_slugs, ba_eas_tests_slugs_extra() );
+		remove_role( 'foot-soldier' );
+
+		$this->eas->set_role_slugs();
+		$this->assertEquals( $this->eas->role_slugs, ba_eas_tests_slugs_default() );
 	}
 
 	/**

@@ -6,9 +6,10 @@
     "grunt-checktextdomain": "^1.0.0",
     "grunt-contrib-clean": "^0.7.0",
     "grunt-contrib-copy": "^0.8.2",
-    "grunt-contrib-jshint": "^0.11.3",
+    "grunt-contrib-jshint": "^0.12.0",
     "grunt-contrib-uglify": "^0.11.0",
     "grunt-contrib-watch": "~0.6.1",
+    "grunt-jscs": "^2.7.0",
     "grunt-jsvalidate": "^0.2.2",
     "grunt-legacy-util": "^0.2.0",
     "grunt-string-replace": "^1.2.1",
@@ -22,5 +23,5 @@
     "type": "git",
     "url": "https://github.com/thebrandonallen/edit-author-slug.git"
   },
-  "version": "1.1.2"
+  "version": "1.2.0"
 }

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Edit Author Slug Uninstall Functions.
  *
@@ -10,11 +9,11 @@
  */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+defined( 'ABSPATH' ) || exit;
 
 // Make sure we're uninstalling.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-	return false;
+	exit();
 }
 
 // Delete all the options.
@@ -26,6 +25,7 @@ delete_option( '_ba_eas_do_auto_update' );
 delete_option( '_ba_eas_do_role_based' );
 delete_option( '_ba_eas_old_options' );
 delete_option( '_ba_eas_role_slugs' );
+delete_option( '_ba_eas_remove_front' );
 
 // Final flush for good measure.
-delete_option( 'rewrite_rules' );
+update_option( 'rewrite_rules', '' );

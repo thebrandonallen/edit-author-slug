@@ -23,8 +23,41 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	public function tearDown() {
 		parent::tearDown();
 
-		$this->eas->author_base = 'author';
-		$this->eas->role_slugs  = ba_eas_tests_slugs_default();
+		// Reset some globals to their defaults.
+		$this->eas->author_base             = 'author';
+		$this->eas->role_slugs              = ba_eas_tests_slugs_default();
+		$GLOBALS['wp_rewrite']->author_base = 'author';
+	}
+
+	/**
+	 * Copy of WP's function from 4.4.0. Can be removed when 4.4.0 is the
+	 * minimum version.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @global WP_Rewrite $wp_rewrite
+	 *
+	 * @param string $structure Optional. Permalink structure to set. Default empty.
+	 */
+	public function set_permalink_structure( $structure = '' ) {
+		global $wp_rewrite;
+
+		$wp_rewrite->init();
+		$wp_rewrite->set_permalink_structure( $structure );
+		$wp_rewrite->flush_rules();
+	}
+
+	/**
+	 * Filters the return of user role filters.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param string $role
+	 *
+	 * @return string
+	 */
+	public function user_role_filter( $role = '' ) {
+		return 'test';
 	}
 
 	/**
@@ -109,21 +142,29 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$user    = get_userdata( $this->single_user_id );
 		$this->assertEquals( 'splinter-master', $user->user_nicename );
 
+		// Update using lastfirst
+		$this->eas->default_user_nicename = 'userid';
+		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
+		$user    = get_userdata( $this->single_user_id );
+		$this->assertEquals( $this->single_user_id, $user->user_nicename );
+
 		// Update using random string as structure, shouldn't update, so
 		// user_nicename should be same as previous test ('splinter-master')
 		$this->eas->default_user_nicename = 'Cowabunga Dude!';
 		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
 		$user    = get_userdata( $this->single_user_id );
-		$this->assertEquals( 'splinter-master', $user->user_nicename );
+		$this->assertEquals( $this->single_user_id, $user->user_nicename );
 
 		remove_filter( 'ba_eas_do_auto_update', '__return_true', 10 );
 	}
 
 	/**
 	 * @covers ::ba_eas_auto_update_user_nicename_single
+	 *
+	 * @expectedDeprecated ba_eas_auto_update_user_nicename_single
 	 */
 	function test_ba_eas_auto_update_user_nicename_single() {
-		$this->markTestIncomplete();
+		ba_eas_auto_update_user_nicename_single();
 	}
 
 	/**
@@ -162,6 +203,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 			'first_name' => 'Michelangelo',
 			'last_name'  => 'Hamato',
 		) );
+
+		$_REQUEST = array( '_wpnonce' => wp_create_nonce( 'edit-author-slug-options' ) );
 
 		$this->eas->default_user_nicename = 'firstlast';
 
@@ -308,19 +351,79 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::ba_eas_wp_rewrite_overrides
+	 */
+	function test_ba_eas_wp_rewrite_overrides() {
+		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, 'author' );
+
+		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+
+		ba_eas_wp_rewrite_overrides();
+		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, '%ba_eas_author_role%' );
+
+		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
+
+		$this->eas->author_base = 'ninja';
+		ba_eas_wp_rewrite_overrides();
+		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, 'ninja' );
+
+
+		$this->set_permalink_structure( '/archives/%post_id%/');
+		$GLOBALS['wp_rewrite']->get_author_permastruct();
+		$this->assertEquals( '/archives/ninja/%author%', $GLOBALS['wp_rewrite']->author_structure );
+		$this->eas->remove_front = true;
+		ba_eas_wp_rewrite_overrides();
+		$this->assertEquals( '/ninja/%author%', $GLOBALS['wp_rewrite']->author_structure );
+		$GLOBALS['wp_rewrite']->front = '/';
+		$this->eas->remove_front = false;
+	}
+
+	/**
+	 * @covers ::ba_eas_remove_front
+	 */
+	function test_ba_eas_remove_front() {
+		$this->assertFalse( ba_eas_remove_front() );
+
+		$this->eas->remove_front = true;
+		$this->assertTrue( ba_eas_remove_front() );
+
+		add_filter( 'ba_eas_remove_front', '__return_false' );
+		$this->assertFalse( ba_eas_remove_front() );
+		remove_filter( 'ba_eas_remove_front', '__return_false' );
+		$this->eas->remove_front = false;
+
+	}
+
+	/**
+	 * @covers ::ba_eas_has_front
+	 */
+	function test_ba_eas_has_front() {
+		$this->assertFalse( ba_eas_has_front() );
+
+		$GLOBALS['wp_rewrite']->front = '/test/';
+		$this->assertTrue( ba_eas_has_front() );
+
+		add_filter( 'ba_eas_has_front', '__return_false' );
+		$this->assertFalse( ba_eas_has_front() );
+		remove_filter( 'ba_eas_has_front', '__return_false' );
+		$GLOBALS['wp_rewrite']->front = '/';
+
+	}
+
+	/**
 	 * @covers ::ba_eas_do_role_based_author_base
 	 */
 	function test_ba_eas_do_role_based_author_base() {
+
+		// False tests
+		//add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
+		$this->assertFalse( ba_eas_do_role_based_author_base() );
+		//remove_filter( 'ba_eas_do_role_based_author_base', '__return_false', 10 );
 
 		// True tests
 		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
 		$this->assertTrue( ba_eas_do_role_based_author_base() );
 		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
-
-		// False tests
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
-		$this->assertFalse( ba_eas_do_role_based_author_base() );
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_false', 10 );
 	}
 
 	/**
@@ -362,6 +465,16 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$this->assertEquals( $author_link_ninja, $link );
 
 		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
+
+		add_filter( 'ba_eas_remove_front', '__return_true' );
+		add_filter( 'ba_eas_has_front', '__return_true' );
+
+		$this->set_permalink_structure( '/archives/%post_id%/');
+		$link = ba_eas_author_link( 'http://example.com/archives/author/mastersplinter/', $this->single_user_id );
+		$this->assertEquals( 'http://example.com/author/mastersplinter/', $link );
+
+		remove_filter( 'ba_eas_has_front', '__return_true' );
+		remove_filter( 'ba_eas_remove_front', '__return_true' );
 	}
 
 	/**
@@ -412,7 +525,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$this->assertEquals( 'test', get_option( 'rewrite_rules' ) );
 
 		ba_eas_flush_rewrite_rules();
-		$this->assertFalse( get_option( 'rewrite_rules' ) );
+		$this->assertEmpty( get_option( 'rewrite_rules' ) );
 	}
 
 	/**
@@ -444,17 +557,37 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::ba_eas_get_user_role
+	 */
+	function test_ba_eas_get_user_role() {
+
+		// Passed roles array.
+		$role = ba_eas_get_user_role( array( 'administrator', 'foot-soldier' ), $this->single_user_id );
+		$this->assertEquals( 'administrator', $role );
+
+		// No passed roles array.
+		$role = ba_eas_get_user_role( array(), $this->single_user_id );
+		$this->assertEquals( 'subscriber', $role );
+
+		// No passed roles array.
+		add_filter( 'ba_eas_get_user_role', array( $this, 'user_role_filter' )  );
+		$role = ba_eas_get_user_role( array(), $this->single_user_id );
+		$this->assertEquals( 'test', $role );
+		remove_filter( 'ba_eas_get_user_role', array( $this, 'user_role_filter' )  );
+	}
+
+	/**
 	 * @covers ::ba_eas_get_wp_roles
 	 */
 	function test_ba_eas_get_wp_roles() {
-		$this->markTestIncomplete();
+		$this->assertTrue( ba_eas_get_wp_roles() instanceof WP_Roles );
 	}
 
 	/**
 	 * @covers ::ba_eas_get_roles
 	 */
 	function test_ba_eas_get_roles() {
-		$this->markTestIncomplete();
+		$this->assertEquals( ba_eas_tests_roles_default(), ba_eas_get_roles() );
 	}
 
 	/**
