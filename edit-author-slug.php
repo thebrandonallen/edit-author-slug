@@ -300,7 +300,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			// Load the default nicename structure for auto-update.
 			$default_user_nicename = get_option( '_ba_eas_default_user_nicename' );
 			$default_user_nicename = sanitize_key( $default_user_nicename );
-			if ( empty( $default_user_nicename ) ) {
+			if ( ! empty( $default_user_nicename ) ) {
 				$this->default_user_nicename = $default_user_nicename;
 			}
 
