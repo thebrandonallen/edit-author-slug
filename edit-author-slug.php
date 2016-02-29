@@ -14,8 +14,8 @@
  * Plugin Name: Edit Author Slug
  * Plugin URI: https://github.com/thebrandonallen/edit-author-slug/
  * Description: Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
- * Version: 1.2.0
- * Tested With: 4.0.9, 4.1.9, 4.2.6, 4.3.2, 4.4.1
+ * Version: 1.2.1
+ * Tested With: 4.0.10, 4.1.10, 4.2.7, 4.3.3, 4.4.2
  * Author: Brandon Allen
  * Author URI: https://github.com/thebrandonallen/
  * License: GPLv2 or later
@@ -24,7 +24,7 @@
  */
 
 /*
-	Copyright 2015  Brandon Allen  (email : plugins ([at]) brandonallen ([dot]) me)
+	Copyright 2009-2016  Brandon Allen  (email : plugins ([at]) brandonallen ([dot]) me)
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * @access public
 		 * @var    string
 		 */
-		public $version = '1.2.0';
+		public $version = '1.2.1';
 
 		/**
 		 * The database version.
@@ -300,7 +300,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			// Load the default nicename structure for auto-update.
 			$default_user_nicename = get_option( '_ba_eas_default_user_nicename' );
 			$default_user_nicename = sanitize_key( $default_user_nicename );
-			if ( empty( $default_user_nicename ) ) {
+			if ( ! empty( $default_user_nicename ) ) {
 				$this->default_user_nicename = $default_user_nicename;
 			}
 

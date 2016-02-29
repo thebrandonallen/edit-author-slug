@@ -1,9 +1,9 @@
 # Edit Author Slug [![Build Status](https://travis-ci.org/thebrandonallen/edit-author-slug.svg?branch=master)](https://travis-ci.org/thebrandonallen/edit-author-slug) #
 **Contributors:** thebrandonallen  
 **Tags:** author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles  
-**Requires at least:** 4.0.9  
-**Tested up to:** 4.4.1  
-**Stable tag:** 1.2.0  
+**Requires at least:** 4.0.10  
+**Tested up to:** 4.4.2  
+**Stable tag:** 1.2.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -54,6 +54,10 @@ While I've made every attempt to prevent this, I may have missed a spot or two. 
 If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums.
 
 ## Changelog ##
+
+### 1.2.1 ###
+* Fixed stupid error where the default user nicename wasn't being properly retrieved from the database. Sorry about that :(
+* Unfortunately, some unicorns were lost during the development of this release, but they are a resilient creature.
 
 ### 1.2.0 ###
 * Added the ability to use forward slashes in the author base.
