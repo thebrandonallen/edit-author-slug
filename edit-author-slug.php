@@ -15,7 +15,7 @@
  * Plugin URI: https://github.com/thebrandonallen/edit-author-slug/
  * Description: Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
  * Version: 1.2.0
- * Tested With: 4.0.9, 4.1.9, 4.2.6, 4.3.2, 4.4.1
+ * Tested With: 4.0.10, 4.1.10, 4.2.7, 4.3.3, 4.4.2
  * Author: Brandon Allen
  * Author URI: https://github.com/thebrandonallen/
  * License: GPLv2 or later
