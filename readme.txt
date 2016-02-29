@@ -51,6 +51,10 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 
 == Changelog ==
 
+= 1.2.1 =
+* Fixed stupid error where the default user nicename wasn't being properly retrieved from the database. Sorry about that :(
+* Unfortunately, some unicorns were lost during the development of this release, but they are a resilient creature.
+
 = 1.2.0 =
 * Added the ability to use forward slashes in the author base.
 * Improved display on the settings page, and storing, of role slugs.
