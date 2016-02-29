@@ -4,18 +4,18 @@
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-checktextdomain": "^1.0.0",
-    "grunt-contrib-clean": "^0.7.0",
+    "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-copy": "^0.8.2",
-    "grunt-contrib-jshint": "^0.12.0",
-    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^0.11.1",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-jscs": "^2.7.0",
     "grunt-jsvalidate": "^0.2.2",
     "grunt-legacy-util": "^0.2.0",
     "grunt-string-replace": "^1.2.1",
-    "grunt-wp-i18n": "^0.5.3",
+    "grunt-wp-i18n": "^0.5.4",
     "grunt-wp-readme-to-markdown": "^1.0.0",
-    "matchdep": "^1.0.0"
+    "matchdep": "^1.0.1"
   },
   "license": "GPL-2.0+",
   "name": "edit-author-slug",
