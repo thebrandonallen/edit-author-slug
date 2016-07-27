@@ -327,10 +327,10 @@ function ba_eas_sanitize_author_base( $author_base = 'author' ) {
 	if ( ! empty( $author_base ) || 'author' !== $author_base ) {
 
 		// Split the author base string on forward slashes.
-		$parts = array_filter( explode( '/', $author_base ) );
+		$parts = array_map( 'sanitize_title', explode( '/', $author_base ) );
 
 		// Sanitize the parts, and put them back together.
-		$author_base = implode( '/', array_map( 'sanitize_title', $parts ) );
+		$author_base = implode( '/', array_filter( $parts ) );
 	}
 
 	// Always default to `author`.
