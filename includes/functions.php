@@ -844,6 +844,9 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
 /**
  * Clean and update the nicename cache.
  *
+ * @todo This will no longer be necessary when WP 4.5 is the minimum version.
+ * @see https://core.trac.wordpress.org/ticket/35750
+ *
  * @since 1.0.0
  *
  * @param int    $user_id       The user id.
