@@ -347,7 +347,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$output = ob_get_clean();
 
 		$input = '<input class="eas-checkbox" name="_ba_eas_do_role_based" id="_ba_eas_do_role_based" value="1" type="checkbox" />';
-		$label = 'Set user&#039;s Author Base according to their role. (The above &quot;Author Base&quot; setting will be used as a fallback.)';
+		$label = 'Set user&#039;s Author Base according to their role.';
 
 		$this->assertContains( $input, $output );
 		$this->assertContains( $label, $output );
