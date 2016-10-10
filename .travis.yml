@@ -8,18 +8,19 @@ sudo: false
 language: php
 
 php:
-    - 7.0
-    - 5.6
-    - 5.5
-    - 5.4
-    - 5.3
+  - 7.0
+  - 5.6
+  - 5.5
+  - 5.4
+  - 5.3
 
 env:
-    - WP_VERSION=master
-    - WP_VERSION=4.5
-    - WP_VERSION=4.4
-    - WP_VERSION=4.3
-    - WP_VERSION=4.2
+  - WP_VERSION=master
+  - WP_VERSION=4.6
+  - WP_VERSION=4.5
+  - WP_VERSION=4.4
+  - WP_VERSION=4.3
+  - WP_VERSION=4.2
 
 matrix:
   fast_finish: true
@@ -39,7 +40,7 @@ matrix:
 
 # Clones WordPress and configures our testing environment.
 before_script:
-    - bash bin/install-wp-tests-travis.sh wordpress_test root '' localhost $WP_VERSION
+  - bash bin/install-wp-tests-travis.sh wordpress_test root '' localhost $WP_VERSION
 
 script: phpunit --coverage-clover=coverage.clover
 
