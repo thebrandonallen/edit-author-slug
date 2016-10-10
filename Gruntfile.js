@@ -2,8 +2,6 @@
 module.exports = function(grunt) {
 	var SOURCE_DIR = '',
 		BUILD_DIR = 'build/',
-		CURRENT_TIME = new Date(),
-		CURRENT_YEAR = CURRENT_TIME.getFullYear(),
 
 		EAS_JS = [
 			'js/*.js'
@@ -152,7 +150,7 @@ module.exports = function(grunt) {
 				options: {
 					domainPath: '/languages',
 					mainFile: 'edit-author-slug.php',
-					potComments: 'Copyright (C) 2009-' + CURRENT_YEAR + ' Brandon Allen\nThis file is distributed under the same license as the Edit Author Slug package.\nSubmit translations to https://translate.wordpress.org/projects/wp-plugins/edit-author-slug.',
+					potComments: 'Copyright (C) 2009-<%= grunt.template.today("UTC:yyyy") %> Brandon Allen\nThis file is distributed under the same license as the Edit Author Slug package.\nSubmit translations to https://translate.wordpress.org/projects/wp-plugins/edit-author-slug.',
 					potFilename: 'edit-author-slug.pot',
 					potHeaders: {
 						poedit: true,
