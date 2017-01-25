@@ -1,16 +1,16 @@
-# Copyright (C) 2009-2016 Brandon Allen
+# Copyright (C) 2009-2017 Brandon Allen
 # This file is distributed under the same license as the Edit Author Slug package.
 # Submit translations to https://translate.wordpress.org/projects/wp-plugins/edit-author-slug.
 msgid ""
 msgstr ""
-"Project-Id-Version: Edit Author Slug 1.2.1\n"
+"Project-Id-Version: Edit Author Slug 1.3.0\n"
 "Report-Msgid-Bugs-To: "
 "https://github.com/thebrandonallen/edit-author-slug/issues\n"
-"POT-Creation-Date: 2016-02-29 08:07:33+00:00\n"
+"POT-Creation-Date: 2017-01-25 06:16:50+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
 "Last-Translator: BRANDON ALLEN <plugins@brandonallen.me>\n"
 "Language-Team: ENGLISH <plugins@brandonallen.me>\n"
 "X-Generator: grunt-wp-i18n 0.5.4\n"
@@ -26,11 +26,11 @@ msgstr ""
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
 
-#: edit-author-slug.php:240
+#: edit-author-slug.php:234
 msgid "Method does not exist."
 msgstr ""
 
-#: edit-author-slug.php:259 edit-author-slug.php:272
+#: edit-author-slug.php:253 edit-author-slug.php:266
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 
@@ -153,66 +153,71 @@ msgid "Remove the \"front\" portion of the author permalink structure."
 msgstr ""
 
 #: includes/admin.php:625
-msgid ""
-"Set user's Author Base according to their role. (The above \"Author Base\" "
-"setting will be used as a fallback.)"
+msgid "Set user's Author Base according to their role."
 msgstr ""
 
-#: includes/admin.php:731
+#: includes/admin.php:628
+msgid ""
+"Use the %1$s rewrite tag to customize the role-based author base. If you "
+"set the author base to \"%2$s\", the resulting author structure will be "
+"something like \"%3$s\"."
+msgstr ""
+
+#: includes/admin.php:741
 msgid "Automatically update Author Slug when a user updates their profile."
 msgstr ""
 
-#: includes/admin.php:755
+#: includes/admin.php:765
 msgid "Default author slug options"
 msgstr ""
 
-#: includes/admin.php:775
+#: includes/admin.php:785
 msgid "Update all users at once based on the specified Author Slug structure."
 msgstr ""
 
-#: includes/admin.php:791
+#: includes/admin.php:801
 msgid ""
 "Update all users according to the below Author Slug setting. This will only "
 "be run after clicking \"Save Changes\"."
 msgstr ""
 
-#: includes/admin.php:815
+#: includes/admin.php:825
 msgid "Default bulk update author slug options"
 msgstr ""
 
-#: includes/admin.php:838
+#: includes/admin.php:848
 msgid "Settings"
 msgstr ""
 
-#: includes/admin.php:863 tests/test-admin.php:551
+#: includes/admin.php:873 tests/test-admin.php:551
 msgid "username (Default)"
 msgstr ""
 
-#: includes/admin.php:864 tests/test-admin.php:552
+#: includes/admin.php:874 tests/test-admin.php:552
 msgid "nickname"
 msgstr ""
 
-#: includes/admin.php:865 tests/test-admin.php:553
+#: includes/admin.php:875 tests/test-admin.php:553
 msgid "displayname"
 msgstr ""
 
-#: includes/admin.php:866 tests/test-admin.php:554
+#: includes/admin.php:876 tests/test-admin.php:554
 msgid "firstname"
 msgstr ""
 
-#: includes/admin.php:867 tests/test-admin.php:555
+#: includes/admin.php:877 tests/test-admin.php:555
 msgid "lastname"
 msgstr ""
 
-#: includes/admin.php:868 tests/test-admin.php:556
+#: includes/admin.php:878 tests/test-admin.php:556
 msgid "firstname-lastname"
 msgstr ""
 
-#: includes/admin.php:869 tests/test-admin.php:557
+#: includes/admin.php:879 tests/test-admin.php:557
 msgid "lastname-firstname"
 msgstr ""
 
-#: includes/admin.php:870 tests/test-admin.php:558
+#: includes/admin.php:880 tests/test-admin.php:558
 msgid "userid (Experimental)"
 msgstr ""
 
