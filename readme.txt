@@ -1,9 +1,9 @@
 === Edit Author Slug ===
 Contributors: thebrandonallen
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles
-Requires at least: 4.0.10
-Tested up to: 4.5
-Stable tag: 1.2.1
+Requires at least: 4.3
+Tested up to: 4.7.1
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,11 @@ While I've made every attempt to prevent this, I may have missed a spot or two. 
 If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums.
 
 == Changelog ==
+
+= 1.3.0 =
+* Fix a potential bug where a sanitized author base could end up with double forward slashes.
+* Introduce the `%ba_eas_author_role%` permalink structure tag. This can be used to customize role-based author bases.
+* Bonus: All alternative facts are now free!
 
 = 1.2.1 =
 * Fixed stupid error where the default user nicename wasn't being properly retrieved from the database. Sorry about that :(

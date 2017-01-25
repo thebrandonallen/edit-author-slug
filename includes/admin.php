@@ -622,7 +622,17 @@ function ba_eas_admin_setting_callback_do_role_based() {
 ?>
 
 		<input class="eas-checkbox" name="_ba_eas_do_role_based" id="_ba_eas_do_role_based" value="1"<?php checked( ba_eas()->do_role_based ); ?> type="checkbox" />
-		<?php esc_html_e( 'Set user\'s Author Base according to their role. (The above "Author Base" setting will be used as a fallback.)', 'edit-author-slug' ); ?>
+		<?php esc_html_e( "Set user's Author Base according to their role.", 'edit-author-slug' ); ?>
+		<br /><br />
+		<?php echo sprintf(
+			esc_html__(
+				'Use the %1$s rewrite tag to customize the role-based author base. If you set the author base to "%2$s", the resulting author structure will be something like "%3$s".',
+				'edit-author-slug'
+			),
+			'<code>%ba_eas_author_role%</code>',
+			'<em>cool-people/&#37;ba_eas_author_role&#37;</em>',
+			'<em>http://example.com/cool-people/role-slug/author-slug</em>'
+		); ?>
 
 <?php
 }

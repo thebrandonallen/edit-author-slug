@@ -313,6 +313,7 @@ function ba_eas_sanitize_nicename( $nicename = '', $strict = true ) {
  *
  * @since 0.8.0
  * @since 1.2.0 Removed all non-sanitization code.
+ * @since 1.3.0 Allow `%ba_eas_author_role%` rewrite tag in author base.
  *
  * @param string $author_base Author base to be sanitized.
  *
@@ -327,10 +328,19 @@ function ba_eas_sanitize_author_base( $author_base = 'author' ) {
 	if ( ! empty( $author_base ) || 'author' !== $author_base ) {
 
 		// Split the author base string on forward slashes.
-		$parts = array_filter( explode( '/', $author_base ) );
+		$parts = explode( '/', $author_base );
+
+		// Sanitize all parts except our rewrite tag, `%ba_eas_author_role%`.
+		foreach ( $parts as $key => $part ) {
+			if ( '%ba_eas_author_role%' !== $part ) {
+				$part = sanitize_title( $part );
+			}
+
+			$parts[ $key ] = $part;
+		}
 
 		// Sanitize the parts, and put them back together.
-		$author_base = implode( '/', array_map( 'sanitize_title', $parts ) );
+		$author_base = implode( '/', array_filter( $parts ) );
 	}
 
 	// Always default to `author`.
@@ -405,6 +415,7 @@ function ba_eas_nicename_is_ascii( $nicename = '' ) {
  * when appropriate.
  *
  * @since 1.2.0
+ * @since 1.3.0 Allow `%ba_eas_author_role%` rewrite tag in author base.
  *
  * @return void
  */
@@ -419,7 +430,7 @@ function ba_eas_wp_rewrite_overrides() {
 	}
 
 	// If doing role-based, set accordingly.
-	if ( ba_eas_do_role_based_author_base() ) {
+	if ( ba_eas_do_role_based_author_base() && false === strpos( $author_base, '%ba_eas_author_role%' ) ) {
 		$author_base = '%ba_eas_author_role%';
 	}
 
@@ -843,6 +854,9 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
 
 /**
  * Clean and update the nicename cache.
+ *
+ * @todo This will no longer be necessary when WP 4.5 is the minimum version.
+ * @see https://core.trac.wordpress.org/ticket/35750
  *
  * @since 1.0.0
  *
