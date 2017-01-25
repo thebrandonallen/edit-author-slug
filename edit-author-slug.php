@@ -1,26 +1,20 @@
 <?php
 /**
- * Edit Author Slug Plugin
- *
- * Customize a user's author links.
+ * Plugin Name: Edit Author Slug
+ * Plugin URI:  https://github.com/thebrandonallen/edit-author-slug/
+ * Description: Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
+ * Version:     1.2.1
+ * Tested With: 4.3.7, 4.4.6, 4.5.5, 4.6.2, 4.7.1
+ * Author:      Brandon Allen
+ * Author URI:  https://github.com/thebrandonallen/
+ * License:     GPLv2 or later
+ * Text Domain: edit-author-slug
+ * Domain Path: /languages
  *
  * @package Edit_Author_Slug
  * @subpackage Main
- *
  * @author Brandon Allen
- */
-
-/**
- * Plugin Name: Edit Author Slug
- * Plugin URI: https://github.com/thebrandonallen/edit-author-slug/
- * Description: Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
- * Version: 1.2.1
- * Tested With: 4.2.9, 4.3.5, 4.4.4, 4.5.3, 4.6
- * Author: Brandon Allen
- * Author URI: https://github.com/thebrandonallen/
- * License: GPLv2 or later
- * Text Domain: edit-author-slug
- * Domain Path: /languages
+ * @version 1.2.1
  */
 
 /*
