@@ -35,6 +35,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 *
 	 * @since 1.2.0
 	 *
+	 * @todo Remove.
+	 *
 	 * @global WP_Rewrite $wp_rewrite
 	 *
 	 * @param string $structure Optional. Permalink structure to set. Default empty.
@@ -304,11 +306,21 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 */
 	function test_ba_eas_sanitize_author_base() {
 
+		// Test an empty author base.
 		$this->assertEquals( 'author', ba_eas_sanitize_author_base( '' ) );
 
+		// Test an author base with double forward slashes.
 		$this->assertEquals( 'author/base', ba_eas_sanitize_author_base( 'author//base' ) );
 
+		// Test a single word author base.
 		$this->assertEquals( 'ninja', ba_eas_sanitize_author_base( 'ninja' ) );
+
+		// Test that a santized, multi-part, author base with an invalid part,
+		// doesn't contain double forward slashes.
+		$this->assertEquals( 'author/base', ba_eas_sanitize_author_base( 'author/&^$()<>*@!/base' ) );
+
+		// Test that the role-based tag is retained.
+		$this->assertEquals( '%ba_eas_author_role%/base', ba_eas_sanitize_author_base( '%ba_eas_author_role%/base' ) );
 	}
 
 	/**
