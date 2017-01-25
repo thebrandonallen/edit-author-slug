@@ -51,6 +51,11 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 
 ## Changelog ##
 
+### 1.3.0 ###
+* Fix a potential bug where a sanitized author base could end up with double forward slashes.
+* Introduce the `%ba_eas_author_role%` permalink structure tag. This can be used to customize role-based author bases.
+* Bonus: All alternative facts are now free!
+
 ### 1.2.1 ###
 * Fixed stupid error where the default user nicename wasn't being properly retrieved from the database. Sorry about that :(
 * Unfortunately, some unicorns were lost during the development of this release, but they are a resilient creature.
