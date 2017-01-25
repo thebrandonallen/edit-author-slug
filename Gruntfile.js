@@ -195,11 +195,15 @@ module.exports = function(grunt) {
 				},
 				options: {
 					replacements: [{
-						pattern: /(\public\ \$version.*)'(.*)';/gm, // For plugin version variable
+						pattern: /(\public\s\$version.*)'(.*)';/gm, // For plugin version variable
 						replacement: '$1\'<%= pkg.version %>\';'
 					},
 					{
-						pattern: /(\* Version:\s*)(.*)$/gm, // For plugin header
+						pattern: /(\*\sVersion:\s+).*/gm, // For plugin header
+						replacement: '$1<%= pkg.version %>'
+					},
+					{
+						pattern: /(\*\s\@version\s+).*/gm, // For plugin header
 						replacement: '$1<%= pkg.version %>'
 					}]
 				}
@@ -211,15 +215,19 @@ module.exports = function(grunt) {
 				},
 				options: {
 					replacements: [{
-						pattern: /(\public\ \$version.*)'(.*)';/gm, // For plugin version variable
+						pattern: /(\public\s\$version.*)'(.*)';/gm, // For plugin version variable
 						replacement: '$1\'<%= pkg.version %>\';'
 					},
 					{
-						pattern: /(\* Version:\s*)(.*)$/gm, // For plugin header
+						pattern: /(\*\sVersion:\s+).*/gm, // For plugin header
 						replacement: '$1<%= pkg.version %>'
 					},
 					{
-						pattern: /(Stable tag:[\*\ ]*)(.*\S)/gim, // For readme.*
+						pattern: /(\*\s\@version\s+).*/gm, // For plugin header
+						replacement: '$1<%= pkg.version %>'
+					},
+					{
+						pattern: /(Stable tag:\s+).*/gm, // For readme.txt
 						replacement: '$1<%= pkg.version %>'
 					}]
 				}
