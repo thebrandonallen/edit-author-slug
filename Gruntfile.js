@@ -12,6 +12,7 @@ module.exports = function(grunt) {
 		],
 
 		EAS_EXCLUDED_MISC = [
+			'!**/assets/**',
 			'!**/bin/**',
 			'!**/build/**',
 			'!**/coverage/**',
