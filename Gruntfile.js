@@ -12,17 +12,15 @@ module.exports = function(grunt) {
 		],
 
 		EAS_EXCLUDED_MISC = [
-			'!**/.idea/**',
 			'!**/bin/**',
 			'!**/build/**',
 			'!**/coverage/**',
-			'!**/nbproject/**',
 			'!**/node_modules/**',
 			'!**/tests/**',
 			'!Gruntfile.js*',
 			'!package.json*',
 			'!phpunit.xml*',
-			'!.{editorconfig,distignore,gitignore,jshintrc,travis.yml,DS_Store}'
+			'!.*'
 		];
 
 	// Load tasks.
