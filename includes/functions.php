@@ -80,19 +80,8 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false, $structure =
 	 */
 	$structure = apply_filters( 'ba_eas_auto_update_user_nicename_structure', $structure, $user_id );
 
-	// Make sure we have a structure.
-	if ( empty( $structure ) ) {
-		$structure = 'username';
-	}
-
-	// Setup the current nicename.
-	$old_nicename = $user->user_login;
-	if ( ! empty( $user->user_nicename ) ) {
-		$old_nicename = $user->user_nicename;
-	}
-
-	// Setup default nicename.
-	$nicename = $old_nicename;
+	// Setup the default and current nicename.
+	$nicename = $old_nicename = $user->user_nicename;
 
 	// Setup the new nicename based on the provided structure.
 	switch ( $structure ) {
