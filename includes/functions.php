@@ -397,6 +397,101 @@ function ba_eas_nicename_is_ascii( $nicename = '' ) {
 	return ba_eas_sanitize_nicename( $nicename ) === ba_eas_sanitize_nicename( $nicename, false );
 }
 
+/**
+ * Returns a nicename built according to the passed structure.
+ *
+ * @since 1.4.0
+ *
+ * @param int    $user_id   The user id.
+ * @param string $structure The structure to build the nicename against.
+ *
+ * @return string Defaults to empty.
+ */
+function ba_eas_get_nicename_by_structure( $user_id = 0, $structure = '' ) {
+
+	// Validate the user id.
+	$user = get_userdata( $user_id );
+
+	// Bail if we don't have a valid user id.
+	if ( empty( $user->ID ) ) {
+		return '';
+	}
+
+	// Set the default nicename.
+	$nicename = '';
+
+	// Setup the new nicename based on the provided structure.
+	switch ( $structure ) {
+
+		case 'username':
+
+			if ( ! empty( $user->user_login ) ) {
+				$nicename = $user->user_login;
+			}
+
+			break;
+
+		case 'nickname':
+
+			if ( ! empty( $user->nickname ) ) {
+				$nicename = $user->nickname;
+			}
+
+			break;
+
+		case 'displayname':
+
+			if ( ! empty( $user->display_name ) ) {
+				$nicename = $user->display_name;
+			}
+
+			break;
+
+		case 'firstname':
+
+			if ( ! empty( $user->first_name ) ) {
+				$nicename = $user->first_name;
+			}
+
+			break;
+
+		case 'lastname':
+
+			if ( ! empty( $user->last_name ) ) {
+				$nicename = $user->last_name;
+			}
+
+			break;
+
+		case 'firstlast':
+
+			if ( ! empty( $user->first_name ) && ! empty( $user->last_name ) ) {
+				$nicename = $user->first_name . '-' . $user->last_name;
+			}
+
+			break;
+
+		case 'lastfirst':
+
+			if ( ! empty( $user->first_name ) && ! empty( $user->last_name ) ) {
+				$nicename = $user->last_name . '-' . $user->first_name;
+			}
+
+			break;
+
+		case 'userid':
+
+			$nicename = $user->ID;
+
+			break;
+	}
+
+	// Sanitize and trim the new user nicename.
+	$nicename = ba_eas_trim_nicename( ba_eas_sanitize_nicename( $nicename ) );
+
+	return apply_filters( 'ba_eas_get_nicename_by_structure', $nicename, $user_id, $structure );
+}
+
 /** Author Base ***************************************************************/
 
 /**
