@@ -80,77 +80,11 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false, $structure =
 	 */
 	$structure = apply_filters( 'ba_eas_auto_update_user_nicename_structure', $structure, $user_id );
 
-	// Setup the default and current nicename.
-	$nicename = $old_nicename = $user->user_nicename;
-
-	// Setup the new nicename based on the provided structure.
-	switch ( $structure ) {
-
-		case 'username':
-
-			if ( ! empty( $user->user_login ) ) {
-				$nicename = $user->user_login;
-			}
-
-			break;
-
-		case 'nickname':
-
-			if ( ! empty( $user->nickname ) ) {
-				$nicename = $user->nickname;
-			}
-
-			break;
-
-		case 'displayname':
-
-			if ( ! empty( $user->display_name ) ) {
-				$nicename = $user->display_name;
-			}
-
-			break;
-
-		case 'firstname':
-
-			if ( ! empty( $user->first_name ) ) {
-				$nicename = $user->first_name;
-			}
-
-			break;
-
-		case 'lastname':
-
-			if ( ! empty( $user->last_name ) ) {
-				$nicename = $user->last_name;
-			}
-
-			break;
-
-		case 'firstlast':
-
-			if ( ! empty( $user->first_name ) && ! empty( $user->last_name ) ) {
-				$nicename = $user->first_name . '-' . $user->last_name;
-			}
-
-			break;
-
-		case 'lastfirst':
-
-			if ( ! empty( $user->first_name ) && ! empty( $user->last_name ) ) {
-				$nicename = $user->last_name . '-' . $user->first_name;
-			}
-
-			break;
-
-		case 'userid':
-
-			$nicename = $user_id;
-
-			break;
-	}
+	// Setup the current nicename.
+	$old_nicename = $user->user_nicename;
 
 	// Sanitize and trim the new user nicename.
-	$nicename = ba_eas_trim_nicename( ba_eas_sanitize_nicename( $nicename ) );
+	$nicename = ba_eas_get_nicename_by_structure( $user_id, $structure );
 
 	/**
 	 * Filters the auto-updated user nicename before being saved.

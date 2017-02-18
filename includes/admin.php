@@ -31,34 +31,18 @@ function ba_eas_show_user_nicename( $user ) {
 	}
 
 	// Setup the nicename.
-	$nicename = '';
-	if ( ! empty( $user->user_nicename ) ) {
-		$nicename = $user->user_nicename;
-	}
+	$nicename = $user->user_nicename;
 
 	// Setup options array.
-	$options = array();
-	$options['username']    = ba_eas_sanitize_nicename( $user->nickname );
-	$options['displayname'] = ba_eas_sanitize_nicename( $user->display_name );
-
-	// Setup the first name.
-	if ( ! empty( $user->first_name ) ) {
-		$options['firstname'] = ba_eas_sanitize_nicename( $user->first_name );
-	}
-
-	// Setup the last name.
-	if ( ! empty( $user->last_name ) ) {
-		$options['lastname'] = ba_eas_sanitize_nicename( $user->last_name );
-	}
-
-	// Setup the first/last name combos.
-	if ( ! empty( $options['firstname'] ) && ! empty( $options['lastname'] ) ) {
-		$options['firslast']  = $options['firstname'] . '-' . $options['lastname'];
-		$options['lastfirst'] = $options['lastname'] . '-' . $options['firstname'];
-	}
-
-	// Setup the user id.
-	$options['userid'] = (int) $user->ID;
+	$options = array(
+		'username'    => ba_eas_get_nicename_by_structure( $user->ID, 'username' ),
+		'displayname' => ba_eas_get_nicename_by_structure( $user->ID, 'displayname' ),
+		'firstname'   => ba_eas_get_nicename_by_structure( $user->ID, 'firstname' ),
+		'lastname'    => ba_eas_get_nicename_by_structure( $user->ID, 'lastname' ),
+		'firstlast'   => ba_eas_get_nicename_by_structure( $user->ID, 'firstlast' ),
+		'lastfirst'   => ba_eas_get_nicename_by_structure( $user->ID, 'lastfirst' ),
+		'userid'      => ba_eas_get_nicename_by_structure( $user->ID, 'userid' ),
+	);
 
 	/**
 	 * Filters the array of user nicename options.
