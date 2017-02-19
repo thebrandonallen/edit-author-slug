@@ -1,14 +1,13 @@
 <?php
 /**
- * Plugin Name: Edit Author Slug
- * Plugin URI:  https://github.com/thebrandonallen/edit-author-slug/
- * Description: Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
- * Version:     1.3.0
- * Author:      Brandon Allen
- * Author URI:  https://github.com/thebrandonallen/
- * License:     GPLv2 or later
- * Text Domain: edit-author-slug
- * Domain Path: /languages
+ * Plugin Name:     Edit Author Slug
+ * Plugin URI:      https://github.com/thebrandonallen/edit-author-slug/
+ * Description:     Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
+ * Author:          Brandon Allen
+ * Author URI:      https://github.com/thebrandonallen/
+ * Text Domain:     edit-author-slug
+ * Domain Path:     /languages
+ * Version:         1.3.0
  *
  * @package Edit_Author_Slug
  * @subpackage Main
@@ -17,7 +16,7 @@
  */
 
 /*
-	Copyright 2009-2016  Brandon Allen  (email : plugins ([at]) brandonallen ([dot]) me)
+	Copyright (C) 2009-2017  Brandon Allen  (email : plugins ([at]) brandonallen ([dot]) me)
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,7 +32,7 @@
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-	http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
+	https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 // Exit if accessed directly.
