@@ -711,6 +711,8 @@ function ba_eas_get_user_role( $roles = array(), $user_id = 0 ) {
  * WP_Roles object. This is a wrapper function for `wp_roles()` with a fallback
  * for those on WP < 4.3.
  *
+ * @since 1.2.0
+ *
  * @global WP_Roles $wp_roles
  *
  * @return WP_Roles
