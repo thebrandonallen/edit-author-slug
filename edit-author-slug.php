@@ -205,6 +205,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 				$instance = new BA_Edit_Author_Slug;
 				$instance->setup_globals();
 				$instance->includes();
+				$instance->options_back_compat();
 				$instance->setup_actions();
 			}
 
@@ -227,8 +228,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			if ( 'author_base_rewrite' === $name ) {
 				_deprecated_function( 'BA_Edit_Author_Slug::author_base_rewrite', '1.2.0', 'ba_eas_wp_rewrite_overrides' );
 				ba_eas_wp_rewrite_overrides();
-			} elseif ( 'options_back_compat' === $name ) {
-				_deprecated_function( 'BA_Edit_Author_Slug::options_back_compat', '1.4.0' );
 			} else {
 				_doing_it_wrong( "BA_Edit_Author_Slug::{$name}", esc_html__( 'Method does not exist.', 'edit-author-slug' ), '1.0.0' );
 			}
@@ -283,24 +282,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			$this->plugin_basename = plugin_basename( $this->file );
 
 			/* Options ********************************************************/
-
-			// Author base.
-			if ( $base = get_option( '_ba_eas_author_base' ) ) {
-
-				// Sanitize the db value.
-				$base = ba_eas_sanitize_author_base( $base );
-
-				// Author base.
-				if ( ! empty( $base ) ) {
-					$this->author_base = $base;
-				}
-			}
-
-			// Current DB version.
-			$current_db_version = (int) get_option( '_ba_eas_db_version', 0 );
-			if ( 0 < $current_db_version ) {
-				$this->current_db_version = $current_db_version;
-			}
 
 			// Load the remove front option.
 			$remove_front       = (int) get_option( '_ba_eas_remove_front', 0 );
@@ -360,6 +341,50 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			// Localize.
 			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
+		}
+
+		/**
+		 * Sets the author base and db version with support for previous
+		 * versions of the plugin.
+		 *
+		 * @since 1.2.0
+		 *
+		 * @return void
+		 */
+		private function options_back_compat() {
+
+			// Options.
+			if ( $base = get_option( '_ba_eas_author_base' ) ) {
+
+				// Sanitize the db value.
+				$base = ba_eas_sanitize_author_base( $base );
+
+				// Author base.
+				if ( ! empty( $base ) ) {
+					$this->author_base = $base;
+				}
+
+				// Current DB version.
+				$this->current_db_version = absint( get_option( '_ba_eas_db_version' ) );
+
+			// Pre-0.9 Back compat.
+			} elseif ( $options = get_option( 'ba_edit_author_slug' ) ) {
+
+				// Sanitize the db value.
+				if ( ! empty( $options['author_base'] ) ) {
+					$base = ba_eas_sanitize_author_base( $options['author_base'] );
+				}
+
+				// Author base.
+				if ( ! empty( $base ) ) {
+					$this->author_base = $base;
+				}
+
+				// Current DB version.
+				if ( ! empty( $options['db_version'] ) ) {
+					$this->current_db_version = absint( $options['db_version'] );
+				}
+			}
 		}
 
 		/** Public Methods ****************************************************/
