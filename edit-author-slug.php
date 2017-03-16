@@ -116,15 +116,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		public $plugin_basename = '';
 
 		/**
-		 * The text domain for Edit Author Slug.
-		 *
-		 * @since  0.9.6
-		 * @access public
-		 * @var    string
-		 */
-		public $domain = 'edit-author-slug';
-
-		/**
 		 * The author base.
 		 *
 		 * @since  0.7.0
@@ -397,7 +388,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			// Look in wp-content/plugins/edit-author-slug/languages first.
 			// Fallback to wp-content/languages/plugins.
-			load_plugin_textdomain( $this->domain, false, dirname( $this->plugin_basename ) . '/languages/' );
+			load_plugin_textdomain( 'edit-author-slug', false, dirname( $this->plugin_basename ) . '/languages/' );
 		}
 
 		/**
