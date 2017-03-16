@@ -205,7 +205,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 				$instance = new BA_Edit_Author_Slug;
 				$instance->setup_globals();
 				$instance->includes();
-				$instance->options_back_compat();
 				$instance->setup_actions();
 			}
 
@@ -283,11 +282,31 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			/* Options ********************************************************/
 
+			// Author base.
+			if ( $base = get_option( '_ba_eas_author_base' ) ) {
+
+				// Sanitize the db value.
+				$base = ba_eas_sanitize_author_base( $base );
+
+				// Author base.
+				if ( ! empty( $base ) ) {
+					$this->author_base = $base;
+				}
+			}
+
+			// Current DB version.
+			$current_db_version = (int) get_option( '_ba_eas_db_version', 0 );
+			if ( 0 < $current_db_version ) {
+				$this->current_db_version = $current_db_version;
+			}
+
 			// Load the remove front option.
-			$this->remove_front = (bool) absint( get_option( '_ba_eas_remove_front', 0 ) );
+			$remove_front       = (int) get_option( '_ba_eas_remove_front', 0 );
+			$this->remove_front = (bool) $remove_front;
 
 			// Load auto-update option.
-			$this->do_auto_update = (bool) absint( get_option( '_ba_eas_do_auto_update', 0 ) );
+			$do_auto_update       = (int) get_option( '_ba_eas_do_auto_update', 0 );
+			$this->do_auto_update = (bool) $do_auto_update;
 
 			// Load the default nicename structure for auto-update.
 			$default_user_nicename = get_option( '_ba_eas_default_user_nicename' );
@@ -297,7 +316,8 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			}
 
 			// Load role-based author slug option.
-			$this->do_role_based = (bool) absint( get_option( '_ba_eas_do_role_based', 0 ) );
+			$do_role_based       = (int) get_option( '_ba_eas_do_role_based', 0 );
+			$this->do_role_based = (bool) $do_role_based;
 		}
 
 		/**
@@ -345,43 +365,12 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * versions of the plugin.
 		 *
 		 * @since 1.2.0
+		 * @deprecated 1.4.0
 		 *
 		 * @return void
 		 */
 		private function options_back_compat() {
-
-			// Options.
-			if ( $base = get_option( '_ba_eas_author_base' ) ) {
-
-				// Sanitize the db value.
-				$base = ba_eas_sanitize_author_base( $base );
-
-				// Author base.
-				if ( ! empty( $base ) ) {
-					$this->author_base = $base;
-				}
-
-				// Current DB version.
-				$this->current_db_version = absint( get_option( '_ba_eas_db_version' ) );
-
-			// Pre-0.9 Back compat.
-			} elseif ( $options = get_option( 'ba_edit_author_slug' ) ) {
-
-				// Sanitize the db value.
-				if ( ! empty( $options['author_base'] ) ) {
-					$base = ba_eas_sanitize_author_base( $options['author_base'] );
-				}
-
-				// Author base.
-				if ( ! empty( $base ) ) {
-					$this->author_base = $base;
-				}
-
-				// Current DB version.
-				if ( ! empty( $options['db_version'] ) ) {
-					$this->current_db_version = absint( $options['db_version'] );
-				}
-			}
+			_deprecated_function( __METHOD__, '1.4.0' );
 		}
 
 		/** Public Methods ****************************************************/

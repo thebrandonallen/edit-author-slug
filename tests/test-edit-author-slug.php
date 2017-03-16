@@ -48,9 +48,12 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 
 	/**
 	 * @covers BA_Edit_Author_Slug::options_back_compat
+	 * @expectedDeprecated BA_Edit_Author_Slug::options_back_compat
 	 */
 	function test_options_back_compat() {
-		$this->markTestIncomplete();
+		$method = new ReflectionMethod( $this->eas, 'options_back_compat' );
+		$method->setAccessible( true );
+		$method->invoke( $this->eas );
 	}
 
 	/**
