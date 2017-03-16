@@ -357,12 +357,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			if ( $base = get_option( '_ba_eas_author_base' ) ) {
 
 				// Sanitize the db value.
-				$base = ba_eas_sanitize_author_base( $base );
-
-				// Author base.
-				if ( ! empty( $base ) ) {
-					$this->author_base = $base;
-				}
+				$this->author_base = ba_eas_sanitize_author_base( $base );
 
 				// Current DB version.
 				$this->current_db_version = (int) get_option( '_ba_eas_db_version', 0 );
@@ -372,12 +367,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 				// Sanitize the db value.
 				if ( ! empty( $options['author_base'] ) ) {
-					$base = ba_eas_sanitize_author_base( $options['author_base'] );
-				}
-
-				// Author base.
-				if ( ! empty( $base ) ) {
-					$this->author_base = $base;
+					$this->author_base = ba_eas_sanitize_author_base( $options['author_base'] );
 				}
 
 				// Current DB version.
