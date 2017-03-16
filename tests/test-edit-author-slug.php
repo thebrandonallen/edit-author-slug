@@ -18,11 +18,13 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	 * @covers BA_Edit_Author_Slug::__call
 	 *
 	 * @expectedDeprecated     BA_Edit_Author_Slug::author_base_rewrite
+	 * @expectedDeprecated     BA_Edit_Author_Slug::options_back_compat
 	 * @expectedIncorrectUsage BA_Edit_Author_Slug::fake_method
 	 */
 	public function test__call() {
 
 		$this->eas->__call( 'author_base_rewrite' );
+		$this->eas->__call( 'options_back_compat' );
 
 		$this->assertNull( $this->eas->__call( 'fake_method' ) );
 	}
@@ -44,14 +46,6 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 		$this->assertEquals( 4,  has_action( 'init', 'ba_eas_wp_rewrite_overrides' ) );
 		$this->assertEquals( 20, has_action( 'init', array( $this->eas, 'add_rewrite_tags' ) ) );
 		$this->assertEquals( 10, has_action( 'plugins_loaded', array( $this->eas, 'load_textdomain' ) ) );
-	}
-
-	/**
-	 * @covers BA_Edit_Author_Slug::options_back_compat
-	 * @expectedDeprecated BA_Edit_Author_Slug::options_back_compat
-	 */
-	function test_options_back_compat() {
-		$this->eas->options_back_compat();
 	}
 
 	/**
