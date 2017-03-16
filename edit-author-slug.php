@@ -227,6 +227,8 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			if ( 'author_base_rewrite' === $name ) {
 				_deprecated_function( 'BA_Edit_Author_Slug::author_base_rewrite', '1.2.0', 'ba_eas_wp_rewrite_overrides' );
 				ba_eas_wp_rewrite_overrides();
+			} elseif ( 'options_back_compat' === $name ) {
+				_deprecated_function( 'BA_Edit_Author_Slug::options_back_compat', '1.4.0' );
 			} else {
 				_doing_it_wrong( "BA_Edit_Author_Slug::{$name}", esc_html__( 'Method does not exist.', 'edit-author-slug' ), '1.0.0' );
 			}
@@ -358,19 +360,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			// Localize.
 			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
-		}
-
-		/**
-		 * Sets the author base and db version with support for previous
-		 * versions of the plugin.
-		 *
-		 * @since 1.2.0
-		 * @deprecated 1.4.0
-		 *
-		 * @return void
-		 */
-		private function options_back_compat() {
-			_deprecated_function( __METHOD__, '1.4.0' );
 		}
 
 		/** Public Methods ****************************************************/

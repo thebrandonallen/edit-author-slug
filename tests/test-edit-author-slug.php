@@ -51,9 +51,7 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	 * @expectedDeprecated BA_Edit_Author_Slug::options_back_compat
 	 */
 	function test_options_back_compat() {
-		$method = new ReflectionMethod( $this->eas, 'options_back_compat' );
-		$method->setAccessible( true );
-		$method->invoke( $this->eas );
+		$this->eas->options_back_compat();
 	}
 
 	/**
