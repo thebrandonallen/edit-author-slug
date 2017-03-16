@@ -248,18 +248,18 @@ function ba_eas_sanitize_author_base( $author_base = 'author' ) {
 	$original_author_base = $author_base;
 
 	// Only do extra sanitization when needed.
-	if ( ! empty( $author_base ) || 'author' !== $author_base ) {
+	if ( ! empty( $author_base ) && 'author' !== $author_base ) {
 
 		// Split the author base string on forward slashes.
 		$parts = explode( '/', $author_base );
+		$parts = array_filter( array_map( 'trim', $parts ) );
 
 		// Sanitize all parts except our rewrite tag, `%ba_eas_author_role%`.
 		foreach ( $parts as $key => $part ) {
-			if ( '%ba_eas_author_role%' !== $part ) {
-				$part = sanitize_title( $part );
-			}
 
-			$parts[ $key ] = $part;
+			if ( '%ba_eas_author_role%' !== $part  ) {
+				$parts[ $key ] = sanitize_title( $part );
+			}
 		}
 
 		// Sanitize the parts, and put them back together.
@@ -273,6 +273,8 @@ function ba_eas_sanitize_author_base( $author_base = 'author' ) {
 
 	/**
 	 * Filters the sanitized author base.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @param string $author_base          The sanitized author base.
 	 * @param string $original_author_base The unsanitized author base.
