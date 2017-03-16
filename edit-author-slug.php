@@ -365,7 +365,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 				}
 
 				// Current DB version.
-				$this->current_db_version = absint( get_option( '_ba_eas_db_version' ) );
+				$this->current_db_version = (int) get_option( '_ba_eas_db_version', 0 );
 
 			// Pre-0.9 Back compat.
 			} elseif ( $options = get_option( 'ba_edit_author_slug' ) ) {
@@ -382,7 +382,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 				// Current DB version.
 				if ( ! empty( $options['db_version'] ) ) {
-					$this->current_db_version = absint( $options['db_version'] );
+					$this->current_db_version = (int) $options['db_version'];
 				}
 			}
 		}
