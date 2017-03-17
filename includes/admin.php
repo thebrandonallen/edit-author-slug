@@ -364,7 +364,7 @@ function ba_eas_show_user_nicename_scripts( $hook_suffix = '' ) {
 		'edit-author-slug',
 		ba_eas()->plugin_url . "js/edit-author-slug{$min}.js",
 		array( 'jquery' ),
-		ba_eas()::VERSION
+		ba_eas()->version
 	);
 	wp_enqueue_script( 'edit-author-slug' );
 }
@@ -923,7 +923,7 @@ function ba_eas_install() {
 
 	// Add the options.
 	add_option( '_ba_eas_author_base',           $ba_eas->author_base );
-	add_option( '_ba_eas_db_version',            $ba_eas::DB_VERSION );
+	add_option( '_ba_eas_db_version',            $ba_eas->db_version );
 	add_option( '_ba_eas_do_auto_update',        (int) $ba_eas->do_auto_update );
 	add_option( '_ba_eas_default_user_nicename', $ba_eas->default_user_nicename );
 	add_option( '_ba_eas_do_role_based',         (int) $ba_eas->do_role_based );
@@ -944,7 +944,7 @@ function ba_eas_upgrade() {
 	$ba_eas = ba_eas();
 
 	// We're up-to-date, so let's move on.
-	if ( $ba_eas->current_db_version === $ba_eas::DB_VERSION ) {
+	if ( $ba_eas->current_db_version === $ba_eas->db_version ) {
 		return;
 	}
 
@@ -972,7 +972,7 @@ function ba_eas_upgrade() {
 	}
 
 	// Version bump.
-	update_option( '_ba_eas_db_version', $ba_eas::DB_VERSION );
+	update_option( '_ba_eas_db_version', $ba_eas->db_version );
 
 	// Courtesy flush.
 	ba_eas_flush_rewrite_rules();
