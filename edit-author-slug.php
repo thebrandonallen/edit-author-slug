@@ -55,20 +55,18 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		/**
 		 * The plugin version.
 		 *
-		 * @since  0.8.0
-		 * @access public
-		 * @var    string
+		 * @since 1.4.0
+		 * @var   string
 		 */
-		public $version = '1.3.0';
+		const VERSION = '1.3.0';
 
 		/**
-		 * The database version.
+		 * The plugin version.
 		 *
-		 * @since  0.8.0
-		 * @access public
-		 * @var    int
+		 * @since 1.4.0
+		 * @var   int
 		 */
-		public $db_version = 411;
+		const DB_VERSION = 411;
 
 		/**
 		 * The current installed database version.
@@ -202,6 +200,31 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			// Always return the instance.
 			return $instance;
+		}
+
+		/**
+		 * Magic method for accessing custom/deprecated/nonexistent properties.
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param string $name The property name.
+		 *
+		 * @return mixed
+		 */
+		public function __get( $name ) {
+
+			// Default to null.
+			$retval = null;
+
+			if ( 'version' === $name ) {
+				// BA_Edit_Author_Slug->version was removed in 1.4.0.
+				$retval = self::VERSION;
+			} elseif ( 'db_version' === $name ) {
+				// BA_Edit_Author_Slug->db_version was removed in 1.4.0.
+				$retval = self::DB_VERSION;
+			}
+
+			return $retval;
 		}
 
 		/**

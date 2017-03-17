@@ -196,7 +196,7 @@ module.exports = function(grunt) {
 				},
 				options: {
 					replacements: [{
-						pattern: /(\public\s\$version.*)'(.*)';/gm, // For plugin version variable
+						pattern: /(const\sVERSION.*)'(.*)';/gm, // For plugin version variable
 						replacement: '$1\'<%= pkg.version %>\';'
 					},
 					{
@@ -216,7 +216,7 @@ module.exports = function(grunt) {
 				},
 				options: {
 					replacements: [{
-						pattern: /(\public\s\$version.*)'(.*)';/gm, // For plugin version variable
+						pattern: /(const\sVERSION.*)'(.*)';/gm, // For plugin version variable
 						replacement: '$1\'<%= pkg.version %>\';'
 					},
 					{
