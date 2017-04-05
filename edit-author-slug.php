@@ -206,7 +206,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		public function __construct() {
 			$this->setup_globals();
 			$this->includes();
-			$this->options_back_compat();
+			$this->setup_options();
 			$this->setup_actions();
 		}
 
@@ -357,6 +357,34 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		}
 
 		/**
+		 * Get our options from the DB and set their corresponding properties.
+		 *
+		 * @since 1.4.0
+		 *
+		 * @return void
+		 */
+		private function setup_options() {
+
+			// Get the author base option.
+			$base = get_option( '_ba_eas_author_base' );
+
+			// Options.
+			if ( $base ) {
+
+				// Sanitize the db value.
+				$this->author_base = ba_eas_sanitize_author_base( $base );
+
+				// Current DB version.
+				$this->current_db_version = (int) get_option( '_ba_eas_db_version', 0 );
+
+				return;
+			}
+
+			// If we're still here, check for pre-0.9 options.
+			$this->options_back_compat();
+		}
+
+		/**
 		 * Display Author slug edit field on User/Profile edit page.
 		 *
 		 * @since 0.7.0
@@ -387,32 +415,17 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 */
 		private function options_back_compat() {
 
-			// Get the author base option.
-			$base = get_option( '_ba_eas_author_base' );
+			// Get the pre-0.9 options.
+			$options = get_option( 'ba_edit_author_slug' );
 
-			// Options.
-			if ( $base ) {
+			// Sanitize the db value.
+			if ( ! empty( $options['author_base'] ) ) {
+				$this->author_base = ba_eas_sanitize_author_base( $options['author_base'] );
+			}
 
-				// Sanitize the db value.
-				$this->author_base = ba_eas_sanitize_author_base( $base );
-
-				// Current DB version.
-				$this->current_db_version = (int) get_option( '_ba_eas_db_version', 0 );
-
-			} else {
-
-				// Get the pre-0.9 options.
-				$options = get_option( 'ba_edit_author_slug' );
-
-				// Sanitize the db value.
-				if ( ! empty( $options['author_base'] ) ) {
-					$this->author_base = ba_eas_sanitize_author_base( $options['author_base'] );
-				}
-
-				// Current DB version.
-				if ( ! empty( $options['db_version'] ) ) {
-					$this->current_db_version = (int) $options['db_version'];
-				}
+			// Current DB version.
+			if ( ! empty( $options['db_version'] ) ) {
+				$this->current_db_version = (int) $options['db_version'];
 			}
 		}
 
