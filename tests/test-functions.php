@@ -386,6 +386,42 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::ba_eas_get_nicename_by_structure
+	 */
+	public function test_ba_eas_get_nicename_by_structure() {
+
+		$empty_user_id = ba_eas_get_nicename_by_structure();
+		$this->assertEquals( '', $empty_user_id );
+
+		$empty_structure = ba_eas_get_nicename_by_structure( $this->single_user_id );
+		$this->assertEquals( '', $empty_structure );
+
+		$username = ba_eas_get_nicename_by_structure( $this->single_user_id, 'username' );
+		$this->assertEquals( 'mastersplinter', $username );
+
+		$nickname = ba_eas_get_nicename_by_structure( $this->single_user_id, 'nickname' );
+		$this->assertEquals( 'sensei', $nickname );
+
+		$displayname = ba_eas_get_nicename_by_structure( $this->single_user_id, 'displayname' );
+		$this->assertEquals( 'master-splinter', $displayname );
+
+		$firstname = ba_eas_get_nicename_by_structure( $this->single_user_id, 'firstname' );
+		$this->assertEquals( 'master', $firstname );
+
+		$lastname = ba_eas_get_nicename_by_structure( $this->single_user_id, 'lastname' );
+		$this->assertEquals( 'splinter', $lastname );
+
+		$firstlast = ba_eas_get_nicename_by_structure( $this->single_user_id, 'firstlast' );
+		$this->assertEquals( 'master-splinter', $firstlast );
+
+		$lastfirst = ba_eas_get_nicename_by_structure( $this->single_user_id, 'lastfirst' );
+		$this->assertEquals( 'splinter-master', $lastfirst );
+
+		$userid = ba_eas_get_nicename_by_structure( $this->single_user_id, 'userid' );
+		$this->assertEquals( $this->single_user_id, $userid );
+	}
+
+	/**
 	 * @covers ::ba_eas_wp_rewrite_overrides
 	 */
 	function test_ba_eas_wp_rewrite_overrides() {
