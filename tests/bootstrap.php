@@ -8,10 +8,10 @@
  */
 
 // Support for:
-// 1. `WP_DEVELOP_DIR` environment variable
-// 2. Plugin installed inside of WordPress.org developer checkout
-// 3. WordPress.org developer checked out to /tmp
-// 4. Tests checked out to /tmp
+// 1. `WP_DEVELOP_DIR` environment variable.
+// 2. Plugin installed inside of WordPress.org developer checkout.
+// 3. WordPress.org developer checked out to /tmp.
+// 4. Tests checked out to /tmp.
 if ( false !== getenv( 'WP_DEVELOP_DIR' ) ) {
 	$_tests_dir = getenv( 'WP_DEVELOP_DIR' ) . '/tests/phpunit';
 } elseif ( file_exists( '../../../../tests/phpunit/includes/bootstrap.php' ) ) {
@@ -24,6 +24,9 @@ if ( false !== getenv( 'WP_DEVELOP_DIR' ) ) {
 
 require_once $_tests_dir . '/includes/functions.php';
 
+/**
+ * Manually load the plugin being tested.
+ */
 function _manually_load_plugin() {
 	require dirname( __FILE__ ) . '/../edit-author-slug.php';
 }

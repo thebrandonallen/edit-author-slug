@@ -1,9 +1,26 @@
 <?php
+/**
+ * Test the Edit Author Slug functions.
+ *
+ * @package Edit_Author_Slug
+ * @subpackage Tests
+ */
 
+/**
+ * The Edit Author Slug functions test case.
+ */
 class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
+	/**
+	 * The single user id.
+	 *
+	 * @var int
+	 */
 	private $single_user_id = null;
 
+	/**
+	 * The `setUp` method.
+	 */
 	public function setUp() {
 		parent::setUp();
 
@@ -20,6 +37,9 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		) );
 	}
 
+	/**
+	 * The `tearDown` method.
+	 */
 	public function tearDown() {
 		parent::tearDown();
 
@@ -58,7 +78,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param string $role
+	 * @param string $role The user role.
 	 *
 	 * @return string
 	 */
@@ -67,105 +87,111 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_do_auto_update()`.
+	 *
 	 * @covers ::ba_eas_do_auto_update
 	 */
 	public function test_ba_eas_do_auto_update() {
 
-		// False tests
+		// False test.
 		$this->assertFalse( ba_eas_do_auto_update() );
 
-		// True tests
+		// True test.
 		$this->eas->do_auto_update = true;
 		$this->assertTrue( ba_eas_do_auto_update() );
 	}
 
 	/**
+	 * Test for `ba_eas_do_bulk_update()`.
+	 *
 	 * @covers ::ba_eas_do_bulk_update
 	 */
 	public function test_ba_eas_do_bulk_update() {
 
-		// True tests
+		// True tests.
 		$this->assertTrue( ba_eas_do_bulk_update( '1' ) );
 		$this->assertTrue( ba_eas_do_bulk_update( true ) );
 
-		// False tests
+		// False tests.
 		$this->assertFalse( ba_eas_do_bulk_update( '0' ) );
 		$this->assertFalse( ba_eas_do_bulk_update( false ) );
 		$this->assertFalse( ba_eas_do_bulk_update( 'ninja' ) );
 	}
 
 	/**
+	 * Test for `ba_eas_auto_update_user_nicename()`.
+	 *
 	 * @covers ::ba_eas_auto_update_user_nicename
 	 */
 	public function test_ba_eas_auto_update_user_nicename() {
-		// No user id
+		// No user id.
 		$this->assertFalse( ba_eas_auto_update_user_nicename( false ) );
 
-		// No auto update
+		// No auto update.
 		$this->assertFalse( ba_eas_auto_update_user_nicename( 1 ) );
 
-		// We need below tests to think auto update is on
+		// We need below tests to think auto update is on.
 		$this->eas->do_auto_update = true;
 
-		// Invalid user
+		// Invalid user.
 		$this->assertFalse( ba_eas_auto_update_user_nicename( 1337 ) );
 
-		// Update using username
+		// Update using username.
 		$this->eas->default_user_nicename = '';
 		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
 		$user    = get_userdata( $this->single_user_id );
 		$this->assertEquals( 'mastersplinter', $user->user_nicename );
 
-		// Update using username
+		// Update using username.
 		$this->eas->default_user_nicename = 'username';
 		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
 		$user    = get_userdata( $this->single_user_id );
 		$this->assertEquals( 'mastersplinter', $user->user_nicename );
 
-		// Update using nickname
+		// Update using nickname.
 		$this->eas->default_user_nicename = 'nickname';
 		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
 		$user    = get_userdata( $this->single_user_id );
 		$this->assertEquals( 'sensei', $user->user_nicename );
 
-		// Update using displayname
+		// Update using displayname.
 		$this->eas->default_user_nicename = 'displayname';
 		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
 		$user    = get_userdata( $this->single_user_id );
 		$this->assertEquals( 'master-splinter', $user->user_nicename );
 
-		// Update using firstname
+		// Update using firstname.
 		$this->eas->default_user_nicename = 'firstname';
 		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
 		$user    = get_userdata( $this->single_user_id );
 		$this->assertEquals( 'master', $user->user_nicename );
 
-		// Update using lastname
+		// Update using lastname.
 		$this->eas->default_user_nicename = 'lastname';
 		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
 		$user    = get_userdata( $this->single_user_id );
 		$this->assertEquals( 'splinter', $user->user_nicename );
 
-		// Update using firstlast
+		// Update using firstlast.
 		$this->eas->default_user_nicename = 'firstlast';
 		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
 		$user    = get_userdata( $this->single_user_id );
 		$this->assertEquals( 'master-splinter', $user->user_nicename );
 
-		// Update using lastfirst
+		// Update using lastfirst.
 		$this->eas->default_user_nicename = 'lastfirst';
 		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
 		$user    = get_userdata( $this->single_user_id );
 		$this->assertEquals( 'splinter-master', $user->user_nicename );
 
-		// Update using lastfirst
+		// Update using lastfirst.
 		$this->eas->default_user_nicename = 'userid';
 		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
 		$user    = get_userdata( $this->single_user_id );
 		$this->assertEquals( $this->single_user_id, $user->user_nicename );
 
 		// Update using random string as structure, shouldn't update, so
-		// user_nicename should be same as previous test ('splinter-master')
+		// user_nicename should be same as previous test ('splinter-master').
 		$this->eas->default_user_nicename = 'Cowabunga Dude!';
 		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
 		$user    = get_userdata( $this->single_user_id );
@@ -173,6 +199,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_auto_update_user_nicename_single()`.
+	 *
 	 * @covers ::ba_eas_auto_update_user_nicename_single
 	 *
 	 * @expectedDeprecated ba_eas_auto_update_user_nicename_single
@@ -182,6 +210,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_auto_update_user_nicename_bulk()`.
+	 *
 	 * @covers ::ba_eas_auto_update_user_nicename_bulk
 	 */
 	public function test_ba_eas_auto_update_user_nicename_bulk() {
@@ -218,7 +248,9 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 			'last_name'  => 'Hamato',
 		) );
 
-		$_REQUEST = array( '_wpnonce' => wp_create_nonce( 'edit-author-slug-options' ) );
+		$_REQUEST = array(
+			'_wpnonce' => wp_create_nonce( 'edit-author-slug-options' ),
+		);
 
 		$this->eas->default_user_nicename = 'firstlast';
 
@@ -268,7 +300,9 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$mikey = get_userdata( $mikey_id );
 		$this->assertEquals( 'mikey', $mikey->user_nicename );
 
-		$_POST = array( '_ba_eas_bulk_update_structure' => 'firstlast' );
+		$_POST = array(
+			'_ba_eas_bulk_update_structure' => 'firstlast',
+		);
 
 		ba_eas_auto_update_user_nicename_bulk( true );
 
@@ -284,7 +318,9 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$mikey = get_userdata( $mikey_id );
 		$this->assertEquals( 'michelangelo-hamato', $mikey->user_nicename );
 
-		$_POST = array( '_ba_eas_bulk_update_structure' => 'nickname' );
+		$_POST = array(
+			'_ba_eas_bulk_update_structure' => 'nickname',
+		);
 
 		add_filter( 'ba_eas_auto_update_user_nicename_bulk_user_ids', '__return_empty_array' );
 		ba_eas_auto_update_user_nicename_bulk( true );
@@ -304,6 +340,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_sanitize_nicename()`.
+	 *
 	 * @covers ::ba_eas_sanitize_nicename
 	 */
 	public function test_ba_eas_sanitize_nicename() {
@@ -314,6 +352,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_sanitize_author_base()`.
+	 *
 	 * @covers ::ba_eas_sanitize_author_base
 	 */
 	public function test_ba_eas_sanitize_author_base() {
@@ -336,6 +376,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_esc_nicename()`.
+	 *
 	 * @covers ::ba_eas_esc_nicename
 	 */
 	public function test_ba_eas_esc_nicename() {
@@ -347,6 +389,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_trim_nicename()`.
+	 *
 	 * @covers ::ba_eas_trim_nicename
 	 */
 	public function test_ba_eas_trim_nicename() {
@@ -366,6 +410,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_nicename_is_ascii()`.
+	 *
 	 * @covers ::ba_eas_nicename_is_ascii
 	 */
 	public function test_ba_eas_nicename_is_ascii() {
@@ -375,6 +421,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_get_nicename_by_structure()`.
+	 *
 	 * @covers ::ba_eas_get_nicename_by_structure
 	 */
 	public function test_ba_eas_get_nicename_by_structure() {
@@ -411,6 +459,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_wp_rewrite_overrides()`.
+	 *
 	 * @covers ::ba_eas_wp_rewrite_overrides
 	 */
 	public function test_ba_eas_wp_rewrite_overrides() {
@@ -425,7 +475,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		ba_eas_wp_rewrite_overrides();
 		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, 'ninja' );
 
-		$this->set_permalink_structure( '/archives/%post_id%/');
+		$this->set_permalink_structure( '/archives/%post_id%/' );
 		$GLOBALS['wp_rewrite']->get_author_permastruct();
 		$this->assertEquals( '/archives/ninja/%author%', $GLOBALS['wp_rewrite']->author_structure );
 
@@ -435,6 +485,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_remove_front()`.
+	 *
 	 * @covers ::ba_eas_remove_front
 	 */
 	public function test_ba_eas_remove_front() {
@@ -445,6 +497,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_has_front()`.
+	 *
 	 * @covers ::ba_eas_has_front
 	 */
 	public function test_ba_eas_has_front() {
@@ -455,19 +509,23 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_do_role_based_author_base()`.
+	 *
 	 * @covers ::ba_eas_do_role_based_author_base
 	 */
 	public function test_ba_eas_do_role_based_author_base() {
 
-		// False tests
+		// False tests.
 		$this->assertFalse( ba_eas_do_role_based_author_base() );
 
-		// True tests
+		// True tests.
 		$this->eas->do_role_based = true;
 		$this->assertTrue( ba_eas_do_role_based_author_base() );
 	}
 
 	/**
+	 * Test for `ba_eas_author_link()`.
+	 *
 	 * @covers ::ba_eas_author_link
 	 */
 	public function test_ba_eas_author_link() {
@@ -477,38 +535,40 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$author_link_ninja      = 'http://example.com/ninja/mastersplinter/';
 		$author_link_subscriber = 'http://example.com/subscriber/mastersplinter/';
 
-		// Test role-based author base disabled
+		// Test role-based author base disabled.
 		$link = ba_eas_author_link( $author_link, $this->single_user_id );
 		$this->assertEquals( $author_link, $link );
 
 		$this->eas->do_role_based = true;
 
-		// Test role-based author based enabled, but no EAS author base
+		// Test role-based author based enabled, but no EAS author base.
 		$link = ba_eas_author_link( $author_link, $this->single_user_id );
 		$this->assertEquals( $author_link, $link );
 
-		// Test role-based author based enabled, user is subscriber
+		// Test role-based author based enabled, user is subscriber.
 		$link = ba_eas_author_link( $role_based_author_link, $this->single_user_id );
 		$this->assertEquals( $author_link_subscriber, $link );
 
-		// Test role-based author based enabled, role slug doesn't exist
+		// Test role-based author based enabled, role slug doesn't exist.
 		$this->eas->role_slugs = array();
 		$link = ba_eas_author_link( $role_based_author_link, $this->single_user_id );
 		$this->assertEquals( $author_link_author, $link );
 
-		// Test role-based author based enabled, role slug doesn't exist, custom author base
+		// Test role-based author based enabled, role slug doesn't exist, custom author base.
 		$this->eas->author_base = 'ninja';
 		$link = ba_eas_author_link( $role_based_author_link, $this->single_user_id );
 		$this->assertEquals( $author_link_ninja, $link );
 
 		$this->eas->remove_front = true;
 
-		$this->set_permalink_structure( '/archives/%post_id%/');
+		$this->set_permalink_structure( '/archives/%post_id%/' );
 		$link = ba_eas_author_link( 'http://example.com/archives/author/mastersplinter/', $this->single_user_id );
 		$this->assertEquals( 'http://example.com/author/mastersplinter/', $link );
 	}
 
 	/**
+	 * Test for `ba_eas_template_include()`.
+	 *
 	 * @covers ::ba_eas_template_include
 	 */
 	public function test_ba_eas_template_include() {
@@ -523,8 +583,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$this->assertEquals( 'author-mastersplinter.php', ba_eas_template_include( 'author-mastersplinter.php' ) );
 		$this->assertEquals( "author-{$this->single_user_id}.php", ba_eas_template_include( "author-{$this->single_user_id}.php" ) );
 
-		$role_template         = TEMPLATEPATH . '/' . 'author-subscriber.php';
-		$role_slug_template    = TEMPLATEPATH . '/' . 'author-deshi.php';
+		$role_template         = TEMPLATEPATH . '/author-subscriber.php';
+		$role_slug_template    = TEMPLATEPATH . '/author-deshi.php';
 		$this->eas->role_slugs = ba_eas_tests_slugs_custom();
 
 		file_put_contents( $role_template, '<?php' );
@@ -545,6 +605,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_flush_rewrite_rules()`.
+	 *
 	 * @covers ::ba_eas_flush_rewrite_rules
 	 */
 	public function test_ba_eas_flush_rewrite_rules() {
@@ -556,6 +618,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_author_rewrite_rules()`.
+	 *
 	 * @covers ::ba_eas_author_rewrite_rules
 	 */
 	public function test_ba_eas_author_rewrite_rules() {
@@ -581,6 +645,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_get_user_role()`.
+	 *
 	 * @covers ::ba_eas_get_user_role
 	 */
 	public function test_ba_eas_get_user_role() {
@@ -594,13 +660,15 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$this->assertEquals( 'subscriber', $role );
 
 		// No passed roles array.
-		add_filter( 'ba_eas_get_user_role', array( $this, 'user_role_filter' )  );
+		add_filter( 'ba_eas_get_user_role', array( $this, 'user_role_filter' ) );
 		$role = ba_eas_get_user_role( array(), $this->single_user_id );
 		$this->assertEquals( 'test', $role );
-		remove_filter( 'ba_eas_get_user_role', array( $this, 'user_role_filter' )  );
+		remove_filter( 'ba_eas_get_user_role', array( $this, 'user_role_filter' ) );
 	}
 
 	/**
+	 * Test for `ba_eas_get_wp_roles()`.
+	 *
 	 * @covers ::ba_eas_get_wp_roles
 	 */
 	public function test_ba_eas_get_wp_roles() {
@@ -608,6 +676,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_get_roles()`.
+	 *
 	 * @covers ::ba_eas_get_roles
 	 */
 	public function test_ba_eas_get_roles() {
@@ -615,39 +685,45 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_get_editable_roles()`.
+	 *
 	 * @covers ::ba_eas_get_editable_roles
 	 */
 	public function test_ba_eas_get_editable_roles() {
 
-		// Test with empty $wp_roles global
+		// Test with empty $wp_roles global.
 		global $wp_roles;
 		unset( $wp_roles );
 		$this->assertEquals( ba_eas_tests_roles_default(), ba_eas_get_editable_roles() );
 
-		// Test default WP roles
+		// Test default WP roles.
 		$this->assertEquals( ba_eas_tests_roles_default(), ba_eas_get_editable_roles() );
 
-		// Test with extra role
+		// Test with extra role.
 		add_filter( 'editable_roles', 'ba_eas_tests_roles_extra' );
 		$this->assertEquals( ba_eas_tests_roles_extra(), ba_eas_get_editable_roles() );
 		remove_filter( 'editable_roles', 'ba_eas_tests_roles_extra', 10 );
 	}
 
 	/**
+	 * Test for `ba_eas_get_default_role_slugs()`.
+	 *
 	 * @covers ::ba_eas_get_default_role_slugs
 	 */
 	public function test_ba_eas_get_default_role_slugs() {
 
-		// Test with empty $wp_roles global
+		// Test with empty $wp_roles global.
 		global $wp_roles;
 		unset( $wp_roles );
 		$this->assertEquals( ba_eas_tests_slugs_default(), ba_eas_get_default_role_slugs() );
 
-		// Test default WP roles
+		// Test default WP roles.
 		$this->assertEquals( ba_eas_tests_slugs_default(), ba_eas_get_default_role_slugs() );
 	}
 
 	/**
+	 * Test for `array_replace_recursive()`.
+	 *
 	 * @covers ::array_replace_recursive
 	 */
 	public function test_array_replace_recursive() {
@@ -679,6 +755,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_update_nicename_cache()`.
+	 *
 	 * @covers ::ba_eas_update_nicename_cache
 	 *
 	 * @expectedIncorrectUsage ba_eas_update_nicename_cache
@@ -690,13 +768,19 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$this->assertNull( ba_eas_update_nicename_cache( null ) );
 
 		$user = get_userdata( $this->single_user_id );
-		wp_update_user( array( 'ID' => $this->single_user_id, 'user_nicename' => 'master-splinter' ) );
+		wp_update_user( array(
+			'ID' => $this->single_user_id,
+			'user_nicename' => 'master-splinter',
+		) );
 		ba_eas_update_nicename_cache( $this->single_user_id, $user );
 		$this->assertNotEquals( $this->single_user_id, wp_cache_get( 'mastersplinter', 'userslugs' ) );
 		$this->assertEquals( $this->single_user_id, wp_cache_get( 'master-splinter', 'userslugs' ) );
 
 		$user = get_userdata( $this->single_user_id );
-		wp_update_user( array( 'ID' => $this->single_user_id, 'user_nicename' => 'mastersplinter' ) );
+		wp_update_user( array(
+			'ID' => $this->single_user_id,
+			'user_nicename' => 'mastersplinter',
+		) );
 		ba_eas_update_nicename_cache( false, $user );
 		$this->assertNotEquals( $this->single_user_id, (int) wp_cache_get( 'master-splinter', 'userslugs' ) );
 		$this->assertEquals( $this->single_user_id, (int) wp_cache_get( 'mastersplinter', 'userslugs' ) );

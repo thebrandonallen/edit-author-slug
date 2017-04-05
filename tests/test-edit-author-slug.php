@@ -1,13 +1,30 @@
 <?php
+/**
+ * Test the main class functionality.
+ *
+ * @package Edit_Author_Slug
+ * @subpackage Tests
+ */
 
-class EAS_UnitTestCase extends WP_UnitTestCase  {
+/**
+ * The Edit Author Slug unit test case.
+ */
+class EAS_UnitTestCase extends WP_UnitTestCase {
 
+	/**
+	 * The `setUp` method.
+	 */
 	public function setUp() {
 		parent::setUp();
 
 		$this->eas = ba_eas();
 	}
 
+	/**
+	 * The admin `tearDown` method.
+	 *
+	 * Resets the current user and globals.
+	 */
 	public function tearDown() {
 		parent::tearDown();
 		$this->eas->author_base   = 'author';
@@ -16,6 +33,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	}
 
 	/**
+	 * Test for `BA_Edit_Author_Slug::__call()`.
+	 *
 	 * @covers BA_Edit_Author_Slug::__call
 	 *
 	 * @expectedDeprecated     BA_Edit_Author_Slug::author_base_rewrite
@@ -29,6 +48,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	}
 
 	/**
+	 * Test for `BA_Edit_Author_Slug::setup_globals()`.
+	 *
 	 * @covers BA_Edit_Author_Slug::setup_globals
 	 */
 	public function test_setup_globals() {
@@ -36,6 +57,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	}
 
 	/**
+	 * Test for `BA_Edit_Author_Slug::setup_actions()`.
+	 *
 	 * @covers BA_Edit_Author_Slug::setup_actions
 	 */
 	public function test_setup_actions() {
@@ -48,6 +71,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	}
 
 	/**
+	 * Test for `BA_Edit_Author_Slug::options_back_compat()`.
+	 *
 	 * @covers BA_Edit_Author_Slug::options_back_compat
 	 */
 	public function test_options_back_compat() {
@@ -55,6 +80,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	}
 
 	/**
+	 * Test for `BA_Edit_Author_Slug::load_textdomain()`.
+	 *
 	 * @covers BA_Edit_Author_Slug::load_textdomain
 	 */
 	public function test_load_textdomain() {
@@ -62,6 +89,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	}
 
 	/**
+	 * Test for `BA_Edit_Author_Slug::set_role_slugs()`.
+	 *
 	 * @covers BA_Edit_Author_Slug::set_role_slugs
 	 */
 	public function test_set_role_slugs() {
@@ -82,41 +111,45 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	}
 
 	/**
+	 * Test for `BA_Edit_Author_Slug::add_rewrite_tags()`.
+	 *
 	 * @covers BA_Edit_Author_Slug::add_rewrite_tags
 	 */
 	public function test_add_rewrite_tags() {
 
-		// Check for return when role-based author base is disabled
+		// Check for return when role-based author base is disabled.
 		$this->assertNull( $this->eas->add_rewrite_tags() );
 
-		// Check that rewrite tags have been added when role-based author base is on
+		// Check that rewrite tags have been added when role-based author base is on.
 		$wp_rewrite = $GLOBALS['wp_rewrite'];
 
 		$this->eas->do_role_based = true;
 
-		// Test for WP default roles/role slugs
+		// Test for WP default roles/role slugs.
 		$this->eas->add_rewrite_tags();
 		$slugs = '(administrator|editor|author|contributor|subscriber)';
 
-		$this->assertTrue( in_array( '%ba_eas_author_role%', $wp_rewrite->rewritecode ) );
-		$this->assertTrue( in_array( $slugs, $wp_rewrite->rewritereplace ) );
+		$this->assertTrue( in_array( '%ba_eas_author_role%', $wp_rewrite->rewritecode, true ) );
+		$this->assertTrue( in_array( $slugs, $wp_rewrite->rewritereplace, true ) );
 
-		// Test for WP custom roles/role slugs
+		// Test for WP custom roles/role slugs.
 		$this->eas->role_slugs = ba_eas_tests_slugs_custom();
 		$this->eas->add_rewrite_tags();
 		$slugs = '(jonin|chunin|mystic|junior-genin|deshi|author)';
 
-		$this->assertTrue( in_array( $slugs, $wp_rewrite->rewritereplace ) );
+		$this->assertTrue( in_array( $slugs, $wp_rewrite->rewritereplace, true ) );
 
-		// Test for WP custom roles/role slugs
+		// Test for WP custom roles/role slugs.
 		$this->eas->role_slugs = ba_eas_tests_slugs_extra();
 		$this->eas->add_rewrite_tags();
 		$slugs = '(administrator|editor|author|contributor|subscriber|foot-soldier)';
 
-		$this->assertTrue( in_array( $slugs, $wp_rewrite->rewritereplace ) );
+		$this->assertTrue( in_array( $slugs, $wp_rewrite->rewritereplace, true ) );
 	}
 
 	/**
+	 * Test for `ba_eas_activation()`.
+	 *
 	 * @covers ::ba_eas_activation
 	 */
 	public function test_ba_eas_activation() {
@@ -125,6 +158,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	}
 
 	/**
+	 * Test for `ba_eas_deactivation()`.
+	 *
 	 * @covers ::ba_eas_deactivation
 	 */
 	public function test_ba_eas_deactivation() {
