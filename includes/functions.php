@@ -195,15 +195,21 @@ function ba_eas_auto_update_user_nicename_bulk( $value = false ) {
 	$updated = 0;
 
 	// Loop through all the users and maybe update their nicenames.
-	foreach ( $users as $user_id ) {
+	foreach ( $users as $key => $user_id ) {
+
+		// Reset the max execution time.
+		set_time_limit( 30 );
 
 		// Maybe update the user nicename.
 		$id = ba_eas_auto_update_user_nicename( $user_id, true, $structure );
 
-		// If updating was a success, the bump the updated count.
+		// If updating was a success, then bump the updated count.
 		if ( ! empty( $id ) && ! is_wp_error( $id ) ) {
 			$updated++;
 		}
+
+		// Remove the processed user from the users array.
+		unset( $users[ $key ] );
 	}
 
 	// Add a message to the settings page denoting user how many users were updated.
