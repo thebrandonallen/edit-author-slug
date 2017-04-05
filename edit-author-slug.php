@@ -243,7 +243,11 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 				_deprecated_function( 'BA_Edit_Author_Slug::author_base_rewrite', '1.2.0', 'ba_eas_wp_rewrite_overrides' );
 				ba_eas_wp_rewrite_overrides();
 			} else {
-				_doing_it_wrong( "BA_Edit_Author_Slug::{$name}", esc_html__( 'Method does not exist.', 'edit-author-slug' ), '1.0.0' );
+				_doing_it_wrong(
+					esc_html( "BA_Edit_Author_Slug::{$name}" ),
+					esc_html__( 'Method does not exist.', 'edit-author-slug' ),
+					'1.0.0'
+				);
 			}
 
 			unset( $name, $args );
@@ -262,7 +266,11 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * @return void
 		 */
 		private function __clone() {
-			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'edit-author-slug' ), '1.0' );
+			_doing_it_wrong(
+				__FUNCTION__,
+				esc_html__( 'Cheatin&#8217; huh?', 'edit-author-slug' ),
+				'1.0'
+			);
 		}
 
 		/**
@@ -275,7 +283,11 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * @return void
 		 */
 		private function __wakeup() {
-			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'edit-author-slug' ), '1.0' );
+			_doing_it_wrong(
+				__FUNCTION__,
+				esc_html__( 'Cheatin&#8217; huh?', 'edit-author-slug' ),
+				'1.0'
+			);
 		}
 
 		/* Private Methods ****************************************************/
@@ -367,8 +379,11 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 */
 		private function options_back_compat() {
 
+			// Get the author base option.
+			$base = get_option( '_ba_eas_author_base' );
+
 			// Options.
-			if ( $base = get_option( '_ba_eas_author_base' ) ) {
+			if ( $base ) {
 
 				// Sanitize the db value.
 				$this->author_base = ba_eas_sanitize_author_base( $base );
@@ -376,8 +391,10 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 				// Current DB version.
 				$this->current_db_version = (int) get_option( '_ba_eas_db_version', 0 );
 
-			// Pre-0.9 Back compat.
-			} elseif ( $options = get_option( 'ba_edit_author_slug' ) ) {
+			} else {
+
+				// Get the pre-0.9 options.
+				$options = get_option( 'ba_edit_author_slug' );
 
 				// Sanitize the db value.
 				if ( ! empty( $options['author_base'] ) ) {

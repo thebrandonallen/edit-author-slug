@@ -137,7 +137,8 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	// Stash the original user object.
 	$_user = get_userdata( $user->ID );
 
-	$user_nicename = $user_nicename_custom = '';
+	$user_nicename        = '';
+	$user_nicename_custom = '';
 
 	if ( isset( $_POST['ba_eas_author_slug'] ) ) {
 		$user_nicename = trim( wp_unslash( $_POST['ba_eas_author_slug'] ) );
@@ -168,7 +169,8 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	$ascii = ba_eas_nicename_is_ascii( $user_nicename );
 
 	// Sanitize the author slug and cache the pre-filtered, sanitized version.
-	$user_nicename = $raw_nicename_sanitized = ba_eas_sanitize_nicename( $user_nicename );
+	$user_nicename          = ba_eas_sanitize_nicename( $user_nicename );
+	$raw_nicename_sanitized = $user_nicename;
 
 	/**
 	 * Filters the sanitized user nicename before any final checks are run.
@@ -232,6 +234,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 		if ( $exists && (int) $exists->ID !== $user->ID ) {
 
 			// Setup the error message.
+			/* translators: 1: author slug */
 			$message = __(
 				'<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try something different.',
 				'edit-author-slug'
@@ -352,7 +355,7 @@ function ba_eas_show_user_nicename_scripts( $hook_suffix = '' ) {
 	);
 
 	// Bail if we shouldn't add our js.
-	if ( ! in_array( $hook_suffix, $user_pages ) || ! ba_eas_can_edit_author_slug() ) {
+	if ( ! in_array( $hook_suffix, $user_pages, true ) || ! ba_eas_can_edit_author_slug() ) {
 		return;
 	}
 
@@ -432,7 +435,9 @@ function ba_eas_register_admin_settings() {
 		'ba_eas_admin_setting_callback_author_base',
 		'edit-author-slug',
 		'ba_eas_author_base',
-		array( 'label_for' => '_ba_eas_author_base' )
+		array(
+			'label_for' => '_ba_eas_author_base',
+		)
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_author_base', 'ba_eas_sanitize_author_base' );
 
@@ -444,7 +449,9 @@ function ba_eas_register_admin_settings() {
 			'ba_eas_admin_setting_callback_remove_front',
 			'edit-author-slug',
 			'ba_eas_author_base',
-			array( 'label_for' => '_ba_eas_remove_front' )
+			array(
+				'label_for' => '_ba_eas_remove_front',
+			)
 		);
 		register_setting( 'edit-author-slug', '_ba_eas_remove_front', 'intval' );
 	}
@@ -456,7 +463,9 @@ function ba_eas_register_admin_settings() {
 		'ba_eas_admin_setting_callback_do_role_based',
 		'edit-author-slug',
 		'ba_eas_author_base',
-		array( 'label_for' => '_ba_eas_do_role_based' )
+		array(
+			'label_for' => '_ba_eas_do_role_based',
+		)
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_do_role_based', 'intval' );
 
@@ -485,7 +494,9 @@ function ba_eas_register_admin_settings() {
 		'ba_eas_admin_setting_callback_do_auto_update',
 		'edit-author-slug',
 		'ba_eas_auto_update',
-		array( 'label_for' => '_ba_eas_do_auto_update' )
+		array(
+			'label_for' => '_ba_eas_do_auto_update',
+		)
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_do_auto_update', 'intval' );
 
@@ -496,7 +507,9 @@ function ba_eas_register_admin_settings() {
 		'ba_eas_admin_setting_callback_default_user_nicename',
 		'edit-author-slug',
 		'ba_eas_auto_update',
-		array( 'label_for' => '_ba_eas_default_user_nicename' )
+		array(
+			'label_for' => '_ba_eas_default_user_nicename',
+		)
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_default_user_nicename', 'sanitize_key' );
 
@@ -515,7 +528,9 @@ function ba_eas_register_admin_settings() {
 		'ba_eas_admin_setting_callback_bulk_update',
 		'edit-author-slug',
 		'ba_eas_bulk_update',
-		array( 'label_for' => '_ba_eas_bulk_update' )
+		array(
+			'label_for' => '_ba_eas_bulk_update',
+		)
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_bulk_update', 'ba_eas_auto_update_user_nicename_bulk' );
 
@@ -526,7 +541,9 @@ function ba_eas_register_admin_settings() {
 		'ba_eas_admin_setting_callback_bulk_update_structure',
 		'edit-author-slug',
 		'ba_eas_bulk_update',
-		array( 'label_for' => '_ba_eas_bulk_update_structure' )
+		array(
+			'label_for' => '_ba_eas_bulk_update_structure',
+		)
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_bulk_update_structure', '__return_false' );
 }
@@ -609,6 +626,7 @@ function ba_eas_admin_setting_callback_do_role_based() {
 		<?php esc_html_e( "Set user's Author Base according to their role.", 'edit-author-slug' ); ?>
 		<br /><br />
 		<?php echo sprintf(
+			/* translators: 1: rewrite tag, 2: rewrite tag demo usage, 3: demo URL using rewrite tag */
 			esc_html__(
 				'Use the %1$s rewrite tag to customize the role-based author base. If you set the author base to "%2$s", the resulting author structure will be something like "%3$s".',
 				'edit-author-slug'
@@ -829,7 +847,15 @@ function ba_eas_admin_setting_callback_bulk_update_structure() {
 function ba_eas_add_settings_link( $links, $file ) {
 
 	if ( ba_eas()->plugin_basename === $file ) {
-		$settings_link = '<a href="' . esc_url( add_query_arg( array( 'page' => 'edit-author-slug' ), admin_url( 'options-general.php' ) ) ) . '">' . esc_html__( 'Settings', 'edit-author-slug' ) . '</a>';
+
+		$settings_url = add_query_arg(
+			array(
+				'page' => 'edit-author-slug',
+			),
+			admin_url( 'options-general.php' )
+		);
+
+		$settings_link = '<a href="' . esc_url( $settings_url ) . '">' . esc_html__( 'Settings', 'edit-author-slug' ) . '</a>';
 		array_unshift( $links, $settings_link );
 	}
 
@@ -884,13 +910,13 @@ function ba_eas_default_user_nicename_options_list() {
  */
 function ba_eas_settings_updated() {
 
-	// Make sure we're on the Edit Author Slug settings page.
-	if ( ! isset( $_REQUEST['option_page'] ) || 'edit-author-slug' !== $_REQUEST['option_page'] ) {
+	// Check that a valid nonce was passed.
+	if ( ! isset( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'edit-author-slug-options' ) ) {
 		return;
 	}
 
-	// Check that a valid nonce was passed.
-	if ( ! isset( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'edit-author-slug-options' ) ) {
+	// Make sure we're on the Edit Author Slug settings page.
+	if ( ! isset( $_REQUEST['option_page'] ) || 'edit-author-slug' !== $_REQUEST['option_page'] ) {
 		return;
 	}
 

@@ -106,7 +106,10 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false, $structure =
 	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
 
 	// Update if there's a change.
-	$user_id = wp_update_user( array( 'ID' => $user_id, 'user_nicename' => $nicename ) );
+	$user_id = wp_update_user( array(
+		'ID'            => $user_id,
+		'user_nicename' => $nicename,
+	) );
 
 	// Add it back in case other plugins do some updating.
 	add_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
@@ -175,7 +178,9 @@ function ba_eas_auto_update_user_nicename_bulk( $value = false ) {
 	}
 
 	// Get an array of ids of all users.
-	$users = get_users( array( 'fields' => 'ID' ) );
+	$users = get_users( array(
+		'fields' => 'ID',
+	) );
 
 	/**
 	 * Filters the array of user ids who will have their user nicenames updated.
@@ -205,7 +210,13 @@ function ba_eas_auto_update_user_nicename_bulk( $value = false ) {
 	add_settings_error(
 		'_ba_eas_bulk_auto_update',
 		'bulk_user_nicenames_updated',
-		sprintf( __( '%d user author slug(s) updated.', 'edit-author-slug' ), $updated ),
+		/* translators: Updated author slugs count. */
+		_n(
+			'%d user author slug updated.',
+			'%d user author slugs updated.',
+			$updated,
+			'edit-author-slug'
+		),
 		'updated'
 	);
 
@@ -257,7 +268,7 @@ function ba_eas_sanitize_author_base( $author_base = 'author' ) {
 		// Sanitize all parts except our rewrite tag, `%ba_eas_author_role%`.
 		foreach ( $parts as $key => $part ) {
 
-			if ( '%ba_eas_author_role%' !== $part  ) {
+			if ( '%ba_eas_author_role%' !== $part ) {
 				$parts[ $key ] = sanitize_title( $part );
 			}
 		}
@@ -420,7 +431,7 @@ function ba_eas_get_nicename_by_structure( $user_id = 0, $structure = '' ) {
 			$nicename = $user->ID;
 
 			break;
-	}
+	} // End switch().
 
 	// Sanitize and trim the new user nicename.
 	$nicename = ba_eas_trim_nicename( ba_eas_sanitize_nicename( $nicename ) );
@@ -726,10 +737,8 @@ function ba_eas_get_wp_roles() {
 
 	} else {
 
-		global $wp_roles;
-
 		// Make sure the `$wp_roles` global has been set.
-		if ( ! isset( $wp_roles ) ) {
+		if ( ! isset( $GLOBALS['wp_roles'] ) ) {
 			$wp_roles = new WP_Roles();
 		}
 	}
@@ -835,7 +844,7 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
 	/**
 	 * Add array_replace_recursive() for users of PHP 5.2.x
 	 *
-	 * http://php.net/manual/en/function.array-replace-recursive.php#109390
+	 * @see http://php.net/manual/en/function.array-replace-recursive.php#109390
 	 *
 	 * @since 1.0.2
 	 *
@@ -872,7 +881,7 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
 
 		return $base;
 	}
-} // end function exists check.
+} // End if().
 
 /**
  * Clean and update the nicename cache.
