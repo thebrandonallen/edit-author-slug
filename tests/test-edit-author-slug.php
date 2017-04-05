@@ -10,8 +10,9 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 
 	public function tearDown() {
 		parent::tearDown();
-		$this->eas->author_base = 'author';
-		$this->eas->role_slugs  = ba_eas_tests_slugs_default();
+		$this->eas->author_base   = 'author';
+		$this->eas->role_slugs    = ba_eas_tests_slugs_default();
+		$this->eas->do_role_based = false;
 	}
 
 	/**
@@ -84,17 +85,14 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	 * @covers BA_Edit_Author_Slug::add_rewrite_tags
 	 */
 	public function test_add_rewrite_tags() {
+
 		// Check for return when role-based author base is disabled
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
-
 		$this->assertNull( $this->eas->add_rewrite_tags() );
-
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_false', 10 );
 
 		// Check that rewrite tags have been added when role-based author base is on
 		$wp_rewrite = $GLOBALS['wp_rewrite'];
 
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+		$this->eas->do_role_based = true;
 
 		// Test for WP default roles/role slugs
 		$this->eas->add_rewrite_tags();
@@ -116,8 +114,6 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 		$slugs = '(administrator|editor|author|contributor|subscriber|foot-soldier)';
 
 		$this->assertTrue( in_array( $slugs, $wp_rewrite->rewritereplace ) );
-
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
 	}
 
 	/**

@@ -26,7 +26,11 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		// Reset some globals to their defaults.
 		$this->eas->author_base             = 'author';
 		$this->eas->role_slugs              = ba_eas_tests_slugs_default();
+		$this->eas->do_auto_update          = false;
+		$this->eas->do_role_based           = false;
+		$this->eas->remove_front            = false;
 		$GLOBALS['wp_rewrite']->author_base = 'author';
+		$GLOBALS['wp_rewrite']->front       = '/';
 	}
 
 	/**
@@ -67,15 +71,12 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_do_auto_update() {
 
-		// True tests
-		add_filter( 'ba_eas_do_auto_update', '__return_true' );
-		$this->assertTrue( ba_eas_do_auto_update() );
-		remove_filter( 'ba_eas_do_auto_update', '__return_true', 10 );
-
 		// False tests
-		add_filter( 'ba_eas_do_auto_update', '__return_false' );
 		$this->assertFalse( ba_eas_do_auto_update() );
-		remove_filter( 'ba_eas_do_auto_update', '__return_false', 10 );
+
+		// True tests
+		$this->eas->do_auto_update = true;
+		$this->assertTrue( ba_eas_do_auto_update() );
 	}
 
 	/**
@@ -87,18 +88,10 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$this->assertTrue( ba_eas_do_bulk_update( '1' ) );
 		$this->assertTrue( ba_eas_do_bulk_update( true ) );
 
-		add_filter( 'ba_eas_do_bulk_update', '__return_true' );
-		$this->assertTrue( ba_eas_do_bulk_update() );
-		remove_filter( 'ba_eas_do_bulk_update', '__return_true', 10 );
-
 		// False tests
 		$this->assertFalse( ba_eas_do_bulk_update( '0' ) );
 		$this->assertFalse( ba_eas_do_bulk_update( false ) );
 		$this->assertFalse( ba_eas_do_bulk_update( 'ninja' ) );
-
-		add_filter( 'ba_eas_do_bulk_update', '__return_false' );
-		$this->assertFalse( ba_eas_do_bulk_update() );
-		remove_filter( 'ba_eas_do_bulk_update', '__return_false', 10 );
 	}
 
 	/**
@@ -109,12 +102,10 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$this->assertFalse( ba_eas_auto_update_user_nicename( false ) );
 
 		// No auto update
-		add_filter( 'ba_eas_do_auto_update', '__return_false' );
 		$this->assertFalse( ba_eas_auto_update_user_nicename( 1 ) );
-		remove_filter( 'ba_eas_do_auto_update', '__return_false', 10 );
 
 		// We need below tests to think auto update is on
-		add_filter( 'ba_eas_do_auto_update', '__return_true' );
+		$this->eas->do_auto_update = true;
 
 		// Invalid user
 		$this->assertFalse( ba_eas_auto_update_user_nicename( 1337 ) );
@@ -179,8 +170,6 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
 		$user    = get_userdata( $this->single_user_id );
 		$this->assertEquals( $this->single_user_id, $user->user_nicename );
-
-		remove_filter( 'ba_eas_do_auto_update', '__return_true', 10 );
 	}
 
 	/**
@@ -427,26 +416,22 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	public function test_ba_eas_wp_rewrite_overrides() {
 		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, 'author' );
 
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
-
+		$this->eas->do_role_based = true;
 		ba_eas_wp_rewrite_overrides();
 		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, '%ba_eas_author_role%' );
-
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
+		$this->eas->do_role_based = false;
 
 		$this->eas->author_base = 'ninja';
 		ba_eas_wp_rewrite_overrides();
 		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, 'ninja' );
 
-
 		$this->set_permalink_structure( '/archives/%post_id%/');
 		$GLOBALS['wp_rewrite']->get_author_permastruct();
 		$this->assertEquals( '/archives/ninja/%author%', $GLOBALS['wp_rewrite']->author_structure );
+
 		$this->eas->remove_front = true;
 		ba_eas_wp_rewrite_overrides();
 		$this->assertEquals( '/ninja/%author%', $GLOBALS['wp_rewrite']->author_structure );
-		$GLOBALS['wp_rewrite']->front = '/';
-		$this->eas->remove_front = false;
 	}
 
 	/**
@@ -457,12 +442,6 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		$this->eas->remove_front = true;
 		$this->assertTrue( ba_eas_remove_front() );
-
-		add_filter( 'ba_eas_remove_front', '__return_false' );
-		$this->assertFalse( ba_eas_remove_front() );
-		remove_filter( 'ba_eas_remove_front', '__return_false' );
-		$this->eas->remove_front = false;
-
 	}
 
 	/**
@@ -473,12 +452,6 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		$GLOBALS['wp_rewrite']->front = '/test/';
 		$this->assertTrue( ba_eas_has_front() );
-
-		add_filter( 'ba_eas_has_front', '__return_false' );
-		$this->assertFalse( ba_eas_has_front() );
-		remove_filter( 'ba_eas_has_front', '__return_false' );
-		$GLOBALS['wp_rewrite']->front = '/';
-
 	}
 
 	/**
@@ -487,14 +460,11 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	public function test_ba_eas_do_role_based_author_base() {
 
 		// False tests
-		//add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
 		$this->assertFalse( ba_eas_do_role_based_author_base() );
-		//remove_filter( 'ba_eas_do_role_based_author_base', '__return_false', 10 );
 
 		// True tests
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+		$this->eas->do_role_based = true;
 		$this->assertTrue( ba_eas_do_role_based_author_base() );
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
 	}
 
 	/**
@@ -507,15 +477,11 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$author_link_ninja      = 'http://example.com/ninja/mastersplinter/';
 		$author_link_subscriber = 'http://example.com/subscriber/mastersplinter/';
 
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
-
 		// Test role-based author base disabled
 		$link = ba_eas_author_link( $author_link, $this->single_user_id );
 		$this->assertEquals( $author_link, $link );
 
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_false', 10 );
-
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+		$this->eas->do_role_based = true;
 
 		// Test role-based author based enabled, but no EAS author base
 		$link = ba_eas_author_link( $author_link, $this->single_user_id );
@@ -535,17 +501,11 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$link = ba_eas_author_link( $role_based_author_link, $this->single_user_id );
 		$this->assertEquals( $author_link_ninja, $link );
 
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
-
-		add_filter( 'ba_eas_remove_front', '__return_true' );
-		add_filter( 'ba_eas_has_front', '__return_true' );
+		$this->eas->remove_front = true;
 
 		$this->set_permalink_structure( '/archives/%post_id%/');
 		$link = ba_eas_author_link( 'http://example.com/archives/author/mastersplinter/', $this->single_user_id );
 		$this->assertEquals( 'http://example.com/author/mastersplinter/', $link );
-
-		remove_filter( 'ba_eas_has_front', '__return_true' );
-		remove_filter( 'ba_eas_remove_front', '__return_true' );
 	}
 
 	/**
@@ -553,11 +513,9 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_template_include() {
 
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
 		$this->assertEquals( 'no-role-based', ba_eas_template_include( 'no-role-based' ) );
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_false', 10 );
 
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+		$this->eas->do_role_based = true;
 
 		$this->assertEquals( 'no-WP_User', ba_eas_template_include( 'no-WP_User' ) );
 
@@ -584,8 +542,6 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		*/
 
 		$GLOBALS['wp_query']->queried_object = null;
-
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
 	}
 
 	/**
@@ -618,13 +574,10 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 			'with_name_3'    => 'index.php?ba_eas_author_role=$matches[1]&author_name=$matches[2]&paged=$matches[3]',
 		);
 
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
 		$this->assertEquals( $test, ba_eas_author_rewrite_rules( $test ) );
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_false', 10 );
 
-		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+		$this->eas->do_role_based = true;
 		$this->assertEquals( $expected, ba_eas_author_rewrite_rules( $test ) );
-		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true', 10 );
 	}
 
 	/**
