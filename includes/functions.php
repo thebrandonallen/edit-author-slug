@@ -152,29 +152,31 @@ function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
  *
  * @since 0.9.0
  *
- * @param string $value The option value passed to the settings API.
+ * @param string|bool $do_bulk The option value passed to the settings API.
  *
  * @return bool False to prevent the setting from being saved to the db.
  */
-function ba_eas_auto_update_user_nicename_bulk( $value = false ) {
+function ba_eas_auto_update_user_nicename_bulk( $do_bulk = false ) {
 
 	// Nonce check.
 	check_admin_referer( 'edit-author-slug-options' );
 
-	// Default the structure to the auto-update structure.
+	// Sanitize the option value.
+	$do_bulk = ( is_numeric( $do_bulk ) || is_bool( $do_bulk ) )
+			 ? (bool) $do_bulk
+			 : false;
+
+	// Bail if the user didn't ask to run the bulk update.
+	if ( ! $do_bulk ) {
+		return false;
+	}
+
+	// Default to the auto-update nicename structure.
 	$structure = ba_eas()->default_user_nicename;
 
 	// If a bulk update structure was passed, use that.
 	if ( isset( $_POST['_ba_eas_bulk_update_structure'] ) ) {
 		$structure = sanitize_key( $_POST['_ba_eas_bulk_update_structure'] );
-	}
-
-	// Sanitize the option value.
-	$value = (bool) absint( $value );
-
-	// Bail if the user didn't ask to run the bulk update.
-	if ( ! $value ) {
-		return false;
 	}
 
 	// Get an array of ids of all users.
