@@ -51,6 +51,13 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 
 ## Changelog ##
 
+### 1.4.0 ###
+* Release date: TBD
+* Lots of code cleanup to better adhere to WordPress Coding Standards.
+* Improved performance of `ba_eas_sanitize_author_base()` by preventing unnecessary processing.
+* Fixed an issue where the demo author permalink URL could have a double slash.
+* Improvements to bulk update for sites with a large user base.
+
 ### 1.3.0 ###
 * Release date: January 25, 2017
 * Fix a potential bug where a sanitized author base could end up with double forward slashes.
