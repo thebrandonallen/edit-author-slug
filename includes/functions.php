@@ -33,6 +33,32 @@ function ba_eas_do_auto_update() {
 }
 
 /**
+ * Determines if a bulk update should occur.
+ *
+ * @since 1.4.0
+ *
+ * @param mixed $do_bulk Whether or not to perform a bulk update.
+ *
+ * @return bool True if bulk update should occur.
+ */
+function ba_eas_do_bulk_update( $do_bulk = false ) {
+
+	// Sanitize the option value.
+	$retval = ( is_numeric( $do_bulk ) || is_bool( $do_bulk ) )
+			 ? (bool) $do_bulk
+			 : false;
+
+	/**
+	 * Filters the return of the `ba_eas_do_bulk_update()`.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @param bool $retval The `do_auto_update` option.
+	 */
+	return (bool) apply_filters( 'ba_eas_do_bulk_update', $retval );
+}
+
+/**
  * Auto-update the user_nicename for a given user.
  *
  * @since 0.9.0
@@ -161,13 +187,8 @@ function ba_eas_auto_update_user_nicename_bulk( $do_bulk = false ) {
 	// Nonce check.
 	check_admin_referer( 'edit-author-slug-options' );
 
-	// Sanitize the option value.
-	$do_bulk = ( is_numeric( $do_bulk ) || is_bool( $do_bulk ) )
-			 ? (bool) $do_bulk
-			 : false;
-
 	// Bail if the user didn't ask to run the bulk update.
-	if ( ! $do_bulk ) {
+	if ( ! ba_eas_do_bulk_update( $do_bulk ) ) {
 		return false;
 	}
 
