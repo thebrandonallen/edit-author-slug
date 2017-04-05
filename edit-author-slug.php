@@ -191,15 +191,23 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			// Only run these methods if they haven't been ran previously.
 			if ( null === $instance ) {
-				$instance = new BA_Edit_Author_Slug;
-				$instance->setup_globals();
-				$instance->includes();
-				$instance->options_back_compat();
-				$instance->setup_actions();
+				$instance = new self;
 			}
 
 			// Always return the instance.
 			return $instance;
+		}
+
+		/**
+		 * The constructor.
+		 *
+		 * @since 1.4.0
+		 */
+		public function __construct() {
+			$this->setup_globals();
+			$this->includes();
+			$this->options_back_compat();
+			$this->setup_actions();
 		}
 
 		/**
