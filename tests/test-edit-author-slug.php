@@ -30,14 +30,14 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	/**
 	 * @covers BA_Edit_Author_Slug::setup_globals
 	 */
-	function test_setup_globals() {
+	public function test_setup_globals() {
 		$this->markTestIncomplete();
 	}
 
 	/**
 	 * @covers BA_Edit_Author_Slug::setup_actions
 	 */
-	function test_setup_actions() {
+	public function test_setup_actions() {
 		$this->assertEquals( 10, has_action( 'activate_' . $this->eas->plugin_basename, 'ba_eas_activation' ) );
 		$this->assertEquals( 10, has_action( 'deactivate_' . $this->eas->plugin_basename, 'ba_eas_deactivation' ) );
 		$this->assertEquals( 10, has_action( 'after_setup_theme', array( $this->eas, 'set_role_slugs' ) ) );
@@ -49,21 +49,21 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	/**
 	 * @covers BA_Edit_Author_Slug::options_back_compat
 	 */
-	function test_options_back_compat() {
+	public function test_options_back_compat() {
 		$this->markTestIncomplete();
 	}
 
 	/**
 	 * @covers BA_Edit_Author_Slug::load_textdomain
 	 */
-	function test_load_textdomain() {
+	public function test_load_textdomain() {
 		$this->eas->load_textdomain();
 	}
 
 	/**
 	 * @covers BA_Edit_Author_Slug::set_role_slugs
 	 */
-	function test_set_role_slugs() {
+	public function test_set_role_slugs() {
 		$this->assertEquals( $this->eas->role_slugs, ba_eas_tests_slugs_default() );
 
 		update_option( '_ba_eas_role_slugs', ba_eas_tests_slugs_custom() );
@@ -83,7 +83,7 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	/**
 	 * @covers BA_Edit_Author_Slug::add_rewrite_tags
 	 */
-	function test_add_rewrite_tags() {
+	public function test_add_rewrite_tags() {
 		// Check for return when role-based author base is disabled
 		add_filter( 'ba_eas_do_role_based_author_base', '__return_false' );
 
@@ -123,7 +123,7 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	/**
 	 * @covers ::ba_eas_activation
 	 */
-	function test_ba_eas_activation() {
+	public function test_ba_eas_activation() {
 		ba_eas_activation();
 		$this->assertTrue( (bool) did_action( 'ba_eas_activation' ) );
 	}
@@ -131,7 +131,7 @@ class EAS_UnitTestCase extends WP_UnitTestCase  {
 	/**
 	 * @covers ::ba_eas_deactivation
 	 */
-	function test_ba_eas_deactivation() {
+	public function test_ba_eas_deactivation() {
 		ba_eas_deactivation();
 		$this->assertTrue( (bool) did_action( 'ba_eas_deactivation' ) );
 	}

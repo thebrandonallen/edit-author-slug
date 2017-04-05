@@ -2,13 +2,13 @@
 
 class BA_EAS_Tests_Hooks extends WP_UnitTestCase {
 
-	function setUp() {
+	public function setUp() {
 		parent::setUp();
 
 		$this->eas = ba_eas();
 	}
 
-	function test_actions_added() {
+	public function test_actions_added() {
 		$this->assertEquals( 10, has_action( 'profile_update', 'ba_eas_auto_update_user_nicename' ) );
 		$this->assertEquals( 10, has_action( 'user_register', 'ba_eas_auto_update_user_nicename' ) );
 		$this->assertEquals( 20, has_filter( 'author_link', 'ba_eas_author_link' ) );
@@ -16,7 +16,7 @@ class BA_EAS_Tests_Hooks extends WP_UnitTestCase {
 		$this->assertEquals( 10, has_filter( 'author_template', 'ba_eas_template_include' ) );
 	}
 
-	function test_admin_actions_added() {
+	public function test_admin_actions_added() {
 		set_current_screen( 'admin.php' );
 		require( $this->eas->plugin_dir . 'includes/hooks.php' );
 
