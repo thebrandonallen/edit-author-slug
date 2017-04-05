@@ -79,6 +79,29 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::ba_eas_do_bulk_update
+	 */
+	public function test_ba_eas_do_bulk_update() {
+
+		// True tests
+		$this->assertTrue( ba_eas_do_bulk_update( '1' ) );
+		$this->assertTrue( ba_eas_do_bulk_update( true ) );
+
+		add_filter( 'ba_eas_do_bulk_update', '__return_true' );
+		$this->assertTrue( ba_eas_do_bulk_update() );
+		remove_filter( 'ba_eas_do_bulk_update', '__return_true', 10 );
+
+		// False tests
+		$this->assertFalse( ba_eas_do_bulk_update( '0' ) );
+		$this->assertFalse( ba_eas_do_bulk_update( false ) );
+		$this->assertFalse( ba_eas_do_bulk_update( 'ninja' ) );
+
+		add_filter( 'ba_eas_do_bulk_update', '__return_false' );
+		$this->assertFalse( ba_eas_do_bulk_update() );
+		remove_filter( 'ba_eas_do_bulk_update', '__return_false', 10 );
+	}
+
+	/**
 	 * @covers ::ba_eas_auto_update_user_nicename
 	 */
 	function test_ba_eas_auto_update_user_nicename() {
