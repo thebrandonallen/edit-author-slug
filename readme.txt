@@ -3,7 +3,7 @@ Contributors: thebrandonallen
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles
 Requires at least: 4.3
 Tested up to: 4.7.3
-Stable tag: 1.3.0
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,7 +52,7 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 == Changelog ==
 
 = 1.4.0 =
-* Release date: TBD
+* Release date: April 4, 2017
 * Lots of code cleanup to better adhere to WordPress Coding Standards.
 * Improved performance of `ba_eas_sanitize_author_base()` by preventing unnecessary processing.
 * Fixed an issue where the demo author permalink URL could have a double slash.
