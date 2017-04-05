@@ -257,7 +257,7 @@ module.exports = function(grunt) {
 			options: {
 				banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
 				'<%= grunt.template.today("UTC:yyyy-mm-dd h:MM:ss TT Z") %> - ' +
-				'https://github.com/thebrandonallen/edit-author-slug/ */\n'
+				'https://github.com/thebrandonallen/edit-author-slug/ */'
 			}
 		},
 		watch: {
