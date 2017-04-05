@@ -582,18 +582,27 @@ function ba_eas_admin_setting_callback_auto_update_section() {
 function ba_eas_admin_setting_callback_author_base() {
 
 	$author_base = ba_eas_sanitize_author_base( ba_eas()->author_base );
+	$front       = trim( $GLOBALS['wp_rewrite']->front, '/' );
 
-	// Build the demo author link.
-	$author_link = esc_url( home_url( '/' ) );
-	$author_link = $author_link . '<span class="eas-demo-author-base-front">' . esc_html( trim( $GLOBALS['wp_rewrite']->front, '/' ) ) . '/</span>';
-	$author_link = $author_link . '<span class="eas-demo-author-base">' . $author_base . '</span>';
-	$author_link = $author_link . user_trailingslashit( '/author-slug' );
+	// Add the trailing slash back if `$front` isn't empty.
+	if ( ! empty( $front ) ) {
+		$front = trailingslashit( $front );
+	}
 ?>
 
 		<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php echo esc_attr( $author_base ); ?>" class="regular-text code" />
 		<em><?php esc_html_e( "Defaults to 'author'", 'edit-author-slug' ); ?></em>
 		<br /><br />
-		<strong>Demo:</strong> <em><?php echo $author_link; ?></em>
+		<strong>Demo:</strong>
+		<em><?php
+			echo sprintf(
+				'%1$s%2$s%3$s%4$s',
+				esc_url( home_url( '/' ) ),
+				'<span class="eas-demo-author-base-front">' . esc_html( $front ) . '</span>',
+				'<span class="eas-demo-author-base">' . esc_html( $author_base ) . '</span>',
+				esc_html( user_trailingslashit( '/author-slug' ) )
+			);
+		?></em>
 
 <?php
 }
