@@ -20,6 +20,7 @@ module.exports = function(grunt) {
 			'!**/tests/**',
 			'!Gruntfile.js*',
 			'!package.json*',
+			'!phpcs.xml.dist',
 			'!phpunit.xml*',
 			'!.*'
 		];
