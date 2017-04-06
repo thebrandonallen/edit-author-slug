@@ -1,24 +1,22 @@
 <?php
 /**
- * Plugin Name: Edit Author Slug
- * Plugin URI:  https://github.com/thebrandonallen/edit-author-slug/
- * Description: Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
- * Version:     1.3.0
- * Tested With: 4.3.7, 4.4.6, 4.5.5, 4.6.2, 4.7.1
- * Author:      Brandon Allen
- * Author URI:  https://github.com/thebrandonallen/
- * License:     GPLv2 or later
- * Text Domain: edit-author-slug
- * Domain Path: /languages
+ * Plugin Name:     Edit Author Slug
+ * Plugin URI:      https://github.com/thebrandonallen/edit-author-slug/
+ * Description:     Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
+ * Author:          Brandon Allen
+ * Author URI:      https://github.com/thebrandonallen/
+ * Text Domain:     edit-author-slug
+ * Domain Path:     /languages
+ * Version:         1.4.0
  *
  * @package Edit_Author_Slug
  * @subpackage Main
  * @author Brandon Allen
- * @version 1.3.0
+ * @version 1.4.0
  */
 
 /*
-	Copyright 2009-2016  Brandon Allen  (email : plugins ([at]) brandonallen ([dot]) me)
+	Copyright (C) 2009-2017  Brandon Allen  (email : plugins ([at]) brandonallen ([dot]) me)
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -34,7 +32,7 @@
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-	http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
+	https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 // Exit if accessed directly.
@@ -57,20 +55,18 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		/**
 		 * The plugin version.
 		 *
-		 * @since  0.8.0
-		 * @access public
-		 * @var    string
+		 * @since 1.4.0
+		 * @var   string
 		 */
-		public $version = '1.3.0';
+		const VERSION = '1.4.0';
 
 		/**
-		 * The database version.
+		 * The plugin version.
 		 *
-		 * @since  0.8.0
-		 * @access public
-		 * @var    int
+		 * @since 1.4.0
+		 * @var   int
 		 */
-		public $db_version = 411;
+		const DB_VERSION = 411;
 
 		/**
 		 * The current installed database version.
@@ -116,15 +112,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * @var    string
 		 */
 		public $plugin_basename = '';
-
-		/**
-		 * The text domain for Edit Author Slug.
-		 *
-		 * @since  0.9.6
-		 * @access public
-		 * @var    string
-		 */
-		public $domain = 'edit-author-slug';
 
 		/**
 		 * The author base.
@@ -204,15 +191,48 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			// Only run these methods if they haven't been ran previously.
 			if ( null === $instance ) {
-				$instance = new BA_Edit_Author_Slug;
-				$instance->setup_globals();
-				$instance->includes();
-				$instance->options_back_compat();
-				$instance->setup_actions();
+				$instance = new self;
 			}
 
 			// Always return the instance.
 			return $instance;
+		}
+
+		/**
+		 * The constructor.
+		 *
+		 * @since 1.4.0
+		 */
+		public function __construct() {
+			$this->setup_globals();
+			$this->includes();
+			$this->setup_options();
+			$this->setup_actions();
+		}
+
+		/**
+		 * Magic method for accessing custom/deprecated/nonexistent properties.
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param string $name The property name.
+		 *
+		 * @return mixed
+		 */
+		public function __get( $name ) {
+
+			// Default to null.
+			$retval = null;
+
+			if ( 'version' === $name ) {
+				// BA_Edit_Author_Slug->version was removed in 1.4.0.
+				$retval = self::VERSION;
+			} elseif ( 'db_version' === $name ) {
+				// BA_Edit_Author_Slug->db_version was removed in 1.4.0.
+				$retval = self::DB_VERSION;
+			}
+
+			return $retval;
 		}
 
 		/**
@@ -231,7 +251,11 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 				_deprecated_function( 'BA_Edit_Author_Slug::author_base_rewrite', '1.2.0', 'ba_eas_wp_rewrite_overrides' );
 				ba_eas_wp_rewrite_overrides();
 			} else {
-				_doing_it_wrong( "BA_Edit_Author_Slug::{$name}", esc_html__( 'Method does not exist.', 'edit-author-slug' ), '1.0.0' );
+				_doing_it_wrong(
+					esc_html( "BA_Edit_Author_Slug::{$name}" ),
+					esc_html__( 'Method does not exist.', 'edit-author-slug' ),
+					'1.0.0'
+				);
 			}
 
 			unset( $name, $args );
@@ -250,7 +274,11 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * @return void
 		 */
 		private function __clone() {
-			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'edit-author-slug' ), '1.0' );
+			_doing_it_wrong(
+				__FUNCTION__,
+				esc_html__( 'Cheatin&#8217; huh?', 'edit-author-slug' ),
+				'1.0'
+			);
 		}
 
 		/**
@@ -263,7 +291,11 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * @return void
 		 */
 		private function __wakeup() {
-			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'edit-author-slug' ), '1.0' );
+			_doing_it_wrong(
+				__FUNCTION__,
+				esc_html__( 'Cheatin&#8217; huh?', 'edit-author-slug' ),
+				'1.0'
+			);
 		}
 
 		/* Private Methods ****************************************************/
@@ -286,10 +318,12 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			/* Options ********************************************************/
 
 			// Load the remove front option.
-			$this->remove_front = (bool) absint( get_option( '_ba_eas_remove_front', 0 ) );
+			$remove_front       = (int) get_option( '_ba_eas_remove_front', 0 );
+			$this->remove_front = (bool) $remove_front;
 
 			// Load auto-update option.
-			$this->do_auto_update = (bool) absint( get_option( '_ba_eas_do_auto_update', 0 ) );
+			$do_auto_update       = (int) get_option( '_ba_eas_do_auto_update', 0 );
+			$this->do_auto_update = (bool) $do_auto_update;
 
 			// Load the default nicename structure for auto-update.
 			$default_user_nicename = get_option( '_ba_eas_default_user_nicename' );
@@ -299,7 +333,8 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			}
 
 			// Load role-based author slug option.
-			$this->do_role_based = (bool) absint( get_option( '_ba_eas_do_role_based', 0 ) );
+			$do_role_based       = (int) get_option( '_ba_eas_do_role_based', 0 );
+			$this->do_role_based = (bool) $do_role_based;
 		}
 
 		/**
@@ -319,6 +354,34 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			if ( is_admin() ) {
 				require_once( $this->plugin_dir . 'includes/admin.php' );
 			}
+		}
+
+		/**
+		 * Get our options from the DB and set their corresponding properties.
+		 *
+		 * @since 1.4.0
+		 *
+		 * @return void
+		 */
+		private function setup_options() {
+
+			// Get the author base option.
+			$base = get_option( '_ba_eas_author_base' );
+
+			// Options.
+			if ( $base ) {
+
+				// Sanitize the db value.
+				$this->author_base = ba_eas_sanitize_author_base( $base );
+
+				// Current DB version.
+				$this->current_db_version = (int) get_option( '_ba_eas_db_version', 0 );
+
+				return;
+			}
+
+			// If we're still here, check for pre-0.9 options.
+			$this->options_back_compat();
 		}
 
 		/**
@@ -352,37 +415,17 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 */
 		private function options_back_compat() {
 
-			// Options.
-			if ( $base = get_option( '_ba_eas_author_base' ) ) {
+			// Get the pre-0.9 options.
+			$options = get_option( 'ba_edit_author_slug' );
 
-				// Sanitize the db value.
-				$base = ba_eas_sanitize_author_base( $base );
+			// Sanitize the db value.
+			if ( ! empty( $options['author_base'] ) ) {
+				$this->author_base = ba_eas_sanitize_author_base( $options['author_base'] );
+			}
 
-				// Author base.
-				if ( ! empty( $base ) ) {
-					$this->author_base = $base;
-				}
-
-				// Current DB version.
-				$this->current_db_version = absint( get_option( '_ba_eas_db_version' ) );
-
-			// Pre-0.9 Back compat.
-			} elseif ( $options = get_option( 'ba_edit_author_slug' ) ) {
-
-				// Sanitize the db value.
-				if ( ! empty( $options['author_base'] ) ) {
-					$base = ba_eas_sanitize_author_base( $options['author_base'] );
-				}
-
-				// Author base.
-				if ( ! empty( $base ) ) {
-					$this->author_base = $base;
-				}
-
-				// Current DB version.
-				if ( ! empty( $options['db_version'] ) ) {
-					$this->current_db_version = absint( $options['db_version'] );
-				}
+			// Current DB version.
+			if ( ! empty( $options['db_version'] ) ) {
+				$this->current_db_version = (int) $options['db_version'];
 			}
 		}
 
@@ -406,7 +449,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			// Look in wp-content/plugins/edit-author-slug/languages first.
 			// Fallback to wp-content/languages/plugins.
-			load_plugin_textdomain( $this->domain, false, dirname( $this->plugin_basename ) . '/languages/' );
+			load_plugin_textdomain( 'edit-author-slug', false, dirname( $this->plugin_basename ) . '/languages/' );
 		}
 
 		/**

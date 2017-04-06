@@ -1,8 +1,28 @@
 <?php
+/**
+ * Test admin functionality.
+ *
+ * @package Edit_Author_Slug
+ * @subpackage Tests
+ */
 
+/**
+ * The Edit Author Slug admin test class.
+ */
 class BA_EAS_Tests_Admin extends WP_UnitTestCase {
+
+	/**
+	 * The old user id.
+	 *
+	 * @var int
+	 */
 	protected $old_current_user = 0;
 
+	/**
+	 * The admin `setUp` method.
+	 *
+	 * Sets up up some users, and loads the admin.
+	 */
 	public function setUp() {
 		parent::setUp();
 
@@ -20,6 +40,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		require_once( $this->eas->plugin_dir . 'includes/admin.php' );
 	}
 
+	/**
+	 * The admin `tearDown` method.
+	 *
+	 * Resets the current user and globals.
+	 */
 	public function tearDown() {
 		parent::tearDown();
 		wp_set_current_user( $this->old_current_user );
@@ -31,7 +56,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param string $nicename
+	 * @param string $nicename The user nicename.
 	 *
 	 * @return string
 	 */
@@ -40,9 +65,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_show_user_nicename()`.
+	 *
 	 * @covers ::ba_eas_show_user_nicename
 	 */
-	function test_ba_eas_show_user_nicename() {
+	public function test_ba_eas_show_user_nicename() {
 		add_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
 		$this->assertEquals( '', ba_eas_show_user_nicename( wp_get_current_user() ) );
 		remove_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
@@ -51,37 +78,37 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_show_user_nicename( wp_get_current_user() );
 		$output = ob_get_clean();
 
-		// masterplinter
+		// Test for `masterplinter`.
 		$this->assertContains( '<label title="mastersplinter">', $output );
 		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="mastersplinter" autocapitalize="none" autocorrect="off" maxlength="50" checked=\'checked\'>', $output );
 		$this->assertContains( '<span>mastersplinter</span>', $output );
 
-		// master-splinter
+		// Test for `master-splinter`.
 		$this->assertContains( '<label title="master-splinter">', $output );
 		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="master-splinter" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span>master-splinter</span>', $output );
 
-		// master
+		// Test for `master`.
 		$this->assertContains( '<label title="master">', $output );
 		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="master" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span>master</span>', $output );
 
-		// splinter
+		// Test for `splinter`.
 		$this->assertContains( '<label title="splinter">', $output );
 		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="splinter" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span>splinter</span>', $output );
 
-		// splinter-master
+		// Test for `splinter-master`.
 		$this->assertContains( '<label title="splinter-master">', $output );
 		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="splinter-master" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span>splinter-master</span>', $output );
 
-		// userid
+		// Test for `userid`.
 		$this->assertContains( '<label title="' . $this->new_current_user . '">', $output );
 		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="' . $this->new_current_user . '" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span>' . $this->new_current_user . '</span>', $output );
 
-		// Custom
+		// Test custom author slug.
 		$this->assertContains( '<label for="ba_eas_author_slug_custom_radio">', $output );
 		$this->assertContains( '<input type="radio" id="ba_eas_author_slug_custom_radio" name="ba_eas_author_slug" value="\c\u\s\t\o\m" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span class="screen-reader-text">Enter a custom author slug in the following field</span>', $output );
@@ -90,9 +117,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_update_user_nicename()`.
+	 *
 	 * @covers ::ba_eas_update_user_nicename
 	 */
-	function test_ba_eas_update_user_nicename() {
+	public function test_ba_eas_update_user_nicename() {
 		$user = new WP_User;
 		$errors = new WP_Error;
 
@@ -193,9 +222,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_can_edit_author_slug()`.
+	 *
 	 * @covers ::ba_eas_can_edit_author_slug
 	 */
-	function test_ba_eas_can_edit_author_slug() {
+	public function test_ba_eas_can_edit_author_slug() {
 		$this->assertTrue( ba_eas_can_edit_author_slug() );
 
 		wp_set_current_user( $this->old_current_user );
@@ -208,16 +239,20 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_author_slug_column()`.
+	 *
 	 * @covers ::ba_eas_author_slug_column
 	 */
-	function test_ba_eas_author_slug_column() {
+	public function test_ba_eas_author_slug_column() {
 		$this->assertArrayHasKey( 'ba-eas-author-slug', ba_eas_author_slug_column( array() ) );
 	}
 
 	/**
+	 * Test `ba_eas_author_slug_custom_column()`.
+	 *
 	 * @covers ::ba_eas_author_slug_custom_column
 	 */
-	function test_ba_eas_author_slug_custom_column() {
+	public function test_ba_eas_author_slug_custom_column() {
 		$default = ba_eas_author_slug_custom_column( 'ninja', 'ninjas', $this->new_current_user );
 		$this->assertEquals( 'ninja', $default );
 
@@ -226,9 +261,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_show_user_nicename_scripts()`.
+	 *
 	 * @covers ::ba_eas_show_user_nicename_scripts
 	 */
-	function test_ba_eas_show_user_nicename_scripts() {
+	public function test_ba_eas_show_user_nicename_scripts() {
 
 		// Valid page.
 		ba_eas_show_user_nicename_scripts( 'profile.php' );
@@ -240,11 +277,15 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_add_settings_menu()`.
+	 *
 	 * @covers ::ba_eas_add_settings_menu
 	 */
-	function test_ba_eas_add_settings_menu() {
-		$current_user = get_current_user_id();
-		wp_set_current_user( $this->factory->user->create( array( 'role' => 'administrator' ) ) );
+	public function test_ba_eas_add_settings_menu() {
+		$user_id = $this->factory->user->create( array(
+			'role' => 'administrator',
+		) );
+		wp_set_current_user( $user_id );
 		update_option( 'siteurl', 'http://example.com' );
 
 		ba_eas_add_settings_menu();
@@ -252,14 +293,14 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$expected = 'http://example.com/wp-admin/options-general.php?page=edit-author-slug';
 
 		$this->assertEquals( $expected, menu_page_url( 'edit-author-slug', false ) );
-
-		wp_set_current_user( $current_user );
 	}
 
 	/**
+	 * Test `ba_eas_settings_page_html()`.
+	 *
 	 * @covers ::ba_eas_settings_page_html
 	 */
-	function test_ba_eas_settings_page_html() {
+	public function test_ba_eas_settings_page_html() {
 		ob_start();
 		ba_eas_settings_page_html();
 		$output = ob_get_clean();
@@ -268,19 +309,21 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_register_admin_settings()`.
+	 *
 	 * @covers ::ba_eas_register_admin_settings
 	 */
-	function test_ba_eas_register_admin_settings() {
+	public function test_ba_eas_register_admin_settings() {
 		global $wp_settings_sections, $wp_settings_fields;
 
 		ba_eas_register_admin_settings();
 
-		// Sections _ba_eas_bulk_auto_update
+		// Sections _ba_eas_bulk_auto_update.
 		$this->assertEquals( 'ba_eas_author_base', $wp_settings_sections['edit-author-slug']['ba_eas_author_base']['id'] );
 		$this->assertEquals( 'ba_eas_auto_update', $wp_settings_sections['edit-author-slug']['ba_eas_auto_update']['id'] );
 		$this->assertEquals( 'ba_eas_bulk_update', $wp_settings_sections['edit-author-slug']['ba_eas_bulk_update']['id'] );
 
-		// Fields
+		// Fields.
 		$this->assertEquals( '_ba_eas_author_base', $wp_settings_fields['edit-author-slug']['ba_eas_author_base']['_ba_eas_author_base']['id'] );
 		$this->assertEquals( '_ba_eas_do_role_based', $wp_settings_fields['edit-author-slug']['ba_eas_author_base']['_ba_eas_do_role_based']['id'] );
 		$this->assertEquals( '_ba_eas_role_slugs', $wp_settings_fields['edit-author-slug']['ba_eas_author_base']['_ba_eas_role_slugs']['id'] );
@@ -291,9 +334,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_admin_setting_callback_author_base_section()`.
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_author_base_section
 	 */
-	function test_ba_eas_admin_setting_callback_author_base_section() {
+	public function test_ba_eas_admin_setting_callback_author_base_section() {
 		ob_start();
 		ba_eas_admin_setting_callback_author_base_section();
 		$output = ob_get_clean();
@@ -302,24 +347,28 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_admin_setting_callback_author_base()`.
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_author_base
 	 */
-	function test_ba_eas_admin_setting_callback_author_base() {
+	public function test_ba_eas_admin_setting_callback_author_base() {
 		ob_start();
 		ba_eas_admin_setting_callback_author_base();
 		$output = ob_get_clean();
 
 		$input = '<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="author" class="regular-text code" />';
-		$label = "<em>Defaults to &#039;author&#039;</em>";
+		$label = '<em>Defaults to &#039;author&#039;</em>';
 
 		$this->assertContains( $input, $output );
 		$this->assertContains( $label, $output );
 	}
 
 	/**
+	 * Test `ba_eas_admin_setting_callback_remove_front()`.
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_remove_front
 	 */
-	function test_ba_eas_admin_setting_callback_remove_front() {
+	public function test_ba_eas_admin_setting_callback_remove_front() {
 		ob_start();
 		ba_eas_admin_setting_callback_remove_front();
 		$output = ob_get_clean();
@@ -328,20 +377,24 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_admin_setting_callback_auto_update_section()`.
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_auto_update_section
 	 */
-	function test_ba_eas_admin_setting_callback_auto_update_section() {
+	public function test_ba_eas_admin_setting_callback_auto_update_section() {
 		ob_start();
 		ba_eas_admin_setting_callback_auto_update_section();
 		$output = ob_get_clean();
 
-		$this->assertContains( "Allow Author Slugs to be automatically updated, and set the default Author Slug structure for users. Automatic updating will only occur when a user can&#039;t edit Author Slugs on their own.", $output );
+		$this->assertContains( 'Allow Author Slugs to be automatically updated, and set the default Author Slug structure for users. Automatic updating will only occur when a user can&#039;t edit Author Slugs on their own.', $output );
 	}
 
 	/**
+	 * Test `ba_eas_admin_setting_callback_do_role_based()`.
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_do_role_based
 	 */
-	function test_ba_eas_admin_setting_callback_do_role_based() {
+	public function test_ba_eas_admin_setting_callback_do_role_based() {
 		ob_start();
 		ba_eas_admin_setting_callback_do_role_based();
 		$output = ob_get_clean();
@@ -354,9 +407,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_admin_setting_callback_role_slugs()`.
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_role_slugs
 	 */
-	function test_ba_eas_admin_setting_callback_role_slugs() {
+	public function test_ba_eas_admin_setting_callback_role_slugs() {
 
 		// Add the ninja role.
 		add_role( 'ninja', 'Ninja' );
@@ -449,7 +504,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertNotContains( $input, $output );
 		$this->assertNotContains( $label, $output );
 
-		// Empty slug
+		// Empty slug.
 		$role_slugs = $this->eas->role_slugs;
 		$role_slugs['administrator']['slug'] = '';
 		$this->eas->role_slugs = $role_slugs;
@@ -466,16 +521,20 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_admin_setting_sanitize_callback_role_slugs()`.
+	 *
 	 * @covers ::ba_eas_admin_setting_sanitize_callback_role_slugs
 	 */
-	function test_ba_eas_admin_setting_sanitize_callback_role_slugs() {
+	public function test_ba_eas_admin_setting_sanitize_callback_role_slugs() {
 		$this->markTestIncomplete();
 	}
 
 	/**
+	 * Test `ba_eas_admin_setting_callback_do_auto_update()`.
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_do_auto_update
 	 */
-	function test_ba_eas_admin_setting_callback_do_auto_update() {
+	public function test_ba_eas_admin_setting_callback_do_auto_update() {
 		ob_start();
 		ba_eas_admin_setting_callback_do_auto_update();
 		$output = ob_get_clean();
@@ -488,9 +547,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_admin_setting_callback_default_user_nicename()`.
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_default_user_nicename
 	 */
-	function test_ba_eas_admin_setting_callback_default_user_nicename() {
+	public function test_ba_eas_admin_setting_callback_default_user_nicename() {
 		ob_start();
 		ba_eas_admin_setting_callback_default_user_nicename();
 		$output = ob_get_clean();
@@ -499,9 +560,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_admin_setting_callback_bulk_update_section()`.
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_bulk_update_section
 	 */
-	function test_ba_eas_admin_setting_callback_bulk_update_section() {
+	public function test_ba_eas_admin_setting_callback_bulk_update_section() {
 		ob_start();
 		ba_eas_admin_setting_callback_bulk_update_section();
 		$output = ob_get_clean();
@@ -510,9 +573,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_admin_setting_callback_bulk_update()`.
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_bulk_update
 	 */
-	function test_ba_eas_admin_setting_callback_bulk_update() {
+	public function test_ba_eas_admin_setting_callback_bulk_update() {
 		ob_start();
 		ba_eas_admin_setting_callback_bulk_update();
 		$output = ob_get_clean();
@@ -525,9 +590,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_admin_setting_callback_bulk_update_structure()`.
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_bulk_update_structure
 	 */
-	function test_ba_eas_admin_setting_callback_bulk_update_structure() {
+	public function test_ba_eas_admin_setting_callback_bulk_update_structure() {
 		ob_start();
 		ba_eas_admin_setting_callback_bulk_update_structure();
 		$output = ob_get_clean();
@@ -536,17 +603,21 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_add_settings_link()`.
+	 *
 	 * @covers ::ba_eas_add_settings_link
 	 */
-	function test_ba_eas_add_settings_link() {
+	public function test_ba_eas_add_settings_link() {
 		$links = ba_eas_add_settings_link( array(), $this->eas->plugin_basename );
 		$this->assertEquals( '<a href="http://example.org/wp-admin/options-general.php?page=edit-author-slug">Settings</a>', $links[0] );
 	}
 
 	/**
+	 * Test `ba_eas_default_user_nicename_options_list()`.
+	 *
 	 * @covers ::ba_eas_default_user_nicename_options_list
 	 */
-	function test_ba_eas_default_user_nicename_options_list() {
+	public function test_ba_eas_default_user_nicename_options_list() {
 		$options = array(
 			'username'    => __( 'username (Default)',    'edit-author-slug' ),
 			'nickname'    => __( 'nickname',              'edit-author-slug' ),
@@ -562,9 +633,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_settings_updated()`.
+	 *
 	 * @covers ::ba_eas_settings_updated
 	 */
-	function test_ba_eas_settings_updated() {
+	public function test_ba_eas_settings_updated() {
 
 		// Legitimate request.
 		$_REQUEST = array(
@@ -596,9 +669,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_install()`.
+	 *
 	 * @covers ::ba_eas_install
 	 */
-	function test_ba_eas_install() {
+	public function test_ba_eas_install() {
 		$old_db_version = $this->eas->current_db_version;
 		$this->eas->current_db_version = 0;
 		ba_eas_install();
@@ -615,9 +690,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_upgrade()`.
+	 *
 	 * @covers ::ba_eas_upgrade
 	 */
-	function test_ba_eas_upgrade() {
+	public function test_ba_eas_upgrade() {
 		$old_db_version = $this->eas->current_db_version;
 		$this->eas->current_db_version = 30;
 

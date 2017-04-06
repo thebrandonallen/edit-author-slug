@@ -12,6 +12,7 @@ module.exports = function(grunt) {
 		],
 
 		EAS_EXCLUDED_MISC = [
+			'!**/assets/**',
 			'!**/bin/**',
 			'!**/build/**',
 			'!**/coverage/**',
@@ -195,7 +196,7 @@ module.exports = function(grunt) {
 				},
 				options: {
 					replacements: [{
-						pattern: /(\public\s\$version.*)'(.*)';/gm, // For plugin version variable
+						pattern: /(const\sVERSION.*)'(.*)';/gm, // For plugin version variable
 						replacement: '$1\'<%= pkg.version %>\';'
 					},
 					{
@@ -215,7 +216,7 @@ module.exports = function(grunt) {
 				},
 				options: {
 					replacements: [{
-						pattern: /(\public\s\$version.*)'(.*)';/gm, // For plugin version variable
+						pattern: /(const\sVERSION.*)'(.*)';/gm, // For plugin version variable
 						replacement: '$1\'<%= pkg.version %>\';'
 					},
 					{
@@ -256,7 +257,7 @@ module.exports = function(grunt) {
 			options: {
 				banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
 				'<%= grunt.template.today("UTC:yyyy-mm-dd h:MM:ss TT Z") %> - ' +
-				'https://github.com/thebrandonallen/edit-author-slug/ */\n'
+				'https://github.com/thebrandonallen/edit-author-slug/ */'
 			}
 		},
 		watch: {
