@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Bootstrap the plugin unit testing environment.
  *
@@ -23,6 +22,19 @@ if ( false !== getenv( 'WP_DEVELOP_DIR' ) ) {
 }
 
 require_once $_tests_dir . '/includes/functions.php';
+
+/**
+ * Compatibility with PHPUnit 6+
+ */
+$_needs_phpunit_back_compat = in_array(
+	getenv( 'WP_VERSION' ),
+	array( '4.6', '4.5', '4.4', '4.3' ),
+	true
+);
+if ( class_exists( 'PHPUnit\Runner\Version' ) && $_needs_phpunit_back_compat ) {
+	var_dump( 'PHPUnit 6+ compat loadeded...' );
+	require_once dirname( __FILE__ ) . '/phpunit6-compat.php';
+}
 
 /**
  * Manually load the plugin being tested.
