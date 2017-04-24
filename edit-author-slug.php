@@ -7,12 +7,12 @@
  * Author URI:      https://github.com/thebrandonallen/
  * Text Domain:     edit-author-slug
  * Domain Path:     /languages
- * Version:         1.4.0
+ * Version:         1.4.1
  *
  * @package Edit_Author_Slug
  * @subpackage Main
  * @author Brandon Allen
- * @version 1.4.0
+ * @version 1.4.1
  */
 
 /*
@@ -58,7 +58,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * @since 1.4.0
 		 * @var   string
 		 */
-		const VERSION = '1.4.0';
+		const VERSION = '1.4.1';
 
 		/**
 		 * The plugin version.

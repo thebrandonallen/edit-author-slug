@@ -3,7 +3,7 @@
 **Tags:** author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles  
 **Requires at least:** 4.3  
 **Tested up to:** 4.7.3  
-**Stable tag:** 1.4.0  
+**Stable tag:** 1.4.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -38,6 +38,21 @@ Translations should be submitted to [Translate WordPress](https://translate.word
 2. Individual user author slug
 
 ## Frequently Asked Questions ##
+
+### What is an author slug? ###
+
+On standard WordPress installs, it's the final part of an author permalink.
+e.g. - https://example.com/author/author-slug/
+
+In relation to WordPress internals, the author slug is the same as the `user_nicename` field found in a `WP_User` object, or the users table in the database.
+
+### Will my changes persist if I deactivate or delete the Edit Author Slug plugin? ###
+
+It depends.
+
+Changing a user's author slug is permanent, as this changes the user's `user_nicename` field in the database.
+
+If you've changed the author base, deactivating or deleting the plugin will revert your author base back to `author`.
 
 ### Why can't I edit my Author Slug? ###
 
@@ -254,12 +269,12 @@ I swear I tested this! :(
 
 ### 0.1.4 ###
 * Release date: January 18, 2010
-* Update tags to reflect WordPress 2.9.1 compatability.
+* Update tags to reflect WordPress 2.9.1 compatibility.
 * Update link to plugin homepage.
 
 ### 0.1.3 ###
 * Release date: December 21, 2009
-* Update tags to reflect WordPress 2.9 compatability.
+* Update tags to reflect WordPress 2.9 compatibility.
 
 ### 0.1.2 ###
 * Release date: November 28, 2009
