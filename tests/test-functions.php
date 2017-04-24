@@ -759,6 +759,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 *
 	 * @covers ::ba_eas_update_nicename_cache
 	 *
+	 * @expectedDeprecated ba_eas_auto_update_user_nicename_single
 	 * @expectedIncorrectUsage ba_eas_update_nicename_cache
 	 */
 	public function test_ba_eas_update_nicename_cache() {
