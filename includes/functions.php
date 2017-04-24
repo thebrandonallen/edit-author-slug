@@ -140,14 +140,13 @@ function ba_eas_auto_update_user_nicename( $user_id, $bulk = false, $structure =
 	// Add it back in case other plugins do some updating.
 	add_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
 
-	/*
-	 * Since this is an action taken without the user's knowledge we must fail
-	 * silently. Therefore, we only want to update the cache if we're successful.
-	 */
+	// Only delete the `userslugs` cache if the user was successfully updated.
+	// TODO: Remove when WP 4.5 is the minimum version.
+	// See https://core.trac.wordpress.org/ticket/35750.
 	if ( ! empty( $user_id ) && ! is_wp_error( $user_id ) ) {
 
-		// Update the nicename cache.
-		ba_eas_update_nicename_cache( $user_id, $user, $nicename );
+		// Delete the old nicename from the cache.
+		wp_cache_delete( $old_nicename, 'userslugs' );
 	}
 
 	return $user_id;
@@ -922,12 +921,15 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
  * @see https://core.trac.wordpress.org/ticket/35750
  *
  * @since 1.0.0
+ * @deprecated 1.5.0
  *
  * @param int    $user_id       The user id.
  * @param object $old_user_data The WP_User object.
  * @param string $new_nicename  The new user nicename.
  */
 function ba_eas_update_nicename_cache( $user_id = 0, $old_user_data = '', $new_nicename = '' ) {
+
+	_deprecated_function( __FUNCTION__, '1.5.0', 'wp_cache_delete( $old_nicename, \'userslugs\' );' );
 
 	// Bail if there's no user.
 	if ( empty( $user_id ) && empty( $old_user_data->ID ) ) {
