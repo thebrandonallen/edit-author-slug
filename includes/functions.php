@@ -239,12 +239,15 @@ function ba_eas_auto_update_user_nicename_bulk( $do_bulk = false ) {
 	add_settings_error(
 		'_ba_eas_bulk_auto_update',
 		'bulk_user_nicenames_updated',
-		/* translators: Updated author slugs count. */
-		_n(
-			'%d user author slug updated.',
-			'%d user author slugs updated.',
-			$updated,
-			'edit-author-slug'
+		sprintf(
+			/* translators: Updated author slugs count. */
+			_n(
+				'%d user author slug updated.',
+				'%d user author slugs updated.',
+				$updated,
+				'edit-author-slug'
+			),
+			$updated
 		),
 		'updated'
 	);
