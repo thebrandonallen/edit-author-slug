@@ -1,3 +1,5 @@
+/* jshint devel: true */
+
 jQuery( document ).ready( function( $ ) {
 
 	// Front show/hide.
