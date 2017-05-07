@@ -1,10 +1,14 @@
+# gitignore file for Edit Author Slug
+
 # Files and folders related to build/test tools
 /build
 /coverage
 /node_modules
-/npm-debug.log
-/phpunit.xml
-/tests/phpunit/build
+npm-debug.log
+phpcs.xml
+phpunit.xml
+wp-cli.local.yml
 
-# Filesystem files and folders
+# Operating system specific files
 .DS_Store
+Thumbs.db
