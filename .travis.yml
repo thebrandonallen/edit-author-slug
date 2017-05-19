@@ -26,14 +26,13 @@ php:
 
 env:
   global:
-    -EAS_TRAVISCI=travis:phpunit
+    - EAS_TRAVISCI=travis:phpunit
   matrix:
     - WP_VERSION=master
     - WP_VERSION=4.7
     - WP_VERSION=4.6
     - WP_VERSION=4.5
     - WP_VERSION=4.4
-    - WP_VERSION=4.3
 
 matrix:
   fast_finish: true
@@ -49,8 +48,6 @@ matrix:
       env: WP_VERSION=4.5
     - php: 7.1
       env: WP_VERSION=4.4
-    - php: 7.1
-      env: WP_VERSION=4.3
   allow_failures:
     - php: nightly
     - env: WP_VERSION=master EAS_TRAVISCI=travis:codecoverage
