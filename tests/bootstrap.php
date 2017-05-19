@@ -32,7 +32,6 @@ $_needs_phpunit_back_compat = in_array(
 	true
 );
 if ( class_exists( 'PHPUnit\Runner\Version' ) && $_needs_phpunit_back_compat ) {
-	var_dump( 'PHPUnit 6+ compat loadeded...' );
 	require_once dirname( __FILE__ ) . '/phpunit6-compat.php';
 }
 
