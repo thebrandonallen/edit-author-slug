@@ -626,6 +626,24 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_admin_setting_callback_bulk_update_structure()` with no
+	 * default nicename structure.
+	 *
+	 * @covers ::ba_eas_admin_setting_callback_bulk_update_structure
+	 */
+	public function test_ba_eas_admin_setting_callback_bulk_update_structure_no_default() {
+
+		$old_default_user_nicename = $this->eas->default_user_nicename;
+		$this->eas->default_user_nicename = '';
+		ob_start();
+		ba_eas_admin_setting_callback_bulk_update_structure();
+		$output = ob_get_clean();
+
+		$this->assertContains( '<select id="_ba_eas_bulk_update_structure" name="_ba_eas_bulk_update_structure">', $output );
+		$this->eas->default_user_nicename = $old_default_user_nicename;
+	}
+
+	/**
 	 * Test `ba_eas_add_settings_link()`.
 	 *
 	 * @covers ::ba_eas_add_settings_link
