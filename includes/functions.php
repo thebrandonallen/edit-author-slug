@@ -870,8 +870,9 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
 	 */
 	function array_replace_recursive( $base, $replacements ) {
 		foreach ( array_slice( func_get_args(), 1 ) as $replacements ) {
-			$bref_stack = array( &$base );
-			$head_stack = array( $replacements );
+			$bref_stack       = array( &$base );
+			$head_stack       = array( $replacements );
+			$head_stack_count = count( $head_stack );
 
 			do {
 				end( $bref_stack );
@@ -889,7 +890,7 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
 						$bref[ $key ] = $head[ $key ];
 					}
 				}
-			} while ( count( $head_stack ) );
+			} while ( $head_stack_count );
 		}
 
 		return $base;
