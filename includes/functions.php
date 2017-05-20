@@ -804,12 +804,15 @@ function ba_eas_get_roles() {
  * user management.
  *
  * @since 1.0.0
+ * @deprecated 1.2.0
  *
  * @global WP_Roles $wp_roles The WP_Roles object.
  *
  * @return array $editable_roles List of editable roles.
  */
 function ba_eas_get_editable_roles() {
+
+	_deprecated_function( __FUNCTION__, '1.2.0' );
 
 	/**
 	 * Filter the list of editable roles.

@@ -689,6 +689,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 * Test for `ba_eas_get_editable_roles()`.
 	 *
 	 * @covers ::ba_eas_get_editable_roles
+	 * @expectedDeprecated ba_eas_get_editable_roles
 	 */
 	public function test_ba_eas_get_editable_roles() {
 
