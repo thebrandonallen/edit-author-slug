@@ -483,13 +483,8 @@ function ba_eas_get_nicename_by_structure( $user_id = 0, $structure = '' ) {
  */
 function ba_eas_wp_rewrite_overrides() {
 
-	// Set default author base.
-	$author_base = 'author';
-
 	// Set to our author base if it exists.
-	if ( ! empty( ba_eas()->author_base ) ) {
-		$author_base = ba_eas()->author_base;
-	}
+	$author_base = ba_eas()->author_base;
 
 	// Get the role-based option.
 	$role_based = ba_eas_do_role_based_author_base();
