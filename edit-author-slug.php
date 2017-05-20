@@ -428,12 +428,9 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			$role_slugs = wp_list_pluck( $this->role_slugs, 'slug' );
 			$role_slugs = array_filter( array_values( $role_slugs ) );
 
-			// Grab the author base.
-			$author_base = ba_eas()->author_base;
-
 			// Add a fallback.
-			if ( false === strpos( $author_base, '%ba_eas_author_role%' ) && false === strpos( $author_base, '/' ) ) {
-				$role_slugs[] = $author_base;
+			if ( false === strpos( $this->author_base, '%ba_eas_author_role%' ) && false === strpos( $this->author_base, '/' ) ) {
+				$role_slugs[] = $this->author_base;
 			} else {
 				$role_slugs[] = 'author';
 			}
