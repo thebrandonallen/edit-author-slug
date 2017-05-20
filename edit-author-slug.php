@@ -50,7 +50,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 	 *
 	 * @final
 	 */
-	final class BA_Edit_Author_Slug {
+	class BA_Edit_Author_Slug {
 
 		/**
 		 * The plugin version.
