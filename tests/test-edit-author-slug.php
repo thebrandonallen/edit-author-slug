@@ -49,7 +49,7 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 		global $l10n, $wp_version;
 
 		$file = WP_LANG_DIR . '/plugins/internationalized-plugin-de_DE.mo';
-		if ( version_compare( $wp_version, '4.6', '>=' ) ) {
+		if ( version_compare( $wp_version, '4.6', '<' ) ) {
 			$file = DIR_TESTDATA . '/pomo/overload.mo';
 		}
 
