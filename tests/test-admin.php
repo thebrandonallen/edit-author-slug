@@ -549,7 +549,103 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_admin_setting_sanitize_callback_role_slugs
 	 */
 	public function test_ba_eas_admin_setting_sanitize_callback_role_slugs() {
-		$this->markTestIncomplete();
+		$expected = ba_eas_tests_slugs_default();
+
+		// Setup the role slugs array to pass to the callback.
+		$role_slugs = array();
+		foreach ( ba_eas_tests_slugs_default() as $role => $details ) {
+			$role_slugs[ $role ]['slug'] = $details['slug'];
+		}
+
+		$actual = ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs );
+
+		$this->assertEqualSets( $expected, $actual );
+	}
+
+	/**
+	 * Test `ba_eas_admin_setting_sanitize_callback_role_slugs()` when a passed
+	 * role doesn't exist.
+	 *
+	 * @covers ::ba_eas_admin_setting_sanitize_callback_role_slugs
+	 */
+	public function test_ba_eas_admin_setting_sanitize_callback_role_slugs_no_role() {
+		$expected = ba_eas_tests_slugs_default();
+
+		// Setup the role slugs array to pass to the callback.
+		$role_slugs = array();
+		foreach ( $expected as $role => $details ) {
+			$role_slugs[ $role ]['slug'] = $details['slug'];
+		}
+
+		// Add the `fake-role` role to the role slugs.
+		$role_slugs['fake-role'] = array(
+			'slug' => 'fake-role',
+		);
+
+		$actual = ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs );
+
+		$this->assertEqualSets( $expected, $actual );
+	}
+
+	/**
+	 * Test `ba_eas_admin_setting_sanitize_callback_role_slugs()` when the
+	 * passed role slug is empty.
+	 *
+	 * @covers ::ba_eas_admin_setting_sanitize_callback_role_slugs
+	 */
+	public function test_ba_eas_admin_setting_sanitize_callback_role_slugs_empty_slug_passed() {
+		$expected = ba_eas_tests_slugs_default();
+
+		// Setup the role slugs array to pass to the callback.
+		$role_slugs = array();
+		foreach ( $expected as $role => $details ) {
+			$role_slugs[ $role ]['slug'] = $details['slug'];
+		}
+
+		// Empty the `administrator` role slug.
+		$role_slugs['administrator']['slug'] = '';
+
+		$actual = ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs );
+
+		$this->assertEqualSets( $expected, $actual );
+	}
+
+	/**
+	 * Test `ba_eas_admin_setting_sanitize_callback_role_slugs()` when no role
+	 * slug can be found.
+	 *
+	 * @covers ::ba_eas_admin_setting_sanitize_callback_role_slugs
+	 */
+	public function test_ba_eas_admin_setting_sanitize_callback_role_slugs_no_role_slug_exists() {
+
+		// Add a `ninja` role with no display name.
+		add_role( 'ninja', '' );
+
+		$expected = ba_eas_tests_slugs_default();
+
+		// Setup the role slugs array to pass to the callback.
+		$role_slugs = array();
+		foreach ( $expected as $role => $details ) {
+			$role_slugs[ $role ]['slug'] = $details['slug'];
+		}
+
+		// Add the `ninja` role to the role slugs.
+		$role_slugs['ninja'] = array(
+			'slug' => '',
+		);
+
+		// Add the `ninja` role to the expected array.
+		$expected['ninja'] = array(
+			'name' => '',
+			'slug' => '',
+		);
+
+		$actual = ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs );
+
+		$this->assertEqualSets( $expected, $actual );
+
+		// Remove the `ninja` role.
+		remove_role( 'ninja' );
 	}
 
 	/**
