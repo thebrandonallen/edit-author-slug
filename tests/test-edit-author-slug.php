@@ -126,16 +126,12 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 		$this->assertFalse( is_textdomain_loaded( 'edit-author-slug' ) );
 
 		add_filter( 'override_load_textdomain', array( $this, '_override_load_textdomain_filter' ), 10, 3 );
-		$load_textdomain = $this->eas->load_textdomain();
+		$this->eas->load_textdomain();
 		remove_filter( 'override_load_textdomain', array( $this, '_override_load_textdomain_filter' ) );
 
-		$is_textdomain_loaded = is_textdomain_loaded( 'edit-author-slug' );
-		unload_textdomain( 'edit-author-slug' );
-		$is_textdomain_loaded_after = is_textdomain_loaded( 'edit-author-slug' );
+		$this->assertTrue( is_textdomain_loaded( 'edit-author-slug' ) );
 
-		$this->assertTrue( $load_textdomain );
-		$this->assertTrue( $is_textdomain_loaded );
-		$this->assertFalse( $is_textdomain_loaded_after );
+		unload_textdomain( 'edit-author-slug' );
 	}
 
 	/**
