@@ -37,6 +37,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 	 *
 	 * @since 1.5.0
 	 *
+	 * @todo When WP 4.6 is the minimum version, remove fallback.
+	 *
 	 * @param bool   $override Whether to override the .mo file loading. Default false.
 	 * @param string $domain   Text domain. Unique identifier for retrieving translated strings.
 	 * @param string $file     Path to the MO file.
@@ -44,9 +46,12 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 	 * @return bool
 	 */
 	function _override_load_textdomain_filter( $override, $domain, $file ) {
-		global $l10n;
+		global $l10n, $wp_version;
 
 		$file = WP_LANG_DIR . '/plugins/internationalized-plugin-de_DE.mo';
+		if ( version_compare( $wp_version, '4.6', '>=' ) ) {
+			$file = DIR_TESTDATA . '/pomo/overload.mo';
+		}
 
 		if ( ! is_readable( $file ) ) {
 			return false;
