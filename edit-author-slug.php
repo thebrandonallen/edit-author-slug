@@ -323,12 +323,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 				// Current DB version.
 				$this->current_db_version = (int) get_option( '_ba_eas_db_version', 0 );
-
-				return;
 			}
-
-			// If we're still here, check for pre-0.9 options.
-			$this->options_back_compat();
 		}
 
 		/**
@@ -350,30 +345,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			// Localize.
 			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
-		}
-
-		/**
-		 * Sets the author base and db version with support for previous
-		 * versions of the plugin.
-		 *
-		 * @since 1.2.0
-		 *
-		 * @return void
-		 */
-		private function options_back_compat() {
-
-			// Get the pre-0.9 options.
-			$options = get_option( 'ba_edit_author_slug' );
-
-			// Sanitize the db value.
-			if ( ! empty( $options['author_base'] ) ) {
-				$this->author_base = ba_eas_sanitize_author_base( $options['author_base'] );
-			}
-
-			// Current DB version.
-			if ( ! empty( $options['db_version'] ) ) {
-				$this->current_db_version = (int) $options['db_version'];
-			}
 		}
 
 		/** Public Methods ****************************************************/
