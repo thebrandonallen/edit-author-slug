@@ -358,9 +358,32 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		$input = '<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="author" class="regular-text code" />';
 		$label = '<em>Defaults to &#039;author&#039;</em>';
+		$front = '<span class="eas-demo-author-base-front"></span>';
 
 		$this->assertContains( $input, $output );
 		$this->assertContains( $label, $output );
+		$this->assertContains( $front, $output );
+	}
+
+	/**
+	 * Test `ba_eas_admin_setting_callback_author_base()`.
+	 *
+	 * @covers ::ba_eas_admin_setting_callback_author_base
+	 */
+	public function test_ba_eas_admin_setting_callback_author_base_with_front() {
+
+		$GLOBALS['wp_rewrite']->front = '/test/';
+		ob_start();
+		ba_eas_admin_setting_callback_author_base();
+		$output = ob_get_clean();
+
+		$input = '<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="author" class="regular-text code" />';
+		$label = '<em>Defaults to &#039;author&#039;</em>';
+		$front = '<span class="eas-demo-author-base-front">test/</span>';
+
+		$this->assertContains( $input, $output );
+		$this->assertContains( $label, $output );
+		$this->assertContains( $front, $output );
 	}
 
 	/**
