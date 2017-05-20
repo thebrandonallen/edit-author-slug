@@ -33,6 +33,41 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Filter the text domain, so that something is loaded for testing.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param bool   $override Whether to override the .mo file loading. Default false.
+	 * @param string $domain   Text domain. Unique identifier for retrieving translated strings.
+	 * @param string $file     Path to the MO file.
+	 *
+	 * @return bool
+	 */
+	function _override_load_textdomain_filter( $override, $domain, $file ) {
+		global $l10n;
+
+		$file = WP_LANG_DIR . '/plugins/internationalized-plugin-de_DE.mo';
+
+		if ( ! is_readable( $file ) ) {
+			return false;
+		}
+
+		$mo = new MO();
+
+		if ( ! $mo->import_from_file( $file ) ) {
+			return false;
+		}
+
+		if ( isset( $l10n[ $domain ] ) ) {
+			$mo->merge_with( $l10n[ $domain ] );
+		}
+
+		$l10n[ $domain ] = &$mo;
+
+		return true;
+	}
+
+	/**
 	 * Test for `BA_Edit_Author_Slug::__call()`.
 	 *
 	 * @covers BA_Edit_Author_Slug::__call
@@ -85,7 +120,22 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 	 * @covers BA_Edit_Author_Slug::load_textdomain
 	 */
 	public function test_load_textdomain() {
-		$this->eas->load_textdomain();
+
+		// Make sure the text domain isn't already loaded.
+		unload_textdomain( 'edit-author-slug' );
+		$this->assertFalse( is_textdomain_loaded( 'edit-author-slug' ) );
+
+		add_filter( 'override_load_textdomain', array( $this, '_override_load_textdomain_filter' ), 10, 3 );
+		$load_textdomain = $this->eas->load_textdomain();
+		remove_filter( 'override_load_textdomain', array( $this, '_override_load_textdomain_filter' ) );
+
+		$is_textdomain_loaded = is_textdomain_loaded( 'edit-author-slug' );
+		unload_textdomain( 'edit-author-slug' );
+		$is_textdomain_loaded_after = is_textdomain_loaded( 'edit-author-slug' );
+
+		$this->assertTrue( $load_textdomain );
+		$this->assertTrue( $is_textdomain_loaded );
+		$this->assertFalse( $is_textdomain_loaded_after );
 	}
 
 	/**

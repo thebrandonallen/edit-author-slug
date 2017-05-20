@@ -440,24 +440,18 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		/** Public Methods ****************************************************/
 
 		/**
-		 * Load the translation file for current language. Checks the Edit Author
-		 * Slug languages folder first, then inside the default WP language
-		 * plugins folder.
+		 * Load the translation file for the current language.
 		 *
-		 * Note that custom translation files inside the Edit Author Slug plugin
-		 * folder will be removed on edit-author-slug updates. If you're creating
-		 * custom translation files, please use the global language folder
+		 * We only check the default WP language plugins folder.
 		 * (ie - wp-content/languages/plugins).
 		 *
 		 * @since 0.9.6
+		 * @since 1.5.0 Only check the default WP languages folder.
 		 *
-		 * @return void
+		 * @return bool
 		 */
 		public function load_textdomain() {
-
-			// Look in wp-content/plugins/edit-author-slug/languages first.
-			// Fallback to wp-content/languages/plugins.
-			load_plugin_textdomain( 'edit-author-slug', false, dirname( $this->plugin_basename ) . '/languages/' );
+			return load_plugin_textdomain( 'edit-author-slug' );
 		}
 
 		/**
