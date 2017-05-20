@@ -491,8 +491,16 @@ function ba_eas_wp_rewrite_overrides() {
 		$author_base = ba_eas()->author_base;
 	}
 
+	// Get the role-based option.
+	$role_based = ba_eas_do_role_based_author_base();
+
+	// If we have the default author base and not doing role-based.
+	if ( 'author' === $author_base && ! $role_based ) {
+		return;
+	}
+
 	// If doing role-based, set accordingly.
-	if ( ba_eas_do_role_based_author_base() && false === strpos( $author_base, '%ba_eas_author_role%' ) ) {
+	if ( $role_based && false === strpos( $author_base, '%ba_eas_author_role%' ) ) {
 		$author_base = '%ba_eas_author_role%';
 	}
 
