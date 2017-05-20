@@ -762,19 +762,8 @@ function ba_eas_get_user_role( $roles = array(), $user_id = 0 ) {
  * @return WP_Roles
  */
 function ba_eas_get_wp_roles() {
-
-	if ( function_exists( 'wp_roles' ) ) {
-		$wp_roles = wp_roles();
-
-	} else {
-
-		// Make sure the `$wp_roles` global has been set.
-		if ( ! isset( $GLOBALS['wp_roles'] ) ) {
-			$wp_roles = new WP_Roles();
-		}
-	}
-
-	return $wp_roles;
+	_deprecated_function( __FUNCTION__, '1.5.0', 'wp_roles' );
+	return wp_roles();
 }
 
 /**
@@ -790,14 +779,12 @@ function ba_eas_get_wp_roles() {
  */
 function ba_eas_get_roles() {
 
-	// Get the `WP_Roles` object.
-	$wp_roles = ba_eas_get_wp_roles();
-
 	// Pull out just the roles array.
-	$_wp_roles = $wp_roles->roles;
+	$_wp_roles = array();
 
 	// Remove user caps.
-	foreach ( $_wp_roles as $role => $details ) {
+	foreach ( wp_roles()->roles as $role => $details ) {
+		$_wp_roles[ $role ] = $details;
 		unset( $_wp_roles[ $role ]['capabilities'] );
 	}
 
@@ -824,22 +811,14 @@ function ba_eas_get_roles() {
  */
 function ba_eas_get_editable_roles() {
 
-	// Get the `WP_Roles` object.
-	$wp_roles = ba_eas_get_wp_roles();
-
-	$roles = array();
-	if ( ! empty( $wp_roles->roles ) ) {
-		$roles = $wp_roles->roles;
-	}
-
 	/**
 	 * Filter the list of editable roles.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $roles The return of WP_Roles::roles.
+	 * @param array $roles The `WP_Roles::roles` array.
 	 */
-	$editable_roles = apply_filters( 'editable_roles', $roles );
+	$editable_roles = apply_filters( 'editable_roles', wp_roles()->roles );
 
 	// Remove user caps.
 	if ( ! empty( $editable_roles ) ) {

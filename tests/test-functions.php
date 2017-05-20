@@ -670,9 +670,10 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 * Test for `ba_eas_get_wp_roles()`.
 	 *
 	 * @covers ::ba_eas_get_wp_roles
+	 * @expectedDeprecated ba_eas_get_wp_roles
 	 */
 	public function test_ba_eas_get_wp_roles() {
-		$this->assertTrue( ba_eas_get_wp_roles() instanceof WP_Roles );
+		$this->assertInstanceOf( 'WP_Roles', ba_eas_get_wp_roles() );
 	}
 
 	/**
