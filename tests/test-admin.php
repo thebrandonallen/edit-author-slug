@@ -702,13 +702,13 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_install();
 
 		$this->assertEquals( $this->eas->author_base, get_option( '_ba_eas_author_base' ) );
-		$this->assertEquals( $this->eas->db_version, get_option( '_ba_eas_db_version' ) );
+		$this->assertEquals( $this->eas::DB_VERSION, get_option( '_ba_eas_db_version' ) );
 		$this->assertEquals( $this->eas->do_auto_update, get_option( '_ba_eas_do_auto_update' ) );
 		$this->assertEquals( $this->eas->default_user_nicename, get_option( '_ba_eas_default_user_nicename' ) );
 		$this->assertEquals( $this->eas->do_role_based, get_option( '_ba_eas_do_role_based' ) );
 		$this->assertEquals( $this->eas->role_slugs, get_option( '_ba_eas_role_slugs' ) );
 
-		$this->eas->current_db_version = $this->eas->db_version;
+		$this->eas->current_db_version = $this->eas::DB_VERSION;
 		$this->assertNull( ba_eas_install() );
 	}
 
@@ -726,7 +726,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_upgrade();
 
 		$this->assertEquals( $this->eas->author_base, get_option( '_ba_eas_author_base' ) );
-		$this->assertEquals( $this->eas->db_version, get_option( '_ba_eas_db_version' ) );
+		$this->assertEquals( $this->eas::DB_VERSION, get_option( '_ba_eas_db_version' ) );
 		$this->assertEquals( $this->eas->do_auto_update, get_option( '_ba_eas_do_auto_update' ) );
 		$this->assertEquals( $this->eas->default_user_nicename, get_option( '_ba_eas_default_user_nicename' ) );
 		$this->assertEquals( $this->eas->do_role_based, get_option( '_ba_eas_do_role_based' ) );
@@ -735,7 +735,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertEquals( false, get_option( 'ba_edit_author_slug' ) );
 		$this->assertEquals( false, get_option( 'rewrite_rules' ) );
 
-		$this->eas->current_db_version = $this->eas->db_version;
+		$this->eas->current_db_version = $this->eas::DB_VERSION;
 		$this->assertNull( ba_eas_upgrade() );
 	}
 }

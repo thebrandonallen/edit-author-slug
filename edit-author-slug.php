@@ -225,11 +225,19 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			$retval = null;
 
 			if ( 'version' === $name ) {
-				// BA_Edit_Author_Slug->version was removed in 1.4.0.
 				$retval = self::VERSION;
+				_doing_it_wrong(
+					'BA_Edit_Author_Slug::version',
+					esc_html__( 'Use class constant, BA_Edit_Author_Slug::VERSION, instead.', 'edit-author-slug' ),
+					'1.4.0'
+				);
 			} elseif ( 'db_version' === $name ) {
-				// BA_Edit_Author_Slug->db_version was removed in 1.4.0.
 				$retval = self::DB_VERSION;
+				_doing_it_wrong(
+					'BA_Edit_Author_Slug::db_version',
+					esc_html__( 'Use class constant, BA_Edit_Author_Slug::DB_VERSION, instead.', 'edit-author-slug' ),
+					'1.4.0'
+				);
 			}
 
 			return $retval;
