@@ -73,21 +73,6 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test for `BA_Edit_Author_Slug::__call()`.
-	 *
-	 * @covers BA_Edit_Author_Slug::__call
-	 *
-	 * @expectedDeprecated     BA_Edit_Author_Slug::author_base_rewrite
-	 * @expectedIncorrectUsage BA_Edit_Author_Slug::fake_method
-	 */
-	public function test__call() {
-
-		$this->eas->__call( 'author_base_rewrite' );
-
-		$this->assertNull( $this->eas->__call( 'fake_method' ) );
-	}
-
-	/**
 	 * Test for `BA_Edit_Author_Slug::setup_globals()`.
 	 *
 	 * @covers BA_Edit_Author_Slug::setup_globals
@@ -137,6 +122,17 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 		$this->assertTrue( is_textdomain_loaded( 'edit-author-slug' ) );
 
 		unload_textdomain( 'edit-author-slug' );
+	}
+
+	/**
+	 * Test for `BA_Edit_Author_Slug::author_base_rewrite()`.
+	 *
+	 * @covers BA_Edit_Author_Slug::author_base_rewrite
+	 *
+	 * @expectedDeprecated BA_Edit_Author_Slug::author_base_rewrite
+	 */
+	public function test_author_base_rewrite() {
+		$this->assertNull( $this->eas->author_base_rewrite() );
 	}
 
 	/**

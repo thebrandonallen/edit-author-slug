@@ -245,33 +245,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			return $retval;
 		}
 
-		/**
-		 * Magic method to prevent notices and errors from invalid method calls.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string $name The method name being called.
-		 * @param array  $args The method arguments.
-		 *
-		 * @return null
-		 */
-		public function __call( $name = '', $args = array() ) {
-
-			if ( 'author_base_rewrite' === $name ) {
-				_deprecated_function( 'BA_Edit_Author_Slug::author_base_rewrite', '1.2.0', 'ba_eas_wp_rewrite_overrides' );
-				ba_eas_wp_rewrite_overrides();
-			} else {
-				_doing_it_wrong(
-					esc_html( "BA_Edit_Author_Slug::{$name}" ),
-					esc_html__( 'Method does not exist.', 'edit-author-slug' ),
-					'1.0.0'
-				);
-			}
-
-			unset( $name, $args );
-			return null;
-		}
-
 		/* Private Methods ****************************************************/
 
 		/**
@@ -418,6 +391,22 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 */
 		public function load_textdomain() {
 			return load_plugin_textdomain( 'edit-author-slug' );
+		}
+
+		/**
+		 * Rewrite Author Base according to user's setting.
+		 *
+		 * Rewrites Author Base to user's setting from the Author Base field
+		 * on Options > Permalinks.
+		 *
+		 * @since 0.4.0
+		 * @deprecated 1.2.0
+		 *
+		 * @return void
+		 */
+		public function author_base_rewrite() {
+			_deprecated_function( __METHOD__, '1.2.0', 'ba_eas_wp_rewrite_overrides' );
+			ba_eas_wp_rewrite_overrides();
 		}
 
 		/**
