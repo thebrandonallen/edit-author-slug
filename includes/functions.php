@@ -69,7 +69,7 @@ function ba_eas_do_bulk_update( $do_bulk = false ) {
  *
  * @return bool|int User id on success. False on failure.
  */
-function ba_eas_auto_update_user_nicename( $user_id, $bulk = false, $structure = '' ) {
+function ba_eas_auto_update_user_nicename( $user_id = 0, $bulk = false, $structure = '' ) {
 
 	// Bail if there's no id or object.
 	if ( empty( $user_id ) ) {

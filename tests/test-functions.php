@@ -125,7 +125,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_auto_update_user_nicename() {
 		// No user id.
-		$this->assertFalse( ba_eas_auto_update_user_nicename( false ) );
+		$this->assertFalse( ba_eas_auto_update_user_nicename() );
 
 		// No auto update.
 		$this->assertFalse( ba_eas_auto_update_user_nicename( 1 ) );
@@ -202,11 +202,10 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 * Test for `ba_eas_auto_update_user_nicename_single()`.
 	 *
 	 * @covers ::ba_eas_auto_update_user_nicename_single
-	 *
 	 * @expectedDeprecated ba_eas_auto_update_user_nicename_single
 	 */
 	public function test_ba_eas_auto_update_user_nicename_single() {
-		ba_eas_auto_update_user_nicename_single();
+		$this->assertFalse( ba_eas_auto_update_user_nicename_single() );
 	}
 
 	/**
