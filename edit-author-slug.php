@@ -210,6 +210,8 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			$this->setup_actions();
 		}
 
+		/** Magic Methods *****************************************************/
+
 		/**
 		 * Magic method for accessing custom/deprecated/nonexistent properties.
 		 *
@@ -268,42 +270,6 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			unset( $name, $args );
 			return null;
-		}
-
-		/** Magic Methods *****************************************************/
-
-		/**
-		 * A dummy magic method to prevent BA_Edit_Author_Slug from being cloned.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @codeCoverageIgnore
-		 *
-		 * @return void
-		 */
-		private function __clone() {
-			_doing_it_wrong(
-				__FUNCTION__,
-				esc_html__( 'Cheatin&#8217; huh?', 'edit-author-slug' ),
-				'1.0'
-			);
-		}
-
-		/**
-		 * A dummy magic method to prevent BA_Edit_Author_Slug from being unserialized.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @codeCoverageIgnore
-		 *
-		 * @return void
-		 */
-		private function __wakeup() {
-			_doing_it_wrong(
-				__FUNCTION__,
-				esc_html__( 'Cheatin&#8217; huh?', 'edit-author-slug' ),
-				'1.0'
-			);
 		}
 
 		/* Private Methods ****************************************************/
