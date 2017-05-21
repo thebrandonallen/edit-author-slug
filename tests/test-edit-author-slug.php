@@ -96,6 +96,22 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers BA_Edit_Author_Slug::__get
+	 * @expectedIncorrectUsage BA_Edit_Author_Slug::version
+	 * @expectedIncorrectUsage BA_Edit_Author_Slug::db_version
+	 */
+	public function test__get() {
+
+		$this->assertNull( $this->eas->__get( 'fake_property' ) );
+
+		$actual = $this->eas->__get( 'version' );
+		$this->assertSame( BA_Edit_Author_Slug::VERSION, $actual );
+
+		$actual = $this->eas->__get( 'db_version' );
+		$this->assertSame( BA_Edit_Author_Slug::DB_VERSION, $actual );
+	}
+
+	/**
 	 * Test for `BA_Edit_Author_Slug::load_textdomain()`.
 	 *
 	 * @covers BA_Edit_Author_Slug::load_textdomain
