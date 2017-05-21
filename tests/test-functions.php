@@ -491,8 +491,10 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	public function test_ba_eas_remove_front() {
 		$this->assertFalse( ba_eas_remove_front() );
 
+		add_filter( 'ba_eas_has_front', '__return_true' );
 		$this->eas->remove_front = true;
 		$this->assertTrue( ba_eas_remove_front() );
+		remove_filter( 'ba_eas_has_front', '__return_true' );
 	}
 
 	/**

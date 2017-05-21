@@ -503,7 +503,7 @@ function ba_eas_wp_rewrite_overrides() {
 	$GLOBALS['wp_rewrite']->author_base = $author_base;
 
 	// Override `WP_Rewrite::author_structure` with our new value.
-	if ( ba_eas_remove_front() && ba_eas_has_front() ) {
+	if ( ba_eas_remove_front() ) {
 		$GLOBALS['wp_rewrite']->author_structure = '/' . $author_base . '/%author%';
 	}
 }
@@ -517,6 +517,8 @@ function ba_eas_wp_rewrite_overrides() {
  */
 function ba_eas_remove_front() {
 
+	$reval = ( ba_eas_has_front() && ba_eas()->remove_front );
+
 	/**
 	 * Filters the return of the `remove_front` option.
 	 *
@@ -524,7 +526,7 @@ function ba_eas_remove_front() {
 	 *
 	 * @param bool $remove_front The `remove_front` option.
 	 */
-	return (bool) apply_filters( 'ba_eas_remove_front', ba_eas()->remove_front );
+	return (bool) apply_filters( 'ba_eas_remove_front', $reval );
 }
 
 /**
@@ -597,7 +599,7 @@ function ba_eas_author_link( $link = '', $user_id = 0 ) {
 	}
 
 	// Remove front if applicable.
-	if ( ba_eas_has_front() && ba_eas_remove_front() ) {
+	if ( ba_eas_remove_front() ) {
 		$link = str_replace( $GLOBALS['wp_rewrite']->front, '/', $link );
 	}
 
