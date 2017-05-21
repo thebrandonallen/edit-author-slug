@@ -37,7 +37,7 @@ function ba_eas_do_auto_update() {
  *
  * @since 1.4.0
  *
- * @param mixed $do_bulk Whether or not to perform a bulk update.
+ * @param int|bool $do_bulk Whether or not to perform a bulk update.
  *
  * @return bool True if bulk update should occur.
  */
