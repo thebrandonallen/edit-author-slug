@@ -465,10 +465,13 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	public function test_ba_eas_wp_rewrite_overrides() {
 		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, 'author' );
 
-		$this->eas->do_role_based = true;
+		ba_eas_wp_rewrite_overrides();
+		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, 'author' );
+
+		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
 		ba_eas_wp_rewrite_overrides();
 		$this->assertEquals( $GLOBALS['wp_rewrite']->author_base, '%ba_eas_author_role%' );
-		$this->eas->do_role_based = false;
+		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
 
 		$this->eas->author_base = 'ninja';
 		ba_eas_wp_rewrite_overrides();
