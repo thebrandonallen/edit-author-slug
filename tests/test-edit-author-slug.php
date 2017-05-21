@@ -96,15 +96,6 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test for `BA_Edit_Author_Slug::options_back_compat()`.
-	 *
-	 * @covers BA_Edit_Author_Slug::options_back_compat
-	 */
-	public function test_options_back_compat() {
-		$this->markTestIncomplete();
-	}
-
-	/**
 	 * Test for `BA_Edit_Author_Slug::load_textdomain()`.
 	 *
 	 * @covers BA_Edit_Author_Slug::load_textdomain
