@@ -435,6 +435,15 @@ function ba_eas_get_nicename_by_structure( $user_id = 0, $structure = '' ) {
 	// Sanitize and trim the new user nicename.
 	$nicename = ba_eas_trim_nicename( ba_eas_sanitize_nicename( $nicename ) );
 
+	/**
+	 * Filters the return of `ba_eas_get_nicename_by_structure`.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @param string $nicename  The nicename.
+	 * @param int    $user_id   The user id.
+	 * @param string $structure The passed nicename structure.
+	 */
 	return apply_filters( 'ba_eas_get_nicename_by_structure', $nicename, $user_id, $structure );
 }
 
