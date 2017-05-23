@@ -224,40 +224,41 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 		return;
 	}
 
-	// Make sure the passed nicename is different from the user's current nicename.
-	if ( $user_nicename !== $old_user_nicename ) {
-
-		// Bail and throw an error if the nicename already exists.
-		$exists = get_user_by( 'slug', $user_nicename );
-		if ( $exists && (int) $exists->ID !== $user->ID ) {
-
-			// Setup the error message.
-			/* translators: 1: author slug */
-			$message = __(
-				'<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try something different.',
-				'edit-author-slug'
-			);
-
-			// Add the error message.
-			$errors->add(
-				'user_nicename_exists',
-				sprintf(
-					$message,
-					'<strong><em>' . ba_eas_esc_nicename( $user_nicename ) . '</em></strong>'
-				)
-			);
-
-			return;
-		}
-
-		// Looks like we made it, so let's update.
-		$user->user_nicename = $user_nicename;
-
-		// Delete the old nicename from the cache.
-		// TODO: Remove when WP 4.5 is the minimum version.
-		// See https://core.trac.wordpress.org/ticket/35750.
-		wp_cache_delete( $old_user_nicename, 'userslugs' );
+	// Bail if the nicename hasn't changed.
+	if ( $user_nicename === $old_user_nicename ) {
+		return;
 	}
+
+	// Bail and throw an error if the nicename already exists.
+	$exists = get_user_by( 'slug', $user_nicename );
+	if ( $exists && (int) $exists->ID !== $user->ID ) {
+
+		// Setup the error message.
+		/* translators: 1: author slug */
+		$message = __(
+			'<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try something different.',
+			'edit-author-slug'
+		);
+
+		// Add the error message.
+		$errors->add(
+			'user_nicename_exists',
+			sprintf(
+				$message,
+				'<strong><em>' . ba_eas_esc_nicename( $user_nicename ) . '</em></strong>'
+			)
+		);
+
+		return;
+	}
+
+	// Looks like we made it, so let's update.
+	$user->user_nicename = $user_nicename;
+
+	// Delete the old nicename from the cache.
+	// TODO: Remove when WP 4.5 is the minimum version.
+	// See https://core.trac.wordpress.org/ticket/35750.
+	wp_cache_delete( $old_user_nicename, 'userslugs' );
 }
 
 /**
