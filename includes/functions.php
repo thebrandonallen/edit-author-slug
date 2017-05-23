@@ -354,7 +354,9 @@ function ba_eas_trim_nicename( $nicename = '' ) {
  *              characters that can be converted to ASCII.
  */
 function ba_eas_nicename_is_ascii( $nicename = '' ) {
-	return ba_eas_sanitize_nicename( $nicename ) === ba_eas_sanitize_nicename( $nicename, false );
+	$sanitize_nicename        = ba_eas_sanitize_nicename( $nicename );
+	$sanitize_nicename_strict = ba_eas_sanitize_nicename( $nicename, false );
+	return ( $sanitize_nicename === $sanitize_nicename_strict );
 }
 
 /**
@@ -520,6 +522,8 @@ function ba_eas_remove_front() {
  */
 function ba_eas_has_front() {
 
+	$retval = ( '/' !== $GLOBALS['wp_rewrite']->front );
+
 	/**
 	 * Filters the return of the `ba_eas_has_front` option.
 	 *
@@ -527,7 +531,7 @@ function ba_eas_has_front() {
 	 *
 	 * @param bool $has_front The `remove_front` option.
 	 */
-	return (bool) apply_filters( 'ba_eas_has_front', '/' !== $GLOBALS['wp_rewrite']->front );
+	return (bool) apply_filters( 'ba_eas_has_front', $retval );
 }
 
 /**
@@ -613,7 +617,7 @@ function ba_eas_template_include( $template ) {
 	$author = get_queried_object();
 
 	// Make sure we have a WP_User object.
-	if ( ! is_a( $author, 'WP_User' ) ) {
+	if ( ! $author instanceof WP_User ) {
 		return $template;
 	}
 
@@ -773,7 +777,7 @@ function ba_eas_get_default_role_slugs() {
 	$roles = ba_eas_get_roles();
 
 	// Convert role names into role slugs.
-	foreach ( $roles as $role => $details ) {
+	foreach ( (array) $roles as $role => $details ) {
 		$roles[ $role ]['slug'] = sanitize_title( translate_user_role( $details['name'] ) );
 	}
 

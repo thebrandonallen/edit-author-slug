@@ -69,7 +69,7 @@ function ba_eas_show_user_nicename( $user ) {
 			<th scope="row"><?php esc_html_e( 'Author Slug', 'edit-author-slug' ); ?></th>
 			<td>
 				<fieldset><legend class="screen-reader-text"><span><?php esc_html_e( 'Author Slug', 'edit-author-slug' ); ?></span></legend>
-				<?php foreach ( (array) $options as $item ) {
+				<?php foreach ( (array) $options as $item ) :
 
 					// Checked?
 					$checked_text = checked( $item, $nicename, false );
@@ -83,7 +83,7 @@ function ba_eas_show_user_nicename( $user ) {
 					<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="<?php echo ba_eas_esc_nicename( $item ); ?>" autocapitalize="none" autocorrect="off" maxlength="50"<?php echo $checked_text; ?>>
 					<span><?php echo ba_eas_esc_nicename( $item ); ?></span>
 				</label><br />
-				<?php } ?>
+				<?php endforeach; ?>
 				<label for="ba_eas_author_slug_custom_radio">
 					<input type="radio" id="ba_eas_author_slug_custom_radio" name="ba_eas_author_slug" value="\c\u\s\t\o\m" autocapitalize="none" autocorrect="off" maxlength="50"<?php checked( $checked ); ?>>
 					<?php esc_html_e( 'Custom:', 'edit-author-slug' ); ?>
@@ -776,9 +776,9 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 
 		<span class="screen-reader-text"><?php esc_html_e( 'Default author slug options', 'edit-author-slug' ); ?></span>
 		<select id="_ba_eas_default_user_nicename" name="_ba_eas_default_user_nicename">
-		<?php foreach ( (array) $options as $id => $item ) { ?>
+		<?php foreach ( (array) $options as $id => $item ) : ?>
 			<option id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $id ); ?>"<?php selected( $structure, $id ); ?>><?php echo esc_html( $item ); ?></option>
-		<?php } ?>
+		<?php endforeach; ?>
 		</select>
 
 <?php
@@ -836,9 +836,9 @@ function ba_eas_admin_setting_callback_bulk_update_structure() {
 
 		<span class="screen-reader-text"><?php esc_html_e( 'Default bulk update author slug options', 'edit-author-slug' ); ?></span>
 		<select id="_ba_eas_bulk_update_structure" name="_ba_eas_bulk_update_structure">
-		<?php foreach ( (array) $options as $id => $item ) { ?>
+		<?php foreach ( (array) $options as $id => $item ) : ?>
 			<option id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $id ); ?>"<?php selected( $structure, $id ); ?>><?php echo esc_html( $item ); ?></option>
-		<?php } ?>
+		<?php endforeach; ?>
 		</select>
 
 <?php
