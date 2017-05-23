@@ -134,9 +134,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	// Check the nonce.
 	check_admin_referer( 'update-user_' . $user->ID );
 
-	// Stash the original user object.
-	$_user = get_userdata( $user->ID );
-
+	$old_user_nicename    = $user->user_nicename;
 	$user_nicename        = '';
 	$user_nicename_custom = '';
 
@@ -227,7 +225,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	}
 
 	// Make sure the passed nicename is different from the user's current nicename.
-	if ( $user_nicename !== $_user->user_nicename ) {
+	if ( $user_nicename !== $old_user_nicename ) {
 
 		// Bail and throw an error if the nicename already exists.
 		$exists = get_user_by( 'slug', $user_nicename );
@@ -258,7 +256,8 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 		// Delete the old nicename from the cache.
 		// TODO: Remove when WP 4.5 is the minimum version.
 		// See https://core.trac.wordpress.org/ticket/35750.
-		wp_cache_delete( $_user->user_nicename, 'userslugs' );	}
+		wp_cache_delete( $old_user_nicename, 'userslugs' );
+	}
 }
 
 /**
