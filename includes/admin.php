@@ -582,7 +582,7 @@ function ba_eas_admin_setting_callback_auto_update_section() {
  */
 function ba_eas_admin_setting_callback_author_base() {
 
-	$author_base = ba_eas_sanitize_author_base( ba_eas()->author_base );
+	$author_base = ba_eas()->author_base;
 	$front       = trim( $GLOBALS['wp_rewrite']->front, '/' );
 
 	// Add the trailing slash back if `$front` isn't empty.
