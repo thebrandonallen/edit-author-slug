@@ -1,5 +1,5 @@
 /* jshint node:true */
-module.exports = function(grunt) {
+module.exports = function( grunt ) {
 	var SOURCE_DIR = '',
 		BUILD_DIR = 'build/',
 
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 	grunt.util = require( 'grunt-legacy-util' );
 
 	grunt.initConfig({
-		pkg: grunt.file.readJSON('package.json'),
+		pkg: grunt.file.readJSON( 'package.json' ),
 		checktextdomain: {
 			options: {
 				text_domain: 'edit-author-slug',
@@ -113,7 +113,8 @@ module.exports = function(grunt) {
 				 * @returns {Bool}
 				 */
 				filter: function( filepath ) {
-					var index, file = grunt.option( 'file' );
+					var index,
+						file = grunt.option( 'file' );
 
 					// Don't filter when no target file is specified
 					if ( ! file ) {
@@ -133,10 +134,10 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		jsvalidate:{
-			options:{
+		jsvalidate: {
+			options: {
 				globals: {},
-				esprimaOptions:{},
+				esprimaOptions: {},
 				verbose: false
 			},
 			core: {
@@ -165,15 +166,17 @@ module.exports = function(grunt) {
 								'Plugin URI of the plugin/theme',
 								'Author of the plugin/theme',
 								'Author URI of the plugin/theme'
-								];
-									for ( translation in pot.translations[''] ) {
-										if ( 'undefined' !== typeof pot.translations[''][ translation ].comments.extracted ) {
-											if ( excluded_meta.indexOf( pot.translations[''][ translation ].comments.extracted ) >= 0 ) {
-												console.log( 'Excluded meta: ' + pot.translations[''][ translation ].comments.extracted );
-													delete pot.translations[''][ translation ];
-												}
-											}
-										}
+							];
+
+						for ( translation in pot.translations[''] ) {
+							if ( 'undefined' !== typeof pot.translations[''][ translation ].comments.extracted ) {
+								if ( excluded_meta.indexOf( pot.translations[''][ translation ].comments.extracted ) >= 0 ) {
+									console.log( 'Excluded meta: ' + pot.translations[''][ translation ].comments.extracted );
+									delete pot.translations[''][ translation ];
+								}
+							}
+						}
+
 						return pot;
 					},
 					type: 'wp-plugin'
@@ -181,11 +184,11 @@ module.exports = function(grunt) {
 			}
 		},
 		phpunit: {
-			'default': {
+			default: {
 				cmd: 'phpunit',
 				args: ['-c', 'phpunit.xml.dist']
 			},
-			'codecoverage': {
+			codecoverage: {
 				cmd: 'phpunit',
 				args: ['-c', 'phpunit.xml.dist', '--coverage-clover=coverage.clover' ]
 			}
@@ -205,7 +208,7 @@ module.exports = function(grunt) {
 						replacement: '$1<%= pkg.version %>'
 					},
 					{
-						pattern: /(\*\s\@version\s+).*/gm, // For plugin header
+						pattern: /(\*\s@version\s+).*/gm, // For plugin header
 						replacement: '$1<%= pkg.version %>'
 					}]
 				}
@@ -225,7 +228,7 @@ module.exports = function(grunt) {
 						replacement: '$1<%= pkg.version %>'
 					},
 					{
-						pattern: /(\*\s\@version\s+).*/gm, // For plugin header
+						pattern: /(\*\s@version\s+).*/gm, // For plugin header
 						replacement: '$1<%= pkg.version %>'
 					},
 					{
@@ -233,7 +236,7 @@ module.exports = function(grunt) {
 						replacement: '$1<%= pkg.version %>'
 					},
 					{
-						pattern:  /(Copyright \(C\) 2009\-)[0-9]{4}(.*)/gm, // For Copyright.
+						pattern:  /(Copyright \(C\) 2009-)[0-9]{4}(.*)/gm, // For Copyright.
 						replacement: '$1<%= grunt.template.today("UTC:yyyy") %>$2'
 					}]
 				}
@@ -299,6 +302,6 @@ module.exports = function(grunt) {
 	grunt.registerTask( 'travis:codecoverage', 'Runs PHPUnit tasks with code-coverage generation.', ['phpunit:codecoverage'] );
 
 	// Register the default tasks.
-	grunt.registerTask('default', ['watch']);
+	grunt.registerTask( 'default', ['watch'] );
 
 };
