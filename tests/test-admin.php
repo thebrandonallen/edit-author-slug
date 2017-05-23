@@ -140,6 +140,13 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		remove_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
 
 		$_POST = array(
+			'ba_eas_author_slug' => 'mastersplinter',
+		);
+
+		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
+		$this->assertEquals( 'mastersplinter', $user->user_nicename );
+
+		$_POST = array(
 			'ba_eas_author_slug' => addslashes( '\c\u\s\t\o\m' ),
 			'ba_eas_author_slug_custom' => 'assertion-1',
 		);
