@@ -294,6 +294,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		private function includes() {
 
 			// Load the core functions.
+			require_once( $this->plugin_dir . 'includes/deprecated.php' );
 			require_once( $this->plugin_dir . 'includes/functions.php' );
 			require_once( $this->plugin_dir . 'includes/hooks.php' );
 
