@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 
 // Make sure we're uninstalling.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-	exit();
+	exit;
 }
 
 // Delete all the options.
