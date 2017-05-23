@@ -387,42 +387,27 @@ function ba_eas_get_nicename_by_structure( $user_id = 0, $structure = '' ) {
 
 		case 'username':
 
-			if ( ! empty( $user->user_login ) ) {
-				$nicename = $user->user_login;
-			}
-
+			$nicename = $user->user_login;
 			break;
 
 		case 'nickname':
 
-			if ( ! empty( $user->nickname ) ) {
-				$nicename = $user->nickname;
-			}
-
+			$nicename = $user->nickname;
 			break;
 
 		case 'displayname':
 
-			if ( ! empty( $user->display_name ) ) {
-				$nicename = $user->display_name;
-			}
-
+			$nicename = $user->display_name;
 			break;
 
 		case 'firstname':
 
-			if ( ! empty( $user->first_name ) ) {
-				$nicename = $user->first_name;
-			}
-
+			$nicename = $user->first_name;
 			break;
 
 		case 'lastname':
 
-			if ( ! empty( $user->last_name ) ) {
-				$nicename = $user->last_name;
-			}
-
+			$nicename = $user->last_name;
 			break;
 
 		case 'firstlast':
@@ -444,7 +429,6 @@ function ba_eas_get_nicename_by_structure( $user_id = 0, $structure = '' ) {
 		case 'userid':
 
 			$nicename = $user->ID;
-
 			break;
 	} // End switch().
 
