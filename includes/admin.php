@@ -274,7 +274,7 @@ function ba_eas_can_edit_author_slug() {
 	$retval = false;
 
 	// True if user is allowed to edit the author slug.
-	if ( is_super_admin() || current_user_can( 'edit_users' ) || current_user_can( 'edit_author_slug' ) ) {
+	if ( current_user_can( 'edit_users' ) || current_user_can( 'edit_author_slug' ) ) {
 		$retval = true;
 	}
 
