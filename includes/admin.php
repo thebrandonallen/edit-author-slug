@@ -189,11 +189,8 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 		$ascii
 	) );
 
-	// Was the nicename filtered?
-	$changed = ( $raw_nicename_sanitized !== $user_nicename );
-
 	// Reset `$ascii` if the nicename was filtered.
-	if ( $changed ) {
+	if ( $raw_nicename_sanitized !== $user_nicename ) {
 		$ascii = ba_eas_nicename_is_ascii( $user_nicename );
 	}
 
