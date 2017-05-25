@@ -113,14 +113,6 @@ function ba_eas_show_user_nicename( $user ) {
  */
 function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
-	// Bail early if user can't edit the slug.
-	if ( ! ba_eas_can_edit_author_slug() ) {
-		return;
-	}
-
-	// Don't run the auto-update if the current user can update their own nicename.
-	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
-
 	// We shouldn't be here if we're not updating.
 	if ( ! $update ) {
 		return;
@@ -131,8 +123,16 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 		return;
 	}
 
+	// Bail if user can't edit the slug.
+	if ( ! ba_eas_can_edit_author_slug() ) {
+		return;
+	}
+
 	// Check the nonce.
 	check_admin_referer( 'update-user_' . $user->ID );
+
+	// Don't run the auto-update if the current user can update their own nicename.
+	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
 
 	$old_user_nicename    = $user->user_nicename;
 	$user_nicename        = '';
