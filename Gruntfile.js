@@ -216,6 +216,7 @@ module.exports = function( grunt ) {
 			build: {
 				files: {
 					'edit-author-slug.php': 'edit-author-slug.php',
+					'includes/classes/class-edit-author-slug.php': 'includes/classes/class-edit-author-slug.php',
 					'readme.txt': 'readme.txt'
 				},
 				options: {
