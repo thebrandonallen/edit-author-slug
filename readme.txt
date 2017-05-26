@@ -291,20 +291,3 @@ I swear I tested this! :(
 = 0.1 =
 * Release date: November 27, 2009
 * Initial release.
-
-== Upgrade Notice ==
-
-= 1.0 =
-Role-based author bases are here!
-
-= 0.4 =
-Adds ability to change the Author Base (not a required upgrade)
-
-= 0.3 =
-Edit Author Slug can now be localized. You can find edit-author-slug.pot in 'edit-author-slug/languages' to get you started.
-
-= 0.2 =
-Added a check to avoid duplicate duplicate author slugs, and better sanitization.
-
-= TODO =
-* Allow Author Slug editing of users from one centralized location
