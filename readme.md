@@ -66,6 +66,9 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 
 ## Changelog ##
 
+### 1.5.0 ###
+* Release date: TDB
+
 ### 1.4.1 ###
 * Release date: April 24, 2017
 * Fix failing string replacement in bulk update message.
