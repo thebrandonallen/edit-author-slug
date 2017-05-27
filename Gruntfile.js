@@ -244,7 +244,7 @@ module.exports = function( grunt ) {
 			},
 			readme: {
 				files: {
-					'readme.md': 'readme.md'
+					'README.md': 'README.md'
 				},
 				options: {
 					replacements: [{
