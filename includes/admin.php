@@ -227,8 +227,7 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	}
 
 	// Bail and throw an error if the nicename already exists.
-	$exists = get_user_by( 'slug', $user_nicename );
-	if ( $exists && (int) $exists->ID !== $user->ID ) {
+	if ( ba_eas_nicename_exists( $user_nicename, $user ) ) {
 
 		// Setup the error message.
 		/* translators: 1: author slug */

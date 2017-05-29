@@ -447,6 +447,47 @@ function ba_eas_get_nicename_by_structure( $user_id = 0, $structure = '' ) {
 	return apply_filters( 'ba_eas_get_nicename_by_structure', $nicename, $user_id, $structure );
 }
 
+/**
+ * Check if a nicename exists.
+ *
+ * @since 1.5.0
+ *
+ * @param string      $nicename   The nicename to check.
+ * @param int|WP_User $user_or_id The user id or user object.
+ *
+ * @return bool|WP_User The WP_User object. False on failure.
+ */
+function ba_eas_nicename_exists( $nicename = '', $user_or_id = 0 ) {
+
+	// Default to false.
+	$retval = false;
+
+	// Get the user objects if they exist.
+	$user     = new WP_User( $user_or_id );
+	$existing = get_user_by( 'slug', $nicename );
+
+	// Return the existing user object if it exists.
+	if ( ! empty( $existing->ID ) ) {
+		$retval = $existing;
+	}
+
+	// Check if a user was passed and if it matches the existing user.
+	if ( $retval && ! empty( $user->ID ) && $existing->ID === $user->ID ) {
+		$retval = false;
+	}
+
+	/**
+	 * Filters the return of `ba_eas_nicename_exists()`.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param bool|WP_User $retval     The WP_User object. False on failure.
+	 * @param string       $nicename   The user nicename.
+	 * @param int|WP_User  $user_or_id The user id or user object.
+	 */
+	return apply_filters( 'ba_eas_nicename_exists', $retval, $nicename, $user_or_id );
+}
+
 /** Author Base ***************************************************************/
 
 /**

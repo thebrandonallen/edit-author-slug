@@ -448,6 +448,46 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_nicename_exists()` under normal circumstances.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @covers ::ba_eas_nicename_exists
+	 */
+	public function test_ba_eas_nicename_exists() {
+
+		$this->factory->user->create( array(
+			'user_nicename' => 'leonardo-hamato',
+		) );
+
+		$exists = ba_eas_nicename_exists( 'leonardo-hamato', $this->single_user_id );
+		$this->assertInstanceOf( 'WP_User', $exists );
+	}
+
+	/**
+	 * Test `ba_eas_nicename_exists()` when the passed nicename doesn't exist.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @covers ::ba_eas_nicename_exists
+	 */
+	public function test_ba_eas_nicename_exists_not_exists() {
+		$this->assertFalse( ba_eas_nicename_exists( 'test' ) );
+	}
+
+	/**
+	 * Test `ba_eas_nicename_exists()` when the nicename exists, but it belongs
+	 * to the passed user.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @covers ::ba_eas_nicename_exists
+	 */
+	public function test_ba_eas_nicename_exists_same_as_passed_user() {
+		$this->assertFalse( ba_eas_nicename_exists( 'mastersplinter', $this->single_user_id ) );
+	}
+
+	/**
 	 * Test for `ba_eas_wp_rewrite_overrides()`.
 	 *
 	 * @covers ::ba_eas_wp_rewrite_overrides
