@@ -15,11 +15,9 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 	/**
-	 * Final BA_Edit_Author_Slug class.
+	 * BA_Edit_Author_Slug class.
 	 *
 	 * @since 0.1.0
-	 *
-	 * @final
 	 */
 	class BA_Edit_Author_Slug {
 
