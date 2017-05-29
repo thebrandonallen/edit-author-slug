@@ -329,6 +329,61 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_auto_update_user_nicename_bulk()` when there is an
+	 * invalid user id.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @covers ::ba_eas_auto_update_user_nicename_bulk
+	 */
+	public function test_ba_eas_auto_update_user_nicename_bulk_with_bad_id() {
+
+		$leo_id = $this->factory->user->create( array(
+			'user_login' => 'leonardo',
+			'user_pass'  => '1234',
+			'user_email' => 'leonardo@example.com',
+			'nickname'   => 'Leo',
+			'first_name' => 'Leonardo',
+			'last_name'  => 'Hamato',
+		) );
+		$raph_id = $this->factory->user->create( array(
+			'user_login' => 'raphael',
+			'user_pass'  => '1234',
+			'user_email' => 'raphael@example.com',
+			'nickname'   => 'Raph',
+			'first_name' => 'Raphael',
+			'last_name'  => 'Hamato',
+		) );
+
+		$this->eas->default_user_nicename = 'firstlast';
+
+		add_filter( 'ba_eas_auto_update_user_nicename_bulk_user_ids', array( $this, 'return_bad_id' ) );
+		ba_eas_auto_update_user_nicename_bulk( true );
+		remove_filter( 'ba_eas_auto_update_user_nicename_bulk_user_ids', array( $this, 'return_bad_id' ) );
+
+		$leo = get_user_by( 'id', $leo_id );
+		$this->assertEquals( 'leonardo-hamato', $leo->user_nicename );
+
+		$raph = get_user_by( 'id', $raph_id );
+		$this->assertEquals( 'raphael-hamato', $raph->user_nicename );
+	}
+
+	/**
+	 * Return a non-existent user id.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $ids The array of user ids to update.
+	 *
+	 * @return array
+	 */
+	public function return_bad_id( $ids = array() ) {
+		$ids = (array) $ids;
+		$ids[] = '1234567890';
+		return $ids;
+	}
+
+	/**
 	 * Test for `ba_eas_sanitize_nicename()`.
 	 *
 	 * @covers ::ba_eas_sanitize_nicename

@@ -173,6 +173,8 @@ function ba_eas_auto_update_user_nicename_bulk( $do_bulk = false ) {
 	// Nonce check.
 	check_admin_referer( 'edit-author-slug-options' );
 
+	global $wpdb;
+
 	// Default to the auto-update nicename structure.
 	$structure = ba_eas()->default_user_nicename;
 
@@ -197,24 +199,61 @@ function ba_eas_auto_update_user_nicename_bulk( $do_bulk = false ) {
 
 	// Set the default updated count.
 	$updated = 0;
+	$when    = array();
+	$where   = array();
 
 	// Loop through all the users and maybe update their nicenames.
 	foreach ( $users as $key => $user_id ) {
 
+		$user = get_user_by( 'id', $user_id );
+		if ( empty( $user->ID ) ) {
+			continue;
+		}
+
 		// Reset the max execution time.
 		set_time_limit( 30 );
 
-		// Maybe update the user nicename.
-		$id = ba_eas_auto_update_user_nicename( $user_id, true, $structure );
+		$user     = get_user_by( 'id', $user_id );
+		$nicename = ba_eas_get_nicename_by_structure( $user->ID, $structure );
+		$exists   = ba_eas_nicename_exists( $nicename, $user );
 
-		// If updating was a success, then bump the updated count.
-		if ( ! empty( $id ) && ! is_wp_error( $id ) ) {
-			$updated++;
+		if ( ! $exists && $nicename && $user->nicename !== $nicename ) {
+			$when[]  = $wpdb->prepare( 'WHEN %d THEN %s', $user->ID, $nicename );
+			$where[] = $wpdb->prepare( '%d', $user->ID );
 		}
 
-		// Remove the processed user from the users array.
+		// Remove the processed user from the users array and clean the cache.
 		unset( $users[ $key ] );
+		clean_user_cache( $user );
+		if ( $exists ) {
+			clean_user_cache( $exists );
+		}
 	}
+
+	// If we have some when statements, the update the nicenames.
+	if ( ! empty( $when ) ) {
+
+		// Setup our when and where statements.
+		$when_sql  = implode( ' ', $when );
+		$where_sql = '';
+		if ( ! empty( $where ) ) {
+			$where_sql = 'WHERE ID IN ( ' . implode( ',', $where ) . ' )';
+		}
+
+		// Run the update.
+		$sql = "
+			UPDATE $wpdb->users
+			SET user_nicename = CASE ID
+			{$when_sql}
+			ELSE user_nicename
+			END
+			{$where_sql}
+		";
+		$updated = $wpdb->query( $sql ); // WPCS: unprepared SQL ok.
+	}
+
+	// Unset some vars to help with memory.
+	unset( $users, $when, $when_sql, $where, $where_sql );
 
 	// Add a message to the settings page denoting user how many users were updated.
 	add_settings_error(
