@@ -165,13 +165,13 @@ function ba_eas_auto_update_user_nicename( $user_id = 0, $bulk = false, $structu
  */
 function ba_eas_auto_update_user_nicename_bulk( $do_bulk = false ) {
 
-	// Nonce check.
-	check_admin_referer( 'edit-author-slug-options' );
-
 	// Bail if the user didn't ask to run the bulk update.
 	if ( ! ba_eas_do_bulk_update( $do_bulk ) ) {
 		return false;
 	}
+
+	// Nonce check.
+	check_admin_referer( 'edit-author-slug-options' );
 
 	// Default to the auto-update nicename structure.
 	$structure = ba_eas()->default_user_nicename;
