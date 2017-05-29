@@ -54,26 +54,6 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Copy of WP's function from 4.4.0. Can be removed when 4.4.0 is the
-	 * minimum version.
-	 *
-	 * @since 1.2.0
-	 *
-	 * @todo Remove.
-	 *
-	 * @global WP_Rewrite $wp_rewrite
-	 *
-	 * @param string $structure Optional. Permalink structure to set. Default empty.
-	 */
-	public function set_permalink_structure( $structure = '' ) {
-		global $wp_rewrite;
-
-		$wp_rewrite->init();
-		$wp_rewrite->set_permalink_structure( $structure );
-		$wp_rewrite->flush_rules();
-	}
-
-	/**
 	 * Filters the return of user role filters.
 	 *
 	 * @since 1.2.0
