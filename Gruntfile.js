@@ -239,6 +239,10 @@ module.exports = function( grunt ) {
 					{
 						pattern: /(Copyright\s\(C\)\s2009-)[0-9]{4}(.*)/gm, // For Copyright.
 						replacement: '$1<%= grunt.template.today("UTC:yyyy") %>$2'
+					},
+					{
+						pattern: /(\*\sRelease\sdate:\s)TDB$/gm,
+						replacement: '$1<%= grunt.template.today("yyyy-mm-dd") %>'
 					}]
 				}
 			},
