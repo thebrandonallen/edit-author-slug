@@ -27,7 +27,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		 * @since 1.4.0
 		 * @var   string
 		 */
-		const VERSION = '1.4.1';
+		const VERSION = '1.5.0';
 
 		/**
 		 * The plugin version.

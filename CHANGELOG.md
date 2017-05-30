@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [1.5.0](https://github.com/thebrandonallen/edit-author-slug/tree/1.5.0) - TBD ##
+## [1.5.0](https://github.com/thebrandonallen/edit-author-slug/tree/1.5.0) - 2017-05-30 ##
 ### Added
 * Added `CHANGELOG.md` file.
 * Introduce `ba_eas_nicename_exists()` to check if a nicename exists.

@@ -3,7 +3,7 @@ Contributors: thebrandonallen
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 1.4.1
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -67,7 +67,7 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 == Changelog ==
 
 = 1.5.0 =
-* Release date: TBD
+* Release date: 2017-05-30
 * Bumped minimum required WordPress version to 4.4.
 * Refactored bulk upgrading again. The original fix made things better, but not as good as it could be. This new refactoring drastically improves performance and memory usage.
 * This release is primarily an under-the-hood release with a number of optimizations and performance improvements.
