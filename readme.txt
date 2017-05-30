@@ -67,7 +67,7 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 == Changelog ==
 
 = 1.5.0 =
-* Release date: TDB
+* Release date: TBD
 * Bumped minimum required WordPress version to 4.4.
 * Refactored bulk upgrading again. The original fix made things better, but not as good as it could be. This new refactoring drastically improves performance and memory usage.
 * This release is primarily an under-the-hood release with a number of optimizations and performance improvements.
