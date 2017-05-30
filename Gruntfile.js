@@ -215,6 +215,7 @@ module.exports = function( grunt ) {
 			},
 			build: {
 				files: {
+					'CHANGELOG.md': 'CHANGELOG.md',
 					'edit-author-slug.php': 'edit-author-slug.php',
 					'includes/classes/class-edit-author-slug.php': 'includes/classes/class-edit-author-slug.php',
 					'readme.txt': 'readme.txt'
@@ -243,6 +244,10 @@ module.exports = function( grunt ) {
 					{
 						pattern: /(\*\sRelease\sdate:\s)TBD$/gm,
 						replacement: '$1<%= grunt.template.today("yyyy-mm-dd") %>'
+					},
+					{
+						pattern: /^(##\s.*\s-\s)TBD(.*)$/gm,
+						replacement: '$1<%= grunt.template.today("yyyy-mm-dd") %>$2'
 					}]
 				}
 			},
