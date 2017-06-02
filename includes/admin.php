@@ -109,7 +109,7 @@ function ba_eas_show_user_nicename( $user ) {
  *
  * @param WP_Errors $errors The WP_Errors object.
  * @param bool      $update True if user is being updated.
- * @param WP_User   $user   The WP_User object.
+ * @param object    $user   An stdClass with user properties.
  */
 function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
@@ -134,7 +134,8 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	// Don't run the auto-update if the current user can update their own nicename.
 	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
 
-	$old_user_nicename    = $user->user_nicename;
+	// Set some default variables.
+	$old_user_nicename    = get_user_by( 'id', $user->ID )->user_nicename;
 	$user_nicename        = '';
 	$user_nicename_custom = '';
 
