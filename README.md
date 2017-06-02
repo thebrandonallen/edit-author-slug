@@ -66,6 +66,10 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 
 ## Changelog ##
 
+### 1.5.1 ###
+* Release date: TBD
+* Fix PHP notice when manually updating a user profile. Props @mydigitalsauce.
+
 ### 1.5.0 ###
 * Release date: 2017-05-30
 * Bumped minimum required WordPress version to 4.4.

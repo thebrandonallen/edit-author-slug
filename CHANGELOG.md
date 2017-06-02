@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [1.5.1](https://github.com/thebrandonallen/edit-author-slug/tree/1.5.1) - TBD ##
+### Fixed
+* Fixed a PHP notice when manually updating a user profile.
+
 ## [1.5.0](https://github.com/thebrandonallen/edit-author-slug/tree/1.5.0) - 2017-05-30 ##
 ### Added
 * Added `CHANGELOG.md` file.
