@@ -58,7 +58,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * Accessibility improvements to the settings page.
 
 ## [1.1.2](https://github.com/thebrandonallen/edit-author-slug/tree/1.1.2) - 2015-10-11 ##
-* Fix loading of minified JS in the admin. Props nuyensgert.
+* Fix loading of minified JS in the admin.
 
 ## [1.1.1](https://github.com/thebrandonallen/edit-author-slug/tree/1.1.1) - 2015-09-29 ##
 * Fix a few minor output escaping issues missed in the 1.1.0 release.
@@ -71,7 +71,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [1.0.6](https://github.com/thebrandonallen/edit-author-slug/tree/1.0.6) - 2015-09-14 ##
 * Fix potential, although unlikely, persistent XSS vulnerability.
-* Prevent debug notice in admin. Props chesio.
+* Prevent debug notice in admin.
 * Update heading tags to h1 to match WP 4.3.
 
 ### [1.0.5.1](https://github.com/thebrandonallen/edit-author-slug/tree/1.0.5.1) - 2015-08-04 ###
@@ -79,7 +79,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [1.0.5](https://github.com/thebrandonallen/edit-author-slug/tree/1.0.5) - 2015-08-04 ##
 * Add WP_User object as a parameter passed to the `ba_eas_show_user_nicename_options_list` filter
-* Add Japanese translation files. Props SmokyJp.
+* Add Japanese translation files.
 * Fixed possible (although unlikely) cache invalidation issue
 * Minor code improvements and optimizations.
 
@@ -99,7 +99,7 @@ I swear I tested this! :(
 * Temporary, semi work-around for Co-Authors Plus [https://github.com/Automattic/Co-Authors-Plus/pull/204]
 
 ## [1.0.1](https://github.com/thebrandonallen/edit-author-slug/tree/1.0.1) - 2014-04-17 ##
-* Fix possible syntax error when updating a profile (props Christine https://wordpress.org/support/topic/undefined-property-error-1)
+* Fix possible syntax error when updating a profile (https://wordpress.org/support/topic/undefined-property-error-1)
 
 ## [1.0](https://github.com/thebrandonallen/edit-author-slug/tree/1.0) - 2014-02-26 ##
 * Added ability to do role-based author bases
@@ -160,7 +160,7 @@ I swear I tested this! :(
 * Got rid of wp_die() statement on duplicate author slugs in favor of WP's built-in duplicate author slug method.
 
 ## [0.6.1](https://github.com/thebrandonallen/edit-author-slug/tree/0.6.1) - 2010-12-14 ##
-* Added Dutch translation - props Juliette Reinders Folmer.
+* Added Dutch translation.
 * Don't hard code the languages folder path.
 * Improve class check/initialization.
 
@@ -171,7 +171,7 @@ I swear I tested this! :(
 * Flush rewrite rules only when necessary instead of every page load.
 
 ## [0.5](https://github.com/thebrandonallen/edit-author-slug/tree/0.5) - 2010-06-22 ##
-* Added 'Author Slug' column to Users > Authors & Users (Users > Users in 3.0) page (props Yonat Sharon for the jumpstart).
+* Added 'Author Slug' column to Users > Authors & Users (Users > Users in 3.0) page.
 * Ended support for the WP 2.8 branch. Most likely still works, but I will not support it.
 * Various bug fixes.
 
@@ -179,10 +179,10 @@ I swear I tested this! :(
 * Added ability to change the Author Base.
 * Updated documentation.
 * Added some extra security via WP esc_* functions.
-* Added Belorussian translation, props Marcis G.
+* Added Belorussian translation.
 
 ## [0.3.1](https://github.com/thebrandonallen/edit-author-slug/tree/0.3.1) - 2010-03-21 ##
-* Added Hebrew Translation, props Yonat Sharon.
+* Added Hebrew Translation.
 
 ## [0.3](https://github.com/thebrandonallen/edit-author-slug/tree/0.3) - 2010-03-21 ##
 * Now localization friendly.
