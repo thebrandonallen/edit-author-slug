@@ -1,6 +1,11 @@
 {
+  "name": "edit-author-slug",
+  "version": "1.5.0",
+  "main": "Gruntfile.js",
   "author": "Brandon Allen",
   "description": "Allows an admin (or capable user) to edit the author slug of a user, and change the author base.",
+  "license": "GPL-2.0",
+  "repository": "github:thebrandonallen/edit-author-slug",
   "devDependencies": {
     "eslint": "~3.19.0",
     "eslint-plugin-wordpress": "github:WordPress-Coding-Standards/eslint-plugin-wordpress.git#5361ae3",
@@ -17,12 +22,5 @@
     "grunt-wp-i18n": "~1.0.0",
     "grunt-wp-readme-to-markdown": "~2.0.1",
     "matchdep": "~1.0.1"
-  },
-  "license": "GPL-2.0+",
-  "name": "edit-author-slug",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/thebrandonallen/edit-author-slug.git"
-  },
-  "version": "1.5.0"
+  }
 }
