@@ -56,8 +56,6 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		parent::setUp();
 
 		wp_set_current_user( self::$user_id );
-
-		$this->eas = ba_eas();
 	}
 
 	/**
@@ -656,7 +654,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertContains( $input, $output );
 		$this->assertContains( $label, $output );
 
-		$this->eas->role_slugs = array(
+		ba_eas()->role_slugs = array(
 			'administrator' => array(
 				'name' => 'Administrator',
 				'slug' => 'administrator',
@@ -696,14 +694,14 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertNotContains( $label, $output );
 
 		// Empty name.
-		$role_slugs = $this->eas->role_slugs;
+		$role_slugs = ba_eas()->role_slugs;
 		$role_slugs['administrator']['name'] = '';
-		$this->eas->role_slugs = $role_slugs;
+		ba_eas()->role_slugs = $role_slugs;
 		ob_start();
 		ba_eas_admin_setting_callback_role_slugs();
 		$output = ob_get_clean();
 		$role_slugs['administrator']['name'] = 'Administrator';
-		$this->eas->role_slugs = $role_slugs;
+		ba_eas()->role_slugs = $role_slugs;
 
 		$input = 'name="_ba_eas_role_slugs[administrator][slug]"';
 		$label = 'Administrator';
@@ -711,14 +709,14 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertNotContains( $label, $output );
 
 		// Empty slug.
-		$role_slugs = $this->eas->role_slugs;
+		$role_slugs = ba_eas()->role_slugs;
 		$role_slugs['administrator']['slug'] = '';
-		$this->eas->role_slugs = $role_slugs;
+		ba_eas()->role_slugs = $role_slugs;
 		ob_start();
 		ba_eas_admin_setting_callback_role_slugs();
 		$output = ob_get_clean();
 		$role_slugs['administrator']['slug'] = 'Administrator';
-		$this->eas->role_slugs = $role_slugs;
+		ba_eas()->role_slugs = $role_slugs;
 
 		$input = 'name="_ba_eas_role_slugs[administrator][slug]"';
 		$label = 'Administrator';
@@ -868,14 +866,14 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_admin_setting_callback_default_user_nicename_no_default() {
 
-		$old_default_user_nicename = $this->eas->default_user_nicename;
-		$this->eas->default_user_nicename = '';
+		$old_default_user_nicename = ba_eas()->default_user_nicename;
+		ba_eas()->default_user_nicename = '';
 		ob_start();
 		ba_eas_admin_setting_callback_default_user_nicename();
 		$output = ob_get_clean();
 
 		$this->assertContains( '<select id="_ba_eas_default_user_nicename" name="_ba_eas_default_user_nicename">', $output );
-		$this->eas->default_user_nicename = $old_default_user_nicename;
+		ba_eas()->default_user_nicename = $old_default_user_nicename;
 	}
 
 	/**
@@ -929,14 +927,14 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_admin_setting_callback_bulk_update_structure_no_default() {
 
-		$old_default_user_nicename = $this->eas->default_user_nicename;
-		$this->eas->default_user_nicename = '';
+		$old_default_user_nicename = ba_eas()->default_user_nicename;
+		ba_eas()->default_user_nicename = '';
 		ob_start();
 		ba_eas_admin_setting_callback_bulk_update_structure();
 		$output = ob_get_clean();
 
 		$this->assertContains( '<select id="_ba_eas_bulk_update_structure" name="_ba_eas_bulk_update_structure">', $output );
-		$this->eas->default_user_nicename = $old_default_user_nicename;
+		ba_eas()->default_user_nicename = $old_default_user_nicename;
 	}
 
 	/**
@@ -945,7 +943,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_add_settings_link
 	 */
 	public function test_ba_eas_add_settings_link() {
-		$links = ba_eas_add_settings_link( array(), $this->eas->plugin_basename );
+		$links = ba_eas_add_settings_link( array(), ba_eas()->plugin_basename );
 		$this->assertEquals( '<a href="http://example.org/wp-admin/options-general.php?page=edit-author-slug">Settings</a>', $links[0] );
 	}
 
@@ -1011,18 +1009,18 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_install
 	 */
 	public function test_ba_eas_install() {
-		$old_db_version = $this->eas->current_db_version;
-		$this->eas->current_db_version = 0;
+		$old_db_version = ba_eas()->current_db_version;
+		ba_eas()->current_db_version = 0;
 		ba_eas_install();
 
-		$this->assertEquals( $this->eas->author_base, get_option( '_ba_eas_author_base' ) );
+		$this->assertEquals( ba_eas()->author_base, get_option( '_ba_eas_author_base' ) );
 		$this->assertEquals( BA_Edit_Author_Slug::DB_VERSION, get_option( '_ba_eas_db_version' ) );
-		$this->assertEquals( $this->eas->do_auto_update, get_option( '_ba_eas_do_auto_update' ) );
-		$this->assertEquals( $this->eas->default_user_nicename, get_option( '_ba_eas_default_user_nicename' ) );
-		$this->assertEquals( $this->eas->do_role_based, get_option( '_ba_eas_do_role_based' ) );
-		$this->assertEquals( $this->eas->role_slugs, get_option( '_ba_eas_role_slugs' ) );
+		$this->assertEquals( ba_eas()->do_auto_update, get_option( '_ba_eas_do_auto_update' ) );
+		$this->assertEquals( ba_eas()->default_user_nicename, get_option( '_ba_eas_default_user_nicename' ) );
+		$this->assertEquals( ba_eas()->do_role_based, get_option( '_ba_eas_do_role_based' ) );
+		$this->assertEquals( ba_eas()->role_slugs, get_option( '_ba_eas_role_slugs' ) );
 
-		$this->eas->current_db_version = BA_Edit_Author_Slug::DB_VERSION;
+		ba_eas()->current_db_version = BA_Edit_Author_Slug::DB_VERSION;
 		$this->assertNull( ba_eas_install() );
 	}
 
@@ -1032,24 +1030,24 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_upgrade
 	 */
 	public function test_ba_eas_upgrade() {
-		$old_db_version = $this->eas->current_db_version;
-		$this->eas->current_db_version = 30;
+		$old_db_version = ba_eas()->current_db_version;
+		ba_eas()->current_db_version = 30;
 
 		update_option( 'ba_edit_author_slug', 'test' );
 
 		ba_eas_upgrade();
 
-		$this->assertEquals( $this->eas->author_base, get_option( '_ba_eas_author_base' ) );
+		$this->assertEquals( ba_eas()->author_base, get_option( '_ba_eas_author_base' ) );
 		$this->assertEquals( BA_Edit_Author_Slug::DB_VERSION, get_option( '_ba_eas_db_version' ) );
-		$this->assertEquals( $this->eas->do_auto_update, get_option( '_ba_eas_do_auto_update' ) );
-		$this->assertEquals( $this->eas->default_user_nicename, get_option( '_ba_eas_default_user_nicename' ) );
-		$this->assertEquals( $this->eas->do_role_based, get_option( '_ba_eas_do_role_based' ) );
-		$this->assertEquals( $this->eas->role_slugs, get_option( '_ba_eas_role_slugs' ) );
+		$this->assertEquals( ba_eas()->do_auto_update, get_option( '_ba_eas_do_auto_update' ) );
+		$this->assertEquals( ba_eas()->default_user_nicename, get_option( '_ba_eas_default_user_nicename' ) );
+		$this->assertEquals( ba_eas()->do_role_based, get_option( '_ba_eas_do_role_based' ) );
+		$this->assertEquals( ba_eas()->role_slugs, get_option( '_ba_eas_role_slugs' ) );
 		$this->assertEquals( 'test', get_option( '_ba_eas_old_options' ) );
 		$this->assertEquals( false, get_option( 'ba_edit_author_slug' ) );
 		$this->assertEquals( false, get_option( 'rewrite_rules' ) );
 
-		$this->eas->current_db_version = BA_Edit_Author_Slug::DB_VERSION;
+		ba_eas()->current_db_version = BA_Edit_Author_Slug::DB_VERSION;
 		$this->assertNull( ba_eas_upgrade() );
 	}
 }
