@@ -289,10 +289,6 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_add_settings_menu
 	 */
 	public function test_ba_eas_add_settings_menu() {
-		$user_id = $this->factory->user->create( array(
-			'role' => 'administrator',
-		) );
-		wp_set_current_user( $user_id );
 		update_option( 'siteurl', 'http://example.com' );
 
 		ba_eas_add_settings_menu();
