@@ -25,8 +25,15 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	protected static $old_user_id;
 
+	/**
+	 * Set up the admin fixture.
+	 *
+	 * @since 1.6.0
+	 */
 	public static function setUpBeforeClass() {
 		$f = new WP_UnitTest_Factory();
+
+		// Set up the new user.
 		self::$user_id = $f->user->create( array(
 			'user_login' => 'mastersplinter',
 			'role'       => 'administrator',
@@ -36,14 +43,20 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		self::commit_transaction();
 
+		// Set the old user id.
 		self::$old_user_id = get_current_user_id();
 
+		// Load the admin.
 		require_once( ba_eas()->plugin_dir . 'includes/admin.php' );
 	}
 
+	/**
+	 * Tear down the admin fixture.
+	 *
+	 * @since 1.6.0
+	 */
 	public static function tearDownAfterClass() {
 		wp_delete_user( self::$user_id );
-
 		self::commit_transaction();
 	}
 
@@ -54,7 +67,6 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function setUp() {
 		parent::setUp();
-
 		wp_set_current_user( self::$user_id );
 	}
 
