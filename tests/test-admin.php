@@ -12,11 +12,40 @@
 class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
+	 * The new user id.
+	 *
+	 * @var int
+	 */
+	protected static $user_id;
+
+	/**
 	 * The old user id.
 	 *
 	 * @var int
 	 */
-	protected $old_current_user = 0;
+	protected static $old_user_id;
+
+	public static function setUpBeforeClass() {
+		$f = new WP_UnitTest_Factory();
+		self::$user_id = $f->user->create( array(
+			'user_login' => 'mastersplinter',
+			'role'       => 'administrator',
+			'first_name' => 'Master',
+			'last_name'  => 'Splinter',
+		) );
+
+		self::commit_transaction();
+
+		self::$old_user_id = get_current_user_id();
+
+		require_once( ba_eas()->plugin_dir . 'includes/admin.php' );
+	}
+
+	public static function tearDownAfterClass() {
+		wp_delete_user( self::$user_id );
+
+		self::commit_transaction();
+	}
 
 	/**
 	 * The admin `setUp` method.
@@ -26,18 +55,9 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$this->old_current_user = get_current_user_id();
-		$this->new_current_user = $this->factory->user->create( array(
-			'user_login' => 'mastersplinter',
-			'role' => 'administrator',
-			'first_name' => 'Master',
-			'last_name' => 'Splinter',
-		) );
-		wp_set_current_user( $this->new_current_user );
+		wp_set_current_user( self::$user_id );
 
 		$this->eas = ba_eas();
-
-		require_once( $this->eas->plugin_dir . 'includes/admin.php' );
 	}
 
 	/**
@@ -47,8 +67,23 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function tearDown() {
 		parent::tearDown();
-		wp_set_current_user( $this->old_current_user );
+
+		// Reset the user data.
+		wp_update_user( array(
+			'ID'            => self::$user_id,
+			'user_nicename' => 'mastersplinter',
+			'role'          => 'administrator',
+			'first_name'    => 'Master',
+			'last_name'     => 'Splinter',
+		) );
+
+		wp_set_current_user( self::$old_user_id );
+
+		// Reset the wp_rewrite global.
 		$GLOBALS['wp_rewrite']->author_base = 'author';
+
+		// Unset any nonce we've set.
+		unset( $_REQUEST['_wpnonce'] );
 	}
 
 	/**
@@ -104,9 +139,9 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertContains( '<span>splinter-master</span>', $output );
 
 		// Test for `userid`.
-		$this->assertContains( '<label title="' . $this->new_current_user . '">', $output );
-		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="' . $this->new_current_user . '" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
-		$this->assertContains( '<span>' . $this->new_current_user . '</span>', $output );
+		$this->assertContains( '<label title="' . self::$user_id . '">', $output );
+		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="' . self::$user_id . '" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
+		$this->assertContains( '<span>' . self::$user_id . '</span>', $output );
 
 		// Test custom author slug.
 		$this->assertContains( '<label for="ba_eas_author_slug_custom_radio">', $output );
@@ -236,9 +271,9 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	public function test_ba_eas_can_edit_author_slug() {
 		$this->assertTrue( ba_eas_can_edit_author_slug() );
 
-		wp_set_current_user( $this->old_current_user );
+		wp_set_current_user( self::$old_user_id );
 		$this->assertFalse( ba_eas_can_edit_author_slug() );
-		wp_set_current_user( $this->new_current_user );
+		wp_set_current_user( self::$user_id );
 
 		add_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
 		$this->assertFalse( ba_eas_can_edit_author_slug() );
@@ -260,10 +295,10 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_author_slug_custom_column
 	 */
 	public function test_ba_eas_author_slug_custom_column() {
-		$default = ba_eas_author_slug_custom_column( 'ninja', 'ninjas', $this->new_current_user );
+		$default = ba_eas_author_slug_custom_column( 'ninja', 'ninjas', self::$user_id );
 		$this->assertEquals( 'ninja', $default );
 
-		$default = ba_eas_author_slug_custom_column( 'ninja', 'ba-eas-author-slug', $this->new_current_user );
+		$default = ba_eas_author_slug_custom_column( 'ninja', 'ba-eas-author-slug', self::$user_id );
 		$this->assertEquals( 'mastersplinter', $default );
 	}
 
