@@ -82,7 +82,7 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 		$this->assertEquals( $file, $this->eas->file );
 		$this->assertEquals( plugin_dir_path( $file ), $this->eas->plugin_dir );
 		$this->assertEquals( plugin_dir_url( $file ), $this->eas->plugin_url );
-		$this->assertEquals( 'edit-author-slug/edit-author-slug.php', $this->eas->plugin_basename );
+		$this->assertEquals( plugin_basename( $file ), $this->eas->plugin_basename );
 		$this->assertEquals( 'author', $this->eas->author_base );
 		$this->assertEquals( 'username', $this->eas->default_user_nicename );
 		$this->assertEquals( false, $this->eas->remove_front );
