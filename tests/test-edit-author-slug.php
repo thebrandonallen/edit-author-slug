@@ -78,7 +78,17 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 	 * @covers BA_Edit_Author_Slug::setup_globals
 	 */
 	public function test_setup_globals() {
-		$this->markTestIncomplete();
+		$file = dirname( dirname( __FILE__ ) ) . '/edit-author-slug.php';
+		$this->assertEquals( $file, $this->eas->file );
+		$this->assertEquals( plugin_dir_path( $file ), $this->eas->plugin_dir );
+		$this->assertEquals( plugin_dir_url( $file ), $this->eas->plugin_url );
+		$this->assertEquals( 'edit-author-slug/edit-author-slug.php', $this->eas->plugin_basename );
+		$this->assertEquals( 'author', $this->eas->author_base );
+		$this->assertEquals( 'username', $this->eas->default_user_nicename );
+		$this->assertEquals( false, $this->eas->remove_front );
+		$this->assertEquals( false, $this->eas->do_auto_update );
+		$this->assertEquals( false, $this->eas->do_role_based );
+		// $this->assertEquals( array(), $this->eas->role_slugs );
 	}
 
 	/**
