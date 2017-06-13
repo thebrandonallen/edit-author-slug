@@ -154,26 +154,19 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_update_user_nicename()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_update_user_nicename
 	 */
 	public function test_ba_eas_update_user_nicename() {
-		$user = new WP_User;
 		$errors = new WP_Error;
-
-		$this->assertNull( ba_eas_update_user_nicename( $errors, false, $user ) );
-
-		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
-
-		$user = wp_get_current_user();
+		$user   = wp_get_current_user();
 
 		$_REQUEST = array(
 			'_wpnonce' => wp_create_nonce( 'update-user_' . $user->ID ),
 		);
 
-		add_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
-		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
-		remove_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
-
+		// Test that the nicename remains unchanged.
 		$_POST = array(
 			'ba_eas_author_slug' => 'mastersplinter',
 		);
@@ -181,6 +174,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
 		$this->assertEquals( 'mastersplinter', $user->user_nicename );
 
+		// Test custom fields.
 		$_POST = array(
 			'ba_eas_author_slug' => addslashes( '\c\u\s\t\o\m' ),
 			'ba_eas_author_slug_custom' => 'assertion-1',
@@ -189,68 +183,221 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_update_user_nicename( $errors, true, $user );
 		$this->assertEquals( 'assertion-1', $user->user_nicename );
 
+		// Test a standard change scenario.
 		$_POST = array(
 			'ba_eas_author_slug' => 'assertion-2',
 		);
 
 		ba_eas_update_user_nicename( $errors, true, $user );
 		$this->assertEquals( 'assertion-2', $user->user_nicename );
+	}
 
+	/**
+	 * Test `ba_eas_update_user_nicename()` when we're not updating.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_update_user_nicename
+	 */
+	public function test_ba_eas_update_user_nicename_not_updating() {
+		$this->assertNull( ba_eas_update_user_nicename( '', false, '' ) );
+	}
+
+	/**
+	 * Test `ba_eas_update_user_nicename()` with no valid user.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_update_user_nicename
+	 */
+	public function test_ba_eas_update_user_nicename_no_valid_user() {
+		$this->assertNull( ba_eas_update_user_nicename( '', true, '' ) );
+	}
+
+	/**
+	 * Test `ba_eas_update_user_nicename()` when the current user can't update
+	 * author slugs.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_update_user_nicename
+	 */
+	public function test_ba_eas_update_user_nicename_when_user_cant_update() {
+		$user = wp_get_current_user();
+		add_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
+		$this->assertNull( ba_eas_update_user_nicename( '', true, $user ) );
+		remove_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
+	}
+
+	/**
+	 * Test `ba_eas_update_user_nicename()` when the nonce is invalid.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_update_user_nicename
+	 * @expectedException WPDieException
+	 */
+	public function test_ba_eas_update_user_nicename_invalid_nonce() {
+		$user = wp_get_current_user();
+		$this->assertNull( ba_eas_update_user_nicename( '', true, $user ) );
+	}
+
+	/**
+	 * Test `ba_eas_update_user_nicename()` when the passed nicename is blank.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_update_user_nicename
+	 */
+	public function test_ba_eas_update_user_nicename_blank_author_slug() {
+
+		$errors = new WP_Error;
+		$user   = wp_get_current_user();
+
+		// Set the nonce.
+		$_REQUEST = array(
+			'_wpnonce' => wp_create_nonce( 'update-user_' . $user->ID ),
+		);
+
+		// Set the nicename to empty.
 		$_POST = array(
-			'ba_eas_author_slug' => '\ ',
+			'ba_eas_author_slug' => '',
 		);
 
 		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
-		$this->assertEquals( 'assertion-2', $user->user_nicename );
+		$this->assertEquals( 'mastersplinter', $user->user_nicename );
 		$this->assertEquals( '<strong>ERROR</strong>: An author slug cannot be blank. Please try again.', $errors->get_error_message( 'user_nicename_empty' ) );
+	}
 
-		unset( $errors );
+	/**
+	 * Test `ba_eas_update_user_nicename()` when the nicename contains
+	 * characters other than alphanumeric, underscores, and hyphens.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_update_user_nicename
+	 */
+	public function test_ba_eas_update_user_nicename_not_ascii() {
+
 		$errors = new WP_Error;
+		$user   = wp_get_current_user();
 
+		// Set the nonce.
+		$_REQUEST = array(
+			'_wpnonce' => wp_create_nonce( 'update-user_' . $user->ID ),
+		);
+
+		// Set the nicename to something with invalid characters.
 		$_POST = array(
 			'ba_eas_author_slug' => '作者',
 		);
 
 		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
-		$this->assertEquals( 'assertion-2', $user->user_nicename );
+		$this->assertEquals( 'mastersplinter', $user->user_nicename );
 		$this->assertEquals( '<strong>ERROR</strong>: An author slug can only contain alphanumeric characters, underscores (_) and dashes (-).', $errors->get_error_message( 'user_nicename_invalid_characters' ) );
+	}
 
-		unset( $errors );
+	/**
+	 * Test `ba_eas_update_user_nicename()` when the nicename passes earlier
+	 * checks, but has sanitized to empty. This is most likely to happen if the
+	 * nicename is filtered.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_update_user_nicename
+	 */
+	public function test_ba_eas_update_user_nicename_invalid_characters() {
+
 		$errors = new WP_Error;
+		$user   = wp_get_current_user();
 
+		// Set the nonce.
+		$_REQUEST = array(
+			'_wpnonce' => wp_create_nonce( 'update-user_' . $user->ID ),
+		);
+
+		// Set the nicename to something with invalid characters.
 		$_POST = array(
 			'ba_eas_author_slug' => '@',
 		);
 
 		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
-		$this->assertEquals( 'assertion-2', $user->user_nicename );
+		$this->assertEquals( 'mastersplinter', $user->user_nicename );
 		$this->assertEquals( '<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different.', $errors->get_error_message( 'user_nicename_invalid' ) );
+	}
 
-		unset( $errors );
+	/**
+	 * Test `ba_eas_update_user_nicename()` with a long author slug.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_update_user_nicename
+	 */
+	public function test_ba_eas_update_user_nicename_long_nicename() {
+
 		$errors = new WP_Error;
+		$user   = wp_get_current_user();
 
+		// Set the nonce.
+		$_REQUEST = array(
+			'_wpnonce' => wp_create_nonce( 'update-user_' . $user->ID ),
+		);
+
+		// Set the nicename to something with invalid characters.
 		$_POST = array(
 			'ba_eas_author_slug' => 'this-is-a-really-really-really-really-long-user-nicename',
 		);
 
 		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
-		$this->assertEquals( 'assertion-2', $user->user_nicename );
+		$this->assertEquals( 'mastersplinter', $user->user_nicename );
 		$this->assertEquals( '<strong>ERROR</strong>: An author slug may not be longer than 50 characters.', $errors->get_error_message( 'user_nicename_too_long' ) );
+	}
 
-		unset( $errors );
+	/**
+	 * Test `ba_eas_update_user_nicename()` when the nicename already exists.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_update_user_nicename
+	 */
+	public function test_ba_eas_update_user_nicename_existing_nicename() {
+
 		$errors = new WP_Error;
+		$user   = wp_get_current_user();
 
+		// Set the nonce.
+		$_REQUEST = array(
+			'_wpnonce' => wp_create_nonce( 'update-user_' . $user->ID ),
+		);
+
+		// Set the nicename to something existing.
 		$_POST = array(
 			'ba_eas_author_slug' => 'admin',
 		);
 
 		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
-		$this->assertEquals( 'assertion-2', $user->user_nicename );
+		$this->assertEquals( 'mastersplinter', $user->user_nicename );
 		$this->assertEquals( '<strong>ERROR</strong>: The author slug, <strong><em>admin</em></strong>, already exists. Please try something different.', $errors->get_error_message( 'user_nicename_exists' ) );
+	}
 
-		unset( $errors );
+	/**
+	 * Test `ba_eas_update_user_nicename()` when the nicename is filtered.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_update_user_nicename
+	 */
+	public function test_ba_eas_update_user_nicename_filtered_nicename() {
+
 		$errors = new WP_Error;
+		$user   = wp_get_current_user();
 
+		// Set the nonce.
+		$_REQUEST = array(
+			'_wpnonce' => wp_create_nonce( 'update-user_' . $user->ID ),
+		);
+
+		// Set the nicename to something existing.
 		$_POST = array(
 			'ba_eas_author_slug' => 'admin',
 		);
@@ -259,8 +406,6 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
 		$this->assertEquals( 'test', $user->user_nicename );
 		remove_filter( 'ba_eas_pre_update_user_nicename', array( $this, 'user_nicename_filter' ) );
-
-		unset( $errors );
 	}
 
 	/**
