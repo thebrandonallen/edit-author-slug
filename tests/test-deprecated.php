@@ -58,15 +58,6 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 	}
 
 	/**
-	 * The `setUp` method.
-	 */
-	public function setUp() {
-		parent::setUp();
-
-		$this->eas = ba_eas();
-	}
-
-	/**
 	 * The `tearDown` method.
 	 */
 	public function tearDown() {
@@ -80,15 +71,6 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 			'first_name'    => 'Master',
 			'last_name'     => 'Splinter',
 		) );
-
-		// Reset some globals to their defaults.
-		$this->eas->author_base             = 'author';
-		$this->eas->role_slugs              = ba_eas_tests_slugs_default();
-		$this->eas->do_auto_update          = false;
-		$this->eas->do_role_based           = false;
-		$this->eas->remove_front            = false;
-		$GLOBALS['wp_rewrite']->author_base = 'author';
-		$GLOBALS['wp_rewrite']->front       = '/';
 	}
 
 	/**
