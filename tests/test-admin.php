@@ -92,8 +92,10 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		// Reset the wp_rewrite global.
 		$GLOBALS['wp_rewrite']->author_base = 'author';
 
-		// Unset any nonce we've set.
+		// Unset any test REQUEST and POST keys we've set.
 		unset( $_REQUEST['_wpnonce'] );
+		unset( $_POST['ba_eas_author_slug'] );
+		unset( $_POST['ba_eas_author_slug_custom'] );
 	}
 
 	/**
