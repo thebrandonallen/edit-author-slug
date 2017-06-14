@@ -92,19 +92,6 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Filters the return of user role filters.
-	 *
-	 * @since 1.2.0
-	 *
-	 * @param string $role The user role.
-	 *
-	 * @return string
-	 */
-	public function user_role_filter( $role = '' ) {
-		return 'test';
-	}
-
-	/**
 	 * Test for `ba_eas_auto_update_user_nicename_single()`.
 	 *
 	 * @covers ::ba_eas_auto_update_user_nicename_single
