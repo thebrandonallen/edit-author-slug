@@ -14,12 +14,16 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 	/**
 	 * The new user id.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @var int
 	 */
 	protected static $user_id;
 
 	/**
 	 * The old user id.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @var int
 	 */
@@ -60,7 +64,10 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 	/**
 	 * Test for `ba_eas_auto_update_user_nicename_single()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_auto_update_user_nicename_single
+	 *
 	 * @expectedDeprecated ba_eas_auto_update_user_nicename_single
 	 */
 	public function test_ba_eas_auto_update_user_nicename_single() {
@@ -70,7 +77,10 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 	/**
 	 * Test for `ba_eas_get_wp_roles()`.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @covers ::ba_eas_get_wp_roles
+	 *
 	 * @expectedDeprecated ba_eas_get_wp_roles
 	 */
 	public function test_ba_eas_get_wp_roles() {
@@ -80,7 +90,10 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 	/**
 	 * Test for `ba_eas_get_editable_roles()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_get_editable_roles
+	 *
 	 * @expectedDeprecated ba_eas_get_editable_roles
 	 */
 	public function test_ba_eas_get_editable_roles() {
@@ -101,6 +114,8 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 
 	/**
 	 * Test for `ba_eas_update_nicename_cache()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_update_nicename_cache
 	 *
@@ -126,6 +141,8 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 	/**
 	 * Test for `ba_eas_update_nicename_cache()` when no user id is passed.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @covers ::ba_eas_update_nicename_cache
 	 *
 	 * @expectedDeprecated ba_eas_update_nicename_cache
@@ -138,6 +155,8 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 
 	/**
 	 * Test for `ba_eas_update_nicename_cache()` when no user id is passed.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @covers ::ba_eas_update_nicename_cache
 	 *
@@ -162,6 +181,8 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 	 * Test for `ba_eas_update_nicename_cache()` when a nicename is passed to
 	 * the old user data parameter.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @covers ::ba_eas_update_nicename_cache
 	 *
 	 * @expectedDeprecated ba_eas_update_nicename_cache
@@ -179,6 +200,8 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 	/**
 	 * Test for `ba_eas_update_nicename_cache()` when a nicename is passed to
 	 * the old user data parameter.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @covers ::ba_eas_update_nicename_cache
 	 *
