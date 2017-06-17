@@ -78,15 +78,6 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	public function tearDown() {
 		parent::tearDown();
 
-		// Reset the user data.
-		wp_update_user( array(
-			'ID'            => self::$user_id,
-			'user_nicename' => 'mastersplinter',
-			'role'          => 'administrator',
-			'first_name'    => 'Master',
-			'last_name'     => 'Splinter',
-		) );
-
 		wp_set_current_user( self::$old_user_id );
 
 		// Reset the wp_rewrite global.

@@ -58,22 +58,6 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 	}
 
 	/**
-	 * The `tearDown` method.
-	 */
-	public function tearDown() {
-		parent::tearDown();
-
-		// Reset the user data.
-		wp_update_user( array(
-			'ID'            => self::$user_id,
-			'user_nicename' => 'mastersplinter',
-			'role'          => 'administrator',
-			'first_name'    => 'Master',
-			'last_name'     => 'Splinter',
-		) );
-	}
-
-	/**
 	 * Test for `ba_eas_auto_update_user_nicename_single()`.
 	 *
 	 * @covers ::ba_eas_auto_update_user_nicename_single
