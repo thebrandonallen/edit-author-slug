@@ -549,6 +549,11 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$this->eas->remove_front = true;
 		ba_eas_wp_rewrite_overrides();
 		$this->assertEquals( '/ninja/%author%', $GLOBALS['wp_rewrite']->author_structure );
+
+		$this->eas->author_base = 'author';
+		$this->set_permalink_structure( '/archives/%post_id%/' );
+		ba_eas_wp_rewrite_overrides();
+		$this->assertEquals( '/author/%author%', $GLOBALS['wp_rewrite']->author_structure );
 	}
 
 	/**

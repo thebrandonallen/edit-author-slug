@@ -546,6 +546,11 @@ function ba_eas_wp_rewrite_overrides() {
 	// Get the role-based option.
 	$role_based = ba_eas_do_role_based_author_base();
 
+	// Override `WP_Rewrite::author_structure` with our new value.
+	if ( ba_eas_remove_front() ) {
+		$GLOBALS['wp_rewrite']->author_structure = '/' . $author_base . '/%author%';
+	}
+
 	// If we have the default author base and not doing role-based.
 	if ( 'author' === $author_base && ! $role_based ) {
 		return;
@@ -558,11 +563,6 @@ function ba_eas_wp_rewrite_overrides() {
 
 	// Override WP_Rewrite::author_base with our new value.
 	$GLOBALS['wp_rewrite']->author_base = $author_base;
-
-	// Override `WP_Rewrite::author_structure` with our new value.
-	if ( ba_eas_remove_front() ) {
-		$GLOBALS['wp_rewrite']->author_structure = '/' . $author_base . '/%author%';
-	}
 }
 
 /**
