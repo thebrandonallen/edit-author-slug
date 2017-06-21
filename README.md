@@ -66,6 +66,10 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 
 ## Changelog ##
 
+### 1.5.2 ###
+* Release date: TBD
+* Fixed a regression where those using the default author based couldn't remove front unless they were also using role-based author bases. Props @thatherton.
+
 ### 1.5.1 ###
 * Release date: 2017-06-02
 * Fix PHP notice when manually updating a user profile. Props @mydigitalsauce.
