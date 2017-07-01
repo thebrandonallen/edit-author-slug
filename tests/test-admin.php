@@ -472,11 +472,9 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_add_settings_menu
 	 */
 	public function test_ba_eas_add_settings_menu() {
-		update_option( 'siteurl', 'http://example.com' );
-
 		ba_eas_add_settings_menu();
 
-		$expected = 'http://example.com/wp-admin/options-general.php?page=edit-author-slug';
+		$expected = get_option( 'siteurl' ) . '/wp-admin/options-general.php?page=edit-author-slug';
 
 		$this->assertEquals( $expected, menu_page_url( 'edit-author-slug', false ) );
 	}
