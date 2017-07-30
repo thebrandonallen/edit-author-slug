@@ -9,6 +9,7 @@
   "devDependencies": {
     "eslint": "~4.3.0",
     "eslint-config-wordpress": "github:WordPress-Coding-Standards/eslint-config-wordpress#220ba0a1c78d5fc55e79155cef7dc75461610b19",
+    "eslint-plugin-wordpress": "github:WordPress-Coding-Standards/eslint-plugin-wordpress#11eaccea0e282db60be6ba747aeee25ab3871be1",
     "grunt": "~1.0.1",
     "grunt-checktextdomain": "~1.0.0",
     "grunt-contrib-clean": "~1.1.0",
