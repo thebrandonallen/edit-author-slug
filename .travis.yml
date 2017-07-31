@@ -16,6 +16,7 @@ cache:
     - $HOME/.composer/cache
 
 php:
+  - 7.2
   - 7.1
   - 7.0
   - 5.6
@@ -26,6 +27,7 @@ env:
     - EAS_TRAVISCI=travis:phpunit
   matrix:
     - WP_VERSION=master
+    - WP_VERSION=4.8
     - WP_VERSION=4.7
     - WP_VERSION=4.6
     - WP_VERSION=4.5
@@ -39,6 +41,12 @@ matrix:
     - php: 7.1
       env: WP_VERSION=master EAS_TRAVISCI=travis:codecoverage
   exclude:
+    - php: 7.2
+      env: WP_VERSION=4.6
+    - php: 7.2
+      env: WP_VERSION=4.5
+    - php: 7.2
+      env: WP_VERSION=4.4
     - php: 7.1
       env: WP_VERSION=4.6
     - php: 7.1
