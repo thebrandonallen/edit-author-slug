@@ -42,6 +42,8 @@ matrix:
       env: WP_VERSION=master EAS_TRAVISCI=travis:codecoverage
   exclude:
     - php: 7.2
+      env: WP_VERSION=4.7
+    - php: 7.2
       env: WP_VERSION=4.6
     - php: 7.2
       env: WP_VERSION=4.5
