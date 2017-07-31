@@ -80,8 +80,10 @@ before_install:
 before_script:
   - |
     # Remove Xdebug for a huge performance increase, but not from nightly:
-    if [[ "$EAS_TRAVISCI" != "travis:codecoverage" ]]; then
+    if [[ "$EAS_TRAVISCI" != "travis:codecoverage" && -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]]; then
       phpenv config-rm xdebug.ini
+    else
+      echo "We are running codecoverage or xdebug.ini does not exist"
     fi
   - |
     # Export Composer's global bin dir to PATH, but not on PHP 5.2:
