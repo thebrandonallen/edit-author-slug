@@ -4,6 +4,8 @@
 # http://docs.travis-ci.com/user/workers/container-based-infrastructure/
 sudo: false
 
+dist: trusty
+
 # Tell Travis CI we're using PHP
 language: php
 
@@ -20,7 +22,6 @@ php:
   - 7.1
   - 7.0
   - 5.6
-  - 5.2
 
 env:
   global:
@@ -38,17 +39,13 @@ matrix:
   include:
     - php: nightly
       env: WP_VERSION=master
+    - php: 7.2
+      env: WP_VERSION=master
     - php: 7.1
       env: WP_VERSION=master EAS_TRAVISCI=travis:codecoverage
+    - php: 5.2
+      dist: precise
   exclude:
-    - php: 7.2
-      env: WP_VERSION=4.7
-    - php: 7.2
-      env: WP_VERSION=4.6
-    - php: 7.2
-      env: WP_VERSION=4.5
-    - php: 7.2
-      env: WP_VERSION=4.4
     - php: 7.1
       env: WP_VERSION=4.6
     - php: 7.1
@@ -57,6 +54,7 @@ matrix:
       env: WP_VERSION=4.4
   allow_failures:
     - php: nightly
+    - php: 7.2
     - env: WP_VERSION=master EAS_TRAVISCI=travis:codecoverage
 
 before_install:
