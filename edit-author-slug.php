@@ -35,7 +35,7 @@
 defined( 'ABSPATH' ) || exit;
 
 // Load the plugin class file.
-require 'includes/classes/class-edit-author-slug.php';
+require 'includes/classes/class-ba-edit-author-slug.php';
 
 /**
  * Runs on Edit Author Slug activation.
