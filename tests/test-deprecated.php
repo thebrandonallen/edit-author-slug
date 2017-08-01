@@ -150,7 +150,7 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 	public function test_ba_eas_update_nicename_cache_no_user_id() {
 		// Make sure the user is cached.
 		$user = get_userdata( self::$user_id );
-		$this->assertNull( ba_eas_update_nicename_cache( 0, new WP_User ) );
+		$this->assertNull( ba_eas_update_nicename_cache( 0, new WP_User() ) );
 	}
 
 	/**

@@ -162,7 +162,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_update_user_nicename
 	 */
 	public function test_ba_eas_update_user_nicename() {
-		$errors = new WP_Error;
+		$errors = new WP_Error();
 		$user   = wp_get_current_user();
 
 		$_REQUEST = array(
@@ -254,7 +254,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_update_user_nicename_blank_author_slug() {
 
-		$errors = new WP_Error;
+		$errors = new WP_Error();
 		$user   = wp_get_current_user();
 
 		// Set the nonce.
@@ -282,7 +282,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_update_user_nicename_not_ascii() {
 
-		$errors = new WP_Error;
+		$errors = new WP_Error();
 		$user   = wp_get_current_user();
 
 		// Set the nonce.
@@ -311,7 +311,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_update_user_nicename_invalid_characters() {
 
-		$errors = new WP_Error;
+		$errors = new WP_Error();
 		$user   = wp_get_current_user();
 
 		// Set the nonce.
@@ -338,7 +338,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_update_user_nicename_long_nicename() {
 
-		$errors = new WP_Error;
+		$errors = new WP_Error();
 		$user   = wp_get_current_user();
 
 		// Set the nonce.
@@ -365,7 +365,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_update_user_nicename_existing_nicename() {
 
-		$errors = new WP_Error;
+		$errors = new WP_Error();
 		$user   = wp_get_current_user();
 
 		// Set the nonce.
@@ -392,7 +392,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_update_user_nicename_filtered_nicename() {
 
-		$errors = new WP_Error;
+		$errors = new WP_Error();
 		$user   = wp_get_current_user();
 
 		// Set the nonce.

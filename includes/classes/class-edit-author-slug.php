@@ -160,7 +160,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			// Only run these methods if they haven't been ran previously.
 			if ( null === $instance ) {
-				$instance = new self;
+				$instance = new self();
 			}
 
 			// Always return the instance.
