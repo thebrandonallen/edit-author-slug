@@ -509,13 +509,13 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_show_user_nicename_scripts() {
 
-		// Valid page.
-		ba_eas_show_user_nicename_scripts( 'profile.php' );
-		$this->assertNotEmpty( $GLOBALS['wp_scripts']->registered['edit-author-slug'] );
-
 		// Invalid page.
 		ba_eas_show_user_nicename_scripts( 'admin.php' );
-		$this->assertNotEmpty( $GLOBALS['wp_scripts']->registered['edit-author-slug'] );
+		$this->assertFalse( isset( $GLOBALS['wp_scripts']->registered['edit-author-slug'] ) );
+
+		// Valid page.
+		ba_eas_show_user_nicename_scripts( 'profile.php' );
+		$this->assertTrue( isset( $GLOBALS['wp_scripts']->registered['edit-author-slug'] ) );
 	}
 
 	/**
