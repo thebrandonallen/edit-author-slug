@@ -13,6 +13,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 
 	/**
 	 * The `setUp` method.
+	 *
+	 * @since 1.1.0
 	 */
 	public function setUp() {
 		parent::setUp();
@@ -22,6 +24,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 
 	/**
 	 * The admin `tearDown` method.
+	 *
+	 * @since 1.1.0
 	 *
 	 * Resets the current user and globals.
 	 */
@@ -94,6 +98,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 	/**
 	 * Test for `BA_Edit_Author_Slug::setup_actions()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers BA_Edit_Author_Slug::setup_actions
 	 */
 	public function test_setup_actions() {
@@ -144,6 +150,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 	/**
 	 * Test for `BA_Edit_Author_Slug::author_base_rewrite()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers BA_Edit_Author_Slug::author_base_rewrite
 	 *
 	 * @expectedDeprecated BA_Edit_Author_Slug::author_base_rewrite
@@ -154,6 +162,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 
 	/**
 	 * Test for `BA_Edit_Author_Slug::set_role_slugs()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers BA_Edit_Author_Slug::set_role_slugs
 	 */
@@ -176,6 +186,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 
 	/**
 	 * Test for `BA_Edit_Author_Slug::add_rewrite_tags()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers BA_Edit_Author_Slug::add_rewrite_tags
 	 */
@@ -222,6 +234,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 	/**
 	 * Test for `ba_eas_activation()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_activation
 	 */
 	public function test_ba_eas_activation() {
@@ -231,6 +245,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 
 	/**
 	 * Test for `ba_eas_deactivation()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_deactivation
 	 */
