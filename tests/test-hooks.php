@@ -13,6 +13,8 @@ class BA_EAS_Tests_Hooks extends WP_UnitTestCase {
 
 	/**
 	 * The `setUp` method.
+	 *
+	 * @since 1.1.0
 	 */
 	public function setUp() {
 		parent::setUp();
@@ -22,6 +24,8 @@ class BA_EAS_Tests_Hooks extends WP_UnitTestCase {
 
 	/**
 	 * Test that actions are added.
+	 *
+	 * @since 1.1.0
 	 */
 	public function test_actions_added() {
 		$this->assertEquals( 10, has_action( 'profile_update', 'ba_eas_auto_update_user_nicename' ) );
@@ -33,6 +37,8 @@ class BA_EAS_Tests_Hooks extends WP_UnitTestCase {
 
 	/**
 	 * Test that admin actions are added.
+	 *
+	 * @since 1.1.0
 	 */
 	public function test_admin_actions_added() {
 		set_current_screen( 'admin.php' );
