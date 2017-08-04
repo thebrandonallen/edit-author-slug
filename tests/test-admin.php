@@ -450,7 +450,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_author_slug_custom_column()`.
 	 *
-	 * @since 0.1.0
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_author_slug_custom_column
 	 */
@@ -610,7 +610,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_admin_setting_callback_auto_update_section()`.
 	 *
-	 * @since 0.1.0
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_admin_setting_callback_auto_update_section
 	 */
@@ -760,7 +760,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_admin_setting_sanitize_callback_role_slugs()`.
 	 *
-	 * @since 0.1.0
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_admin_setting_sanitize_callback_role_slugs
 	 */
