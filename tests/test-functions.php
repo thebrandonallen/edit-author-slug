@@ -752,16 +752,11 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	/**
 	 * Test for `ba_eas_get_default_role_slugs()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_get_default_role_slugs
 	 */
 	public function test_ba_eas_get_default_role_slugs() {
-
-		// Test with empty $wp_roles global.
-		global $wp_roles;
-		unset( $wp_roles );
-		$this->assertEquals( ba_eas_tests_slugs_default(), ba_eas_get_default_role_slugs() );
-
-		// Test default WP roles.
 		$this->assertEquals( ba_eas_tests_slugs_default(), ba_eas_get_default_role_slugs() );
 	}
 
