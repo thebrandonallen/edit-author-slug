@@ -28,7 +28,7 @@ require_once $_tests_dir . '/includes/functions.php';
  */
 $_needs_phpunit_back_compat = in_array(
 	getenv( 'WP_VERSION' ),
-	array( '4.6', '4.5', '4.4', '4.3' ),
+	array( '4.6', '4.5', '4.4' ),
 	true
 );
 if ( class_exists( 'PHPUnit\Runner\Version' ) && $_needs_phpunit_back_compat ) {
