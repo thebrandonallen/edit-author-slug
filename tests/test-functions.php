@@ -14,6 +14,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	/**
 	 * The single user id.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @var int
 	 */
 	private $single_user_id = null;
@@ -89,6 +91,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 	/**
 	 * Test for `ba_eas_do_bulk_update()`.
+	 *
+	 * @since 1.4.0
 	 *
 	 * @covers ::ba_eas_do_bulk_update
 	 */
@@ -467,6 +471,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	/**
 	 * Test for `ba_eas_get_nicename_by_structure()`.
 	 *
+	 * @since 1.4.0
+	 *
 	 * @covers ::ba_eas_get_nicename_by_structure
 	 */
 	public function test_ba_eas_get_nicename_by_structure() {
@@ -545,6 +551,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	/**
 	 * Test for `ba_eas_wp_rewrite_overrides()`.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @covers ::ba_eas_wp_rewrite_overrides
 	 */
 	public function test_ba_eas_wp_rewrite_overrides() {
@@ -579,6 +587,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	/**
 	 * Test for `ba_eas_remove_front()`.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @covers ::ba_eas_remove_front
 	 */
 	public function test_ba_eas_remove_front() {
@@ -592,6 +602,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 	/**
 	 * Test for `ba_eas_has_front()`.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @covers ::ba_eas_has_front
 	 */
@@ -751,6 +763,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	/**
 	 * Test for `ba_eas_get_user_role()`.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @covers ::ba_eas_get_user_role
 	 */
 	public function test_ba_eas_get_user_role() {
@@ -772,6 +786,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 	/**
 	 * Test for `ba_eas_get_roles()`.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @covers ::ba_eas_get_roles
 	 */

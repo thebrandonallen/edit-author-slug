@@ -79,6 +79,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 	/**
 	 * Test for `BA_Edit_Author_Slug::setup_globals()`.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @covers BA_Edit_Author_Slug::setup_globals
 	 */
 	public function test_setup_globals() {
@@ -112,6 +114,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @since 1.5.0
+	 *
 	 * @covers BA_Edit_Author_Slug::__get
 	 * @expectedIncorrectUsage BA_Edit_Author_Slug::version
 	 * @expectedIncorrectUsage BA_Edit_Author_Slug::db_version
@@ -129,6 +133,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 
 	/**
 	 * Test for `BA_Edit_Author_Slug::load_textdomain()`.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @covers BA_Edit_Author_Slug::load_textdomain
 	 */

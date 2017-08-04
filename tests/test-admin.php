@@ -14,12 +14,16 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * The new user id.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @var int
 	 */
 	protected static $user_id;
 
 	/**
 	 * The old user id.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @var int
 	 */
@@ -576,6 +580,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_admin_setting_callback_author_base()`.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_author_base
 	 */
 	public function test_ba_eas_admin_setting_callback_author_base_with_front() {
@@ -596,6 +602,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
 	 * Test `ba_eas_admin_setting_callback_remove_front()`.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @covers ::ba_eas_admin_setting_callback_remove_front
 	 */
@@ -782,6 +790,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * Test `ba_eas_admin_setting_sanitize_callback_role_slugs()` when a passed
 	 * role doesn't exist.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @covers ::ba_eas_admin_setting_sanitize_callback_role_slugs
 	 */
 	public function test_ba_eas_admin_setting_sanitize_callback_role_slugs_no_role() {
@@ -807,6 +817,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * Test `ba_eas_admin_setting_sanitize_callback_role_slugs()` when the
 	 * passed role slug is empty.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @covers ::ba_eas_admin_setting_sanitize_callback_role_slugs
 	 */
 	public function test_ba_eas_admin_setting_sanitize_callback_role_slugs_empty_slug_passed() {
@@ -829,6 +841,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_admin_setting_sanitize_callback_role_slugs()` when no role
 	 * slug can be found.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @covers ::ba_eas_admin_setting_sanitize_callback_role_slugs
 	 */
@@ -901,6 +915,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_admin_setting_callback_default_user_nicename()`.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_default_user_nicename
 	 */
 	public function test_ba_eas_admin_setting_callback_default_user_nicename_no_default() {
@@ -968,6 +984,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * Test `ba_eas_admin_setting_callback_bulk_update_structure()` with no
 	 * default nicename structure.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_bulk_update_structure
 	 */
 	public function test_ba_eas_admin_setting_callback_bulk_update_structure_no_default() {
@@ -997,6 +1015,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_default_user_nicename_options_list()`.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @covers ::ba_eas_default_user_nicename_options_list
 	 */
 	public function test_ba_eas_default_user_nicename_options_list() {
@@ -1016,6 +1036,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
 	 * Test `ba_eas_settings_updated()`.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @covers ::ba_eas_settings_updated
 	 */
