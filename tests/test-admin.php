@@ -179,6 +179,31 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 			'_wpnonce' => wp_create_nonce( 'update-user_' . $user->ID ),
 		);
 
+		// Test a standard change scenario.
+		$_POST = array(
+			'ba_eas_author_slug' => 'assertion-2',
+		);
+
+		ba_eas_update_user_nicename( $errors, true, $user );
+		$this->assertEquals( 'assertion-2', $user->user_nicename );
+	}
+
+	/**
+	 * Test `ba_eas_update_user_nicename()` when the nicename remains unchanged.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_update_user_nicename
+	 */
+	public function test_ba_eas_update_user_nicename_nicename_unchanged() {
+
+		$errors = new WP_Error();
+		$user   = wp_get_current_user();
+
+		$_REQUEST = array(
+			'_wpnonce' => wp_create_nonce( 'update-user_' . $user->ID ),
+		);
+
 		// Test that the nicename remains unchanged.
 		$_POST = array(
 			'ba_eas_author_slug' => 'mastersplinter',
@@ -186,6 +211,23 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
 		$this->assertEquals( 'mastersplinter', $user->user_nicename );
+	}
+
+	/**
+	 * Test `ba_eas_update_user_nicename()` when the nicename remains unchanged.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_update_user_nicename
+	 */
+	public function test_ba_eas_update_user_nicename_custom() {
+
+		$errors = new WP_Error();
+		$user   = wp_get_current_user();
+
+		$_REQUEST = array(
+			'_wpnonce' => wp_create_nonce( 'update-user_' . $user->ID ),
+		);
 
 		// Test custom fields.
 		$_POST = array(
@@ -195,14 +237,6 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		ba_eas_update_user_nicename( $errors, true, $user );
 		$this->assertEquals( 'assertion-1', $user->user_nicename );
-
-		// Test a standard change scenario.
-		$_POST = array(
-			'ba_eas_author_slug' => 'assertion-2',
-		);
-
-		ba_eas_update_user_nicename( $errors, true, $user );
-		$this->assertEquals( 'assertion-2', $user->user_nicename );
 	}
 
 	/**
