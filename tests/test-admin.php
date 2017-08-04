@@ -63,6 +63,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * The admin `setUp` method.
 	 *
+	 * @since 1.1.0
+	 *
 	 * Sets up up some users, and loads the admin.
 	 */
 	public function setUp() {
@@ -72,6 +74,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
 	 * The admin `tearDown` method.
+	 *
+	 * @since 1.1.0
 	 *
 	 * Resets the current user and globals.
 	 */
@@ -104,6 +108,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
 	 * Test `ba_eas_show_user_nicename()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_show_user_nicename
 	 */
@@ -414,6 +420,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_can_edit_author_slug()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_can_edit_author_slug
 	 */
 	public function test_ba_eas_can_edit_author_slug() {
@@ -431,6 +439,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_author_slug_column()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_author_slug_column
 	 */
 	public function test_ba_eas_author_slug_column() {
@@ -439,6 +449,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
 	 * Test `ba_eas_author_slug_custom_column()`.
+	 *
+	 * @since 0.1.0
 	 *
 	 * @covers ::ba_eas_author_slug_custom_column
 	 */
@@ -452,6 +464,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
 	 * Test `ba_eas_show_user_nicename_scripts()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_show_user_nicename_scripts
 	 */
@@ -469,6 +483,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_add_settings_menu()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_add_settings_menu
 	 */
 	public function test_ba_eas_add_settings_menu() {
@@ -482,6 +498,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_settings_page_html()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_settings_page_html
 	 */
 	public function test_ba_eas_settings_page_html() {
@@ -494,6 +512,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
 	 * Test `ba_eas_register_admin_settings()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_register_admin_settings
 	 */
@@ -520,6 +540,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_admin_setting_callback_author_base_section()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_author_base_section
 	 */
 	public function test_ba_eas_admin_setting_callback_author_base_section() {
@@ -532,6 +554,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
 	 * Test `ba_eas_admin_setting_callback_author_base()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_admin_setting_callback_author_base
 	 */
@@ -586,6 +610,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_admin_setting_callback_auto_update_section()`.
 	 *
+	 * @since 0.1.0
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_auto_update_section
 	 */
 	public function test_ba_eas_admin_setting_callback_auto_update_section() {
@@ -598,6 +624,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
 	 * Test `ba_eas_admin_setting_callback_do_role_based()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_admin_setting_callback_do_role_based
 	 */
@@ -615,6 +643,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
 	 * Test `ba_eas_admin_setting_callback_role_slugs()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_admin_setting_callback_role_slugs
 	 */
@@ -730,6 +760,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_admin_setting_sanitize_callback_role_slugs()`.
 	 *
+	 * @since 0.1.0
+	 *
 	 * @covers ::ba_eas_admin_setting_sanitize_callback_role_slugs
 	 */
 	public function test_ba_eas_admin_setting_sanitize_callback_role_slugs() {
@@ -835,6 +867,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_admin_setting_callback_do_auto_update()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_do_auto_update
 	 */
 	public function test_ba_eas_admin_setting_callback_do_auto_update() {
@@ -851,6 +885,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
 	 * Test `ba_eas_admin_setting_callback_default_user_nicename()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_admin_setting_callback_default_user_nicename
 	 */
@@ -882,6 +918,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_admin_setting_callback_bulk_update_section()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_admin_setting_callback_bulk_update_section
 	 */
 	public function test_ba_eas_admin_setting_callback_bulk_update_section() {
@@ -894,6 +932,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
 	 * Test `ba_eas_admin_setting_callback_bulk_update()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_admin_setting_callback_bulk_update
 	 */
@@ -911,6 +951,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
 	 * Test `ba_eas_admin_setting_callback_bulk_update_structure()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_admin_setting_callback_bulk_update_structure
 	 */
@@ -942,6 +984,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
 	 * Test `ba_eas_add_settings_link()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_add_settings_link
 	 */
@@ -1009,6 +1053,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	/**
 	 * Test `ba_eas_install()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_install
 	 */
 	public function test_ba_eas_install() {
@@ -1029,6 +1075,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 	/**
 	 * Test `ba_eas_upgrade()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_upgrade
 	 */
