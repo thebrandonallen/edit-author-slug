@@ -729,6 +729,20 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertContains( $input, $output );
 		$this->assertContains( $label, $output );
 
+		// Remove the ninja role.
+		remove_role( 'ninja' );
+	}
+
+	/**
+	 * Test `ba_eas_admin_setting_callback_role_slugs()` when a role name is empty.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_admin_setting_callback_role_slugs
+	 */
+	public function test_ba_eas_admin_setting_callback_role_slugs_role_doesnt_exist() {
+
+		$role_slugs = ba_eas()->role_slugs;
 		ba_eas()->role_slugs = array(
 			'administrator' => array(
 				'name' => 'Administrator',
@@ -756,9 +770,6 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 			),
 		);
 
-		// Remove the ninja role.
-		remove_role( 'ninja' );
-
 		ob_start();
 		ba_eas_admin_setting_callback_role_slugs();
 		$output = ob_get_clean();
@@ -768,13 +779,29 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertNotContains( $input, $output );
 		$this->assertNotContains( $label, $output );
 
-		// Empty name.
+		ba_eas()->role_slugs = $role_slugs;
+	}
+
+	/**
+	 * Test `ba_eas_admin_setting_callback_role_slugs()` when a role name is empty.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_admin_setting_callback_role_slugs
+	 */
+	public function test_ba_eas_admin_setting_callback_role_slugs_empty_name() {
+
+		// Empty the adminstrator role slug for testing.
 		$role_slugs = ba_eas()->role_slugs;
 		$role_slugs['administrator']['name'] = '';
 		ba_eas()->role_slugs = $role_slugs;
+
+		// Capture the output.
 		ob_start();
 		ba_eas_admin_setting_callback_role_slugs();
 		$output = ob_get_clean();
+
+		// Reset the adminstrator role slug.
 		$role_slugs['administrator']['name'] = 'Administrator';
 		ba_eas()->role_slugs = $role_slugs;
 
@@ -782,14 +809,28 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$label = 'Administrator';
 		$this->assertNotContains( $input, $output );
 		$this->assertNotContains( $label, $output );
+	}
 
-		// Empty slug.
+	/**
+	 * Test `ba_eas_admin_setting_callback_role_slugs()` when a role slug is empty.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_admin_setting_callback_role_slugs
+	 */
+	public function test_ba_eas_admin_setting_callback_role_slugs_empty_slug() {
+
+		// Empty the adminstrator role slug for testing.
 		$role_slugs = ba_eas()->role_slugs;
 		$role_slugs['administrator']['slug'] = '';
 		ba_eas()->role_slugs = $role_slugs;
+
+		// Capture the output.
 		ob_start();
 		ba_eas_admin_setting_callback_role_slugs();
 		$output = ob_get_clean();
+
+		// Reset the adminstrator role slug.
 		$role_slugs['administrator']['slug'] = 'Administrator';
 		ba_eas()->role_slugs = $role_slugs;
 
