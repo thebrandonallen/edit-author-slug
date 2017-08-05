@@ -692,6 +692,9 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_admin_setting_callback_role_slugs() {
 
+		// Backup the roles slugs.
+		$role_slugs_backup = ba_eas()->role_slugs;
+
 		// Add the ninja role.
 		add_role( 'ninja', 'Ninja' );
 
@@ -731,6 +734,9 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		// Remove the ninja role.
 		remove_role( 'ninja' );
+
+		// Restore the role slugs.
+		ba_eas()->role_slugs = $role_slugs_backup;
 	}
 
 	/**
@@ -742,33 +748,16 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_admin_setting_callback_role_slugs_role_doesnt_exist() {
 
-		$role_slugs = ba_eas()->role_slugs;
-		ba_eas()->role_slugs = array(
-			'administrator' => array(
-				'name' => 'Administrator',
-				'slug' => 'administrator',
-			),
-			'editor' => array(
-				'name' => 'Editor',
-				'slug' => 'editor',
-			),
-			'contributor' => array(
-				'name' => 'Contributor',
-				'slug' => 'contributor',
-			),
-			'author' => array(
-				'name' => 'Author',
-				'slug' => 'author',
-			),
-			'subscriber' => array(
-				'name' => 'Subscriber',
-				'slug' => 'subscriber',
-			),
+		// Backup the roles slugs.
+		$role_slugs_backup = ba_eas()->role_slugs;
+
+		$role_slugs = $role_slugs_backup + array(
 			'ninja' => array(
 				'name' => 'Ninja',
 				'slug' => 'ninja',
 			),
 		);
+		ba_eas()->role_slugs = $role_slugs;
 
 		ob_start();
 		ba_eas_admin_setting_callback_role_slugs();
@@ -779,7 +768,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$this->assertNotContains( $input, $output );
 		$this->assertNotContains( $label, $output );
 
-		ba_eas()->role_slugs = $role_slugs;
+		// Restore the role slugs.
+		ba_eas()->role_slugs = $role_slugs_backup;
 	}
 
 	/**
@@ -791,8 +781,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_admin_setting_callback_role_slugs_empty_name() {
 
+		// Backup the roles slugs.
+		$role_slugs_backup = ba_eas()->role_slugs;
+
 		// Empty the adminstrator role slug for testing.
-		$role_slugs = ba_eas()->role_slugs;
+		$role_slugs = $role_slugs_backup;
 		$role_slugs['administrator']['name'] = '';
 		ba_eas()->role_slugs = $role_slugs;
 
@@ -802,8 +795,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$output = ob_get_clean();
 
 		// Reset the adminstrator role slug.
-		$role_slugs['administrator']['name'] = 'Administrator';
-		ba_eas()->role_slugs = $role_slugs;
+		ba_eas()->role_slugs = $role_slugs_backup;
 
 		$input = 'name="_ba_eas_role_slugs[administrator][slug]"';
 		$label = 'Administrator';
@@ -820,8 +812,11 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_admin_setting_callback_role_slugs_empty_slug() {
 
+		// Backup the roles slugs.
+		$role_slugs_backup = ba_eas()->role_slugs;
+
 		// Empty the adminstrator role slug for testing.
-		$role_slugs = ba_eas()->role_slugs;
+		$role_slugs = $role_slugs_backup;
 		$role_slugs['administrator']['slug'] = '';
 		ba_eas()->role_slugs = $role_slugs;
 
@@ -831,8 +826,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$output = ob_get_clean();
 
 		// Reset the adminstrator role slug.
-		$role_slugs['administrator']['slug'] = 'Administrator';
-		ba_eas()->role_slugs = $role_slugs;
+		ba_eas()->role_slugs = $role_slugs_backup;
 
 		$input = 'name="_ba_eas_role_slugs[administrator][slug]"';
 		$label = 'Administrator';
@@ -923,6 +917,9 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_admin_setting_sanitize_callback_role_slugs_no_role_slug_exists() {
 
+		// Backup the roles slugs.
+		$role_slugs_backup = ba_eas()->role_slugs;
+
 		// Add a `ninja` role with no display name.
 		add_role( 'ninja', '' );
 
@@ -951,6 +948,9 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		// Remove the `ninja` role.
 		remove_role( 'ninja' );
+
+		// Restore the role slugs.
+		ba_eas()->role_slugs = $role_slugs_backup;
 	}
 
 	/**
