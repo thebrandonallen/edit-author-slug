@@ -20,6 +20,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 	/**
 	 * The `setUp` method.
+	 *
+	 * @since 1.1.0
 	 */
 	public function setUp() {
 		parent::setUp();
@@ -39,6 +41,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 	/**
 	 * The `tearDown` method.
+	 *
+	 * @since 1.1.0
 	 */
 	public function tearDown() {
 		parent::tearDown();
@@ -68,6 +72,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 	/**
 	 * Test for `ba_eas_do_auto_update()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_do_auto_update
 	 */
@@ -100,6 +106,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 	/**
 	 * Test for `ba_eas_auto_update_user_nicename()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_auto_update_user_nicename
 	 */
@@ -180,6 +188,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 	/**
 	 * Test for `ba_eas_auto_update_user_nicename_bulk()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_auto_update_user_nicename_bulk
 	 */
@@ -366,6 +376,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	/**
 	 * Test for `ba_eas_sanitize_nicename()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_sanitize_nicename
 	 */
 	public function test_ba_eas_sanitize_nicename() {
@@ -377,6 +389,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 	/**
 	 * Test for `ba_eas_sanitize_author_base()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_sanitize_author_base
 	 */
@@ -402,6 +416,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	/**
 	 * Test for `ba_eas_esc_nicename()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_esc_nicename
 	 */
 	public function test_ba_eas_esc_nicename() {
@@ -414,6 +430,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 	/**
 	 * Test for `ba_eas_trim_nicename()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_trim_nicename
 	 */
@@ -435,6 +453,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 	/**
 	 * Test for `ba_eas_nicename_is_ascii()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_nicename_is_ascii
 	 */
@@ -585,6 +605,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	/**
 	 * Test for `ba_eas_do_role_based_author_base()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_do_role_based_author_base
 	 */
 	public function test_ba_eas_do_role_based_author_base() {
@@ -599,6 +621,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 	/**
 	 * Test for `ba_eas_author_link()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_author_link
 	 */
@@ -643,6 +667,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	/**
 	 * Test for `ba_eas_template_include()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_template_include
 	 */
 	public function test_ba_eas_template_include() {
@@ -681,6 +707,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	/**
 	 * Test for `ba_eas_flush_rewrite_rules()`.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @covers ::ba_eas_flush_rewrite_rules
 	 */
 	public function test_ba_eas_flush_rewrite_rules() {
@@ -693,6 +721,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 	/**
 	 * Test for `ba_eas_author_rewrite_rules()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::ba_eas_author_rewrite_rules
 	 */
@@ -762,6 +792,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 	/**
 	 * Test for `array_replace_recursive()`.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @covers ::array_replace_recursive
 	 */
