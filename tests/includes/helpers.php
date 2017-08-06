@@ -1,5 +1,20 @@
 <?php
+/**
+ * Edit Author Slug test helper functions.
+ *
+ * @package Edit_Author_Slug
+ * @subpackage Tests
+ */
 
+/**
+ * Returns the test slugs.
+ *
+ * @since 1.0.4
+ *
+ * @param string $type The slugs type.
+ *
+ * @return array
+ */
 function ba_eas_tests_slugs( $type ) {
 
 	$slugs = array(
@@ -53,7 +68,7 @@ function ba_eas_tests_slugs( $type ) {
 		'foot-soldier' => array(
 			'name' => 'Foot Soldier',
 			'slug' => 'foot-soldier',
-		)
+		),
 	);
 
 	$slugs['extra'] = $slugs['default'] + $extra_role;
@@ -61,18 +76,48 @@ function ba_eas_tests_slugs( $type ) {
 	return $slugs[ $type ];
 }
 
+/**
+ * Returns the default test slugs.
+ *
+ * @since 1.0.4
+ *
+ * @return array
+ */
 function ba_eas_tests_slugs_default() {
 	return ba_eas_tests_slugs( 'default' );
 }
 
+/**
+ * Returns the custom test slugs.
+ *
+ * @since 1.0.4
+ *
+ * @return array
+ */
 function ba_eas_tests_slugs_custom() {
 	return ba_eas_tests_slugs( 'custom' );
 }
 
+/**
+ * Returns the extra test slugs.
+ *
+ * @since 1.0.4
+ *
+ * @return array
+ */
 function ba_eas_tests_slugs_extra() {
 	return ba_eas_tests_slugs( 'extra' );
 }
 
+/**
+ * Returns the test roles.
+ *
+ * @since 1.0.4
+ *
+ * @param string $type The roles type.
+ *
+ * @return array
+ */
 function ba_eas_tests_roles( $type ) {
 
 	$roles = array(
@@ -106,14 +151,35 @@ function ba_eas_tests_roles( $type ) {
 	return $roles[ $type ];
 }
 
+/**
+ * Returns the default test roles.
+ *
+ * @since 1.0.4
+ *
+ * @return array
+ */
 function ba_eas_tests_roles_default() {
 	return ba_eas_tests_roles( 'default' );
 }
 
+/**
+ * Returns the custom test roles.
+ *
+ * @since 1.0.4
+ *
+ * @return array
+ */
 function ba_eas_tests_roles_custom() {
 	return ba_eas_tests_roles( 'custom' );
 }
 
+/**
+ * Returns the extra test roles.
+ *
+ * @since 1.0.4
+ *
+ * @return array
+ */
 function ba_eas_tests_roles_extra() {
 	return ba_eas_tests_roles( 'extra' );
 }
