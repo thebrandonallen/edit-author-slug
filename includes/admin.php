@@ -446,10 +446,7 @@ function ba_eas_register_admin_settings() {
 			__( 'Remove Front', 'edit-author-slug' ),
 			'ba_eas_admin_setting_callback_remove_front',
 			'edit-author-slug',
-			'ba_eas_author_base',
-			array(
-				'label_for' => '_ba_eas_remove_front',
-			)
+			'ba_eas_author_base'
 		);
 		register_setting( 'edit-author-slug', '_ba_eas_remove_front', 'intval' );
 	}
@@ -460,10 +457,7 @@ function ba_eas_register_admin_settings() {
 		__( 'Role-Based Author Base', 'edit-author-slug' ),
 		'ba_eas_admin_setting_callback_do_role_based',
 		'edit-author-slug',
-		'ba_eas_author_base',
-		array(
-			'label_for' => '_ba_eas_do_role_based',
-		)
+		'ba_eas_author_base'
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_do_role_based', 'intval' );
 
@@ -491,10 +485,7 @@ function ba_eas_register_admin_settings() {
 		__( 'Automatically Update', 'edit-author-slug' ),
 		'ba_eas_admin_setting_callback_do_auto_update',
 		'edit-author-slug',
-		'ba_eas_auto_update',
-		array(
-			'label_for' => '_ba_eas_do_auto_update',
-		)
+		'ba_eas_auto_update'
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_do_auto_update', 'intval' );
 
@@ -525,10 +516,7 @@ function ba_eas_register_admin_settings() {
 		__( 'Bulk Update', 'edit-author-slug' ),
 		'ba_eas_admin_setting_callback_bulk_update',
 		'edit-author-slug',
-		'ba_eas_bulk_update',
-		array(
-			'label_for' => '_ba_eas_bulk_update',
-		)
+		'ba_eas_bulk_update'
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_bulk_update', 'ba_eas_auto_update_user_nicename_bulk' );
 
@@ -589,6 +577,7 @@ function ba_eas_admin_setting_callback_author_base() {
 ?>
 
 		<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php echo esc_attr( $author_base ); ?>" class="regular-text code" />
+		<br />
 		<em><?php esc_html_e( "Defaults to 'author'", 'edit-author-slug' ); ?></em>
 		<br /><br />
 		<strong>Demo:</strong>
@@ -616,7 +605,9 @@ function ba_eas_admin_setting_callback_remove_front() {
 ?>
 
 		<input name="_ba_eas_remove_front" id="_ba_eas_remove_front" value="1"<?php checked( ba_eas()->remove_front ); ?> type="checkbox" />
-		<?php esc_html_e( 'Remove the "front" portion of the author permalink structure.', 'edit-author-slug' ); ?>
+		<label for="_ba_eas_remove_front">
+			<?php esc_html_e( 'Remove the "front" portion of the author permalink structure.', 'edit-author-slug' ); ?>
+		</label>
 
 <?php
 }
@@ -630,7 +621,9 @@ function ba_eas_admin_setting_callback_do_role_based() {
 ?>
 
 		<input class="eas-checkbox" name="_ba_eas_do_role_based" id="_ba_eas_do_role_based" value="1"<?php checked( ba_eas()->do_role_based ); ?> type="checkbox" />
-		<?php esc_html_e( "Set user's Author Base according to their role.", 'edit-author-slug' ); ?>
+		<label for="_ba_eas_do_role_based">
+			<?php esc_html_e( "Set user's Author Base according to their role.", 'edit-author-slug' ); ?>
+		</label>
 		<br /><br />
 		<?php echo sprintf(
 			/* translators: 1: rewrite tag, 2: rewrite tag demo usage, 3: demo URL using rewrite tag */
@@ -747,7 +740,9 @@ function ba_eas_admin_setting_callback_do_auto_update() {
 ?>
 
 		<input class="eas-checkbox" name="_ba_eas_do_auto_update" id="_ba_eas_do_auto_update" value="1"<?php checked( ba_eas()->do_auto_update ); ?> type="checkbox" />
-		<?php esc_html_e( 'Automatically update Author Slug when a user updates their profile.', 'edit-author-slug' ); ?>
+		<label for="_ba_eas_do_auto_update">
+			<?php esc_html_e( 'Automatically update Author Slug when a user updates their profile.', 'edit-author-slug' ); ?>
+		</label>
 
 <?php
 }
@@ -807,7 +802,9 @@ function ba_eas_admin_setting_callback_bulk_update() {
 ?>
 
 		<input class="eas-checkbox" name="_ba_eas_bulk_update" id="_ba_eas_bulk_update" value="1" type="checkbox" />
-		<?php esc_html_e( 'Update all users according to the below Author Slug setting. This will only be run after clicking "Save Changes".', 'edit-author-slug' ); ?>
+		<label for="_ba_eas_bulk_update">
+			<?php esc_html_e( 'Update all users according to the below Author Slug setting. This will only be run after clicking "Save Changes".', 'edit-author-slug' ); ?>
+		</label>
 
 <?php
 }
