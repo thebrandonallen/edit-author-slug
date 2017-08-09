@@ -114,6 +114,8 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test the `BA_Edit_Author_Slug::__get()`.
+	 *
 	 * @since 1.5.0
 	 *
 	 * @covers BA_Edit_Author_Slug::__get
