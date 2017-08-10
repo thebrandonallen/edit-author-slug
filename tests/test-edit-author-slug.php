@@ -21,7 +21,6 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 	public function tearDown() {
 		parent::tearDown();
 		ba_eas()->author_base   = 'author';
-		ba_eas()->role_slugs    = ba_eas_tests_slugs_default();
 		ba_eas()->do_role_based = false;
 	}
 
@@ -166,20 +165,43 @@ class EAS_UnitTestCase extends WP_UnitTestCase {
 	 */
 	public function test_set_role_slugs() {
 
-		$this->assertEquals( ba_eas()->role_slugs, ba_eas_tests_slugs_default() );
+		$default_role_slugs = ba_eas()->role_slugs;
 
-		update_option( '_ba_eas_role_slugs', ba_eas_tests_slugs_custom() );
+		$role_slugs                       = $default_role_slugs;
+		$role_slugs['subscriber']['slug'] = 'test';
+
+		update_option( '_ba_eas_role_slugs', $role_slugs );
 		ba_eas()->set_role_slugs();
-		$this->assertEquals( ba_eas()->role_slugs, ba_eas_tests_slugs_custom() );
+		$this->assertEquals( ba_eas()->role_slugs, $role_slugs );
+		update_option( '_ba_eas_role_slugs', $default_role_slugs );
+
+		ba_eas()->role_slugs = $default_role_slugs;
+	}
+
+	/**
+	 * Test for `BA_Edit_Author_Slug::set_role_slugs()` when a custom role exists.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers BA_Edit_Author_Slug::set_role_slugs
+	 */
+	public function test_set_role_slugs_custom_role() {
+
+		$default_role_slugs = ba_eas()->role_slugs;
+
+		$role_slugs = $default_role_slugs + array(
+			'foot-soldier' => array(
+				'name' => 'Foot Soldier',
+				'slug' => 'foot-soldier',
+			),
+		);
 
 		add_role( 'foot-soldier', 'Foot Soldier' );
-		update_option( '_ba_eas_role_slugs', ba_eas_tests_slugs_extra() );
 		ba_eas()->set_role_slugs();
-		$this->assertEquals( ba_eas()->role_slugs, ba_eas_tests_slugs_extra() );
+		$this->assertEquals( ba_eas()->role_slugs, $role_slugs );
 		remove_role( 'foot-soldier' );
 
-		ba_eas()->set_role_slugs();
-		$this->assertEquals( ba_eas()->role_slugs, ba_eas_tests_slugs_default() );
+		ba_eas()->role_slugs = $default_role_slugs;
 	}
 
 	/**
