@@ -9,7 +9,7 @@
 /**
  * The Edit Author Slug unit test case.
  */
-class EAS_UnitTestCase extends WP_UnitTestCase {
+class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 
 	/**
 	 * The admin `tearDown` method.
