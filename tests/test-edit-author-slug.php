@@ -12,6 +12,29 @@
 class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 
 	/**
+	 * The default roles slugs.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @var array
+	 */
+	protected static $default_role_slugs;
+
+	/**
+	 * The admin `setUp` method.
+	 *
+	 * @since 1.1.0
+	 */
+	public function setUp() {
+		parent::setUp();
+
+		// Set the default roles slugs, if not already.
+		if ( is_null( self::$default_role_slugs ) ) {
+			self::$default_role_slugs = ba_eas_get_default_role_slugs();
+		}
+	}
+
+	/**
 	 * The admin `tearDown` method.
 	 *
 	 * @since 1.1.0
@@ -20,7 +43,10 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 	 */
 	public function tearDown() {
 		parent::tearDown();
+
+		// Reset properties used in testing.
 		ba_eas()->author_base   = 'author';
+		ba_eas()->role_slugs    = self::$default_role_slugs;
 		ba_eas()->do_role_based = false;
 	}
 
