@@ -37,8 +37,6 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$this->eas = ba_eas();
-
 		$this->single_user_id = $this->factory->user->create( array(
 			'user_login'   => 'mastersplinter',
 			'user_pass'    => '1234',
