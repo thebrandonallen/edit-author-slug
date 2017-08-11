@@ -231,42 +231,129 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 	 */
 	public function test_add_rewrite_tags() {
 
-		// Check for return when role-based author base is disabled.
-		$this->assertNull( ba_eas()->add_rewrite_tags() );
+		// Make sure the rewrite tag doesn't already exist.
+		remove_rewrite_tag( '%ba_eas_author_role%' );
 
-		// Check that rewrite tags have been added when role-based author base is on.
-		$wp_rewrite = $GLOBALS['wp_rewrite'];
-
+		// // Test for WP default roles/role slugs.
 		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
-
-		// Test for WP default roles/role slugs.
 		ba_eas()->add_rewrite_tags();
+		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+
 		$slugs = '(administrator|editor|author|contributor|subscriber)';
 
-		$this->assertTrue( in_array( '%ba_eas_author_role%', $wp_rewrite->rewritecode, true ) );
-		$this->assertTrue( in_array( $slugs, $wp_rewrite->rewritereplace, true ) );
+		$this->assertContains( '%ba_eas_author_role%', $GLOBALS['wp_rewrite']->rewritecode );
+		$this->assertContains( $slugs, $GLOBALS['wp_rewrite']->rewritereplace );
+	}
 
-		$old_author_base = 'test/base';
+	/**
+	 * Test for `BA_Edit_Author_Slug::add_rewrite_tags()` when role based author
+	 * bases are disabled.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers BA_Edit_Author_Slug::add_rewrite_tags
+	 */
+	public function test_add_rewrite_tags_not_role_based() {
+		$this->assertNull( ba_eas()->add_rewrite_tags() );
+	}
+
+	/**
+	 * Test for `BA_Edit_Author_Slug::add_rewrite_tags()` when the author base
+	 * contains the rewrite tag, and that `author` is appended when appropriate.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers BA_Edit_Author_Slug::add_rewrite_tags
+	 */
+	public function test_add_rewrite_tags_rewrite_tag_in_author_base() {
+
+		$role_slugs                   = self::$default_role_slugs;
+		$role_slugs['author']['slug'] = 'test';
+
+		ba_eas()->role_slugs  = $role_slugs;
 		ba_eas()->author_base = '%ba_eas_author_role%';
-		$this->assertTrue( in_array( '%ba_eas_author_role%', $wp_rewrite->rewritecode, true ) );
-		$this->assertTrue( in_array( $slugs, $wp_rewrite->rewritereplace, true ) );
-		ba_eas()->author_base = $old_author_base;
 
-		// Test for WP custom roles/role slugs.
-		ba_eas()->role_slugs = ba_eas_tests_slugs_custom();
+		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
 		ba_eas()->add_rewrite_tags();
-		$slugs = '(jonin|chunin|mystic|junior-genin|deshi|author)';
-
-		$this->assertTrue( in_array( $slugs, $wp_rewrite->rewritereplace, true ) );
-
-		// Test for WP custom roles/role slugs.
-		ba_eas()->role_slugs = ba_eas_tests_slugs_extra();
-		ba_eas()->add_rewrite_tags();
-		$slugs = '(administrator|editor|author|contributor|subscriber|foot-soldier)';
-
-		$this->assertTrue( in_array( $slugs, $wp_rewrite->rewritereplace, true ) );
-
 		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+
+		$slugs = '(administrator|editor|test|contributor|subscriber|author)';
+
+		$this->assertContains( $slugs, $GLOBALS['wp_rewrite']->rewritereplace );
+
+	}
+
+	/**
+	 * Test for `BA_Edit_Author_Slug::add_rewrite_tags()` when the author base
+	 * contains a forward slash, and that `author` is appended when appropriate.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers BA_Edit_Author_Slug::add_rewrite_tags
+	 */
+	public function test_add_rewrite_tags_slash_in_author_base() {
+
+		$role_slugs                   = self::$default_role_slugs;
+		$role_slugs['author']['slug'] = 'test';
+
+		ba_eas()->role_slugs  = $role_slugs;
+		ba_eas()->author_base = 'author/base';
+
+		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+		ba_eas()->add_rewrite_tags();
+		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+
+		$slugs = '(administrator|editor|test|contributor|subscriber|author)';
+
+		$this->assertContains( $slugs, $GLOBALS['wp_rewrite']->rewritereplace );
+
+	}
+
+	/**
+	 * Test for `BA_Edit_Author_Slug::add_rewrite_tags()` when a custom author
+	 * base has been set.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers BA_Edit_Author_Slug::add_rewrite_tags
+	 */
+	public function test_add_rewrite_tags_custom_author_base() {
+
+		// // Test for WP default roles/role slugs.
+		ba_eas()->author_base = 'test';
+
+		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+		ba_eas()->add_rewrite_tags();
+		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+
+		$slugs = '(administrator|editor|author|contributor|subscriber|test)';
+
+		$this->assertContains( $slugs, $GLOBALS['wp_rewrite']->rewritereplace );
+	}
+
+	/**
+	 * Test for `BA_Edit_Author_Slug::add_rewrite_tags()` when role slugs have
+	 * been customized, and that the author base is added when appropriate.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers BA_Edit_Author_Slug::add_rewrite_tags
+	 */
+	public function test_add_rewrite_tags_custom_role_slugs() {
+
+		$role_slugs                   = self::$default_role_slugs;
+		$role_slugs['author']['slug'] = 'test';
+
+		ba_eas()->role_slugs = $role_slugs;
+
+		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+		ba_eas()->add_rewrite_tags();
+		remove_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
+
+		$slugs = '(administrator|editor|test|contributor|subscriber|author)';
+
+		$this->assertContains( $slugs, $GLOBALS['wp_rewrite']->rewritereplace );
+
 	}
 
 	/**
