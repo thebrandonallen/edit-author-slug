@@ -232,7 +232,7 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 	public function test_add_rewrite_tags() {
 
 		// Make sure the rewrite tag doesn't already exist.
-		remove_rewrite_tag( '%ba_eas_author_role%' );
+		$GLOBALS['wp_rewrite']->remove_rewrite_tag( '%ba_eas_author_role%' );
 
 		// // Test for WP default roles/role slugs.
 		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
