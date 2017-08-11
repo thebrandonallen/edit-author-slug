@@ -91,6 +91,29 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 	}
 
 	/**
+	 * A local copy of the `remove_rewrite_tag()` function for test compat with
+	 * WP < 4.5.0.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param string $tag The rewrite tag.
+	 */
+	protected function remove_rewrite_tag( $tag ) {
+
+		if ( function_exists( 'remove_rewrite_tag' ) ) {
+			remove_rewrite_tag( $tag );
+		} else {
+			$wp_rewrite = $GLOBALS['wp_rewrite'];
+			$position = array_search( $tag, $wp_rewrite->rewritecode );
+			if ( false !== $position && null !== $position ) {
+				unset( $wp_rewrite->rewritecode[ $position ] );
+				unset( $wp_rewrite->rewritereplace[ $position ] );
+				unset( $wp_rewrite->queryreplace[ $position ] );
+			}
+		}
+	}
+
+	/**
 	 * Test for `BA_Edit_Author_Slug::setup_globals()`.
 	 *
 	 * @since 1.2.0
@@ -232,7 +255,7 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 	public function test_add_rewrite_tags() {
 
 		// Make sure the rewrite tag doesn't already exist.
-		$GLOBALS['wp_rewrite']->remove_rewrite_tag( '%ba_eas_author_role%' );
+		$this->remove_rewrite_tag( '%ba_eas_author_role%' );
 
 		// // Test for WP default roles/role slugs.
 		add_filter( 'ba_eas_do_role_based_author_base', '__return_true' );
