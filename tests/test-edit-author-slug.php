@@ -196,7 +196,7 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 
 		update_option( '_ba_eas_role_slugs', $role_slugs );
 		ba_eas()->set_role_slugs();
-		$this->assertEquals( self::$default_role_slugs, $role_slugs );
+		$this->assertEquals( ba_eas()->role_slugs, $role_slugs );
 		update_option( '_ba_eas_role_slugs', self::$default_role_slugs );
 	}
 
@@ -218,7 +218,7 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 
 		add_role( 'foot-soldier', 'Foot Soldier' );
 		ba_eas()->set_role_slugs();
-		$this->assertEquals( self::$default_role_slugs, $role_slugs );
+		$this->assertEquals( ba_eas()->role_slugs, $role_slugs );
 		remove_role( 'foot-soldier' );
 	}
 
