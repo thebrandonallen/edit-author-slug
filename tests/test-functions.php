@@ -21,6 +21,15 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	private $single_user_id = null;
 
 	/**
+	 * The default roles slugs.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @var array
+	 */
+	protected static $default_role_slugs;
+
+	/**
 	 * The `setUp` method.
 	 *
 	 * @since 1.1.0
@@ -39,6 +48,11 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 			'first_name'   => 'Master',
 			'last_name'    => 'Splinter',
 		) );
+
+		// Set the default roles slugs, if not already.
+		if ( is_null( self::$default_role_slugs ) ) {
+			self::$default_role_slugs = ba_eas_get_default_role_slugs();
+		}
 	}
 
 	/**
@@ -51,7 +65,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		// Reset some globals to their defaults.
 		ba_eas()->author_base               = 'author';
-		ba_eas()->role_slugs                = ba_eas_tests_slugs_default();
+		ba_eas()->role_slugs                = self::$default_role_slugs;
 		ba_eas()->do_auto_update            = false;
 		ba_eas()->do_role_based             = false;
 		ba_eas()->remove_front              = false;
