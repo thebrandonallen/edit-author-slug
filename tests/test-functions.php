@@ -21,6 +21,33 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	private $single_user_id = null;
 
 	/**
+	 * The new user id.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @var int
+	 */
+	protected static $user_id;
+
+	/**
+	 * The TMNT user ids.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @var int
+	 */
+	protected static $tmnt_ids = array();
+
+	/**
+	 * The old user id.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @var int
+	 */
+	protected static $old_user_id;
+
+	/**
 	 * The default roles slugs.
 	 *
 	 * @since 1.6.0
@@ -30,22 +57,76 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	protected static $default_role_slugs;
 
 	/**
+	 * Set up the admin fixture.
+	 *
+	 * @since 1.6.0
+	 */
+	public static function setUpBeforeClass() {
+		$f = new WP_UnitTest_Factory();
+
+		// Set up the new user.
+		self::$user_id = $f->user->create( array(
+			'user_login' => 'mastersplinter',
+			'first_name' => 'Master',
+			'last_name'  => 'Splinter',
+			'nickname'   => 'Sensei',
+		) );
+
+		self::$tmnt_ids['leo'] = $f->user->create( array(
+			'user_login' => 'leonardo',
+			'first_name' => 'Leonardo',
+			'last_name'  => 'Hamato',
+			'nickname'   => 'Leo',
+		) );
+
+		self::$tmnt_ids['raph'] = $f->user->create( array(
+			'user_login' => 'raphael',
+			'first_name' => 'Raphael',
+			'last_name'  => 'Hamato',
+			'nickname'   => 'Raph',
+		) );
+
+		self::$tmnt_ids['donnie'] = $f->user->create( array(
+			'user_login' => 'donatello',
+			'first_name' => 'Donatello',
+			'last_name'  => 'Hamato',
+			'nickname'   => 'Donnie',
+		) );
+
+		self::$tmnt_ids['mikey'] = $f->user->create( array(
+			'user_login' => 'michelangelo',
+			'first_name' => 'Michelangelo',
+			'last_name'  => 'Hamato',
+			'nickname'   => 'Mikey',
+		) );
+
+		self::commit_transaction();
+
+		// Set the old user id.
+		self::$old_user_id = get_current_user_id();
+	}
+
+	/**
+	 * Tear down the admin fixture.
+	 *
+	 * @since 1.6.0
+	 */
+	public static function tearDownAfterClass() {
+		wp_delete_user( self::$user_id );
+		wp_delete_user( self::$tmnt_ids['leo'] );
+		wp_delete_user( self::$tmnt_ids['raph'] );
+		wp_delete_user( self::$tmnt_ids['donnie'] );
+		wp_delete_user( self::$tmnt_ids['mikey'] );
+		self::commit_transaction();
+	}
+
+	/**
 	 * The `setUp` method.
 	 *
 	 * @since 1.1.0
 	 */
 	public function setUp() {
 		parent::setUp();
-
-		$this->single_user_id = $this->factory->user->create( array(
-			'user_login'   => 'mastersplinter',
-			'user_pass'    => '1234',
-			'user_email'   => 'mastersplinter@example.com',
-			'display_name' => 'Master Splinter',
-			'nickname'     => 'Sensei',
-			'first_name'   => 'Master',
-			'last_name'    => 'Splinter',
-		) );
 
 		// Set the default roles slugs, if not already.
 		if ( is_null( self::$default_role_slugs ) ) {
@@ -69,6 +150,11 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		ba_eas()->remove_front              = false;
 		$GLOBALS['wp_rewrite']->author_base = 'author';
 		$GLOBALS['wp_rewrite']->front       = '/';
+
+		wp_update_user( array(
+			'ID'            => self::$user_id,
+			'user_nicename' => 'mastersplinter',
+		) );
 	}
 
 	/**
@@ -142,64 +228,64 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		// Update using username.
 		ba_eas()->default_user_nicename = '';
-		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
-		$user    = get_userdata( $this->single_user_id );
+		$user_id = ba_eas_auto_update_user_nicename( self::$user_id );
+		$user    = get_userdata( self::$user_id );
 		$this->assertEquals( 'mastersplinter', $user->user_nicename );
 
 		// Update using username.
 		ba_eas()->default_user_nicename = 'username';
-		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
-		$user    = get_userdata( $this->single_user_id );
+		$user_id = ba_eas_auto_update_user_nicename( self::$user_id );
+		$user    = get_userdata( self::$user_id );
 		$this->assertEquals( 'mastersplinter', $user->user_nicename );
 
 		// Update using nickname.
 		ba_eas()->default_user_nicename = 'nickname';
-		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
-		$user    = get_userdata( $this->single_user_id );
+		$user_id = ba_eas_auto_update_user_nicename( self::$user_id );
+		$user    = get_userdata( self::$user_id );
 		$this->assertEquals( 'sensei', $user->user_nicename );
 
 		// Update using displayname.
 		ba_eas()->default_user_nicename = 'displayname';
-		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
-		$user    = get_userdata( $this->single_user_id );
+		$user_id = ba_eas_auto_update_user_nicename( self::$user_id );
+		$user    = get_userdata( self::$user_id );
 		$this->assertEquals( 'master-splinter', $user->user_nicename );
 
 		// Update using firstname.
 		ba_eas()->default_user_nicename = 'firstname';
-		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
-		$user    = get_userdata( $this->single_user_id );
+		$user_id = ba_eas_auto_update_user_nicename( self::$user_id );
+		$user    = get_userdata( self::$user_id );
 		$this->assertEquals( 'master', $user->user_nicename );
 
 		// Update using lastname.
 		ba_eas()->default_user_nicename = 'lastname';
-		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
-		$user    = get_userdata( $this->single_user_id );
+		$user_id = ba_eas_auto_update_user_nicename( self::$user_id );
+		$user    = get_userdata( self::$user_id );
 		$this->assertEquals( 'splinter', $user->user_nicename );
 
 		// Update using firstlast.
 		ba_eas()->default_user_nicename = 'firstlast';
-		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
-		$user    = get_userdata( $this->single_user_id );
+		$user_id = ba_eas_auto_update_user_nicename( self::$user_id );
+		$user    = get_userdata( self::$user_id );
 		$this->assertEquals( 'master-splinter', $user->user_nicename );
 
 		// Update using lastfirst.
 		ba_eas()->default_user_nicename = 'lastfirst';
-		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
-		$user    = get_userdata( $this->single_user_id );
+		$user_id = ba_eas_auto_update_user_nicename( self::$user_id );
+		$user    = get_userdata( self::$user_id );
 		$this->assertEquals( 'splinter-master', $user->user_nicename );
 
 		// Update using lastfirst.
 		ba_eas()->default_user_nicename = 'userid';
-		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
-		$user    = get_userdata( $this->single_user_id );
-		$this->assertEquals( $this->single_user_id, $user->user_nicename );
+		$user_id = ba_eas_auto_update_user_nicename( self::$user_id );
+		$user    = get_userdata( self::$user_id );
+		$this->assertEquals( self::$user_id, $user->user_nicename );
 
 		// Update using random string as structure, shouldn't update, so
 		// user_nicename should be same as previous test ('splinter-master').
 		ba_eas()->default_user_nicename = 'Cowabunga Dude!';
-		$user_id = ba_eas_auto_update_user_nicename( $this->single_user_id );
-		$user    = get_userdata( $this->single_user_id );
-		$this->assertEquals( $this->single_user_id, $user->user_nicename );
+		$user_id = ba_eas_auto_update_user_nicename( self::$user_id );
+		$user    = get_userdata( self::$user_id );
+		$this->assertEquals( self::$user_id, $user->user_nicename );
 	}
 
 	/**
@@ -210,38 +296,6 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 * @covers ::ba_eas_auto_update_user_nicename_bulk
 	 */
 	public function test_ba_eas_auto_update_user_nicename_bulk() {
-		$leo_id = $this->factory->user->create( array(
-			'user_login' => 'leonardo',
-			'user_pass'  => '1234',
-			'user_email' => 'leonardo@example.com',
-			'nickname'   => 'Leo',
-			'first_name' => 'Leonardo',
-			'last_name'  => 'Hamato',
-		) );
-		$raph_id = $this->factory->user->create( array(
-			'user_login' => 'raphael',
-			'user_pass'  => '1234',
-			'user_email' => 'raphael@example.com',
-			'nickname'   => 'Raph',
-			'first_name' => 'Raphael',
-			'last_name'  => 'Hamato',
-		) );
-		$donnie_id = $this->factory->user->create( array(
-			'user_login' => 'donatello',
-			'user_pass'  => '1234',
-			'user_email' => 'donatello@example.com',
-			'nickname'   => 'Donnie',
-			'first_name' => 'Donatello',
-			'last_name'  => 'Hamato',
-		) );
-		$mikey_id = $this->factory->user->create( array(
-			'user_login' => 'michelangelo',
-			'user_pass'  => '1234',
-			'user_email' => 'michelangelo@example.com',
-			'nickname'   => 'Mikey',
-			'first_name' => 'Michelangelo',
-			'last_name'  => 'Hamato',
-		) );
 
 		$_REQUEST = array(
 			'_wpnonce' => wp_create_nonce( 'edit-author-slug-options' ),
@@ -251,48 +305,48 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		ba_eas_auto_update_user_nicename_bulk( '1' );
 
-		$leo = get_userdata( $leo_id );
+		$leo = get_userdata( self::$tmnt_ids['leo'] );
 		$this->assertEquals( 'leonardo-hamato', $leo->user_nicename );
 
-		$raph = get_userdata( $raph_id );
+		$raph = get_userdata( self::$tmnt_ids['raph'] );
 		$this->assertEquals( 'raphael-hamato', $raph->user_nicename );
 
-		$donnie = get_userdata( $donnie_id );
+		$donnie = get_userdata( self::$tmnt_ids['donnie'] );
 		$this->assertEquals( 'donatello-hamato', $donnie->user_nicename );
 
-		$mikey = get_userdata( $mikey_id );
+		$mikey = get_userdata( self::$tmnt_ids['mikey'] );
 		$this->assertEquals( 'michelangelo-hamato', $mikey->user_nicename );
 
 		ba_eas()->default_user_nicename = 'nickname';
 
 		ba_eas_auto_update_user_nicename_bulk( '1' );
 
-		$leo = get_userdata( $leo_id );
+		$leo = get_userdata( self::$tmnt_ids['leo'] );
 		$this->assertEquals( 'leo', $leo->user_nicename );
 
-		$raph = get_userdata( $raph_id );
+		$raph = get_userdata( self::$tmnt_ids['raph'] );
 		$this->assertEquals( 'raph', $raph->user_nicename );
 
-		$donnie = get_userdata( $donnie_id );
+		$donnie = get_userdata( self::$tmnt_ids['donnie'] );
 		$this->assertEquals( 'donnie', $donnie->user_nicename );
 
-		$mikey = get_userdata( $mikey_id );
+		$mikey = get_userdata( self::$tmnt_ids['mikey'] );
 		$this->assertEquals( 'mikey', $mikey->user_nicename );
 
 		ba_eas()->default_user_nicename = 'firstlast';
 
 		ba_eas_auto_update_user_nicename_bulk();
 
-		$leo = get_userdata( $leo_id );
+		$leo = get_userdata( self::$tmnt_ids['leo'] );
 		$this->assertEquals( 'leo', $leo->user_nicename );
 
-		$raph = get_userdata( $raph_id );
+		$raph = get_userdata( self::$tmnt_ids['raph'] );
 		$this->assertEquals( 'raph', $raph->user_nicename );
 
-		$donnie = get_userdata( $donnie_id );
+		$donnie = get_userdata( self::$tmnt_ids['donnie'] );
 		$this->assertEquals( 'donnie', $donnie->user_nicename );
 
-		$mikey = get_userdata( $mikey_id );
+		$mikey = get_userdata( self::$tmnt_ids['mikey'] );
 		$this->assertEquals( 'mikey', $mikey->user_nicename );
 
 		$_POST = array(
@@ -301,16 +355,16 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		ba_eas_auto_update_user_nicename_bulk( true );
 
-		$leo = get_userdata( $leo_id );
+		$leo = get_userdata( self::$tmnt_ids['leo'] );
 		$this->assertEquals( 'leonardo-hamato', $leo->user_nicename );
 
-		$raph = get_userdata( $raph_id );
+		$raph = get_userdata( self::$tmnt_ids['raph'] );
 		$this->assertEquals( 'raphael-hamato', $raph->user_nicename );
 
-		$donnie = get_userdata( $donnie_id );
+		$donnie = get_userdata( self::$tmnt_ids['donnie'] );
 		$this->assertEquals( 'donatello-hamato', $donnie->user_nicename );
 
-		$mikey = get_userdata( $mikey_id );
+		$mikey = get_userdata( self::$tmnt_ids['mikey'] );
 		$this->assertEquals( 'michelangelo-hamato', $mikey->user_nicename );
 
 		$_POST = array(
@@ -321,16 +375,16 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		ba_eas_auto_update_user_nicename_bulk( true );
 		remove_filter( 'ba_eas_auto_update_user_nicename_bulk_user_ids', '__return_empty_array' );
 
-		$leo = get_userdata( $leo_id );
+		$leo = get_userdata( self::$tmnt_ids['leo'] );
 		$this->assertEquals( 'leonardo-hamato', $leo->user_nicename );
 
-		$raph = get_userdata( $raph_id );
+		$raph = get_userdata( self::$tmnt_ids['raph'] );
 		$this->assertEquals( 'raphael-hamato', $raph->user_nicename );
 
-		$donnie = get_userdata( $donnie_id );
+		$donnie = get_userdata( self::$tmnt_ids['donnie'] );
 		$this->assertEquals( 'donatello-hamato', $donnie->user_nicename );
 
-		$mikey = get_userdata( $mikey_id );
+		$mikey = get_userdata( self::$tmnt_ids['mikey'] );
 		$this->assertEquals( 'michelangelo-hamato', $mikey->user_nicename );
 	}
 
@@ -344,33 +398,16 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_auto_update_user_nicename_bulk_with_bad_id() {
 
-		$leo_id = $this->factory->user->create( array(
-			'user_login' => 'leonardo',
-			'user_pass'  => '1234',
-			'user_email' => 'leonardo@example.com',
-			'nickname'   => 'Leo',
-			'first_name' => 'Leonardo',
-			'last_name'  => 'Hamato',
-		) );
-		$raph_id = $this->factory->user->create( array(
-			'user_login' => 'raphael',
-			'user_pass'  => '1234',
-			'user_email' => 'raphael@example.com',
-			'nickname'   => 'Raph',
-			'first_name' => 'Raphael',
-			'last_name'  => 'Hamato',
-		) );
-
 		ba_eas()->default_user_nicename = 'firstlast';
 
 		add_filter( 'ba_eas_auto_update_user_nicename_bulk_user_ids', array( $this, 'return_bad_id' ) );
 		ba_eas_auto_update_user_nicename_bulk( true );
 		remove_filter( 'ba_eas_auto_update_user_nicename_bulk_user_ids', array( $this, 'return_bad_id' ) );
 
-		$leo = get_user_by( 'id', $leo_id );
+		$leo = get_user_by( 'id', self::$tmnt_ids['leo'] );
 		$this->assertEquals( 'leonardo-hamato', $leo->user_nicename );
 
-		$raph = get_user_by( 'id', $raph_id );
+		$raph = get_user_by( 'id', self::$tmnt_ids['raph'] );
 		$this->assertEquals( 'raphael-hamato', $raph->user_nicename );
 	}
 
@@ -492,32 +529,32 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$empty_user_id = ba_eas_get_nicename_by_structure();
 		$this->assertEquals( '', $empty_user_id );
 
-		$empty_structure = ba_eas_get_nicename_by_structure( $this->single_user_id );
+		$empty_structure = ba_eas_get_nicename_by_structure( self::$user_id );
 		$this->assertEquals( '', $empty_structure );
 
-		$username = ba_eas_get_nicename_by_structure( $this->single_user_id, 'username' );
+		$username = ba_eas_get_nicename_by_structure( self::$user_id, 'username' );
 		$this->assertEquals( 'mastersplinter', $username );
 
-		$nickname = ba_eas_get_nicename_by_structure( $this->single_user_id, 'nickname' );
+		$nickname = ba_eas_get_nicename_by_structure( self::$user_id, 'nickname' );
 		$this->assertEquals( 'sensei', $nickname );
 
-		$displayname = ba_eas_get_nicename_by_structure( $this->single_user_id, 'displayname' );
+		$displayname = ba_eas_get_nicename_by_structure( self::$user_id, 'displayname' );
 		$this->assertEquals( 'master-splinter', $displayname );
 
-		$firstname = ba_eas_get_nicename_by_structure( $this->single_user_id, 'firstname' );
+		$firstname = ba_eas_get_nicename_by_structure( self::$user_id, 'firstname' );
 		$this->assertEquals( 'master', $firstname );
 
-		$lastname = ba_eas_get_nicename_by_structure( $this->single_user_id, 'lastname' );
+		$lastname = ba_eas_get_nicename_by_structure( self::$user_id, 'lastname' );
 		$this->assertEquals( 'splinter', $lastname );
 
-		$firstlast = ba_eas_get_nicename_by_structure( $this->single_user_id, 'firstlast' );
+		$firstlast = ba_eas_get_nicename_by_structure( self::$user_id, 'firstlast' );
 		$this->assertEquals( 'master-splinter', $firstlast );
 
-		$lastfirst = ba_eas_get_nicename_by_structure( $this->single_user_id, 'lastfirst' );
+		$lastfirst = ba_eas_get_nicename_by_structure( self::$user_id, 'lastfirst' );
 		$this->assertEquals( 'splinter-master', $lastfirst );
 
-		$userid = ba_eas_get_nicename_by_structure( $this->single_user_id, 'userid' );
-		$this->assertEquals( $this->single_user_id, $userid );
+		$userid = ba_eas_get_nicename_by_structure( self::$user_id, 'userid' );
+		$this->assertEquals( self::$user_id, $userid );
 	}
 
 	/**
@@ -533,7 +570,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 			'user_nicename' => 'leonardo-hamato',
 		) );
 
-		$exists = ba_eas_nicename_exists( 'leonardo-hamato', $this->single_user_id );
+		$exists = ba_eas_nicename_exists( 'leonardo-hamato', self::$user_id );
 		$this->assertInstanceOf( 'WP_User', $exists );
 	}
 
@@ -557,7 +594,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 * @covers ::ba_eas_nicename_exists
 	 */
 	public function test_ba_eas_nicename_exists_same_as_passed_user() {
-		$this->assertFalse( ba_eas_nicename_exists( 'mastersplinter', $this->single_user_id ) );
+		$this->assertFalse( ba_eas_nicename_exists( 'mastersplinter', self::$user_id ) );
 	}
 
 	/**
@@ -658,33 +695,33 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$author_link_subscriber = 'http://example.com/subscriber/mastersplinter/';
 
 		// Test role-based author base disabled.
-		$link = ba_eas_author_link( $author_link, $this->single_user_id );
+		$link = ba_eas_author_link( $author_link, self::$user_id );
 		$this->assertEquals( $author_link, $link );
 
 		ba_eas()->do_role_based = true;
 
 		// Test role-based author based enabled, but no EAS author base.
-		$link = ba_eas_author_link( $author_link, $this->single_user_id );
+		$link = ba_eas_author_link( $author_link, self::$user_id );
 		$this->assertEquals( $author_link, $link );
 
 		// Test role-based author based enabled, user is subscriber.
-		$link = ba_eas_author_link( $role_based_author_link, $this->single_user_id );
+		$link = ba_eas_author_link( $role_based_author_link, self::$user_id );
 		$this->assertEquals( $author_link_subscriber, $link );
 
 		// Test role-based author based enabled, role slug doesn't exist.
 		ba_eas()->role_slugs = array();
-		$link = ba_eas_author_link( $role_based_author_link, $this->single_user_id );
+		$link = ba_eas_author_link( $role_based_author_link, self::$user_id );
 		$this->assertEquals( $author_link_author, $link );
 
 		// Test role-based author based enabled, role slug doesn't exist, custom author base.
 		ba_eas()->author_base = 'ninja';
-		$link = ba_eas_author_link( $role_based_author_link, $this->single_user_id );
+		$link = ba_eas_author_link( $role_based_author_link, self::$user_id );
 		$this->assertEquals( $author_link_ninja, $link );
 
 		ba_eas()->remove_front = true;
 
 		$this->set_permalink_structure( '/archives/%post_id%/' );
-		$link = ba_eas_author_link( 'http://example.com/archives/author/mastersplinter/', $this->single_user_id );
+		$link = ba_eas_author_link( 'http://example.com/archives/author/mastersplinter/', self::$user_id );
 		$this->assertEquals( 'http://example.com/author/mastersplinter/', $link );
 	}
 
@@ -703,9 +740,10 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		$this->assertEquals( 'no-WP_User', ba_eas_template_include( 'no-WP_User' ) );
 
-		$GLOBALS['wp_query']->queried_object = get_userdata( $this->single_user_id );
+		$user_id = self::$user_id;
+		$GLOBALS['wp_query']->queried_object = get_userdata( $user_id );
 		$this->assertEquals( 'author-mastersplinter.php', ba_eas_template_include( 'author-mastersplinter.php' ) );
-		$this->assertEquals( "author-{$this->single_user_id}.php", ba_eas_template_include( "author-{$this->single_user_id}.php" ) );
+		$this->assertEquals( "author-{$user_id}.php", ba_eas_template_include( "author-{$user_id}.php" ) );
 
 		$role_template         = TEMPLATEPATH . '/author-subscriber.php';
 		$role_slug_template    = TEMPLATEPATH . '/author-deshi.php';
@@ -782,16 +820,16 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	public function test_ba_eas_get_user_role() {
 
 		// Passed roles array.
-		$role = ba_eas_get_user_role( array( 'administrator', 'foot-soldier' ), $this->single_user_id );
+		$role = ba_eas_get_user_role( array( 'administrator', 'foot-soldier' ), self::$user_id );
 		$this->assertEquals( 'administrator', $role );
 
 		// No passed roles array.
-		$role = ba_eas_get_user_role( array(), $this->single_user_id );
+		$role = ba_eas_get_user_role( array(), self::$user_id );
 		$this->assertEquals( 'subscriber', $role );
 
 		// No passed roles array.
 		add_filter( 'ba_eas_get_user_role', array( $this, 'user_role_filter' ) );
-		$role = ba_eas_get_user_role( array(), $this->single_user_id );
+		$role = ba_eas_get_user_role( array(), self::$user_id );
 		$this->assertEquals( 'test', $role );
 		remove_filter( 'ba_eas_get_user_role', array( $this, 'user_role_filter' ) );
 	}
