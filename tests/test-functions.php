@@ -155,6 +155,11 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 			'ID'            => self::$user_id,
 			'user_nicename' => 'mastersplinter',
 		) );
+
+		// Reset the `_wpnonce` to empty.
+		$_REQUEST = array(
+			'_wpnonce' => '',
+		);
 	}
 
 	/**
