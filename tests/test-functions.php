@@ -171,6 +171,30 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Resets the user data for all the turtles.
+	 *
+	 * @since 1.6.0
+	 */
+	public function reset_turtle_data() {
+		wp_update_user( array(
+			'ID'            => self::$tmnt_ids['leo'],
+			'user_nicename' => 'leonardo',
+		) );
+		wp_update_user( array(
+			'ID'            => self::$tmnt_ids['raph'],
+			'user_nicename' => 'raphael'
+		) );
+		wp_update_user( array(
+			'ID'            => self::$tmnt_ids['donnie'],
+			'user_nicename' => 'donatello',
+		) );
+		wp_update_user( array(
+			'ID'            => self::$tmnt_ids['mikey'],
+			'user_nicename' => 'michelangelo',
+		) );
+	}
+
+	/**
 	 * Test for `ba_eas_do_auto_update()`.
 	 *
 	 * @since 1.1.0
