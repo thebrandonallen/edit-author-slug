@@ -226,13 +226,10 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	public function test_ba_eas_do_bulk_update() {
 
 		// True tests.
-		$this->assertTrue( ba_eas_do_bulk_update( '1' ) );
 		$this->assertTrue( ba_eas_do_bulk_update( true ) );
 
 		// False tests.
-		$this->assertFalse( ba_eas_do_bulk_update( '0' ) );
 		$this->assertFalse( ba_eas_do_bulk_update( false ) );
-		$this->assertFalse( ba_eas_do_bulk_update( 'ninja' ) );
 	}
 
 	/**
