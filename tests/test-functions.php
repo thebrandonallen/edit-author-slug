@@ -319,58 +319,12 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_auto_update_user_nicename_bulk() {
 
+		// Set a valid nonce.
 		$_REQUEST = array(
 			'_wpnonce' => wp_create_nonce( 'edit-author-slug-options' ),
 		);
 
-		ba_eas()->default_user_nicename = 'firstlast';
-
-		ba_eas_auto_update_user_nicename_bulk( '1' );
-
-		$leo = get_userdata( self::$tmnt_ids['leo'] );
-		$this->assertEquals( 'leonardo-hamato', $leo->user_nicename );
-
-		$raph = get_userdata( self::$tmnt_ids['raph'] );
-		$this->assertEquals( 'raphael-hamato', $raph->user_nicename );
-
-		$donnie = get_userdata( self::$tmnt_ids['donnie'] );
-		$this->assertEquals( 'donatello-hamato', $donnie->user_nicename );
-
-		$mikey = get_userdata( self::$tmnt_ids['mikey'] );
-		$this->assertEquals( 'michelangelo-hamato', $mikey->user_nicename );
-
-		ba_eas()->default_user_nicename = 'nickname';
-
-		ba_eas_auto_update_user_nicename_bulk( '1' );
-
-		$leo = get_userdata( self::$tmnt_ids['leo'] );
-		$this->assertEquals( 'leo', $leo->user_nicename );
-
-		$raph = get_userdata( self::$tmnt_ids['raph'] );
-		$this->assertEquals( 'raph', $raph->user_nicename );
-
-		$donnie = get_userdata( self::$tmnt_ids['donnie'] );
-		$this->assertEquals( 'donnie', $donnie->user_nicename );
-
-		$mikey = get_userdata( self::$tmnt_ids['mikey'] );
-		$this->assertEquals( 'mikey', $mikey->user_nicename );
-
-		ba_eas()->default_user_nicename = 'firstlast';
-
-		ba_eas_auto_update_user_nicename_bulk();
-
-		$leo = get_userdata( self::$tmnt_ids['leo'] );
-		$this->assertEquals( 'leo', $leo->user_nicename );
-
-		$raph = get_userdata( self::$tmnt_ids['raph'] );
-		$this->assertEquals( 'raph', $raph->user_nicename );
-
-		$donnie = get_userdata( self::$tmnt_ids['donnie'] );
-		$this->assertEquals( 'donnie', $donnie->user_nicename );
-
-		$mikey = get_userdata( self::$tmnt_ids['mikey'] );
-		$this->assertEquals( 'mikey', $mikey->user_nicename );
-
+		// Set the `$_POST` key.
 		$_POST = array(
 			'_ba_eas_bulk_update_structure' => 'firstlast',
 		);
@@ -389,25 +343,31 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$mikey = get_userdata( self::$tmnt_ids['mikey'] );
 		$this->assertEquals( 'michelangelo-hamato', $mikey->user_nicename );
 
-		$_POST = array(
-			'_ba_eas_bulk_update_structure' => 'nickname',
-		);
+		// Reset the turtle data.
+		$this->reset_turtle_data();
+	}
 
-		add_filter( 'ba_eas_auto_update_user_nicename_bulk_user_ids', '__return_empty_array' );
+	/**
+	 * Test for `ba_eas_auto_update_user_nicename_bulk()` when we're not bulk updating.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_auto_update_user_nicename_bulk
+	 */
+	public function test_ba_eas_auto_update_user_nicename_bulk_not_bulk() {
+		$this->assertFalse( ba_eas_auto_update_user_nicename_bulk( false ) );
+	}
+
+	/**
+	 * Test for `ba_eas_auto_update_user_nicename_bulk()` when the nonce is invalid.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_auto_update_user_nicename_bulk
+	 * @expectedException WPDieException
+	 */
+	public function test_ba_eas_auto_update_user_nicename_bulk_invalid_nonce() {
 		ba_eas_auto_update_user_nicename_bulk( true );
-		remove_filter( 'ba_eas_auto_update_user_nicename_bulk_user_ids', '__return_empty_array' );
-
-		$leo = get_userdata( self::$tmnt_ids['leo'] );
-		$this->assertEquals( 'leonardo-hamato', $leo->user_nicename );
-
-		$raph = get_userdata( self::$tmnt_ids['raph'] );
-		$this->assertEquals( 'raphael-hamato', $raph->user_nicename );
-
-		$donnie = get_userdata( self::$tmnt_ids['donnie'] );
-		$this->assertEquals( 'donatello-hamato', $donnie->user_nicename );
-
-		$mikey = get_userdata( self::$tmnt_ids['mikey'] );
-		$this->assertEquals( 'michelangelo-hamato', $mikey->user_nicename );
 	}
 
 	/**
@@ -420,6 +380,11 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_auto_update_user_nicename_bulk_with_bad_id() {
 
+		// Set a valid nonce.
+		$_REQUEST = array(
+			'_wpnonce' => wp_create_nonce( 'edit-author-slug-options' ),
+		);
+
 		ba_eas()->default_user_nicename = 'firstlast';
 
 		add_filter( 'ba_eas_auto_update_user_nicename_bulk_user_ids', array( $this, 'return_bad_id' ) );
@@ -431,6 +396,15 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		$raph = get_user_by( 'id', self::$tmnt_ids['raph'] );
 		$this->assertEquals( 'raphael-hamato', $raph->user_nicename );
+
+		$donnie = get_user_by( 'id', self::$tmnt_ids['donnie'] );
+		$this->assertEquals( 'donatello-hamato', $donnie->user_nicename );
+
+		$mikey = get_user_by( 'id', self::$tmnt_ids['mikey'] );
+		$this->assertEquals( 'michelangelo-hamato', $mikey->user_nicename );
+
+		// Reset the turtle data.
+		$this->reset_turtle_data();
 	}
 
 	/**
@@ -446,6 +420,41 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$ids = (array) $ids;
 		$ids[] = '1234567890';
 		return $ids;
+	}
+
+	/**
+	 * Test for `ba_eas_auto_update_user_nicename_bulk()` when nicename
+	 * structure is submitted via POST request (eg. - on the settings page).
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_auto_update_user_nicename_bulk
+	 */
+	public function test_ba_eas_auto_update_user_nicename_bulk_no_post() {
+
+		// Set a valid nonce.
+		$_REQUEST = array(
+			'_wpnonce' => wp_create_nonce( 'edit-author-slug-options' ),
+		);
+
+		ba_eas()->default_user_nicename = 'firstlast';
+
+		ba_eas_auto_update_user_nicename_bulk( true );
+
+		$leo = get_userdata( self::$tmnt_ids['leo'] );
+		$this->assertEquals( 'leonardo-hamato', $leo->user_nicename );
+
+		$raph = get_userdata( self::$tmnt_ids['raph'] );
+		$this->assertEquals( 'raphael-hamato', $raph->user_nicename );
+
+		$donnie = get_userdata( self::$tmnt_ids['donnie'] );
+		$this->assertEquals( 'donatello-hamato', $donnie->user_nicename );
+
+		$mikey = get_userdata( self::$tmnt_ids['mikey'] );
+		$this->assertEquals( 'michelangelo-hamato', $mikey->user_nicename );
+
+		// Reset the turtle data.
+		$this->reset_turtle_data();
 	}
 
 	/**
