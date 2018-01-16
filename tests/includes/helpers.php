@@ -7,76 +7,6 @@
  */
 
 /**
- * Returns the test slugs.
- *
- * @since 1.0.4
- *
- * @param string $type The slugs type.
- *
- * @return array
- */
-function ba_eas_tests_slugs( $type ) {
-
-	$slugs = array(
-		'default' => array(
-			'administrator' => array(
-				'name' => 'Administrator',
-				'slug' => 'administrator',
-			),
-			'editor' => array(
-				'name' => 'Editor',
-				'slug' => 'editor',
-			),
-			'author' => array(
-				'name' => 'Author',
-				'slug' => 'author',
-			),
-			'contributor' => array(
-				'name' => 'Contributor',
-				'slug' => 'contributor',
-			),
-			'subscriber' => array(
-				'name' => 'Subscriber',
-				'slug' => 'subscriber',
-			),
-		),
-		'custom' => array(
-			'administrator' => array(
-				'name' => 'Administrator',
-				'slug' => 'jonin',
-			),
-			'editor' => array(
-				'name' => 'Editor',
-				'slug' => 'chunin',
-			),
-			'author' => array(
-				'name' => 'Author',
-				'slug' => 'mystic',
-			),
-			'contributor' => array(
-				'name' => 'Contributor',
-				'slug' => 'junior-genin',
-			),
-			'subscriber' => array(
-				'name' => 'Subscriber',
-				'slug' => 'deshi',
-			),
-		),
-	);
-
-	$extra_role = array(
-		'foot-soldier' => array(
-			'name' => 'Foot Soldier',
-			'slug' => 'foot-soldier',
-		),
-	);
-
-	$slugs['extra'] = $slugs['default'] + $extra_role;
-
-	return $slugs[ $type ];
-}
-
-/**
  * Returns the default test slugs.
  *
  * @since 1.0.4
@@ -84,7 +14,28 @@ function ba_eas_tests_slugs( $type ) {
  * @return array
  */
 function ba_eas_tests_slugs_default() {
-	return ba_eas_tests_slugs( 'default' );
+	return array(
+		'administrator' => array(
+			'name' => 'Administrator',
+			'slug' => 'administrator',
+		),
+		'editor' => array(
+			'name' => 'Editor',
+			'slug' => 'editor',
+		),
+		'author' => array(
+			'name' => 'Author',
+			'slug' => 'author',
+		),
+		'contributor' => array(
+			'name' => 'Contributor',
+			'slug' => 'contributor',
+		),
+		'subscriber' => array(
+			'name' => 'Subscriber',
+			'slug' => 'subscriber',
+		),
+	);
 }
 
 /**
@@ -95,7 +46,13 @@ function ba_eas_tests_slugs_default() {
  * @return array
  */
 function ba_eas_tests_slugs_custom() {
-	return ba_eas_tests_slugs( 'custom' );
+	$slugs                          = ba_eas_tests_slugs_default();
+	$slugs['administrator']['slug'] = 'jonin';
+	$slugs['editor']['slug']        = 'chunin';
+	$slugs['author']['slug']        = 'mystic';
+	$slugs['contributor']['slug']   = 'junior-genin';
+	$slugs['subscriber']['slug']    = 'deshi';
+	return $slugs;
 }
 
 /**
@@ -106,7 +63,12 @@ function ba_eas_tests_slugs_custom() {
  * @return array
  */
 function ba_eas_tests_slugs_extra() {
-	return ba_eas_tests_slugs( 'extra' );
+	return ba_eas_tests_slugs_default() + array(
+		'foot-soldier' => array(
+			'name' => 'Foot Soldier',
+			'slug' => 'foot-soldier',
+		),
+	);
 }
 
 /**
