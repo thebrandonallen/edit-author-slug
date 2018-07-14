@@ -77,7 +77,7 @@ module.exports = function( grunt ) {
 						dest: 'build/',
 						dot: true,
 						expand: true,
-						src: ['**', '!**/.{svn,git}/**'].concat( EAS_EXCLUDED_MISC )
+						src: [ '**', '!**/.{svn,git}/**' ].concat( EAS_EXCLUDED_MISC )
 					}
 				]
 			}
@@ -94,12 +94,12 @@ module.exports = function( grunt ) {
 		jshint: {
 			options: grunt.file.readJSON( '.jshintrc' ),
 			grunt: {
-				src: ['Gruntfile.js']
+				src: [ 'Gruntfile.js' ]
 			},
 			core: {
 				expand: true,
 				cwd: SOURCE_DIR,
-				src: [EAS_JS].concat( EAS_EXCLUDED_JS ),
+				src: [ EAS_JS ].concat( EAS_EXCLUDED_JS ),
 
 				/**
 				 * Limit JSHint's run to a single specified file:
@@ -143,7 +143,7 @@ module.exports = function( grunt ) {
 			},
 			core: {
 				files: {
-					src: [SOURCE_DIR + EAS_JS]
+					src: [ SOURCE_DIR + EAS_JS ]
 				}
 			}
 		},
@@ -162,7 +162,7 @@ module.exports = function( grunt ) {
 					},
 					processPot: function( pot ) {
 						var translation, // Exclude meta data from pot.
-							excluded_meta = [
+							excludedMeta = [
 								'Plugin Name of the plugin/theme',
 								'Plugin URI of the plugin/theme',
 								'Author of the plugin/theme',
@@ -171,7 +171,7 @@ module.exports = function( grunt ) {
 
 						for ( translation in pot.translations[''] ) {
 							if ( 'undefined' !== typeof pot.translations[''][ translation ].comments.extracted ) {
-								if ( excluded_meta.indexOf( pot.translations[''][ translation ].comments.extracted ) >= 0 ) {
+								if ( 0 <= excludedMeta.indexOf( pot.translations[''][ translation ].comments.extracted ) ) {
 									console.log( 'Excluded meta: ' + pot.translations[''][ translation ].comments.extracted );
 									delete pot.translations[''][ translation ];
 								}
@@ -187,11 +187,11 @@ module.exports = function( grunt ) {
 		phpunit: {
 			default: {
 				cmd: 'phpunit',
-				args: ['-c', 'phpunit.xml.dist']
+				args: [ '-c', 'phpunit.xml.dist' ]
 			},
 			codecoverage: {
 				cmd: 'phpunit',
-				args: ['-c', 'phpunit.xml.dist', '--coverage-clover=coverage.clover' ]
+				args: [ '-c', 'phpunit.xml.dist', '--coverage-clover=coverage.clover' ]
 			}
 		},
 		'string-replace': {
@@ -200,7 +200,7 @@ module.exports = function( grunt ) {
 					'edit-author-slug.php': 'edit-author-slug.php'
 				},
 				options: {
-					replacements: [{
+					replacements: [ {
 						pattern: /(const\sVERSION.*)'(.*)';/gm, // For plugin version variable
 						replacement: '$1\'<%= pkg.version %>\';'
 					},
@@ -211,7 +211,7 @@ module.exports = function( grunt ) {
 					{
 						pattern: /(\*\s@version\s+).*/gm, // For plugin header
 						replacement: '$1<%= pkg.version %>'
-					}]
+					} ]
 				}
 			},
 			build: {
@@ -222,7 +222,7 @@ module.exports = function( grunt ) {
 					'readme.txt': 'readme.txt'
 				},
 				options: {
-					replacements: [{
+					replacements: [ {
 						pattern: /(const\sVERSION.*)'(.*)';/gm, // For plugin version variable
 						replacement: '$1\'<%= pkg.version %>\';'
 					},
@@ -245,7 +245,7 @@ module.exports = function( grunt ) {
 					{
 						pattern: /(\*\sRelease\sdate:\s)(TBD|TBA)$/gm,
 						replacement: '$1<%= grunt.template.today("yyyy-mm-dd") %>'
-					}]
+					} ]
 				}
 			},
 			readme: {
@@ -253,10 +253,10 @@ module.exports = function( grunt ) {
 					'README.md': 'README.md'
 				},
 				options: {
-					replacements: [{
+					replacements: [ {
 						pattern: /# Edit Author Slug #/gim,
 						replacement: '# Edit Author Slug [![Build Status](https://travis-ci.org/thebrandonallen/edit-author-slug.svg?branch=master)](https://travis-ci.org/thebrandonallen/edit-author-slug) #'
-					}]
+					} ]
 				}
 			}
 		},
@@ -267,7 +267,7 @@ module.exports = function( grunt ) {
 				extDot: 'last',
 				expand: true,
 				ext: '.min.js',
-				src: [EAS_JS].concat( EAS_EXCLUDED_JS )
+				src: [ EAS_JS ].concat( EAS_EXCLUDED_JS )
 			},
 			options: {
 				banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
@@ -277,8 +277,8 @@ module.exports = function( grunt ) {
 		},
 		watch: {
 			js: {
-				files: ['Gruntfile.js'],
-				tasks: ['jshint']
+				files: [ 'Gruntfile.js' ],
+				tasks: [ 'jshint' ]
 			}
 		},
 		wp_readme_to_markdown: {
@@ -297,18 +297,18 @@ module.exports = function( grunt ) {
 
 	// PHPUnit test task.
 	grunt.registerMultiTask( 'phpunit', 'Runs PHPUnit tests, including the multisite tests.', function() {
-		grunt.util.spawn( {
+		grunt.util.spawn({
 			cmd: this.data.cmd,
 			args: this.data.args,
 			opts: { stdio: 'inherit' }
 		}, this.async() );
-	} );
+	});
 
 	// Travis CI Tasks.
-	grunt.registerTask( 'travis:phpunit', ['phpunit:default'] );
-	grunt.registerTask( 'travis:codecoverage', 'Runs PHPUnit tasks with code-coverage generation.', ['phpunit:codecoverage'] );
+	grunt.registerTask( 'travis:phpunit', [ 'phpunit:default' ] );
+	grunt.registerTask( 'travis:codecoverage', 'Runs PHPUnit tasks with code-coverage generation.', [ 'phpunit:codecoverage' ] );
 
 	// Register the default tasks.
-	grunt.registerTask( 'default', ['watch'] );
+	grunt.registerTask( 'default', [ 'watch' ] );
 
 };
