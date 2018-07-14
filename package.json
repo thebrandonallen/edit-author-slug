@@ -4,7 +4,7 @@
   "main": "Gruntfile.js",
   "author": "Brandon Allen",
   "description": "Allows an admin (or capable user) to edit the author slug of a user, and change the author base.",
-  "license": "GPL-2.0",
+  "license": "GPL-2.0-or-later",
   "repository": "github:thebrandonallen/edit-author-slug",
   "devDependencies": {
     "eslint": "~4.19.0",
