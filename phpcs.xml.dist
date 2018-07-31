@@ -14,13 +14,13 @@
 		</properties>
 	</rule>
 
-	<rule ref="WordPress.XSS.EscapeOutput">
+	<rule ref="WordPress.Security.EscapeOutput">
 		<properties>
 			<property name="customEscapingFunctions" type="array" value="ba_eas_esc_nicename" />
 		</properties>
 	</rule>
 
-	<rule ref="WordPress.CSRF.NonceVerification">
+	<rule ref="WordPress.Security.NonceVerification">
 		<properties>
 			<property name="customSanitizingFunctions" type="array" value="ba_eas_sanitize_nicename,ba_eas_sanitize_author_base" />
 		</properties>
