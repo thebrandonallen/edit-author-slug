@@ -719,7 +719,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_admin_setting_callback_role_slugs();
 		$output = ob_get_clean();
 
-		$input = '<input name="_ba_eas_role_slugs[administrator][slug]" id="eas--role-slugs-administrator-slug" type="text" value="administrator" class="regular-text code" />';
+		$input = '<input name="_ba_eas_role_slugs[administrator][slug]" id="eas-role-slugs-administrator-slug" type="text" value="administrator" class="regular-text code" />';
 		$label = '>Administrator</label';
 		$this->assertContains( $input, $output );
 		$this->assertContains( $label, $output );
