@@ -35,22 +35,30 @@ env:
 matrix:
   fast_finish: true
   include:
-    - php: 5.2
+    - php: 5.3
       env: WP_VERSION=master
       dist: precise
-    - php: 5.2
+    - php: 5.3
       env: WP_VERSION=4.9
       dist: precise
-    - php: 5.2
+    - php: 5.3
       env: WP_VERSION=4.8
       dist: precise
-    - php: 5.2
+    - php: 5.3
       env: WP_VERSION=4.7
       dist: precise
-    - php: 7.1
+    - php: 7.2
       env: WP_VERSION=master EAS_TRAVISCI=travis:codecoverage
     - php: nightly
       env: WP_VERSION=master
+    - php: 7.3.0RC2
+      sudo: required
+      dist: xenial
+      services: mysql
+      addons:
+        apt:
+          packages:
+            - libzip4
   exclude:
     - php: 7.2
       env: WP_VERSION=4.8
@@ -58,13 +66,14 @@ matrix:
       env: WP_VERSION=4.7
   allow_failures:
     - php: nightly
+    - php: 7.3.0RC2
     - env: WP_VERSION=master EAS_TRAVISCI=travis:codecoverage
 
 before_install:
   - bash bin/install-wp-tests-travis.sh wordpress_test root '' localhost $WP_VERSION
   - npm --version
   - node --version
-  - nvm install 6
+  - nvm install 8
   - node --version
   - npm --version
   - npm install -g grunt-cli
@@ -98,17 +107,13 @@ before_script:
     # Install the specified version of PHPUnit depending on the PHP version:
     if [[ "$EAS_TRAVISCI" == "travis:phpunit" ]]; then
       case "$TRAVIS_PHP_VERSION" in
-        7.2|7.1|7.0|nightly)
-          echo "Using PHPUnit 6.1"
-          composer global require "phpunit/phpunit=6.1.*"
+        7.3.0RC2|7.2|7.1|7.0|nightly)
+          echo "Using PHPUnit 6.x"
+          travis_retry composer global require "phpunit/phpunit:^6"
           ;;
         5.6|5.5|5.4|5.3)
-          echo "Using PHPUnit 4.8"
-          composer global require "phpunit/phpunit=4.8.*"
-          ;;
-        5.2)
-          # Do nothing, use default PHPUnit 3.6.x
-          echo "Using default PHPUnit, hopefully 3.6"
+          echo "Using PHPUnit 4.x"
+          travis_retry composer global require "phpunit/phpunit:^4"
           ;;
         *)
           echo "No PHPUnit version handling for PHP version $TRAVIS_PHP_VERSION"

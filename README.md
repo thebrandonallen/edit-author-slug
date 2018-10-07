@@ -3,7 +3,7 @@
 **Tags:** author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles  
 **Requires at least:** 4.7  
 **Tested up to:** 4.9.7  
-**Requires PHP:** 5.2.4  
+**Requires PHP:** 5.3  
 **Stable tag:** 1.5.2  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/old-licenses/gpl-2.0.html  
