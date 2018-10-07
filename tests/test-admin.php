@@ -1044,14 +1044,15 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_default_user_nicename_options_list() {
 		$options = array(
-			'username'    => __( 'username (Default)',    'edit-author-slug' ),
-			'nickname'    => __( 'nickname',              'edit-author-slug' ),
-			'displayname' => __( 'displayname',           'edit-author-slug' ),
-			'firstname'   => __( 'firstname',             'edit-author-slug' ),
-			'lastname'    => __( 'lastname',              'edit-author-slug' ),
-			'firstlast'   => __( 'firstname-lastname',    'edit-author-slug' ),
-			'lastfirst'   => __( 'lastname-firstname',    'edit-author-slug' ),
-			'userid'      => __( 'userid (Experimental)', 'edit-author-slug' ),
+			'username'    => __( 'username (Default)', 'edit-author-slug' ),
+			'nickname'    => __( 'nickname', 'edit-author-slug' ),
+			'displayname' => __( 'displayname', 'edit-author-slug' ),
+			'firstname'   => __( 'firstname', 'edit-author-slug' ),
+			'lastname'    => __( 'lastname', 'edit-author-slug' ),
+			'firstlast'   => __( 'firstname-lastname', 'edit-author-slug' ),
+			'lastfirst'   => __( 'lastname-firstname', 'edit-author-slug' ),
+			'userid'      => __( 'userid', 'edit-author-slug' ),
+			'hash'        => __( 'hash', 'edit-author-slug' ),
 		);
 
 		$this->assertSame( $options, ba_eas_default_user_nicename_options_list() );
