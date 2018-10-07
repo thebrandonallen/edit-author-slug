@@ -47,7 +47,7 @@ matrix:
     - php: 5.3
       env: WP_VERSION=4.7
       dist: precise
-    - php: 7.2
+    - php: 7.1
       env: WP_VERSION=trunk EAS_TRAVISCI=travis:codecoverage
     - php: nightly
       env: WP_VERSION=trunk
