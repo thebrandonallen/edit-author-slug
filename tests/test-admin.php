@@ -145,40 +145,40 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		// Test for `masterplinter`.
 		$this->assertContains( '<label title="mastersplinter">', $output );
-		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="mastersplinter" autocapitalize="none" autocorrect="off" maxlength="50" checked=\'checked\'>', $output );
+		$this->assertContains( '<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="mastersplinter" autocapitalize="none" autocorrect="off" maxlength="50" checked=\'checked\'>', $output );
 		$this->assertContains( '<span>mastersplinter</span>', $output );
 
 		// Test for `master-splinter`.
 		$this->assertContains( '<label title="master-splinter">', $output );
-		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="master-splinter" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
+		$this->assertContains( '<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="master-splinter" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span>master-splinter</span>', $output );
 
 		// Test for `master`.
 		$this->assertContains( '<label title="master">', $output );
-		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="master" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
+		$this->assertContains( '<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="master" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span>master</span>', $output );
 
 		// Test for `splinter`.
 		$this->assertContains( '<label title="splinter">', $output );
-		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="splinter" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
+		$this->assertContains( '<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="splinter" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span>splinter</span>', $output );
 
 		// Test for `splinter-master`.
 		$this->assertContains( '<label title="splinter-master">', $output );
-		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="splinter-master" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
+		$this->assertContains( '<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="splinter-master" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span>splinter-master</span>', $output );
 
 		// Test for `userid`.
 		$this->assertContains( '<label title="' . self::$user_id . '">', $output );
-		$this->assertContains( '<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="' . self::$user_id . '" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
+		$this->assertContains( '<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="' . self::$user_id . '" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span>' . self::$user_id . '</span>', $output );
 
 		// Test custom author slug.
 		$this->assertContains( '<label for="ba_eas_author_slug_custom_radio">', $output );
-		$this->assertContains( '<input type="radio" id="ba_eas_author_slug_custom_radio" name="ba_eas_author_slug" value="\c\u\s\t\o\m" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
+		$this->assertContains( '<input type="radio" class="eas-author-slug-custom-radio" name="ba_eas_author_slug" value="\c\u\s\t\o\m" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span class="screen-reader-text">Enter a custom author slug in the following field</span>', $output );
 		$this->assertContains( '<label for="ba_eas_author_slug_custom" class="screen-reader-text">Custom author slug:</label>', $output );
-		$this->assertContains( '<input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="mastersplinter" class="regular-text" />', $output );
+		$this->assertContains( '<input type="text" name="ba_eas_author_slug_custom" class="eas-author-slug-custom" value="mastersplinter" class="regular-text" />', $output );
 	}
 
 	/**
@@ -619,7 +619,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_admin_setting_callback_author_base();
 		$output = ob_get_clean();
 
-		$input = '<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="author" class="regular-text code" />';
+		$input = '<input id="eas-author-base" name="_ba_eas_author_base" type="text" value="author" class="regular-text code" />';
 		$label = '<em>Defaults to &#039;author&#039;</em>';
 		$front = '<span class="eas-demo-author-base-front"></span>';
 
@@ -642,7 +642,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_admin_setting_callback_author_base();
 		$output = ob_get_clean();
 
-		$input = '<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="author" class="regular-text code" />';
+		$input = '<input id="eas-author-base" name="_ba_eas_author_base" type="text" value="author" class="regular-text code" />';
 		$label = '<em>Defaults to &#039;author&#039;</em>';
 		$front = '<span class="eas-demo-author-base-front">test/</span>';
 
@@ -663,7 +663,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_admin_setting_callback_remove_front();
 		$output = ob_get_clean();
 
-		$this->assertContains( '<input name="_ba_eas_remove_front" id="_ba_eas_remove_front" value="1" type="checkbox" />', $output );
+		$this->assertContains( '<input name="_ba_eas_remove_front" id="eas-remove-front" value="1" type="checkbox" />', $output );
 	}
 
 	/**
@@ -693,7 +693,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_admin_setting_callback_do_role_based();
 		$output = ob_get_clean();
 
-		$input = '<input class="eas-checkbox" name="_ba_eas_do_role_based" id="_ba_eas_do_role_based" value="1" type="checkbox" />';
+		$input = '<input class="eas-checkbox" name="_ba_eas_do_role_based" id="eas-do-role-based" value="1" type="checkbox" />';
 		$label = 'Set user&#039;s Author Base according to their role.';
 
 		$this->assertContains( $input, $output );
@@ -716,7 +716,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_admin_setting_callback_role_slugs();
 		$output = ob_get_clean();
 
-		$input = '<input name="_ba_eas_role_slugs[administrator][slug]" id="_ba_eas_role_slugs[administrator][slug]" type="text" value="administrator" class="regular-text code" />';
+		$input = '<input name="_ba_eas_role_slugs[administrator][slug]" id="eas--role-slugs-administrator-slug" type="text" value="administrator" class="regular-text code" />';
 		$label = '>Administrator</label';
 		$this->assertContains( $input, $output );
 		$this->assertContains( $label, $output );
@@ -916,7 +916,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_admin_setting_callback_do_auto_update();
 		$output = ob_get_clean();
 
-		$input = '<input class="eas-checkbox" name="_ba_eas_do_auto_update" id="_ba_eas_do_auto_update" value="1" type="checkbox" />';
+		$input = '<input class="eas-checkbox" name="_ba_eas_do_auto_update" id="eas-do-auto-update" value="1" type="checkbox" />';
 		$label = 'Automatically update Author Slug when a user updates their profile.';
 
 		$this->assertContains( $input, $output );
@@ -935,7 +935,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_admin_setting_callback_default_user_nicename();
 		$output = ob_get_clean();
 
-		$this->assertContains( '<select id="_ba_eas_default_user_nicename" name="_ba_eas_default_user_nicename">', $output );
+		$this->assertContains( '<select id="eas-default-user-nicename" name="_ba_eas_default_user_nicename">', $output );
 	}
 
 	/**
@@ -953,7 +953,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_admin_setting_callback_default_user_nicename();
 		$output = ob_get_clean();
 
-		$this->assertContains( '<select id="_ba_eas_default_user_nicename" name="_ba_eas_default_user_nicename">', $output );
+		$this->assertContains( '<select id="eas-default-user-nicename" name="_ba_eas_default_user_nicename">', $output );
 		ba_eas()->default_user_nicename = $old_default_user_nicename;
 	}
 
@@ -984,7 +984,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_admin_setting_callback_bulk_update();
 		$output = ob_get_clean();
 
-		$input = '<input class="eas-checkbox" name="_ba_eas_bulk_update" id="_ba_eas_bulk_update" value="1" type="checkbox" />';
+		$input = '<input class="eas-checkbox" name="_ba_eas_bulk_update" id="eas-bulk-update" value="1" type="checkbox" />';
 		$label = 'Update all users according to the below Author Slug setting. This will only be run after clicking &quot;Save Changes&quot;.';
 
 		$this->assertContains( $input, $output );
@@ -1003,7 +1003,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_admin_setting_callback_bulk_update_structure();
 		$output = ob_get_clean();
 
-		$this->assertContains( '<select id="_ba_eas_bulk_update_structure" name="_ba_eas_bulk_update_structure">', $output );
+		$this->assertContains( '<select id="eas-bulk-update-structure" name="_ba_eas_bulk_update_structure">', $output );
 	}
 
 	/**
@@ -1022,7 +1022,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_admin_setting_callback_bulk_update_structure();
 		$output = ob_get_clean();
 
-		$this->assertContains( '<select id="_ba_eas_bulk_update_structure" name="_ba_eas_bulk_update_structure">', $output );
+		$this->assertContains( '<select id="eas-bulk-update-structure" name="_ba_eas_bulk_update_structure">', $output );
 		ba_eas()->default_user_nicename = $old_default_user_nicename;
 	}
 

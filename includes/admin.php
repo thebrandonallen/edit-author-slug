@@ -80,17 +80,17 @@ function ba_eas_show_user_nicename( $user ) {
 					}
 				?>
 				<label title="<?php echo ba_eas_esc_nicename( $item ); ?>">
-					<input type="radio" id="ba_eas_author_slug" name="ba_eas_author_slug" value="<?php echo ba_eas_esc_nicename( $item ); ?>" autocapitalize="none" autocorrect="off" maxlength="50"<?php echo $checked_text; ?>>
+					<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="<?php echo ba_eas_esc_nicename( $item ); ?>" autocapitalize="none" autocorrect="off" maxlength="50"<?php echo $checked_text; ?>>
 					<span><?php echo ba_eas_esc_nicename( $item ); ?></span>
 				</label><br />
 				<?php endforeach; ?>
 				<label for="ba_eas_author_slug_custom_radio">
-					<input type="radio" id="ba_eas_author_slug_custom_radio" name="ba_eas_author_slug" value="\c\u\s\t\o\m" autocapitalize="none" autocorrect="off" maxlength="50"<?php checked( $checked ); ?>>
+					<input type="radio" class="eas-author-slug-custom-radio" name="ba_eas_author_slug" value="\c\u\s\t\o\m" autocapitalize="none" autocorrect="off" maxlength="50"<?php checked( $checked ); ?>>
 					<?php esc_html_e( 'Custom:', 'edit-author-slug' ); ?>
 					<span class="screen-reader-text"><?php esc_html_e( 'Enter a custom author slug in the following field', 'edit-author-slug' ); ?></span>
 				</label>
 				<label for="ba_eas_author_slug_custom" class="screen-reader-text"><?php esc_html_e( 'Custom author slug:', 'edit-author-slug' ); ?></label>
-				<input type="text" name="ba_eas_author_slug_custom" id="ba_eas_author_slug_custom" value="<?php echo ba_eas_esc_nicename( $nicename ); ?>" class="regular-text" />
+				<input type="text" name="ba_eas_author_slug_custom" class="eas-author-slug-custom" value="<?php echo ba_eas_esc_nicename( $nicename ); ?>" class="regular-text" />
 				</fieldset>
 			</td>
 		</tr></tbody>
@@ -433,7 +433,7 @@ function ba_eas_register_admin_settings() {
 		'edit-author-slug',
 		'ba_eas_author_base',
 		array(
-			'label_for' => '_ba_eas_author_base',
+			'label_for' => 'eas-author-base',
 		)
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_author_base', 'ba_eas_sanitize_author_base' );
@@ -496,7 +496,7 @@ function ba_eas_register_admin_settings() {
 		'edit-author-slug',
 		'ba_eas_auto_update',
 		array(
-			'label_for' => '_ba_eas_default_user_nicename',
+			'label_for' => 'eas-default-user-nicename',
 		)
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_default_user_nicename', 'sanitize_key' );
@@ -527,7 +527,7 @@ function ba_eas_register_admin_settings() {
 		'edit-author-slug',
 		'ba_eas_bulk_update',
 		array(
-			'label_for' => '_ba_eas_bulk_update_structure',
+			'label_for' => 'eas-bulk-update-structure',
 		)
 	);
 	register_setting( 'edit-author-slug', '_ba_eas_bulk_update_structure', '__return_false' );
@@ -575,7 +575,7 @@ function ba_eas_admin_setting_callback_author_base() {
 	}
 ?>
 
-		<input id="_ba_eas_author_base" name="_ba_eas_author_base" type="text" value="<?php echo esc_attr( $author_base ); ?>" class="regular-text code" />
+		<input id="eas-author-base" name="_ba_eas_author_base" type="text" value="<?php echo esc_attr( $author_base ); ?>" class="regular-text code" />
 		<br />
 		<em><?php esc_html_e( "Defaults to 'author'", 'edit-author-slug' ); ?></em>
 		<br /><br />
@@ -603,8 +603,8 @@ function ba_eas_admin_setting_callback_author_base() {
 function ba_eas_admin_setting_callback_remove_front() {
 ?>
 
-		<input name="_ba_eas_remove_front" id="_ba_eas_remove_front" value="1"<?php checked( ba_eas()->remove_front ); ?> type="checkbox" />
-		<label for="_ba_eas_remove_front">
+		<input name="_ba_eas_remove_front" id="eas-remove-front" value="1"<?php checked( ba_eas()->remove_front ); ?> type="checkbox" />
+		<label for="eas-remove-front">
 			<?php esc_html_e( 'Remove the "front" portion of the author permalink structure.', 'edit-author-slug' ); ?>
 		</label>
 
@@ -619,8 +619,8 @@ function ba_eas_admin_setting_callback_remove_front() {
 function ba_eas_admin_setting_callback_do_role_based() {
 ?>
 
-		<input class="eas-checkbox" name="_ba_eas_do_role_based" id="_ba_eas_do_role_based" value="1"<?php checked( ba_eas()->do_role_based ); ?> type="checkbox" />
-		<label for="_ba_eas_do_role_based">
+		<input class="eas-checkbox" name="_ba_eas_do_role_based" id="eas-do-role-based" value="1"<?php checked( ba_eas()->do_role_based ); ?> type="checkbox" />
+		<label for="eas-do-role-based">
 			<?php esc_html_e( "Set user's Author Base according to their role.", 'edit-author-slug' ); ?>
 		</label>
 		<br /><br />
@@ -673,8 +673,8 @@ function ba_eas_admin_setting_callback_role_slugs() {
 		}
 ?>
 
-		<input name="_ba_eas_role_slugs[<?php echo esc_attr( $role ); ?>][slug]" id="_ba_eas_role_slugs[<?php echo esc_attr( $role ); ?>][slug]" type="text" value="<?php echo ba_eas_esc_nicename( $details['slug'] ); ?>" class="regular-text code" />
-		<label for="_ba_eas_role_slugs[<?php echo esc_attr( $role ); ?>][slug]"><?php echo esc_html( translate_user_role( $details['name'] ) ); ?></label><br />
+		<input name="_ba_eas_role_slugs[<?php echo esc_attr( $role ); ?>][slug]" id="eas-role-slugs-<?php echo esc_attr( $role ); ?>-slug" type="text" value="<?php echo ba_eas_esc_nicename( $details['slug'] ); ?>" class="regular-text code" />
+		<label for="eas-role-slugs-<?php echo esc_attr( $role ); ?>-slug"><?php echo esc_html( translate_user_role( $details['name'] ) ); ?></label><br />
 
 <?php
 	}
@@ -738,8 +738,8 @@ function ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs = array(
 function ba_eas_admin_setting_callback_do_auto_update() {
 ?>
 
-		<input class="eas-checkbox" name="_ba_eas_do_auto_update" id="_ba_eas_do_auto_update" value="1"<?php checked( ba_eas()->do_auto_update ); ?> type="checkbox" />
-		<label for="_ba_eas_do_auto_update">
+		<input class="eas-checkbox" name="_ba_eas_do_auto_update" id="eas-do-auto-update" value="1"<?php checked( ba_eas()->do_auto_update ); ?> type="checkbox" />
+		<label for="eas-do-auto-update">
 			<?php esc_html_e( 'Automatically update Author Slug when a user updates their profile.', 'edit-author-slug' ); ?>
 		</label>
 
@@ -766,9 +766,9 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 ?>
 
 		<span class="screen-reader-text"><?php esc_html_e( 'Default author slug options', 'edit-author-slug' ); ?></span>
-		<select id="_ba_eas_default_user_nicename" name="_ba_eas_default_user_nicename">
+		<select id="eas-default-user-nicename" name="_ba_eas_default_user_nicename">
 		<?php foreach ( (array) $options as $id => $item ) : ?>
-			<option id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $id ); ?>"<?php selected( $structure, $id ); ?>><?php echo esc_html( $item ); ?></option>
+			<option value="<?php echo esc_attr( $id ); ?>"<?php selected( $structure, $id ); ?>><?php echo esc_html( $item ); ?></option>
 		<?php endforeach; ?>
 		</select>
 
@@ -800,8 +800,8 @@ function ba_eas_admin_setting_callback_bulk_update_section() {
 function ba_eas_admin_setting_callback_bulk_update() {
 ?>
 
-		<input class="eas-checkbox" name="_ba_eas_bulk_update" id="_ba_eas_bulk_update" value="1" type="checkbox" />
-		<label for="_ba_eas_bulk_update">
+		<input class="eas-checkbox" name="_ba_eas_bulk_update" id="eas-bulk-update" value="1" type="checkbox" />
+		<label for="eas-bulk-update">
 			<?php esc_html_e( 'Update all users according to the below Author Slug setting. This will only be run after clicking "Save Changes".', 'edit-author-slug' ); ?>
 		</label>
 
@@ -828,9 +828,9 @@ function ba_eas_admin_setting_callback_bulk_update_structure() {
 ?>
 
 		<span class="screen-reader-text"><?php esc_html_e( 'Default bulk update author slug options', 'edit-author-slug' ); ?></span>
-		<select id="_ba_eas_bulk_update_structure" name="_ba_eas_bulk_update_structure">
+		<select id="eas-bulk-update-structure" name="_ba_eas_bulk_update_structure">
 		<?php foreach ( (array) $options as $id => $item ) : ?>
-			<option id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $id ); ?>"<?php selected( $structure, $id ); ?>><?php echo esc_html( $item ); ?></option>
+			<option value="<?php echo esc_attr( $id ); ?>"<?php selected( $structure, $id ); ?>><?php echo esc_html( $item ); ?></option>
 		<?php endforeach; ?>
 		</select>
 

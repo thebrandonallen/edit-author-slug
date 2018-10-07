@@ -45,7 +45,7 @@
 			// On click, set the custom author slug input value, to the value of
 			// the radio item that was clicked.
 			item.addEventListener( 'click', function() {
-				if ( 'ba_eas_author_slug_custom_radio' !== item.id ) {
+				if ( ! item.classList.contains( 'eas-author-slug-custom-radio' ) ) {
 					customInput.value = item.value;
 				}
 			});
@@ -53,7 +53,7 @@
 
 		// When the custom author slug input is focused, set the custom radio as selected.
 		customInput.addEventListener( 'focus', function() {
-			document.querySelector( '#ba_eas_author_slug_custom_radio' ).checked = 'checked';
+			document.querySelector( '.eas-author-slug-custom-radio' ).checked = 'checked';
 		});
 	});
 }() );
