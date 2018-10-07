@@ -69,7 +69,8 @@ function ba_eas_show_user_nicename( $user ) {
 			<th scope="row"><?php esc_html_e( 'Author Slug', 'edit-author-slug' ); ?></th>
 			<td>
 				<fieldset><legend class="screen-reader-text"><span><?php esc_html_e( 'Author Slug', 'edit-author-slug' ); ?></span></legend>
-				<?php foreach ( (array) $options as $item ) :
+				<?php
+				foreach ( (array) $options as $item ) :
 
 					// Checked?
 					$checked_text = checked( $item, $nicename, false );
@@ -78,7 +79,7 @@ function ba_eas_show_user_nicename( $user ) {
 					if ( ! empty( $checked_text ) ) {
 						$checked = false;
 					}
-				?>
+					?>
 				<label title="<?php echo ba_eas_esc_nicename( $item ); ?>">
 					<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="<?php echo ba_eas_esc_nicename( $item ); ?>" autocapitalize="none" autocorrect="off" maxlength="50"<?php echo $checked_text; ?>>
 					<span><?php echo ba_eas_esc_nicename( $item ); ?></span>
@@ -182,13 +183,15 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 	 * @param bool   $ascii         True if the nicename contains only characters
 	 *                              that can be converted to allowed ASCII characters.
 	 */
-	$user_nicename = ba_eas_sanitize_nicename( apply_filters(
-		'ba_eas_pre_update_user_nicename',
-		$user_nicename,
-		$user->ID,
-		$raw_nicename,
-		$ascii
-	) );
+	$user_nicename = ba_eas_sanitize_nicename(
+		apply_filters(
+			'ba_eas_pre_update_user_nicename',
+			$user_nicename,
+			$user->ID,
+			$raw_nicename,
+			$ascii
+		)
+	);
 
 	// Reset `$ascii` if the nicename was filtered.
 	if ( $raw_nicename_sanitized !== $user_nicename ) {
@@ -394,7 +397,7 @@ function ba_eas_add_settings_menu() {
  * @since 0.9.0
  */
 function ba_eas_settings_page_html() {
-?>
+	?>
 
 	<div class="wrap">
 
@@ -410,7 +413,7 @@ function ba_eas_settings_page_html() {
 		</form>
 	</div>
 
-<?php
+	<?php
 }
 
 /**
@@ -541,11 +544,11 @@ function ba_eas_register_admin_settings() {
  * @since 0.9.0
  */
 function ba_eas_admin_setting_callback_author_base_section() {
-?>
+	?>
 
 		<p><?php esc_html_e( 'Change your author base to something more fun!', 'edit-author-slug' ); ?></p>
 
-<?php
+	<?php
 }
 
 /**
@@ -554,11 +557,11 @@ function ba_eas_admin_setting_callback_author_base_section() {
  * @since 0.9.0
  */
 function ba_eas_admin_setting_callback_auto_update_section() {
-?>
+	?>
 
 		<p><?php esc_html_e( "Allow Author Slugs to be automatically updated, and set the default Author Slug structure for users. Automatic updating will only occur when a user can't edit Author Slugs on their own.", 'edit-author-slug' ); ?> <br /><strong><em><?php esc_html_e( 'This could have SEO repercussions if users update their profiles frequently, and it will override any manual editing of the Author Slug you may have previously completed.', 'edit-author-slug' ); ?></em></strong></p>
 
-<?php
+	<?php
 }
 
 /**
@@ -575,14 +578,15 @@ function ba_eas_admin_setting_callback_author_base() {
 	if ( ! empty( $front ) ) {
 		$front = trailingslashit( $front );
 	}
-?>
+	?>
 
 		<input id="eas-author-base" name="_ba_eas_author_base" type="text" value="<?php echo esc_attr( $author_base ); ?>" class="regular-text code" />
 		<br />
 		<em><?php esc_html_e( "Defaults to 'author'", 'edit-author-slug' ); ?></em>
 		<br /><br />
 		<strong>Demo:</strong>
-		<em><?php
+		<em>
+		<?php
 			echo sprintf(
 				'%1$s%2$s%3$s%4$s',
 				esc_url( home_url( '/' ) ),
@@ -590,9 +594,10 @@ function ba_eas_admin_setting_callback_author_base() {
 				'<span class="eas-demo-author-base">' . esc_html( $author_base ) . '</span>',
 				esc_html( user_trailingslashit( '/author-slug' ) )
 			);
-		?></em>
+		?>
+		</em>
 
-<?php
+	<?php
 }
 
 /**
@@ -603,14 +608,14 @@ function ba_eas_admin_setting_callback_author_base() {
  * @return void
  */
 function ba_eas_admin_setting_callback_remove_front() {
-?>
+	?>
 
 		<input name="_ba_eas_remove_front" id="eas-remove-front" value="1"<?php checked( ba_eas()->remove_front ); ?> type="checkbox" />
 		<label for="eas-remove-front">
 			<?php esc_html_e( 'Remove the "front" portion of the author permalink structure.', 'edit-author-slug' ); ?>
 		</label>
 
-<?php
+	<?php
 }
 
 /**
@@ -619,14 +624,15 @@ function ba_eas_admin_setting_callback_remove_front() {
  * @since 1.0.0
  */
 function ba_eas_admin_setting_callback_do_role_based() {
-?>
+	?>
 
 		<input class="eas-checkbox" name="_ba_eas_do_role_based" id="eas-do-role-based" value="1"<?php checked( ba_eas()->do_role_based ); ?> type="checkbox" />
 		<label for="eas-do-role-based">
 			<?php esc_html_e( "Set user's Author Base according to their role.", 'edit-author-slug' ); ?>
 		</label>
 		<br /><br />
-		<?php echo sprintf(
+		<?php
+		echo sprintf(
 			/* translators: 1: rewrite tag, 2: rewrite tag demo usage, 3: demo URL using rewrite tag */
 			esc_html__(
 				'Use the %1$s rewrite tag to customize the role-based author base. If you set the author base to "%2$s", the resulting author structure will be something like "%3$s".',
@@ -635,9 +641,10 @@ function ba_eas_admin_setting_callback_do_role_based() {
 			'<code>%ba_eas_author_role%</code>',
 			'<em>cool-people/&#37;ba_eas_author_role&#37;</em>',
 			'<em>http://example.com/cool-people/role-slug/author-slug</em>'
-		); ?>
+		);
+		?>
 
-<?php
+	<?php
 }
 
 /**
@@ -673,12 +680,12 @@ function ba_eas_admin_setting_callback_role_slugs() {
 		if ( empty( $details['slug'] ) ) {
 			$details['slug'] = sanitize_title( translate_user_role( $details['name'] ) );
 		}
-?>
+		?>
 
 		<input name="_ba_eas_role_slugs[<?php echo esc_attr( $role ); ?>][slug]" id="eas-role-slugs-<?php echo esc_attr( $role ); ?>-slug" type="text" value="<?php echo ba_eas_esc_nicename( $details['slug'] ); ?>" class="regular-text code" />
 		<label for="eas-role-slugs-<?php echo esc_attr( $role ); ?>-slug"><?php echo esc_html( translate_user_role( $details['name'] ) ); ?></label><br />
 
-<?php
+		<?php
 	}
 }
 
@@ -713,11 +720,9 @@ function ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs = array(
 			$slug = $defaults[ $role ]['slug'];
 		}
 
-		// Remove the role if we don't have a slug.
+		// Set the role slug if it exists.
 		if ( empty( $slug ) ) {
 			unset( $role_slugs[ $role ] );
-
-		// We made it through, so set the slug.
 		} else {
 			$role_slugs[ $role ]['slug'] = $slug;
 		}
@@ -738,14 +743,14 @@ function ba_eas_admin_setting_sanitize_callback_role_slugs( $role_slugs = array(
  * @since 0.9.0
  */
 function ba_eas_admin_setting_callback_do_auto_update() {
-?>
+	?>
 
 		<input class="eas-checkbox" name="_ba_eas_do_auto_update" id="eas-do-auto-update" value="1"<?php checked( ba_eas()->do_auto_update ); ?> type="checkbox" />
 		<label for="eas-do-auto-update">
 			<?php esc_html_e( 'Automatically update Author Slug when a user updates their profile.', 'edit-author-slug' ); ?>
 		</label>
 
-<?php
+	<?php
 }
 
 /**
@@ -765,7 +770,7 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 
 	// Get the default nicename options.
 	$options = ba_eas_default_user_nicename_options_list();
-?>
+	?>
 
 		<span class="screen-reader-text"><?php esc_html_e( 'Default author slug options', 'edit-author-slug' ); ?></span>
 		<select id="eas-default-user-nicename" name="_ba_eas_default_user_nicename">
@@ -774,7 +779,7 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 		<?php endforeach; ?>
 		</select>
 
-<?php
+	<?php
 }
 
 /**
@@ -785,11 +790,11 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
  * @return void
  */
 function ba_eas_admin_setting_callback_bulk_update_section() {
-?>
+	?>
 
 		<p><?php esc_html_e( 'Update all users at once based on the specified Author Slug structure.', 'edit-author-slug' ); ?></p>
 
-<?php
+	<?php
 }
 
 /**
@@ -800,14 +805,14 @@ function ba_eas_admin_setting_callback_bulk_update_section() {
  * @return void
  */
 function ba_eas_admin_setting_callback_bulk_update() {
-?>
+	?>
 
 		<input class="eas-checkbox" name="_ba_eas_bulk_update" id="eas-bulk-update" value="1" type="checkbox" />
 		<label for="eas-bulk-update">
 			<?php esc_html_e( 'Update all users according to the below Author Slug setting. This will only be run after clicking "Save Changes".', 'edit-author-slug' ); ?>
 		</label>
 
-<?php
+	<?php
 }
 
 /**
@@ -827,7 +832,7 @@ function ba_eas_admin_setting_callback_bulk_update_structure() {
 
 	// Get the default nicename options.
 	$options = ba_eas_default_user_nicename_options_list();
-?>
+	?>
 
 		<span class="screen-reader-text"><?php esc_html_e( 'Default bulk update author slug options', 'edit-author-slug' ); ?></span>
 		<select id="eas-bulk-update-structure" name="_ba_eas_bulk_update_structure">
@@ -836,7 +841,7 @@ function ba_eas_admin_setting_callback_bulk_update_structure() {
 		<?php endforeach; ?>
 		</select>
 
-<?php
+	<?php
 }
 
 /**
@@ -884,16 +889,19 @@ function ba_eas_default_user_nicename_options_list() {
 	 *
 	 * @param array $options An array of of user nicename structure options.
 	 */
-	$options = apply_filters( 'ba_eas_default_user_nicename_options_list', array(
-		'username'    => __( 'username (Default)',    'edit-author-slug' ),
-		'nickname'    => __( 'nickname',              'edit-author-slug' ),
-		'displayname' => __( 'displayname',           'edit-author-slug' ),
-		'firstname'   => __( 'firstname',             'edit-author-slug' ),
-		'lastname'    => __( 'lastname',              'edit-author-slug' ),
-		'firstlast'   => __( 'firstname-lastname',    'edit-author-slug' ),
-		'lastfirst'   => __( 'lastname-firstname',    'edit-author-slug' ),
-		'userid'      => __( 'userid (Experimental)', 'edit-author-slug' ),
-	) );
+	$options = apply_filters(
+		'ba_eas_default_user_nicename_options_list',
+		array(
+			'username'    => __( 'username (Default)', 'edit-author-slug' ),
+			'nickname'    => __( 'nickname', 'edit-author-slug' ),
+			'displayname' => __( 'displayname', 'edit-author-slug' ),
+			'firstname'   => __( 'firstname', 'edit-author-slug' ),
+			'lastname'    => __( 'lastname', 'edit-author-slug' ),
+			'firstlast'   => __( 'firstname-lastname', 'edit-author-slug' ),
+			'lastfirst'   => __( 'lastname-firstname', 'edit-author-slug' ),
+			'userid'      => __( 'userid (Experimental)', 'edit-author-slug' ),
+		)
+	);
 
 	return (array) $options;
 }
@@ -953,13 +961,13 @@ function ba_eas_install() {
 	}
 
 	// Add the options.
-	add_option( '_ba_eas_author_base',           $ba_eas->author_base );
-	add_option( '_ba_eas_db_version',            BA_Edit_Author_Slug::DB_VERSION );
-	add_option( '_ba_eas_do_auto_update',        (int) $ba_eas->do_auto_update );
+	add_option( '_ba_eas_author_base', $ba_eas->author_base );
+	add_option( '_ba_eas_db_version', BA_Edit_Author_Slug::DB_VERSION );
+	add_option( '_ba_eas_do_auto_update', (int) $ba_eas->do_auto_update );
 	add_option( '_ba_eas_default_user_nicename', $ba_eas->default_user_nicename );
-	add_option( '_ba_eas_do_role_based',         (int) $ba_eas->do_role_based );
-	add_option( '_ba_eas_role_slugs',            $ba_eas->role_slugs );
-	add_option( '_ba_eas_remove_front',          (int) $ba_eas->remove_front );
+	add_option( '_ba_eas_do_role_based', (int) $ba_eas->do_role_based );
+	add_option( '_ba_eas_role_slugs', $ba_eas->role_slugs );
+	add_option( '_ba_eas_remove_front', (int) $ba_eas->remove_front );
 }
 
 /**
@@ -975,7 +983,7 @@ function ba_eas_upgrade() {
 	$ba_eas = ba_eas();
 
 	// We're up-to-date, so let's move on.
-	if ( $ba_eas->current_db_version === BA_Edit_Author_Slug::DB_VERSION ) {
+	if ( BA_Edit_Author_Slug::DB_VERSION === $ba_eas->current_db_version ) {
 		return;
 	}
 
@@ -991,10 +999,10 @@ function ba_eas_upgrade() {
 
 	// < 1.0.0.
 	if ( $ba_eas->current_db_version < 133 ) {
-		add_option( '_ba_eas_do_auto_update',        (int) $ba_eas->do_auto_update );
+		add_option( '_ba_eas_do_auto_update', (int) $ba_eas->do_auto_update );
 		add_option( '_ba_eas_default_user_nicename', $ba_eas->default_user_nicename );
-		add_option( '_ba_eas_do_role_based',         (int) $ba_eas->do_role_based );
-		add_option( '_ba_eas_role_slugs',            $ba_eas->role_slugs );
+		add_option( '_ba_eas_do_role_based', (int) $ba_eas->do_role_based );
+		add_option( '_ba_eas_role_slugs', $ba_eas->role_slugs );
 	}
 
 	// < 1.2.0.

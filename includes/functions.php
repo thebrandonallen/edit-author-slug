@@ -45,8 +45,8 @@ function ba_eas_do_bulk_update( $do_bulk = false ) {
 
 	// Sanitize the option value.
 	$retval = ( is_numeric( $do_bulk ) || is_bool( $do_bulk ) )
-			 ? (bool) $do_bulk
-			 : false;
+		? (bool) $do_bulk
+		: false;
 
 	/**
 	 * Filters the return of the `ba_eas_do_bulk_update()`.
@@ -132,10 +132,12 @@ function ba_eas_auto_update_user_nicename( $user_id = 0, $bulk = false, $structu
 	remove_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
 
 	// Update if there's a change.
-	$user_id = wp_update_user( array(
-		'ID'            => $user_id,
-		'user_nicename' => $nicename,
-	) );
+	$user_id = wp_update_user(
+		array(
+			'ID'            => $user_id,
+			'user_nicename' => $nicename,
+		)
+	);
 
 	// Add it back in case other plugins do some updating.
 	add_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
@@ -184,9 +186,11 @@ function ba_eas_auto_update_user_nicename_bulk( $do_bulk = false ) {
 	}
 
 	// Get an array of ids of all users.
-	$users = get_users( array(
-		'fields' => 'ID',
-	) );
+	$users = get_users(
+		array(
+			'fields' => 'ID',
+		)
+	);
 
 	/**
 	 * Filters the array of user ids who will have their user nicenames updated.
@@ -241,7 +245,7 @@ function ba_eas_auto_update_user_nicename_bulk( $do_bulk = false ) {
 		}
 
 		// Run the update.
-		$sql = "
+		$sql     = "
 			UPDATE $wpdb->users
 			SET user_nicename = CASE ID
 			{$when_sql}
@@ -425,32 +429,26 @@ function ba_eas_get_nicename_by_structure( $user_id = 0, $structure = '' ) {
 	switch ( $structure ) {
 
 		case 'username':
-
 			$nicename = $user->user_login;
 			break;
 
 		case 'nickname':
-
 			$nicename = $user->nickname;
 			break;
 
 		case 'displayname':
-
 			$nicename = $user->display_name;
 			break;
 
 		case 'firstname':
-
 			$nicename = $user->first_name;
 			break;
 
 		case 'lastname':
-
 			$nicename = $user->last_name;
 			break;
 
 		case 'firstlast':
-
 			if ( ! empty( $user->first_name ) && ! empty( $user->last_name ) ) {
 				$nicename = $user->first_name . '-' . $user->last_name;
 			}
@@ -458,7 +456,6 @@ function ba_eas_get_nicename_by_structure( $user_id = 0, $structure = '' ) {
 			break;
 
 		case 'lastfirst':
-
 			if ( ! empty( $user->first_name ) && ! empty( $user->last_name ) ) {
 				$nicename = $user->last_name . '-' . $user->first_name;
 			}
@@ -466,10 +463,9 @@ function ba_eas_get_nicename_by_structure( $user_id = 0, $structure = '' ) {
 			break;
 
 		case 'userid':
-
 			$nicename = $user->ID;
 			break;
-	} // End switch().
+	} // End switch.
 
 	// Sanitize and trim the new user nicename.
 	$nicename = ba_eas_trim_nicename( ba_eas_sanitize_nicename( $nicename ) );
@@ -785,11 +781,9 @@ function ba_eas_get_user_role( $roles = array(), $user_id = 0 ) {
 	// Set the default role to empty.
 	$role = '';
 
-	// Grab the first listed role.
+	// Attempt to get the user role. Grab the first role in the array.
 	if ( ! empty( $roles ) && is_array( $roles ) ) {
 		$role = array_shift( $roles );
-
-	// If no roles were passed, try using the user id to get them.
 	} elseif ( ! empty( $user_id ) ) {
 
 		// Get the WP_User object.
@@ -893,9 +887,9 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
 						$bref[ $key ] = $head[ $key ];
 					}
 				}
-			} while ( count( $head_stack ) );
+			} while ( count( $head_stack ) ); // phpcs:ignore Squiz.PHP.DisallowSizeFunctionsInLoops
 		}
 
 		return $base;
 	}
-} // End if().
+} // End if.

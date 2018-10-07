@@ -123,7 +123,7 @@ function ba_eas_update_nicename_cache( $user_id = 0, $old_user_data = '', $new_n
 	if ( empty( $new_nicename ) ) {
 
 		// Get the new nicename.
-		$user = get_userdata( $user_id );
+		$user         = get_userdata( $user_id );
 		$new_nicename = $user->user_nicename;
 	}
 

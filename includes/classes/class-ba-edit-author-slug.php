@@ -263,13 +263,13 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		private function includes() {
 
 			// Load the core functions.
-			require_once( $this->plugin_dir . 'includes/deprecated.php' );
-			require_once( $this->plugin_dir . 'includes/functions.php' );
-			require_once( $this->plugin_dir . 'includes/hooks.php' );
+			require_once $this->plugin_dir . 'includes/deprecated.php';
+			require_once $this->plugin_dir . 'includes/functions.php';
+			require_once $this->plugin_dir . 'includes/hooks.php';
 
 			// Maybe load the admin functions.
 			if ( is_admin() ) {
-				require_once( $this->plugin_dir . 'includes/admin.php' );
+				require_once $this->plugin_dir . 'includes/admin.php';
 			}
 		}
 
@@ -307,8 +307,8 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 
 			// Author Base Actions.
 			add_action( 'after_setup_theme', array( $this, 'set_role_slugs' ) );
-			add_action( 'init',              'ba_eas_wp_rewrite_overrides', 4 );
-			add_action( 'init',              array( $this, 'add_rewrite_tags' ), 20 );
+			add_action( 'init', 'ba_eas_wp_rewrite_overrides', 4 );
+			add_action( 'init', array( $this, 'add_rewrite_tags' ), 20 );
 
 			// Localize.
 			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
