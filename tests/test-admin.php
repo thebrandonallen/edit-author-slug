@@ -112,6 +112,9 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		// Reset the role slugs.
 		ba_eas()->role_slugs = self::$default_role_slugs;
+
+		// Remove any added roles.
+		remove_role( 'ninja' );
 	}
 
 	/**
@@ -745,9 +748,6 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$label = '>Ninja</label';
 		$this->assertContains( $input, $output );
 		$this->assertContains( $label, $output );
-
-		// Remove the ninja role.
-		remove_role( 'ninja' );
 	}
 
 	/**
@@ -899,9 +899,6 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$actual = ba_eas_admin_setting_sanitize_callback_role_slugs( $expected );
 
 		$this->assertEqualSets( $expected, $actual );
-
-		// Remove the `ninja` role.
-		remove_role( 'ninja' );
 	}
 
 	/**
