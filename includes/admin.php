@@ -364,7 +364,9 @@ function ba_eas_show_user_nicename_scripts( $hook_suffix = '' ) {
 	wp_register_script(
 		'edit-author-slug',
 		ba_eas()->plugin_url . "js/edit-author-slug{$min}.js",
-		BA_Edit_Author_Slug::VERSION
+		array(),
+		BA_Edit_Author_Slug::VERSION,
+		true
 	);
 	wp_enqueue_script( 'edit-author-slug' );
 }
