@@ -405,5 +405,23 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			// Add the role-based rewrite tag, and the expected role slugs.
 			add_rewrite_tag( '%ba_eas_author_role%', '(' . implode( '|', array_unique( $role_slugs ) ) . ')' );
 		}
+
+		/**
+		 * Checks if iThemes Security is enabled, and if the Force Unique
+		 * Nickname WordPress Tweak is turned on.
+		 *
+		 * @since 1.6.0
+		 *
+		 * @return bool
+		 */
+		public function is_itsec_force_unique_nickname() {
+			$retval = false;
+
+			if ( class_exists( 'ITSEC_Modules' ) ) {
+				$retval = ITSEC_Modules::get_settings( 'wordpress-tweaks' )['force_unique_nicename'];
+			}
+
+			return (bool) $retval;
+		}
 	}
 endif; // End class BA_Edit_Author_Slug.

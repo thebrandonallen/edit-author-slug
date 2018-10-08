@@ -21,6 +21,16 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 	protected static $default_role_slugs;
 
 	/**
+	 * Set up the main class fixture.
+	 *
+	 * @since 1.6.0
+	 */
+	public static function setUpBeforeClass() {
+		// Load the ITSEC_Modules mock.
+		require_once 'mocks/class-itsec-modules-mock.php';
+	}
+
+	/**
 	 * The admin `setUp` method.
 	 *
 	 * @since 1.1.0
@@ -377,6 +387,17 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 
 		$this->assertContains( $slugs, $GLOBALS['wp_rewrite']->rewritereplace );
 
+	}
+
+	/**
+	 * Test for `BA_Edit_Author_Slug::is_itsec_force_unique_nickname()`.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers BA_Edit_Author_Slug::is_itsec_force_unique_nickname
+	 */
+	public function test_is_itsec_force_unique_nickname() {
+		$this->assertTrue( ba_eas()->is_itsec_force_unique_nickname() );
 	}
 
 	/**
