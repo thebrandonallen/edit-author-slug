@@ -52,6 +52,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 			'role'       => 'administrator',
 			'first_name' => 'Master',
 			'last_name'  => 'Splinter',
+			'nickname'   => 'Sensei',
 		) );
 
 		self::commit_transaction();
@@ -146,32 +147,37 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_show_user_nicename( wp_get_current_user() );
 		$output = ob_get_clean();
 
-		// Test for `masterplinter`.
+		// Test for username (`masterplinter`).
 		$this->assertContains( '<label title="mastersplinter">', $output );
 		$this->assertContains( '<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="mastersplinter" autocapitalize="none" autocorrect="off" maxlength="50" checked=\'checked\'>', $output );
 		$this->assertContains( '<span>mastersplinter</span>', $output );
 
-		// Test for `master-splinter`.
+		// Test for nickname (`sensei`).
+		$this->assertContains( '<label title="sensei">', $output );
+		$this->assertContains( '<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="sensei" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
+		$this->assertContains( '<span>sensei</span>', $output );
+
+		// Test for firstname-lastname (`master-splinter`).
 		$this->assertContains( '<label title="master-splinter">', $output );
 		$this->assertContains( '<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="master-splinter" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span>master-splinter</span>', $output );
 
-		// Test for `master`.
+		// Test for firstname (`master`).
 		$this->assertContains( '<label title="master">', $output );
 		$this->assertContains( '<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="master" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span>master</span>', $output );
 
-		// Test for `splinter`.
+		// Test for lastname (`splinter`).
 		$this->assertContains( '<label title="splinter">', $output );
 		$this->assertContains( '<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="splinter" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span>splinter</span>', $output );
 
-		// Test for `splinter-master`.
+		// Test for lastname-firstname (`splinter-master`).
 		$this->assertContains( '<label title="splinter-master">', $output );
 		$this->assertContains( '<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="splinter-master" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span>splinter-master</span>', $output );
 
-		// Test for `userid`.
+		// Test for userid (`userid`).
 		$this->assertContains( '<label title="' . self::$user_id . '">', $output );
 		$this->assertContains( '<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="' . self::$user_id . '" autocapitalize="none" autocorrect="off" maxlength="50">', $output );
 		$this->assertContains( '<span>' . self::$user_id . '</span>', $output );

@@ -36,6 +36,7 @@ function ba_eas_show_user_nicename( $user ) {
 	// Setup options array.
 	$options = array(
 		'username'    => ba_eas_get_nicename_by_structure( $user->ID, 'username' ),
+		'nickname'    => ba_eas_get_nicename_by_structure( $user->ID, 'nickname' ),
 		'displayname' => ba_eas_get_nicename_by_structure( $user->ID, 'displayname' ),
 		'firstname'   => ba_eas_get_nicename_by_structure( $user->ID, 'firstname' ),
 		'lastname'    => ba_eas_get_nicename_by_structure( $user->ID, 'lastname' ),
