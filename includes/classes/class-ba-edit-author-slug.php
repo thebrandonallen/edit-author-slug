@@ -418,7 +418,8 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			$retval = false;
 
 			if ( class_exists( 'ITSEC_Modules' ) ) {
-				$retval = ITSEC_Modules::get_settings( 'wordpress-tweaks' )['force_unique_nicename'];
+				$tweaks = ITSEC_Modules::get_settings( 'wordpress-tweaks' );
+				$retval = $tweaks['force_unique_nicename'];
 			}
 
 			return (bool) $retval;
