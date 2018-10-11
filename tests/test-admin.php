@@ -62,6 +62,9 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		// Load the admin.
 		require_once( ba_eas()->plugin_dir . 'includes/admin.php' );
+
+		// Load the ITSEC_Modules mock.
+		require_once 'mocks/class-itsec-modules-mock.php';
 	}
 
 	/**
@@ -116,6 +119,8 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		// Remove any added roles.
 		remove_role( 'ninja' );
+
+		ITSEC_Modules::$force_unique_nicename = false;
 	}
 
 	/**
@@ -191,6 +196,31 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test `ba_eas_show_user_nicename()` when iThemes force unique nicename is
+	 * active.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_show_user_nicename
+	 */
+	public function test_ba_eas_show_user_nicename_itsec_force_unique_nicename() {
+		ITSEC_Modules::$force_unique_nicename = true;
+
+		add_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
+		$this->assertEquals( '', ba_eas_show_user_nicename( wp_get_current_user() ) );
+		remove_filter( 'ba_eas_can_edit_author_slug', '__return_false' );
+
+		ob_start();
+		ba_eas_show_user_nicename( wp_get_current_user() );
+		$output = ob_get_clean();
+
+		// Test for username (`masterplinter`).
+		$this->assertNotContains( '<label title="mastersplinter">', $output );
+		$this->assertNotContains( '<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="mastersplinter" autocapitalize="none" autocorrect="off" maxlength="50" checked=\'checked\'>', $output );
+		$this->assertNotContains( '<span>mastersplinter</span>', $output );
+	}
+
+	/**
 	 * Test `ba_eas_update_user_nicename()`.
 	 *
 	 * @since 1.1.0
@@ -222,6 +252,33 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_update_user_nicename
 	 */
 	public function test_ba_eas_update_user_nicename_nicename_unchanged() {
+
+		$errors = new WP_Error();
+		$user   = wp_get_current_user();
+
+		$_REQUEST = array(
+			'_wpnonce' => wp_create_nonce( 'update-user_' . $user->ID ),
+		);
+
+		// Test that the nicename remains unchanged.
+		$_POST = array(
+			'ba_eas_author_slug' => 'mastersplinter',
+		);
+
+		$this->assertNull( ba_eas_update_user_nicename( $errors, true, $user ) );
+		$this->assertEquals( 'mastersplinter', $user->user_nicename );
+	}
+
+	/**
+	 * Test `ba_eas_update_user_nicename()` when the nicename remains unchanged,
+	 * and iThemes force unique nicename is active.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @covers ::ba_eas_update_user_nicename
+	 */
+	public function test_ba_eas_update_user_nicename_nicename_unchanged_itsec_force_unique_nicename() {
+		ITSEC_Modules::$force_unique_nicename = true;
 
 		$errors = new WP_Error();
 		$user   = wp_get_current_user();

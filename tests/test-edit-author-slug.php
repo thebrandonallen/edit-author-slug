@@ -397,6 +397,7 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 	 * @covers BA_Edit_Author_Slug::is_itsec_force_unique_nickname
 	 */
 	public function test_is_itsec_force_unique_nickname() {
+		ITSEC_Modules::$force_unique_nicename = true;
 		$this->assertTrue( ba_eas()->is_itsec_force_unique_nickname() );
 	}
 
