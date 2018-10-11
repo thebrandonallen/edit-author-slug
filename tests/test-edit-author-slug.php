@@ -114,7 +114,7 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 			remove_rewrite_tag( $tag );
 		} else {
 			$wp_rewrite = $GLOBALS['wp_rewrite'];
-			$position = array_search( $tag, $wp_rewrite->rewritecode );
+			$position   = array_search( $tag, $wp_rewrite->rewritecode );
 			if ( false !== $position && null !== $position ) {
 				unset( $wp_rewrite->rewritecode[ $position ] );
 				unset( $wp_rewrite->rewritereplace[ $position ] );
@@ -155,7 +155,7 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 		$this->assertEquals( 10, has_action( 'activate_' . ba_eas()->plugin_basename, 'ba_eas_activation' ) );
 		$this->assertEquals( 10, has_action( 'deactivate_' . ba_eas()->plugin_basename, 'ba_eas_deactivation' ) );
 		$this->assertEquals( 10, has_action( 'after_setup_theme', array( ba_eas(), 'set_role_slugs' ) ) );
-		$this->assertEquals( 4,  has_action( 'init', 'ba_eas_wp_rewrite_overrides' ) );
+		$this->assertEquals( 4, has_action( 'init', 'ba_eas_wp_rewrite_overrides' ) );
 		$this->assertEquals( 20, has_action( 'init', array( ba_eas(), 'add_rewrite_tags' ) ) );
 		$this->assertEquals( 10, has_action( 'plugins_loaded', array( ba_eas(), 'load_textdomain' ) ) );
 	}

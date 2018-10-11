@@ -42,7 +42,7 @@ class BA_EAS_Tests_Hooks extends WP_UnitTestCase {
 	 */
 	public function test_admin_actions_added() {
 		set_current_screen( 'admin.php' );
-		require( $this->eas->plugin_dir . 'includes/hooks.php' );
+		require $this->eas->plugin_dir . 'includes/hooks.php';
 
 		$this->assertEquals( 10, has_action( 'ba_eas_activation', 'ba_eas_install' ) );
 		$this->assertEquals( 999, has_action( 'admin_init', 'ba_eas_upgrade' ) );

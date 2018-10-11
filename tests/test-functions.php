@@ -65,40 +65,50 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$f = new WP_UnitTest_Factory();
 
 		// Set up the new user.
-		self::$user_id = $f->user->create( array(
-			'user_login' => 'mastersplinter',
-			'first_name' => 'Master',
-			'last_name'  => 'Splinter',
-			'nickname'   => 'Sensei',
-		) );
+		self::$user_id = $f->user->create(
+			array(
+				'user_login' => 'mastersplinter',
+				'first_name' => 'Master',
+				'last_name'  => 'Splinter',
+				'nickname'   => 'Sensei',
+			)
+		);
 
-		self::$tmnt_ids['leo'] = $f->user->create( array(
-			'user_login' => 'leonardo',
-			'first_name' => 'Leonardo',
-			'last_name'  => 'Hamato',
-			'nickname'   => 'Leo',
-		) );
+		self::$tmnt_ids['leo'] = $f->user->create(
+			array(
+				'user_login' => 'leonardo',
+				'first_name' => 'Leonardo',
+				'last_name'  => 'Hamato',
+				'nickname'   => 'Leo',
+			)
+		);
 
-		self::$tmnt_ids['raph'] = $f->user->create( array(
-			'user_login' => 'raphael',
-			'first_name' => 'Raphael',
-			'last_name'  => 'Hamato',
-			'nickname'   => 'Raph',
-		) );
+		self::$tmnt_ids['raph'] = $f->user->create(
+			array(
+				'user_login' => 'raphael',
+				'first_name' => 'Raphael',
+				'last_name'  => 'Hamato',
+				'nickname'   => 'Raph',
+			)
+		);
 
-		self::$tmnt_ids['donnie'] = $f->user->create( array(
-			'user_login' => 'donatello',
-			'first_name' => 'Donatello',
-			'last_name'  => 'Hamato',
-			'nickname'   => 'Donnie',
-		) );
+		self::$tmnt_ids['donnie'] = $f->user->create(
+			array(
+				'user_login' => 'donatello',
+				'first_name' => 'Donatello',
+				'last_name'  => 'Hamato',
+				'nickname'   => 'Donnie',
+			)
+		);
 
-		self::$tmnt_ids['mikey'] = $f->user->create( array(
-			'user_login' => 'michelangelo',
-			'first_name' => 'Michelangelo',
-			'last_name'  => 'Hamato',
-			'nickname'   => 'Mikey',
-		) );
+		self::$tmnt_ids['mikey'] = $f->user->create(
+			array(
+				'user_login' => 'michelangelo',
+				'first_name' => 'Michelangelo',
+				'last_name'  => 'Hamato',
+				'nickname'   => 'Mikey',
+			)
+		);
 
 		self::commit_transaction();
 
@@ -151,10 +161,12 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$GLOBALS['wp_rewrite']->author_base = 'author';
 		$GLOBALS['wp_rewrite']->front       = '/';
 
-		wp_update_user( array(
-			'ID'            => self::$user_id,
-			'user_nicename' => 'mastersplinter',
-		) );
+		wp_update_user(
+			array(
+				'ID'            => self::$user_id,
+				'user_nicename' => 'mastersplinter',
+			)
+		);
 
 		// Reset the `_wpnonce` to empty.
 		$_REQUEST = array(
@@ -181,22 +193,30 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 * @since 1.6.0
 	 */
 	public function reset_turtle_data() {
-		wp_update_user( array(
-			'ID'            => self::$tmnt_ids['leo'],
-			'user_nicename' => 'leonardo',
-		) );
-		wp_update_user( array(
-			'ID'            => self::$tmnt_ids['raph'],
-			'user_nicename' => 'raphael'
-		) );
-		wp_update_user( array(
-			'ID'            => self::$tmnt_ids['donnie'],
-			'user_nicename' => 'donatello',
-		) );
-		wp_update_user( array(
-			'ID'            => self::$tmnt_ids['mikey'],
-			'user_nicename' => 'michelangelo',
-		) );
+		wp_update_user(
+			array(
+				'ID'            => self::$tmnt_ids['leo'],
+				'user_nicename' => 'leonardo',
+			)
+		);
+		wp_update_user(
+			array(
+				'ID'            => self::$tmnt_ids['raph'],
+				'user_nicename' => 'raphael',
+			)
+		);
+		wp_update_user(
+			array(
+				'ID'            => self::$tmnt_ids['donnie'],
+				'user_nicename' => 'donatello',
+			)
+		);
+		wp_update_user(
+			array(
+				'ID'            => self::$tmnt_ids['mikey'],
+				'user_nicename' => 'michelangelo',
+			)
+		);
 	}
 
 	/**
@@ -248,8 +268,8 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		add_filter( 'ba_eas_do_auto_update', '__return_true' );
 		ba_eas()->default_user_nicename = 'nickname';
-		$user_id = ba_eas_auto_update_user_nicename( self::$user_id );
-		$user    = get_userdata( self::$user_id );
+		$user_id                        = ba_eas_auto_update_user_nicename( self::$user_id );
+		$user                           = get_userdata( self::$user_id );
 		$this->assertEquals( 'sensei', $user->user_nicename );
 		remove_filter( 'ba_eas_do_auto_update', '__return_true' );
 
@@ -414,7 +434,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 * @return array
 	 */
 	public function return_bad_id( $ids = array() ) {
-		$ids = (array) $ids;
+		$ids   = (array) $ids;
 		$ids[] = '1234567890';
 		return $ids;
 	}
@@ -601,9 +621,11 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_nicename_exists() {
 
-		$this->factory->user->create( array(
-			'user_nicename' => 'leonardo-hamato',
-		) );
+		$this->factory->user->create(
+			array(
+				'user_nicename' => 'leonardo-hamato',
+			)
+		);
 
 		$exists = ba_eas_nicename_exists( 'leonardo-hamato', self::$user_id );
 		$this->assertInstanceOf( 'WP_User', $exists );
@@ -745,12 +767,12 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		// Test role-based author based enabled, role slug doesn't exist.
 		ba_eas()->role_slugs = array();
-		$link = ba_eas_author_link( $role_based_author_link, self::$user_id );
+		$link                = ba_eas_author_link( $role_based_author_link, self::$user_id );
 		$this->assertEquals( $author_link_author, $link );
 
 		// Test role-based author based enabled, role slug doesn't exist, custom author base.
 		ba_eas()->author_base = 'ninja';
-		$link = ba_eas_author_link( $role_based_author_link, self::$user_id );
+		$link                 = ba_eas_author_link( $role_based_author_link, self::$user_id );
 		$this->assertEquals( $author_link_ninja, $link );
 
 		ba_eas()->remove_front = true;
@@ -775,13 +797,13 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 
 		$this->assertEquals( 'no-WP_User', ba_eas_template_include( 'no-WP_User' ) );
 
-		$user_id = self::$user_id;
+		$user_id                             = self::$user_id;
 		$GLOBALS['wp_query']->queried_object = get_userdata( $user_id );
 		$this->assertEquals( 'author-mastersplinter.php', ba_eas_template_include( 'author-mastersplinter.php' ) );
 		$this->assertEquals( "author-{$user_id}.php", ba_eas_template_include( "author-{$user_id}.php" ) );
 
-		$role_template         = TEMPLATEPATH . '/author-subscriber.php';
-		$role_slug_template    = TEMPLATEPATH . '/author-deshi.php';
+		$role_template       = TEMPLATEPATH . '/author-subscriber.php';
+		$role_slug_template  = TEMPLATEPATH . '/author-deshi.php';
 		ba_eas()->role_slugs = ba_eas_tests_slugs_custom();
 
 		file_put_contents( $role_template, '<?php' );
@@ -834,9 +856,9 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		);
 
 		$expected = array(
-			'with_name_1'    => 'index.php?ba_eas_author_role=$matches[1]&author_name=$matches[2]&feed=$matches[3]',
-			'with_name_2'    => 'index.php?ba_eas_author_role=$matches[1]&author_name=$matches[2]',
-			'with_name_3'    => 'index.php?ba_eas_author_role=$matches[1]&author_name=$matches[2]&paged=$matches[3]',
+			'with_name_1' => 'index.php?ba_eas_author_role=$matches[1]&author_name=$matches[2]&feed=$matches[3]',
+			'with_name_2' => 'index.php?ba_eas_author_role=$matches[1]&author_name=$matches[2]',
+			'with_name_3' => 'index.php?ba_eas_author_role=$matches[1]&author_name=$matches[2]&paged=$matches[3]',
 		);
 
 		$this->assertEquals( $test, ba_eas_author_rewrite_rules( $test ) );

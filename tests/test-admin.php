@@ -47,13 +47,15 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		$f = new WP_UnitTest_Factory();
 
 		// Set up the new user.
-		self::$user_id = $f->user->create( array(
-			'user_login' => 'mastersplinter',
-			'role'       => 'administrator',
-			'first_name' => 'Master',
-			'last_name'  => 'Splinter',
-			'nickname'   => 'Sensei',
-		) );
+		self::$user_id = $f->user->create(
+			array(
+				'user_login' => 'mastersplinter',
+				'role'       => 'administrator',
+				'first_name' => 'Master',
+				'last_name'  => 'Splinter',
+				'nickname'   => 'Sensei',
+			)
+		);
 
 		self::commit_transaction();
 
@@ -61,7 +63,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		self::$old_user_id = get_current_user_id();
 
 		// Load the admin.
-		require_once( ba_eas()->plugin_dir . 'includes/admin.php' );
+		require_once ba_eas()->plugin_dir . 'includes/admin.php';
 
 		// Load the ITSEC_Modules mock.
 		require_once 'mocks/class-itsec-modules-mock.php';
@@ -314,7 +316,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		// Test custom fields.
 		$_POST = array(
-			'ba_eas_author_slug' => addslashes( '\c\u\s\t\o\m' ),
+			'ba_eas_author_slug'        => addslashes( '\c\u\s\t\o\m' ),
 			'ba_eas_author_slug_custom' => 'assertion-1',
 		);
 
@@ -1007,7 +1009,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_admin_setting_callback_default_user_nicename_no_default() {
 
-		$old_default_user_nicename = ba_eas()->default_user_nicename;
+		$old_default_user_nicename      = ba_eas()->default_user_nicename;
 		ba_eas()->default_user_nicename = '';
 		ob_start();
 		ba_eas_admin_setting_callback_default_user_nicename();
@@ -1076,7 +1078,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 */
 	public function test_ba_eas_admin_setting_callback_bulk_update_structure_no_default() {
 
-		$old_default_user_nicename = ba_eas()->default_user_nicename;
+		$old_default_user_nicename      = ba_eas()->default_user_nicename;
 		ba_eas()->default_user_nicename = '';
 		ob_start();
 		ba_eas_admin_setting_callback_bulk_update_structure();
@@ -1132,7 +1134,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		// Legitimate request.
 		$_REQUEST = array(
-			'_wpnonce' => wp_create_nonce( 'edit-author-slug-options' ),
+			'_wpnonce'    => wp_create_nonce( 'edit-author-slug-options' ),
 			'option_page' => 'edit-author-slug',
 		);
 
@@ -1141,7 +1143,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		// Bad nonce.
 		$_REQUEST = array(
-			'_wpnonce' => wp_create_nonce( 'edit-author-slug-settings' ),
+			'_wpnonce'    => wp_create_nonce( 'edit-author-slug-settings' ),
 			'option_page' => 'edit-author-slug',
 		);
 
@@ -1150,7 +1152,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 
 		// Wrong page.
 		$_REQUEST = array(
-			'_wpnonce' => wp_create_nonce( 'edit-author-slug-options' ),
+			'_wpnonce'    => wp_create_nonce( 'edit-author-slug-options' ),
 			'option_page' => 'test',
 		);
 
@@ -1167,7 +1169,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_install
 	 */
 	public function test_ba_eas_install() {
-		$old_db_version = ba_eas()->current_db_version;
+		$old_db_version              = ba_eas()->current_db_version;
 		ba_eas()->current_db_version = 0;
 		ba_eas_install();
 
@@ -1190,7 +1192,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 * @covers ::ba_eas_upgrade
 	 */
 	public function test_ba_eas_upgrade() {
-		$old_db_version = ba_eas()->current_db_version;
+		$old_db_version              = ba_eas()->current_db_version;
 		ba_eas()->current_db_version = 30;
 
 		update_option( 'ba_edit_author_slug', 'test' );

@@ -38,12 +38,14 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 		$f = new WP_UnitTest_Factory();
 
 		// Set up the new user.
-		self::$user_id = $f->user->create( array(
-			'user_login' => 'mastersplinter',
-			'role'       => 'administrator',
-			'first_name' => 'Master',
-			'last_name'  => 'Splinter',
-		) );
+		self::$user_id = $f->user->create(
+			array(
+				'user_login' => 'mastersplinter',
+				'role'       => 'administrator',
+				'first_name' => 'Master',
+				'last_name'  => 'Splinter',
+			)
+		);
 
 		self::commit_transaction();
 
@@ -128,10 +130,12 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 
 		$this->assertEquals( self::$user_id, wp_cache_get( 'mastersplinter', 'userslugs' ) );
 
-		wp_update_user( array(
-			'ID'            => self::$user_id,
-			'user_nicename' => 'master-splinter',
-		) );
+		wp_update_user(
+			array(
+				'ID'            => self::$user_id,
+				'user_nicename' => 'master-splinter',
+			)
+		);
 
 		ba_eas_update_nicename_cache( self::$user_id, $user );
 		$this->assertNotEquals( self::$user_id, wp_cache_get( 'mastersplinter', 'userslugs' ) );
@@ -167,10 +171,12 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 		// Make sure the user is cached.
 		$user = get_userdata( self::$user_id );
 
-		wp_update_user( array(
-			'ID'            => self::$user_id,
-			'user_nicename' => 'master-splinter',
-		) );
+		wp_update_user(
+			array(
+				'ID'            => self::$user_id,
+				'user_nicename' => 'master-splinter',
+			)
+		);
 
 		ba_eas_update_nicename_cache( false, $user );
 		$this->assertNotEquals( self::$user_id, (int) wp_cache_get( 'mastersplinter', 'userslugs' ) );
@@ -213,10 +219,12 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 		// Make sure the user is cached.
 		$user = get_userdata( self::$user_id );
 
-		wp_update_user( array(
-			'ID'            => self::$user_id,
-			'user_nicename' => 'master-splinter',
-		) );
+		wp_update_user(
+			array(
+				'ID'            => self::$user_id,
+				'user_nicename' => 'master-splinter',
+			)
+		);
 
 		ba_eas_update_nicename_cache( self::$user_id, 'mastersplinter' );
 		$this->assertNotEquals( self::$user_id, wp_cache_get( 'mastersplinter', 'userslugs' ) );
