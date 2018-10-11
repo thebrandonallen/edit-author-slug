@@ -115,9 +115,9 @@ function ba_eas_show_user_nicename( $user ) {
  *
  * @since 0.1.0
  *
- * @param WP_Errors $errors The WP_Errors object.
- * @param bool      $update True if user is being updated.
- * @param object    $user   An stdClass with user properties.
+ * @param WP_Error $errors The WP_Error object.
+ * @param bool     $update True if user is being updated.
+ * @param object   $user   An stdClass with user properties.
  */
 function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
@@ -230,6 +230,23 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 			__( '<strong>ERROR</strong>: An author slug may not be longer than 50 characters.', 'edit-author-slug' )
 		);
 		return;
+	}
+
+	// iThemes Security's Force Unique Nickname needs special handling.
+	if ( ba_eas()->is_itsec_force_unique_nickname() ) {
+		// Unless there's an error, iThemes Security will always update the
+		// nicename. We need to make sure it's reset back to the old nicename,
+		// so it's not unexpectedly changed.
+		$user->user_nicename = $old_user_nicename;
+
+		// Bail and throw an error if the nicename is the same as the user login.
+		if ( $user->user_login === $user_nicename ) {
+			$errors->add(
+				'user_nicename_itsec_block',
+				__( '<strong>ERROR</strong>: Your iThemes settings prevent your author slug from being the same as your username.', 'edit-author-slug' )
+			);
+			return;
+		}
 	}
 
 	// Bail if the nicename hasn't changed.
