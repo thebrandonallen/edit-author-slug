@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 * Settings page JS no longer depends jQuery (switched to plain js)
 
 ### Deprecated
-* * Minimum PHP version have been bumped to 5.3. This is a soft bump, meaning, the plugin should still run on PHP 5.2. However, PHP 5.2 is no longer supported.
+* Minimum PHP version have been bumped to 5.3. This is a soft bump, meaning, the plugin should still run on PHP 5.2. However, PHP 5.2 is no longer, officially, supported.
 
 ## [1.5.2](https://github.com/thebrandonallen/edit-author-slug/tree/1.5.2) - 2017-06-21 ##
 ### Fixed
