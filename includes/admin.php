@@ -792,6 +792,9 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 		$structure = 'username';
 	}
 
+	// Set up the class for the iThemes force unique nicename username error message.
+	$class = 'username' === $structure ? '' : ' hidden';
+
 	// Get the default nicename options.
 	$options = ba_eas_default_user_nicename_options_list();
 	?>
@@ -802,6 +805,12 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 			<option value="<?php echo esc_attr( $id ); ?>"<?php selected( $structure, $id ); ?>><?php echo esc_html( $item ); ?></option>
 		<?php endforeach; ?>
 		</select>
+
+		<?php if ( ba_eas()->is_itsec_force_unique_nickname() ) : ?>
+			<div class="eas-author-slug-select-error<?php echo esc_attr( $class ); ?>" style="background: #fff; border-left: 4px solid #fff; border-left-color: #dc3232; box-shadow: 0 1px 1px 0 rgba( 0, 0, 0, 0.1 ); margin: 10px 15px 2px 0; padding: 5px 12px 5px;">
+				Your iThemes settings suggest you don't want the <code>username</code> being used as an author slug. Leaving it set to <code>username</code> will still work, but you may wish to change to something different.
+			</div>
+		<?php endif; ?>
 
 	<?php
 }
@@ -854,6 +863,9 @@ function ba_eas_admin_setting_callback_bulk_update_structure() {
 		$structure = 'username';
 	}
 
+	// Set up the class for the iThemes force unique nicename username error message.
+	$class = 'username' === $structure ? '' : ' hidden';
+
 	// Get the default nicename options.
 	$options = ba_eas_default_user_nicename_options_list();
 	?>
@@ -864,6 +876,12 @@ function ba_eas_admin_setting_callback_bulk_update_structure() {
 			<option value="<?php echo esc_attr( $id ); ?>"<?php selected( $structure, $id ); ?>><?php echo esc_html( $item ); ?></option>
 		<?php endforeach; ?>
 		</select>
+
+		<?php if ( ba_eas()->is_itsec_force_unique_nickname() ) : ?>
+			<div class="eas-author-slug-select-error<?php echo esc_attr( $class ); ?>" style="background: #fff; border-left: 4px solid #fff; border-left-color: #dc3232; box-shadow: 0 1px 1px 0 rgba( 0, 0, 0, 0.1 ); margin: 10px 15px 2px 0; padding: 5px 12px 5px;">
+				Your iThemes settings suggest you don't want the <code>username</code> being used as an author slug. Leaving it set to <code>username</code> will still work, but you may wish to change to something different.
+			</div>
+		<?php endif; ?>
 
 	<?php
 }
