@@ -236,6 +236,10 @@ module.exports = function( grunt ) {
 					{
 						pattern: /(\*\sRelease\sdate:\s)(TBD|TBA)$/gm,
 						replacement: '$1<%= grunt.template.today("yyyy-mm-dd") %>'
+					},
+					{
+						pattern: /^(##\s.*\s-\s)(TBD|TBA)\s##$/gm,
+						replacement: '$1<%= grunt.template.today("yyyy-mm-dd") %> ##'
 					} ]
 				}
 			},
