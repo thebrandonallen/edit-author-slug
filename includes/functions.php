@@ -467,7 +467,7 @@ function ba_eas_get_nicename_by_structure( $user_id = 0, $structure = '' ) {
 			break;
 
 		case 'hash':
-			$nicename = wp_hash( $user->ID . '-' . $user->user_login );
+			$nicename = hash( 'md5', $user->ID . '-' . $user->user_login );
 			break;
 	} // End switch.
 

@@ -587,7 +587,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 		$hash = ba_eas_get_nicename_by_structure( self::$user_id, 'hash' );
 		$user = get_userdata( self::$user_id );
 		$this->assertEquals(
-			wp_hash( $user->ID . '-' . $user->user_login ),
+			hash( 'md5', $user->ID . '-' . $user->user_login ),
 			$hash
 		);
 	}
