@@ -52,8 +52,19 @@
 		});
 
 		// When the custom author slug input is focused, set the custom radio as selected.
-		customInput.addEventListener( 'focus', function() {
+		customInput && customInput.addEventListener( 'focus', function() {
 			document.querySelector( '.eas-author-slug-custom-radio' ).checked = 'checked';
+		});
+
+		// Watch select boxes, and add a warning if username is selected, but
+		// only when iThemes `force unique nicename` is turned on.
+		document.querySelectorAll( 'select' ).forEach( function( item ) {
+			item.addEventListener( 'change', function( event ) {
+				var errorDiv = event.target.nextElementSibling;
+				if ( errorDiv && errorDiv.classList.contains( 'eas-author-slug-select-error' ) ) {
+					toggleHidden( errorDiv );
+				}
+			});
 		});
 	});
 }() );
