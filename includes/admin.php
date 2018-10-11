@@ -45,6 +45,12 @@ function ba_eas_show_user_nicename( $user ) {
 		'userid'      => ba_eas_get_nicename_by_structure( $user->ID, 'userid' ),
 	);
 
+	// Remove the username as a option if the user has requested it not be
+	// available via iThemes force unique nicename.
+	if ( ba_eas()->is_itsec_force_unique_nickname() ) {
+		unset( $options['username'] );
+	}
+
 	/**
 	 * Filters the array of user nicename options.
 	 *
