@@ -465,6 +465,10 @@ function ba_eas_get_nicename_by_structure( $user_id = 0, $structure = '' ) {
 		case 'userid':
 			$nicename = $user->ID;
 			break;
+
+		case 'hash':
+			$nicename = hash( 'sha1', $user->ID . '-' . $user->user_login );
+			break;
 	} // End switch.
 
 	// Sanitize and trim the new user nicename.

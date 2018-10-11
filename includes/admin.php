@@ -43,6 +43,7 @@ function ba_eas_show_user_nicename( $user ) {
 		'firstlast'   => ba_eas_get_nicename_by_structure( $user->ID, 'firstlast' ),
 		'lastfirst'   => ba_eas_get_nicename_by_structure( $user->ID, 'lastfirst' ),
 		'userid'      => ba_eas_get_nicename_by_structure( $user->ID, 'userid' ),
+		'hash'        => ba_eas_get_nicename_by_structure( $user->ID, 'hash' ),
 	);
 
 	// Remove the username as a option if the user has requested it not be
@@ -941,7 +942,8 @@ function ba_eas_default_user_nicename_options_list() {
 			'lastname'    => __( 'lastname', 'edit-author-slug' ),
 			'firstlast'   => __( 'firstname-lastname', 'edit-author-slug' ),
 			'lastfirst'   => __( 'lastname-firstname', 'edit-author-slug' ),
-			'userid'      => __( 'userid (Experimental)', 'edit-author-slug' ),
+			'userid'      => __( 'userid', 'edit-author-slug' ),
+			'hash'        => __( 'hash', 'edit-author-slug' ),
 		)
 	);
 
