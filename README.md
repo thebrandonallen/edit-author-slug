@@ -67,6 +67,14 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 
 ## Changelog ##
 
+### 1.6.0 ###
+* Release date: TBD
+* Minimum required WordPress version is now 4.7
+* Settings page JS no longer depends jQuery (switched to plain js)
+* Add compatability for iThemes Force Unique Nickname WordPress Tweak
+* Add a hash string as an author slug option
+* Minimum PHP version have been bumped to 5.3. This is a soft bump, meaning, the plugin should still run on PHP 5.2. However, PHP 5.2 is no longer, officially, supported.
+
 ### 1.5.2 ###
 * Release date: 2017-06-21
 * Fixed a regression where those using the default author based couldn't remove front unless they were also using role-based author bases. Props @thatherton.
