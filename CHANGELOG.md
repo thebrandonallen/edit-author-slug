@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [1.6.0](https://github.com/thebrandonallen/edit-author-slug/tree/1.6.0) - TDB ##
+## [1.6.0](https://github.com/thebrandonallen/edit-author-slug/tree/1.6.0) - 2018-10-11 ##
 ### Added
 * Add compatability for iThemes Force Unique Nickname WordPress Tweak
 * Add a hash string as an author slug option [GH-17]

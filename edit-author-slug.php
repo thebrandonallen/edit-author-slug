@@ -7,9 +7,9 @@
  * Author URI:      https://github.com/thebrandonallen/
  * Text Domain:     edit-author-slug
  * Domain Path:     /languages
- * Version:         1.5.2
+ * Version:         1.6.0
  *
- * Copyright (C) 2009-2017  Brandon Allen (https://github.com/thebrandonallen)
+ * Copyright (C) 2009-2018  Brandon Allen (https://github.com/thebrandonallen)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
  * @package Edit_Author_Slug
  * @subpackage Main
  * @author Brandon Allen
- * @version 1.5.2
+ * @version 1.6.0
  */
 
 // Exit if accessed directly.

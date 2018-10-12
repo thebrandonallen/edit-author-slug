@@ -4,7 +4,7 @@ Tags: author, author base, author slug, user nicename, nicename, permalink, perm
 Requires at least: 4.7
 Tested up to: 4.9.8
 Requires PHP: 5.3
-Stable tag: 1.5.2
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -68,7 +68,7 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 == Changelog ==
 
 = 1.6.0 =
-* Release date: TBD
+* Release date: 2018-10-11
 * Minimum required WordPress version is now 4.7
 * Settings page JS no longer depends jQuery (switched to plain js)
 * Add compatability for iThemes Force Unique Nickname WordPress Tweak
