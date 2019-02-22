@@ -18,6 +18,7 @@ cache:
     - $HOME/.composer/cache
 
 php:
+  - 7.3
   - 7.2
   - 7.1
   - 7.0
@@ -28,6 +29,8 @@ env:
     - EAS_TRAVISCI=travis:phpunit
   matrix:
     - WP_VERSION=trunk
+    - WP_VERSION=5.1
+    - WP_VERSION=5.0
     - WP_VERSION=4.9
     - WP_VERSION=4.8
     - WP_VERSION=4.7
@@ -47,26 +50,21 @@ matrix:
     - php: 5.3
       env: WP_VERSION=4.7
       dist: precise
-    - php: 7.1
+    - php: 7.2
       env: WP_VERSION=trunk EAS_TRAVISCI=travis:codecoverage
     - php: nightly
       env: WP_VERSION=trunk
-    - php: 7.3.0RC1
-      sudo: required
-      dist: xenial
-      services: mysql
-      addons:
-        apt:
-          packages:
-            - libzip4
   exclude:
+    - php: 7.3
+      env: WP_VERSION=4.8
+    - php: 7.3
+      env: WP_VERSION=4.7
     - php: 7.2
       env: WP_VERSION=4.8
     - php: 7.2
       env: WP_VERSION=4.7
   allow_failures:
     - php: nightly
-    - php: 7.3.0RC1
     - env: WP_VERSION=trunk EAS_TRAVISCI=travis:codecoverage
 
 before_install:
