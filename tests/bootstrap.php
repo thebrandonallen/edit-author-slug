@@ -24,13 +24,6 @@ if ( false !== getenv( 'WP_DEVELOP_DIR' ) ) {
 require_once $_tests_dir . '/includes/functions.php';
 
 /**
- * Compatibility with PHPUnit 6+
- */
-if ( class_exists( 'PHPUnit\Runner\Version' ) ) {
-	require_once dirname( __FILE__ ) . '/includes/phpunit6/compat.php';
-}
-
-/**
  * Manually load the plugin being tested.
  */
 function _manually_load_plugin() {

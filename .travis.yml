@@ -42,6 +42,12 @@ matrix:
       env: WP_VERSION=trunk
       dist: precise
     - php: 5.3
+      env: WP_VERSION=5.1
+      dist: precise
+    - php: 5.3
+      env: WP_VERSION=5.0
+      dist: precise
+    - php: 5.3
       env: WP_VERSION=4.9
       dist: precise
     - php: 5.3
@@ -67,25 +73,6 @@ matrix:
     - php: nightly
     - env: WP_VERSION=trunk EAS_TRAVISCI=travis:codecoverage
 
-before_install:
-  - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-  - npm --version
-  - node --version
-  - nvm install 10.13.0
-  - node --version
-  - npm --version
-  - npm install -g grunt-cli
-  - phpenv versions
-  - mysql --version
-  - php --version
-  - php -m
-  - which phpunit
-  - phpunit --version
-  - curl --version
-  - grunt --version
-  - git --version
-  - svn --version
-
 # Clones WordPress and configures our testing environment.
 before_script:
   - |
@@ -103,13 +90,9 @@ before_script:
     fi
   - |
     # Install the specified version of PHPUnit depending on the PHP version:
-    if [[ "$EAS_TRAVISCI" == "travis:phpunit" ]]; then
+    if [[ "$EAS_TRAVISCI" == "travis:phpunit" || "$EAS_TRAVISCI" == "travis:codecoverage" ]]; then
       case "$TRAVIS_PHP_VERSION" in
-        7.3|7.2|7.1|nightly)
-          echo "Using PHPUnit 7.x"
-          travis_retry composer global require "phpunit/phpunit:^7"
-          ;;
-        7.0)
+        7.3|7.2|7.1|7.0|nightly)
           echo "Using PHPUnit 6.x"
           travis_retry composer global require "phpunit/phpunit:^6"
           ;;
@@ -123,8 +106,25 @@ before_script:
           ;;
       esac
     fi
+  - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+  - npm --version
+  - node --version
+  - nvm install 10.13.0
+  - npm install -g grunt-cli
   - npm install
   - npm prune
+  - mysql --version
+  - phpenv versions
+  - php --version
+  - php -m
+  - npm --version
+  - node --version
+  - which phpunit
+  - phpunit --version
+  - curl --version
+  - grunt --version
+  - git --version
+  - svn --version
 
 script: grunt $EAS_TRAVISCI
 
