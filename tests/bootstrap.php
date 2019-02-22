@@ -26,13 +26,8 @@ require_once $_tests_dir . '/includes/functions.php';
 /**
  * Compatibility with PHPUnit 6+
  */
-$_needs_phpunit_back_compat = in_array(
-	getenv( 'WP_VERSION' ),
-	array( '4.6', '4.5', '4.4' ),
-	true
-);
-if ( class_exists( 'PHPUnit\Runner\Version' ) && $_needs_phpunit_back_compat ) {
-	require_once dirname( __FILE__ ) . '/phpunit6-compat.php';
+if ( class_exists( 'PHPUnit\Runner\Version' ) ) {
+	require_once dirname( __FILE__ ) . '/phpunit6/compat.php';
 }
 
 /**
