@@ -1,4 +1,4 @@
-# Copyright (C) 2009-2018 Brandon Allen
+# Copyright (C) 2009-2019 Brandon Allen
 # This file is distributed under the same license as the Edit Author Slug package.
 # Submit translations to https://translate.wordpress.org/projects/wp-plugins/edit-author-slug.
 msgid ""
