@@ -142,15 +142,6 @@ function ba_eas_auto_update_user_nicename( $user_id = 0, $bulk = false, $structu
 	// Add it back in case other plugins do some updating.
 	add_action( 'profile_update', 'ba_eas_auto_update_user_nicename' );
 
-	// Only delete the `userslugs` cache if the user was successfully updated.
-	// TODO: Remove when WP 4.5 is the minimum version.
-	// See https://core.trac.wordpress.org/ticket/35750.
-	if ( ! empty( $user_id ) && ! is_wp_error( $user_id ) ) {
-
-		// Delete the old nicename from the cache.
-		wp_cache_delete( $old_nicename, 'userslugs' );
-	}
-
 	return $user_id;
 }
 

@@ -279,11 +279,6 @@ function ba_eas_update_user_nicename( $errors, $update, $user ) {
 
 	// Looks like we made it, so let's update.
 	$user->user_nicename = $user_nicename;
-
-	// Delete the old nicename from the cache.
-	// TODO: Remove when WP 4.5 is the minimum version.
-	// See https://core.trac.wordpress.org/ticket/35750.
-	wp_cache_delete( $old_user_nicename, 'userslugs' );
 }
 
 /**
