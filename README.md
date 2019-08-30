@@ -2,7 +2,7 @@
 **Contributors:** [thebrandonallen](https://profiles.wordpress.org/thebrandonallen)  
 **Tags:** author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles  
 **Requires at least:** 4.7  
-**Tested up to:** 5.1  
+**Tested up to:** 5.2.2  
 **Requires PHP:** 5.3  
 **Stable tag:** 1.6.0  
 **License:** GPLv2 or later  
