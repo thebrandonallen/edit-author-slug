@@ -77,6 +77,19 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test for `ba_eas_get_wp_roles()`.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @covers ::ba_eas_get_wp_roles
+	 *
+	 * @expectedDeprecated ba_eas_get_wp_roles
+	 */
+	public function test_ba_eas_get_wp_roles() {
+		$this->assertInstanceOf( 'WP_Roles', ba_eas_get_wp_roles() );
+	}
+
+	/**
 	 * Test for `ba_eas_get_editable_roles()`.
 	 *
 	 * @since 1.1.0
@@ -99,5 +112,19 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 		add_filter( 'editable_roles', 'ba_eas_tests_roles_extra' );
 		$this->assertEquals( ba_eas_tests_roles_extra(), ba_eas_get_editable_roles() );
 		remove_filter( 'editable_roles', 'ba_eas_tests_roles_extra', 10 );
+	}
+
+	/**
+	 * Test for `ba_eas_update_nicename_cache()`.
+	 *
+	 * @since 1.1.0
+	 * @since 1.6.1 Main function converted to noop, so only test for `null` value.
+	 *
+	 * @covers ::ba_eas_update_nicename_cache
+	 *
+	 * @expectedDeprecated ba_eas_update_nicename_cache
+	 */
+	public function test_ba_eas_update_nicename_cache() {
+		$this->assertNull( ba_eas_update_nicename_cache() );
 	}
 }

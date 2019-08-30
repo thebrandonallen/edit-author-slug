@@ -34,6 +34,23 @@ function ba_eas_auto_update_user_nicename_single( $user_id = 0 ) {
 /** Miscellaneous *************************************************************/
 
 /**
+ * Returns the WP_Roles object.
+ *
+ * WP 4.3 added the `wp_roles()` function to facilitate the instantiation of the
+ * WP_Roles object. This is a wrapper function for `wp_roles()` with a fallback
+ * for those on WP < 4.3.
+ *
+ * @since 1.2.0
+ * @deprecated 1.5.0
+ *
+ * @return WP_Roles
+ */
+function ba_eas_get_wp_roles() {
+	_deprecated_function( __FUNCTION__, '1.5.0', 'wp_roles' );
+	return wp_roles();
+}
+
+/**
  * Fetch a filtered list of user roles that the current user is
  * allowed to edit.
  *
@@ -71,4 +88,19 @@ function ba_eas_get_editable_roles() {
 	}
 
 	return $editable_roles;
+}
+
+/**
+ * Clean and update the nicename cache.
+ *
+ * @since 1.0.0
+ * @since 1.6.1 Converted to a no-op.
+ * @deprecated 1.5.0
+ *
+ * @param int    $user_id       The user id.
+ * @param object $old_user_data The WP_User object.
+ * @param string $new_nicename  The new user nicename.
+ */
+function ba_eas_update_nicename_cache( $user_id = 0, $old_user_data = '', $new_nicename = '' ) {
+	_deprecated_function( __FUNCTION__, '1.5.0', 'wp_cache_delete( $old_nicename, \'userslugs\' );' );
 }
