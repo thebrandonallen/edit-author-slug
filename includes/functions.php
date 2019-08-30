@@ -225,7 +225,7 @@ function ba_eas_auto_update_user_nicename_bulk( $do_bulk = false ) {
 		}
 	}
 
-	// If we have some when statements, the update the nicenames.
+	// If we have some when statements, then update the nicenames.
 	if ( ! empty( $when ) ) {
 
 		// Setup our when and where statements.
