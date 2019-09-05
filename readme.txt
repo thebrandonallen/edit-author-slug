@@ -2,9 +2,9 @@
 Contributors: thebrandonallen
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles
 Requires at least: 4.7
-Tested up to: 5.2.2
+Tested up to: 5.2.3
 Requires PHP: 5.3
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -66,6 +66,12 @@ While I've made every attempt to prevent this, I may have missed a spot or two. 
 If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums.
 
 == Changelog ==
+
+= 1.6.1 =
+* Release date: 2019-09-04
+* Removes pre-WP 4.5 cache busting. The minimum version has been 4.7 for quite some time, and, as of WP 4.5, the cache busting was redundant.
+* Don't show the options page if `ba_eas_can_edit_author_slug()` returns `false`.
+* Bumps "Tested up to" version to 5.2.3
 
 = 1.6.0 =
 * Release date: 2018-10-11
