@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [1.6.1](https://github.com/thebrandonallen/edit-author-slug/tree/1.6.1) - 2019-09-05 ##
+### Changed
+* Removes pre-WP 4.5 cache busting. The minimum version has been 4.7 for quite some time, and, as of WP 4.5, the cache busting was redundant.
+* Don't show the options page if `ba_eas_can_edit_author_slug()` returns `false`. [GH-21]
+* Bumps "Tested up to" version to 5.2.3
+
 ## [1.6.0](https://github.com/thebrandonallen/edit-author-slug/tree/1.6.0) - 2018-10-11 ##
 ### Added
 * Add compatibility for iThemes Force Unique Nickname WordPress Tweak
