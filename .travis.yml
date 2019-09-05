@@ -39,21 +39,6 @@ env:
 matrix:
   fast_finish: true
   include:
-    - php: 5.3
-      env: WP_VERSION=5.1
-      dist: precise
-    - php: 5.3
-      env: WP_VERSION=5.0
-      dist: precise
-    - php: 5.3
-      env: WP_VERSION=4.9
-      dist: precise
-    - php: 5.3
-      env: WP_VERSION=4.8
-      dist: precise
-    - php: 5.3
-      env: WP_VERSION=4.7
-      dist: precise
     - php: 7.2
       env: WP_VERSION=trunk EAS_TRAVISCI=travis:codecoverage
     - php: nightly
@@ -94,7 +79,7 @@ before_script:
           echo "Using PHPUnit 6.x"
           travis_retry composer global require "phpunit/phpunit:^6"
           ;;
-        5.6|5.5|5.4|5.3)
+        5.6)
           echo "Using PHPUnit 4.x"
           travis_retry composer global require "phpunit/phpunit:^4"
           ;;
