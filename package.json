@@ -7,8 +7,8 @@
   "license": "GPL-2.0-or-later",
   "repository": "github:thebrandonallen/edit-author-slug",
   "devDependencies": {
+    "@wordpress/eslint-plugin": "~3.0.0",
     "eslint": "~5.16.0",
-    "eslint-config-wordpress": "github:WordPress-Coding-Standards/eslint-config-wordpress#ca2cc309b87349c21c682f2a5d5bd77317b2cb22",
     "grunt": "~1.0.4",
     "grunt-checktextdomain": "~1.0.0",
     "grunt-contrib-clean": "~2.0.0",

@@ -1,4 +1,9 @@
 module.exports = {
 	root: true,
-	extends: "wordpress",
+	env: {
+		browser: true,
+	},
+	extends: [
+		'plugin:@wordpress/eslint-plugin/jshint',
+	],
 };
