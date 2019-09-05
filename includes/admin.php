@@ -400,15 +400,19 @@ function ba_eas_show_user_nicename_scripts( $hook_suffix = '' ) {
  * Add the Edit Author Slug Settings Menu.
  *
  * @since 0.9.0
+ * @since 1.6.1 Only show the page if a user can edit author slugs.
  */
 function ba_eas_add_settings_menu() {
-	add_options_page(
-		__( 'Edit Author Slug Settings', 'edit-author-slug' ),
-		__( 'Edit Author Slug', 'edit-author-slug' ),
-		'edit_users',
-		'edit-author-slug',
-		'ba_eas_settings_page_html'
-	);
+	// If the user can edit author slugs, maybe show the options page.
+	if ( ba_eas_can_edit_author_slug() ) {
+		add_options_page(
+			__( 'Edit Author Slug Settings', 'edit-author-slug' ),
+			__( 'Edit Author Slug', 'edit-author-slug' ),
+			'edit_users',
+			'edit-author-slug',
+			'ba_eas_settings_page_html'
+		);
+	}
 }
 
 /**
