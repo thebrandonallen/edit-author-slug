@@ -18,6 +18,7 @@ cache:
     - $HOME/.composer/cache
 
 php:
+  - 7.4
   - 7.3
   - 7.2
   - 7.1
@@ -29,6 +30,7 @@ env:
     - EAS_TRAVISCI=travis:phpunit
   matrix:
     - WP_VERSION=trunk
+    - WP_VERSION=5.3
     - WP_VERSION=5.2
     - WP_VERSION=5.1
     - WP_VERSION=5.0
@@ -44,6 +46,10 @@ matrix:
     - php: nightly
       env: WP_VERSION=trunk
   exclude:
+    - php: 7.4
+      env: WP_VERSION=4.8
+    - php: 7.4
+      env: WP_VERSION=4.7
     - php: 7.3
       env: WP_VERSION=4.8
     - php: 7.3
@@ -54,6 +60,7 @@ matrix:
       env: WP_VERSION=4.7
   allow_failures:
     - php: nightly
+    - php: 7.4
     - env: WP_VERSION=trunk EAS_TRAVISCI=travis:codecoverage
 
 # Clones WordPress and configures our testing environment.
@@ -75,7 +82,7 @@ before_script:
     # Install the specified version of PHPUnit depending on the PHP version:
     if [[ "$EAS_TRAVISCI" == "travis:phpunit" || "$EAS_TRAVISCI" == "travis:codecoverage" ]]; then
       case "$TRAVIS_PHP_VERSION" in
-        7.3|7.2|7.1|7.0|nightly)
+        7.4|7.3|7.2|7.1|7.0|nightly)
           echo "Using PHPUnit 6.x"
           travis_retry composer global require "phpunit/phpunit:^6"
           ;;
@@ -92,7 +99,7 @@ before_script:
   - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
   - npm --version
   - node --version
-  - nvm install 10.16.3
+  - nvm install 10.19.0
   - npm install -g grunt-cli
   - npm install
   - npm prune
