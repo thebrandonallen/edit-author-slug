@@ -101,6 +101,6 @@ function ba_eas_get_editable_roles() {
  * @param object $old_user_data The WP_User object.
  * @param string $new_nicename  The new user nicename.
  */
-function ba_eas_update_nicename_cache( $user_id = 0, $old_user_data = '', $new_nicename = '' ) {
+function ba_eas_update_nicename_cache( $user_id = 0, $old_user_data = '', $new_nicename = '' ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 	_deprecated_function( __FUNCTION__, '1.5.0', 'wp_cache_delete( $old_nicename, \'userslugs\' );' );
 }

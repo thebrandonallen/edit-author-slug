@@ -244,7 +244,7 @@ function ba_eas_auto_update_user_nicename_bulk( $do_bulk = false ) {
 			END
 			{$where_sql}
 		";
-		$updated = $wpdb->query( $sql ); // WPCS: unprepared SQL ok.
+		$updated = $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- This is actually prepared above.
 	}
 
 	// Unset some vars to help with memory.
@@ -642,7 +642,8 @@ function ba_eas_author_link( $link = '', $user_id = 0 ) {
 		$role = ba_eas_get_user_role( $user->roles, $user_id );
 
 		// Make sure we have a valid slug.
-		$slug = empty( ba_eas()->role_slugs[ $role ]['slug'] ) ? ba_eas()->author_base : ba_eas()->role_slugs[ $role ]['slug'];
+		$slug = ba_eas()->role_slugs[ $role ]['slug'];
+		$slug = empty( $slug ) ? ba_eas()->author_base : $slug;
 
 		// Add the role slug to the link.
 		$link = str_replace( '%ba_eas_author_role%', $slug, $link );
@@ -696,9 +697,10 @@ function ba_eas_template_include( $template ) {
 		$role = ba_eas_get_user_role( $author->roles, $author->ID );
 
 		// Get the role slug.
+		$slug      = ba_eas()->role_slugs[ $role ]['slug'];
 		$role_slug = '';
-		if ( ! empty( ba_eas()->role_slugs[ $role ]['slug'] ) ) {
-			$role_slug = ba_eas()->role_slugs[ $role ]['slug'];
+		if ( ! empty( $slug ) ) {
+			$role_slug = $slug;
 		}
 
 		// Set the templates array.
