@@ -1,0 +1,24 @@
+{
+    "name": "thebrandonallen/edit-author-slug",
+    "description": "Allows an admin (or capable user) to edit the author slug of a user, and change the author base.",
+    "type": "project",
+    "require": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "squizlabs/php_codesniffer": "^3.5",
+        "wp-coding-standards/wpcs": "^2.2"
+    },
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Brandon Allen",
+            "homepage": "https://github.com/thebrandonallen"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+      "discard-changes": true,
+      "sort-packages": true
+    }
+}
