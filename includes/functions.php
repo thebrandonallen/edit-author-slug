@@ -642,7 +642,7 @@ function ba_eas_author_link( $link = '', $user_id = 0 ) {
 		$role = ba_eas_get_user_role( $user->roles, $user_id );
 
 		// Make sure we have a valid slug.
-		$slug = ba_eas()->role_slugs[ $role ]['slug'];
+		$slug = isset( ba_eas()->role_slugs[ $role ]['slug'] ) ? ba_eas()->role_slugs[ $role ]['slug'] : '';
 		$slug = empty( $slug ) ? ba_eas()->author_base : $slug;
 
 		// Add the role slug to the link.
@@ -697,7 +697,7 @@ function ba_eas_template_include( $template ) {
 		$role = ba_eas_get_user_role( $author->roles, $author->ID );
 
 		// Get the role slug.
-		$slug      = ba_eas()->role_slugs[ $role ]['slug'];
+		$slug      = isset( ba_eas()->role_slugs[ $role ]['slug'] ) ? ba_eas()->role_slugs[ $role ]['slug'] : '';
 		$role_slug = '';
 		if ( ! empty( $slug ) ) {
 			$role_slug = $slug;
