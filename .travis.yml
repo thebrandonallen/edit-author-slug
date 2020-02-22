@@ -47,6 +47,14 @@ matrix:
       env: WP_VERSION=trunk
   exclude:
     - php: 7.4
+      env: WP_VERSION=5.2
+    - php: 7.4
+      env: WP_VERSION=5.1
+    - php: 7.4
+      env: WP_VERSION=5.0
+    - php: 7.4
+      env: WP_VERSION=4.9
+    - php: 7.4
       env: WP_VERSION=4.8
     - php: 7.4
       env: WP_VERSION=4.7
