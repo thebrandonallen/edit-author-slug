@@ -4,6 +4,7 @@
 # http://docs.travis-ci.com/user/workers/container-based-infrastructure/
 sudo: false
 
+os: linux
 dist: trusty
 
 # Tell Travis CI we're using PHP
@@ -28,7 +29,7 @@ php:
 env:
   global:
     - EAS_TRAVISCI=travis:phpunit
-  matrix:
+  jobs:
     - WP_VERSION=trunk
     - WP_VERSION=5.3
     - WP_VERSION=5.2
@@ -38,7 +39,7 @@ env:
     - WP_VERSION=4.8
     - WP_VERSION=4.7
 
-matrix:
+jobs:
   fast_finish: true
   include:
     - php: 7.2
