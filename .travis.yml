@@ -1,14 +1,15 @@
 # Travis CI Configuration File
 
-# Use new Travis container-based infrastructure
-# http://docs.travis-ci.com/user/workers/container-based-infrastructure/
-sudo: false
-
+# Set the OS and distribution keys
 os: linux
-dist: trusty
+dist: xenial
 
 # Tell Travis CI we're using PHP
 language: php
+
+# Tell Travis to start MySQL
+services:
+  - mysql
 
 # Configure caches
 cache:
@@ -69,7 +70,6 @@ jobs:
       env: WP_VERSION=4.7
   allow_failures:
     - php: nightly
-    - php: 7.4
     - env: WP_VERSION=trunk EAS_TRAVISCI=travis:codecoverage
 
 # Clones WordPress and configures our testing environment.
