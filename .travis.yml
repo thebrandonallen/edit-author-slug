@@ -37,8 +37,6 @@ env:
     - WP_VERSION=5.1
     - WP_VERSION=5.0
     - WP_VERSION=4.9
-    - WP_VERSION=4.8
-    - WP_VERSION=4.7
 
 jobs:
   fast_finish: true
@@ -56,18 +54,6 @@ jobs:
       env: WP_VERSION=5.0
     - php: 7.4
       env: WP_VERSION=4.9
-    - php: 7.4
-      env: WP_VERSION=4.8
-    - php: 7.4
-      env: WP_VERSION=4.7
-    - php: 7.3
-      env: WP_VERSION=4.8
-    - php: 7.3
-      env: WP_VERSION=4.7
-    - php: 7.2
-      env: WP_VERSION=4.8
-    - php: 7.2
-      env: WP_VERSION=4.7
   allow_failures:
     - php: nightly
     - env: WP_VERSION=trunk EAS_TRAVISCI=travis:codecoverage

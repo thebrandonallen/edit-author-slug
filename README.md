@@ -1,8 +1,8 @@
 # Edit Author Slug [![Build Status](https://travis-ci.org/thebrandonallen/edit-author-slug.svg?branch=master)](https://travis-ci.org/thebrandonallen/edit-author-slug) #
 **Contributors:** [thebrandonallen](https://profiles.wordpress.org/thebrandonallen)  
 **Tags:** author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles  
-**Requires at least:** 4.7  
-**Tested up to:** 5.2.3  
+**Requires at least:** 4.9  
+**Tested up to:** 5.3.2  
 **Requires PHP:** 5.6.20  
 **Stable tag:** 1.6.1  
 **License:** GPLv2 or later  
@@ -66,6 +66,11 @@ While I've made every attempt to prevent this, I may have missed a spot or two. 
 If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums.
 
 ## Changelog ##
+
+### 1.7.0 ###
+* Release date: TBD
+* Bumps the minimum required version to WordPress 4.9.
+* Bumps "Tested up to" version to 5.3.2
 
 ### 1.6.1 ###
 * Release date: 2019-09-05
