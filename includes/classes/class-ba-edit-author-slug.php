@@ -417,7 +417,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 		public function is_itsec_force_unique_nickname() {
 			$retval = false;
 
-			if ( class_exists( 'ITSEC_Modules' ) ) {
+			if ( method_exists( 'ITSEC_Modules', 'get_settings' ) ) {
 				$tweaks = ITSEC_Modules::get_settings( 'wordpress-tweaks' );
 				$retval = $tweaks['force_unique_nicename'];
 			}
