@@ -3,7 +3,9 @@
 
 	// Toggle the .hidden class.
 	toggleHidden = function( el ) {
-		el.classList.toggle( 'hidden' );
+		if (el && Object.prototype.hasOwnProperty.call(el, 'classList')) {
+			el.classList.toggle( 'hidden' );
+		}
 	};
 
 	// Run our code after the DOM is loaded.
