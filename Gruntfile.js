@@ -70,6 +70,18 @@ module.exports = function( grunt ) {
 				src: []
 			}
 		},
+		concat: {
+			options: {
+				stripBanners: true,
+				banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+				'<%= grunt.template.today("UTC:yyyy-mm-dd h:MM:ss TT Z") %> - ' +
+				'https://github.com/thebrandonallen/edit-author-slug/ */\n',
+			},
+			dist: {
+				src: [ 'js/edit-author-slug.min.js' ],
+				dest: 'js/edit-author-slug.min.js',
+			}
+		},
 		copy: {
 			files: {
 				files: [
@@ -256,7 +268,7 @@ module.exports = function( grunt ) {
 				}
 			}
 		},
-		uglify: {
+		terser: {
 			core: {
 				cwd: SOURCE_DIR,
 				dest: SOURCE_DIR,
@@ -264,11 +276,6 @@ module.exports = function( grunt ) {
 				expand: true,
 				ext: '.min.js',
 				src: [ EAS_JS ].concat( EAS_EXCLUDED_JS )
-			},
-			options: {
-				banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-				'<%= grunt.template.today("UTC:yyyy-mm-dd h:MM:ss TT Z") %> - ' +
-				'https://github.com/thebrandonallen/edit-author-slug/ */'
 			}
 		},
 		watch: {
@@ -287,9 +294,10 @@ module.exports = function( grunt ) {
 	});
 
 	// Build tasks.
-	grunt.registerTask( 'readme', [ 'wp_readme_to_markdown', 'string-replace:readme' ] );
-	grunt.registerTask( 'src',    [ 'jsvalidate:core', 'jshint:core' ] );
-	grunt.registerTask( 'build',  [ 'clean:all', 'checktextdomain', 'string-replace:build', 'readme', 'uglify', 'makepot', 'copy:files' ] );
+	grunt.registerTask( 'readme',   [ 'wp_readme_to_markdown', 'string-replace:readme' ] );
+	grunt.registerTask( 'js:build', [ 'terser', 'concat' ] );
+	grunt.registerTask( 'src',      [ 'jsvalidate:core', 'jshint:core' ] );
+	grunt.registerTask( 'build',    [ 'clean:all', 'checktextdomain', 'string-replace:build', 'readme', 'js:build', 'makepot', 'copy:files' ] );
 
 	// PHPUnit test task.
 	grunt.registerMultiTask( 'phpunit', 'Runs PHPUnit tests, including the multisite tests.', function() {
