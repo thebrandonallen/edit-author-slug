@@ -4,7 +4,7 @@
     "type": "project",
     "require": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
-        "phpcompatibility/php-compatibility": "^9.3",
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
         "squizlabs/php_codesniffer": "^3.5",
         "wp-coding-standards/wpcs": "^2.2"
     },
