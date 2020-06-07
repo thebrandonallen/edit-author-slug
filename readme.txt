@@ -2,7 +2,7 @@
 Contributors: thebrandonallen
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles
 Requires at least: 4.9
-Tested up to: 5.3.2
+Tested up to: 5.4.1
 Requires PHP: 5.6.20
 Stable tag: 1.6.1
 License: GPLv2 or later
