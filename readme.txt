@@ -70,7 +70,8 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 = 1.7.0 =
 * Release date: TBD
 * Bumps the minimum required version to WordPress 4.9.
-* Bumps "Tested up to" version to 5.3.2
+* Bumps "Tested up to" version to 5.4.1
+* Fixes an error that may occur with some install of iThemes Security
 
 = 1.6.1 =
 * Release date: 2019-09-05
