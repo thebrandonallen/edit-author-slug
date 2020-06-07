@@ -88,5 +88,22 @@ function ba_eas() {
 	return BA_Edit_Author_Slug::instance();
 }
 
-ba_eas();
-ba_eas()->setup_actions();
+/**
+ * Initialize WP Fail2Ban Redux.
+ *
+ * @since 1.7.0
+ */
+function ba_eas_init() {
+
+	// Initialize the plugin.
+	$eas = ba_eas();
+	$eas->setup_actions();
+
+	/**
+	 * Fires after Edit Author Slug has been loaded and initialized.
+	 *
+	 * @since 1.7.0
+	 */
+	do_action( 'ba_eas_loaded' );
+}
+add_action( 'plugins_loaded', 'ba_eas_init' );

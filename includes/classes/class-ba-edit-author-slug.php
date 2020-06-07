@@ -311,7 +311,7 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			add_action( 'init', array( $this, 'add_rewrite_tags' ), 20 );
 
 			// Localize.
-			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
+			add_action( 'ba_eas_loaded', array( $this, 'load_textdomain' ) );
 		}
 
 		/** Public Methods ****************************************************/
