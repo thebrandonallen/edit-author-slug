@@ -251,7 +251,7 @@ module.exports = function( grunt ) {
 						replacement: '$1<%= grunt.template.today("yyyy-mm-dd") %>'
 					},
 					{
-						pattern: /^(##\s.*\s-\s)(TBD|TBA|TDB)\s##$/gm,
+						pattern: /^(##\s.*\s-\s)(TBD|TBA|TDB)$/gm,
 						replacement: '$1<%= grunt.template.today("yyyy-mm-dd") %> ##'
 					} ]
 				}
