@@ -11,6 +11,9 @@
 	<!-- Exclude the Node Modules directory. -->
 	<exclude-pattern>/node_modules/*</exclude-pattern>
 
+	<!-- Exclude the build directory. -->
+	<exclude-pattern>/build/*</exclude-pattern>
+
 	<!-- Exclude Javascript files. -->
 	<exclude-pattern>*.js</exclude-pattern>
 
