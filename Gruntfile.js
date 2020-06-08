@@ -19,6 +19,7 @@ module.exports = function( grunt ) {
 			'!**/node_modules/**',
 			'!**/tests/**',
 			'!**/vendor/**',
+			'!composer.*',
 			'!Gruntfile.js*',
 			'!package.json*',
 			'!package-lock.json*',
