@@ -89,7 +89,7 @@ function ba_eas() {
 }
 
 /**
- * Initialize WP Fail2Ban Redux.
+ * Initialize Edit Author Slug.
  *
  * @since 1.7.0
  */
