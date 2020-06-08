@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased]
 
-## [1.7.0](https://github.com/thebrandonallen/edit-author-slug/tree/1.7.0) - TDB
+## [1.7.0](https://github.com/thebrandonallen/edit-author-slug/tree/1.7.0) - 2020-06-07
 ### Changed
 * Bumps the minimum required version to WordPress 4.9.
 * Bumps "Tested up to" version to 5.4.1

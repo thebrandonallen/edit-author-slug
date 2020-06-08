@@ -1,16 +1,16 @@
-# Copyright (C) 2009-2019 Brandon Allen
+# Copyright (C) 2009-2020 Brandon Allen
 # This file is distributed under the same license as the Edit Author Slug package.
 # Submit translations to https://translate.wordpress.org/projects/wp-plugins/edit-author-slug.
 msgid ""
 msgstr ""
-"Project-Id-Version: Edit Author Slug 1.6.1\n"
+"Project-Id-Version: Edit Author Slug 1.7.0\n"
 "Report-Msgid-Bugs-To: "
 "https://github.com/thebrandonallen/edit-author-slug/issues\n"
-"POT-Creation-Date: 2019-09-05 05:58:44+00:00\n"
+"POT-Creation-Date: 2020-06-08 03:21:48+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
 "Last-Translator: BRANDON ALLEN <plugins@brandonallen.me>\n"
 "Language-Team: ENGLISH <plugins@brandonallen.me>\n"
 "Language: en\n"

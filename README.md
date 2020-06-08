@@ -2,9 +2,9 @@
 **Contributors:** [thebrandonallen](https://profiles.wordpress.org/thebrandonallen)  
 **Tags:** author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles  
 **Requires at least:** 4.9  
-**Tested up to:** 5.3.2  
+**Tested up to:** 5.4.1  
 **Requires PHP:** 5.6.20  
-**Stable tag:** 1.6.1  
+**Stable tag:** 1.7.0  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/old-licenses/gpl-2.0.html  
 
@@ -68,9 +68,10 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 ## Changelog ##
 
 ### 1.7.0 ###
-* Release date: TBD
+* Release date: 2020-06-07
 * Bumps the minimum required version to WordPress 4.9.
-* Bumps "Tested up to" version to 5.3.2
+* Bumps "Tested up to" version to 5.4.1
+* Fixes an error that may occur with some install of iThemes Security
 
 ### 1.6.1 ###
 * Release date: 2019-09-05
