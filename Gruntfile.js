@@ -1,9 +1,5 @@
-/* jshint node:true */
 module.exports = function ( grunt ) {
-	const SOURCE_DIR = '',
-		BUILD_DIR = 'build/',
-		EAS_JS = [ 'js/*.js' ],
-		EAS_EXCLUDED_JS = [ '!js/*.min.js' ],
+	const BUILD_DIR = 'build/',
 		EAS_EXCLUDED_MISC = [
 			'!**/assets/**',
 			'!**/bin/**',
@@ -92,18 +88,6 @@ module.exports = function ( grunt ) {
 						),
 					},
 				],
-			},
-		},
-		jsvalidate: {
-			options: {
-				globals: {},
-				esprimaOptions: {},
-				verbose: false,
-			},
-			core: {
-				files: {
-					src: [ SOURCE_DIR + EAS_JS ],
-				},
 			},
 		},
 		makepot: {
@@ -259,16 +243,6 @@ module.exports = function ( grunt ) {
 				},
 			},
 		},
-		terser: {
-			core: {
-				cwd: SOURCE_DIR,
-				dest: SOURCE_DIR,
-				extDot: 'last',
-				expand: true,
-				ext: '.min.js',
-				src: [ EAS_JS ].concat( EAS_EXCLUDED_JS ),
-			},
-		},
 		watch: {
 			js: {
 				files: [ 'Gruntfile.js' ],
@@ -293,31 +267,101 @@ module.exports = function ( grunt ) {
 		'eslint:fix',
 		'Runs ESLint on JavaScript files.',
 		function () {
-			const done = this.async();
 			grunt.util.spawn(
 				{
 					cmd: 'npm',
 					args: [ 'run', 'eslint:fix', 'js/edit-author-slug.js' ],
 					opts: { stdio: 'inherit' },
 				},
-				function ( error ) {
-					if ( error ) {
-						done( false );
-					} else {
-						done( true );
-					}
-				}
+				this.async()
 			);
 		}
 	);
-	grunt.registerTask( 'js:build', [ 'terser', 'concat' ] );
+	grunt.registerTask(
+		'js:build',
+		'Runs Terser on JavaScript files.',
+		function () {
+			const banner = grunt.template.process(
+				'/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+					'<%= grunt.template.today("UTC:yyyy-mm-dd h:MM:ss TT Z") %> - ' +
+					'https://github.com/thebrandonallen/edit-author-slug/ */'
+			);
+			grunt.util.spawn(
+				{
+					cmd: 'npm',
+					args: [
+						'run',
+						'build:js',
+						'--',
+						'js/edit-author-slug.js',
+						'--copmress',
+						'--mangle',
+						'--output',
+						'js/edit-author-slug.min.js',
+						'--format',
+						`preamble='${ banner }'`,
+					],
+					opts: { stdio: 'inherit' },
+				},
+				this.async()
+			);
+		}
+	);
+	grunt.registerTask(
+		'i18n:build',
+		'Runs the WP-CLI i18n command to generate the pot file.',
+		function () {
+			const banner = grunt.template.process(
+				'Copyright (C) 2009-<%= grunt.template.today("UTC:yyyy") %> Brandon Allen\n' +
+					'This file is distributed under the same license as the Edit Author Slug package.\n' +
+					'Submit translations to https://translate.wordpress.org/projects/wp-plugins/edit-author-slug.'
+			);
+			const keywords = [
+				'__:1,2d',
+				'_e:1,2d',
+				'_x:1,2c,3d',
+				'_n:1,2,4d',
+				'_ex:1,2c,3d',
+				'_nx:1,2,4c,5d',
+				'esc_attr__:1,2d',
+				'esc_attr_e:1,2d',
+				'esc_attr_x:1,2c,3d',
+				'esc_html__:1,2d',
+				'esc_html_e:1,2d',
+				'esc_html_x:1,2c,3d',
+				'_n_noop:1,2,3d',
+				'_nx_noop:1,2,3c,4d',
+			];
+			const headers = {
+				'Report-Msgid-Bugs-To':
+					'https://github.com/thebrandonallen/edit-author-slug/issues',
+				'X-Poedit-KeywordsList': `${ keywords.join( ';' ) }`,
+			};
+			grunt.util.spawn(
+				{
+					cmd: 'wp',
+					args: [
+						'i18n',
+						'make-pot',
+						'.',
+						'languages/edit-author-slug.pot',
+						`--headers=${ JSON.stringify( headers ) }`,
+						`--file-comment=${ banner }`,
+						'--exclude=build',
+					],
+					opts: { stdio: 'inherit' },
+				},
+				this.async()
+			);
+		}
+	);
 	grunt.registerTask( 'build', [
 		'clean:all',
 		'checktextdomain',
 		'string-replace:build',
 		'readme',
 		'js:build',
-		'makepot',
+		'i18n:build',
 		'copy:files',
 	] );
 
