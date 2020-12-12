@@ -1,16 +1,9 @@
 /* jshint node:true */
-module.exports = function( grunt ) {
-	var SOURCE_DIR = '',
+module.exports = function ( grunt ) {
+	const SOURCE_DIR = '',
 		BUILD_DIR = 'build/',
-
-		EAS_JS = [
-			'js/*.js'
-		],
-
-		EAS_EXCLUDED_JS = [
-			'!js/*.min.js'
-		],
-
+		EAS_JS = [ 'js/*.js' ],
+		EAS_EXCLUDED_JS = [ '!js/*.min.js' ],
 		EAS_EXCLUDED_MISC = [
 			'!**/assets/**',
 			'!**/bin/**',
@@ -25,16 +18,18 @@ module.exports = function( grunt ) {
 			'!package-lock.json*',
 			'!phpcs.xml*',
 			'!phpunit.xml*',
-			'!.*'
+			'!.*',
 		];
 
 	// Load tasks.
-	require( 'matchdep' ).filterDev([ 'grunt-*', '!grunt-legacy-util' ]).forEach( grunt.loadNpmTasks );
+	require( 'matchdep' )
+		.filterDev( [ 'grunt-*', '!grunt-legacy-util' ] )
+		.forEach( grunt.loadNpmTasks );
 
 	// Load legacy utils
 	grunt.util = require( 'grunt-legacy-util' );
 
-	grunt.initConfig({
+	grunt.initConfig( {
 		pkg: grunt.file.readJSON( 'package.json' ),
 		checktextdomain: {
 			options: {
@@ -54,13 +49,13 @@ module.exports = function( grunt ) {
 					'esc_html_e:1,2d',
 					'esc_html_x:1,2c,3d',
 					'_n_noop:1,2,3d',
-					'_nx_noop:1,2,3c,4d'
-				]
+					'_nx_noop:1,2,3c,4d',
+				],
 			},
 			files: {
 				src: [ '**/*.php' ].concat( EAS_EXCLUDED_MISC ),
-				expand: true
-			}
+				expand: true,
+			},
 		},
 		clean: {
 			all: [ BUILD_DIR ],
@@ -68,20 +63,21 @@ module.exports = function( grunt ) {
 				cwd: BUILD_DIR,
 				dot: true,
 				expand: true,
-				src: []
-			}
+				src: [],
+			},
 		},
 		concat: {
 			options: {
 				stripBanners: true,
-				banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-				'<%= grunt.template.today("UTC:yyyy-mm-dd h:MM:ss TT Z") %> - ' +
-				'https://github.com/thebrandonallen/edit-author-slug/ */\n',
+				banner:
+					'/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+					'<%= grunt.template.today("UTC:yyyy-mm-dd h:MM:ss TT Z") %> - ' +
+					'https://github.com/thebrandonallen/edit-author-slug/ */\n',
 			},
 			dist: {
 				src: [ 'js/edit-author-slug.min.js' ],
 				dest: 'js/edit-author-slug.min.js',
-			}
+			},
 		},
 		copy: {
 			files: {
@@ -91,183 +87,177 @@ module.exports = function( grunt ) {
 						dest: 'build/',
 						dot: true,
 						expand: true,
-						src: [ '**', '!**/.{svn,git}/**' ].concat( EAS_EXCLUDED_MISC )
-					}
-				]
-			}
-		},
-		jshint: {
-			options: grunt.file.readJSON( '.jshintrc' ),
-			grunt: {
-				src: [ 'Gruntfile.js' ]
+						src: [ '**', '!**/.{svn,git}/**' ].concat(
+							EAS_EXCLUDED_MISC
+						),
+					},
+				],
 			},
-			core: {
-				expand: true,
-				cwd: SOURCE_DIR,
-				src: [ EAS_JS ].concat( EAS_EXCLUDED_JS ),
-
-				/**
-				 * Limit JSHint's run to a single specified file:
-				 *
-				 * grunt jshint:core --file=filename.js
-				 *
-				 * Optionally, include the file path:
-				 *
-				 * grunt jshint:core --file=path/to/filename.js
-				 *
-				 * @param {String} filepath
-				 * @returns {Bool}
-				 */
-				filter: function( filepath ) {
-					var index,
-						file = grunt.option( 'file' );
-
-					// Don't filter when no target file is specified
-					if ( ! file ) {
-						return true;
-					}
-
-					// Normalise filepath for Windows
-					filepath = filepath.replace( /\\/g, '/' );
-					index = filepath.lastIndexOf( '/' + file );
-
-					// Match only the filename passed from cli
-					if ( filepath === file || ( -1 !== index && index === filepath.length - ( file.length + 1 ) ) ) {
-						return true;
-					}
-
-					return false;
-				}
-			}
 		},
 		jsvalidate: {
 			options: {
 				globals: {},
 				esprimaOptions: {},
-				verbose: false
+				verbose: false,
 			},
 			core: {
 				files: {
-					src: [ SOURCE_DIR + EAS_JS ]
-				}
-			}
+					src: [ SOURCE_DIR + EAS_JS ],
+				},
+			},
 		},
 		makepot: {
 			target: {
 				options: {
 					domainPath: '/languages',
 					mainFile: 'edit-author-slug.php',
-					potComments: 'Copyright (C) 2009-<%= grunt.template.today("UTC:yyyy") %> Brandon Allen\nThis file is distributed under the same license as the Edit Author Slug package.\nSubmit translations to https://translate.wordpress.org/projects/wp-plugins/edit-author-slug.',
+					potComments:
+						'Copyright (C) 2009-<%= grunt.template.today("UTC:yyyy") %> Brandon Allen\nThis file is distributed under the same license as the Edit Author Slug package.\nSubmit translations to https://translate.wordpress.org/projects/wp-plugins/edit-author-slug.',
 					potFilename: 'edit-author-slug.pot',
 					potHeaders: {
 						poedit: true,
-						'report-msgid-bugs-to': 'https://github.com/thebrandonallen/edit-author-slug/issues',
-						'last-translator': 'BRANDON ALLEN <plugins@brandonallen.me>',
-						'language-team': 'ENGLISH <plugins@brandonallen.me>'
+						'report-msgid-bugs-to':
+							'https://github.com/thebrandonallen/edit-author-slug/issues',
+						'last-translator':
+							'BRANDON ALLEN <plugins@brandonallen.me>',
+						'language-team': 'ENGLISH <plugins@brandonallen.me>',
 					},
-					processPot: function( pot ) {
-						var translation, // Exclude meta data from pot.
-							excludedMeta = [
-								'Plugin Name of the plugin/theme',
-								'Plugin URI of the plugin/theme',
-								'Author of the plugin/theme',
-								'Author URI of the plugin/theme'
-							];
+					processPot( pot ) {
+						let translation; // Exclude meta data from pot.
+						const excludedMeta = [
+							'Plugin Name of the plugin/theme',
+							'Plugin URI of the plugin/theme',
+							'Author of the plugin/theme',
+							'Author URI of the plugin/theme',
+						];
 
-						for ( translation in pot.translations[''] ) {
-							if ( 'undefined' !== typeof pot.translations[''][ translation ].comments.extracted ) {
-								if ( 0 <= excludedMeta.indexOf( pot.translations[''][ translation ].comments.extracted ) ) {
-									console.log( 'Excluded meta: ' + pot.translations[''][ translation ].comments.extracted );
-									delete pot.translations[''][ translation ];
+						for ( translation in pot.translations[ '' ] ) {
+							if (
+								'undefined' !==
+								typeof pot.translations[ '' ][ translation ]
+									.comments.extracted
+							) {
+								if (
+									0 <=
+									excludedMeta.indexOf(
+										pot.translations[ '' ][ translation ]
+											.comments.extracted
+									)
+								) {
+									// eslint-disable-next-line
+									console.log(
+										'Excluded meta: ' +
+											pot.translations[ '' ][
+												translation
+											].comments.extracted
+									);
+									delete pot.translations[ '' ][
+										translation
+									];
 								}
 							}
 						}
 
 						return pot;
 					},
-					type: 'wp-plugin'
-				}
-			}
+					type: 'wp-plugin',
+				},
+			},
 		},
 		phpunit: {
 			default: {
 				cmd: 'phpunit',
-				args: [ '-c', 'phpunit.xml.dist' ]
+				args: [ '-c', 'phpunit.xml.dist' ],
 			},
 			codecoverage: {
 				cmd: 'phpunit',
-				args: [ '-c', 'phpunit.xml.dist', '--coverage-clover=coverage.clover' ]
-			}
+				args: [
+					'-c',
+					'phpunit.xml.dist',
+					'--coverage-clover=coverage.clover',
+				],
+			},
 		},
 		'string-replace': {
 			dev: {
 				files: {
-					'edit-author-slug.php': 'edit-author-slug.php'
+					'edit-author-slug.php': 'edit-author-slug.php',
 				},
 				options: {
-					replacements: [ {
-						pattern: /(const\sVERSION.*)'(.*)';/gm, // For plugin version variable
-						replacement: '$1\'<%= pkg.version %>\';'
-					},
-					{
-						pattern: /(\*\sVersion:\s+).*/gm, // For plugin header
-						replacement: '$1<%= pkg.version %>'
-					},
-					{
-						pattern: /(\*\s@version\s+).*/gm, // For plugin header
-						replacement: '$1<%= pkg.version %>'
-					} ]
-				}
+					replacements: [
+						{
+							pattern: /(const\sVERSION.*)'(.*)';/gm, // For plugin version variable
+							replacement: "$1'<%= pkg.version %>';",
+						},
+						{
+							pattern: /(\*\sVersion:\s+).*/gm, // For plugin header
+							replacement: '$1<%= pkg.version %>',
+						},
+						{
+							pattern: /(\*\s@version\s+).*/gm, // For plugin header
+							replacement: '$1<%= pkg.version %>',
+						},
+					],
+				},
 			},
 			build: {
 				files: {
 					'CHANGELOG.md': 'CHANGELOG.md',
 					'edit-author-slug.php': 'edit-author-slug.php',
-					'includes/classes/class-edit-author-slug.php': 'includes/classes/class-edit-author-slug.php',
-					'readme.txt': 'readme.txt'
+					'includes/classes/class-edit-author-slug.php':
+						'includes/classes/class-edit-author-slug.php',
+					'readme.txt': 'readme.txt',
 				},
 				options: {
-					replacements: [ {
-						pattern: /(const\sVERSION.*)'(.*)';/gm, // For plugin version variable
-						replacement: '$1\'<%= pkg.version %>\';'
-					},
-					{
-						pattern: /(\*\sVersion:\s+).*/gm, // For plugin header
-						replacement: '$1<%= pkg.version %>'
-					},
-					{
-						pattern: /(\*\s@version\s+).*/gm, // For plugin header
-						replacement: '$1<%= pkg.version %>'
-					},
-					{
-						pattern: /(Stable\stag:\s+).*/gm, // For readme.txt
-						replacement: '$1<%= pkg.version %>'
-					},
-					{
-						pattern: /(Copyright\s\(C\)\s2009-)[0-9]{4}(.*)/gm, // For Copyright.
-						replacement: '$1<%= grunt.template.today("UTC:yyyy") %>$2'
-					},
-					{
-						pattern: /(\*\sRelease\sdate:\s)(TBD|TBA|TDB)$/gm,
-						replacement: '$1<%= grunt.template.today("yyyy-mm-dd") %>'
-					},
-					{
-						pattern: /^(##\s.*\s-\s)(TBD|TBA|TDB)$/gm,
-						replacement: '$1<%= grunt.template.today("yyyy-mm-dd") %>'
-					} ]
-				}
+					replacements: [
+						{
+							pattern: /(const\sVERSION.*)'(.*)';/gm, // For plugin version variable
+							replacement: "$1'<%= pkg.version %>';",
+						},
+						{
+							pattern: /(\*\sVersion:\s+).*/gm, // For plugin header
+							replacement: '$1<%= pkg.version %>',
+						},
+						{
+							pattern: /(\*\s@version\s+).*/gm, // For plugin header
+							replacement: '$1<%= pkg.version %>',
+						},
+						{
+							pattern: /(Stable\stag:\s+).*/gm, // For readme.txt
+							replacement: '$1<%= pkg.version %>',
+						},
+						{
+							pattern: /(Copyright\s\(C\)\s2009-)[0-9]{4}(.*)/gm, // For Copyright.
+							replacement:
+								'$1<%= grunt.template.today("UTC:yyyy") %>$2',
+						},
+						{
+							pattern: /(\*\sRelease\sdate:\s)(TBD|TBA|TDB)$/gm,
+							replacement:
+								'$1<%= grunt.template.today("yyyy-mm-dd") %>',
+						},
+						{
+							pattern: /^(##\s.*\s-\s)(TBD|TBA|TDB)$/gm,
+							replacement:
+								'$1<%= grunt.template.today("yyyy-mm-dd") %>',
+						},
+					],
+				},
 			},
 			readme: {
 				files: {
-					'README.md': 'README.md'
+					'README.md': 'README.md',
 				},
 				options: {
-					replacements: [ {
-						pattern: /# Edit Author Slug #/gim,
-						replacement: '# Edit Author Slug [![Build Status](https://travis-ci.org/thebrandonallen/edit-author-slug.svg?branch=master)](https://travis-ci.org/thebrandonallen/edit-author-slug) #'
-					} ]
-				}
-			}
+					replacements: [
+						{
+							pattern: /# Edit Author Slug #/gim,
+							replacement:
+								'# Edit Author Slug [![Build Status](https://travis-ci.org/thebrandonallen/edit-author-slug.svg?branch=master)](https://travis-ci.org/thebrandonallen/edit-author-slug) #',
+						},
+					],
+				},
+			},
 		},
 		terser: {
 			core: {
@@ -276,44 +266,85 @@ module.exports = function( grunt ) {
 				extDot: 'last',
 				expand: true,
 				ext: '.min.js',
-				src: [ EAS_JS ].concat( EAS_EXCLUDED_JS )
-			}
+				src: [ EAS_JS ].concat( EAS_EXCLUDED_JS ),
+			},
 		},
 		watch: {
 			js: {
 				files: [ 'Gruntfile.js' ],
-				tasks: [ 'jshint' ]
-			}
+				tasks: [ 'jshint' ],
+			},
 		},
 		wp_readme_to_markdown: {
 			core: {
 				files: {
-					'README.md': 'readme.txt'
-				}
-			}
-		}
-	});
+					'README.md': 'readme.txt',
+				},
+			},
+		},
+	} );
 
 	// Build tasks.
-	grunt.registerTask( 'readme',   [ 'wp_readme_to_markdown', 'string-replace:readme' ] );
+	grunt.registerTask( 'readme', [
+		'wp_readme_to_markdown',
+		'string-replace:readme',
+	] );
+	grunt.registerTask(
+		'eslint:fix',
+		'Runs ESLint on JavaScript files.',
+		function () {
+			const done = this.async();
+			grunt.util.spawn(
+				{
+					cmd: 'npm',
+					args: [ 'run', 'eslint:fix', 'js/edit-author-slug.js' ],
+					opts: { stdio: 'inherit' },
+				},
+				function ( error ) {
+					if ( error ) {
+						done( false );
+					} else {
+						done( true );
+					}
+				}
+			);
+		}
+	);
 	grunt.registerTask( 'js:build', [ 'terser', 'concat' ] );
-	grunt.registerTask( 'src',      [ 'jsvalidate:core', 'jshint:core' ] );
-	grunt.registerTask( 'build',    [ 'clean:all', 'checktextdomain', 'string-replace:build', 'readme', 'js:build', 'makepot', 'copy:files' ] );
+	grunt.registerTask( 'build', [
+		'clean:all',
+		'checktextdomain',
+		'string-replace:build',
+		'readme',
+		'js:build',
+		'makepot',
+		'copy:files',
+	] );
 
 	// PHPUnit test task.
-	grunt.registerMultiTask( 'phpunit', 'Runs PHPUnit tests, including the multisite tests.', function() {
-		grunt.util.spawn({
-			cmd: this.data.cmd,
-			args: this.data.args,
-			opts: { stdio: 'inherit' }
-		}, this.async() );
-	});
+	grunt.registerMultiTask(
+		'phpunit',
+		'Runs PHPUnit tests, including the multisite tests.',
+		function () {
+			grunt.util.spawn(
+				{
+					cmd: this.data.cmd,
+					args: this.data.args,
+					opts: { stdio: 'inherit' },
+				},
+				this.async()
+			);
+		}
+	);
 
 	// Travis CI Tasks.
 	grunt.registerTask( 'travis:phpunit', [ 'phpunit:default' ] );
-	grunt.registerTask( 'travis:codecoverage', 'Runs PHPUnit tasks with code-coverage generation.', [ 'phpunit:codecoverage' ] );
+	grunt.registerTask(
+		'travis:codecoverage',
+		'Runs PHPUnit tasks with code-coverage generation.',
+		[ 'phpunit:codecoverage' ]
+	);
 
 	// Register the default tasks.
 	grunt.registerTask( 'default', [ 'watch' ] );
-
 };

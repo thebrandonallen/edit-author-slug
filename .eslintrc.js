@@ -4,6 +4,6 @@ module.exports = {
 		browser: true,
 	},
 	extends: [
-		'plugin:@wordpress/eslint-plugin/jshint',
+		'plugin:@wordpress/eslint-plugin/recommended',
 	],
 };
