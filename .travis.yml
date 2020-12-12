@@ -61,6 +61,7 @@ jobs:
       env: WP_VERSION=4.9
   allow_failures:
     - php: nightly
+    - php: 8.0
     - env: WP_VERSION=trunk EAS_TRAVISCI=travis:codecoverage
 
 # Clones WordPress and configures our testing environment.
