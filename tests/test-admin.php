@@ -630,7 +630,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 		ba_eas_settings_page_html();
 		$output = ob_get_clean();
 
-		$this->assertContains( '<h1>Edit Author Slug Settings</h1>', $output );
+		$this->assertContains( '<h1 id="edit-author-slug">Edit Author Slug Settings</h1>', $output );
 	}
 
 	/**
