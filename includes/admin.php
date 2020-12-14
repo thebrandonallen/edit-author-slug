@@ -428,7 +428,7 @@ function ba_eas_settings_page_html() {
 		<h1 id="edit-author-slug"><?php esc_html_e( 'Edit Author Slug Settings', 'edit-author-slug' ); ?></h1>
 
 		<div class="notice notice-large">
-			<a href="<?php echo esc_url( ba_eas_author_link() ); ?>">You can customize your own author slug by visiting your profile page.</a> This also applies to other users.
+			<a href="<?php echo esc_url( get_edit_profile_url() ); ?>">You can customize your own author slug by visiting your profile page.</a> This also applies to other users.
 		</div>
 
 		<form action="options.php" method="post">

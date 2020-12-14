@@ -7,7 +7,7 @@
  * Author URI:      https://github.com/thebrandonallen/
  * Text Domain:     edit-author-slug
  * Domain Path:     /languages
- * Version:         1.8.0
+ * Version:         1.8.1
  *
  * Copyright (C) 2009-2020  Brandon Allen (https://github.com/thebrandonallen)
  *
@@ -28,7 +28,7 @@
  * @package Edit_Author_Slug
  * @subpackage Main
  * @author Brandon Allen
- * @version 1.8.0
+ * @version 1.8.1
  */
 
 // Exit if accessed directly.

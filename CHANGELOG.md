@@ -5,11 +5,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [1.8.1](https://github.com/thebrandonallen/edit-author-slug/tree/1.8.1) - 2020-12-14
+### Fixed
+* Corrects settings page notice link to actually link to the current user's profile page.
+
 ## [1.8.0](https://github.com/thebrandonallen/edit-author-slug/tree/1.8.0) - 2020-12-14
 ### Changed
 * Bumps "Tested up to" version to 5.6
-* Adds a notice to the settings page reminding you that you can edit your author slug on your profile page.
 * Drops support for IE 10 on the settings page.
+
+### Added
+* Adds a notice to the settings page reminding you that you can edit your author slug on your profile page.
 
 ## [1.7.0](https://github.com/thebrandonallen/edit-author-slug/tree/1.7.0) - 2020-06-07
 ### Changed
