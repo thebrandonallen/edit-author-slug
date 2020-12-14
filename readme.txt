@@ -4,7 +4,7 @@ Tags: author, author base, author slug, user nicename, nicename, permalink, perm
 Requires at least: 4.9
 Tested up to: 5.6
 Requires PHP: 5.6.20
-Stable tag: 1.7.0
+Stable tag: 1.8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -66,6 +66,12 @@ While I've made every attempt to prevent this, I may have missed a spot or two. 
 If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums.
 
 == Changelog ==
+
+= 1.8.0 =
+* Release date: 2020-12-14
+* Bumps "Tested up to" version to 5.6
+* Adds a notice to the settings page reminding you that you can edit your author slug on your profile page.
+* Drops support for IE 10 on the settings page.
 
 = 1.7.0 =
 * Release date: 2020-06-07

@@ -3,40 +3,52 @@
 # Submit translations to https://translate.wordpress.org/projects/wp-plugins/edit-author-slug.
 msgid ""
 msgstr ""
-"Project-Id-Version: Edit Author Slug 1.7.0\n"
-"Report-Msgid-Bugs-To: "
-"https://github.com/thebrandonallen/edit-author-slug/issues\n"
-"POT-Creation-Date: 2020-06-08 03:21:48+00:00\n"
+"Project-Id-Version: Edit Author Slug 1.8.0\n"
+"Report-Msgid-Bugs-To: https://github.com/thebrandonallen/edit-author-slug/issues\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
-"Last-Translator: BRANDON ALLEN <plugins@brandonallen.me>\n"
-"Language-Team: ENGLISH <plugins@brandonallen.me>\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-Country: United States\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: "
-"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
-"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
-"X-Poedit-Basepath: ../\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-Bookmarks: \n"
-"X-Textdomain-Support: yes\n"
-"X-Generator: grunt-wp-i18n 1.0.3\n"
+"POT-Creation-Date: 2020-12-14T00:13:37+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Poedit-KeywordsList: __:1,2d;_e:1,2d;_x:1,2c,3d;_n:1,2,4d;_ex:1,2c,3d;_nx:1,2,4c,5d;esc_attr__:1,2d;esc_attr_e:1,2d;esc_attr_x:1,2c,3d;esc_html__:1,2d;esc_html_e:1,2d;esc_html_x:1,2c,3d;_n_noop:1,2,3d;_nx_noop:1,2,3c,4d\n"
+"X-Domain: edit-author-slug\n"
+
+#. Plugin Name of the plugin
+#: includes/admin.php:73
+#: includes/admin.php:410
+msgid "Edit Author Slug"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://github.com/thebrandonallen/edit-author-slug/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>"
+msgstr ""
+
+#. Author of the plugin
+msgid "Brandon Allen"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://github.com/thebrandonallen/"
+msgstr ""
 
 #: includes/admin.php:74
-msgid ""
-"Choose an Author Slug based on the above profile information, or create "
-"your own."
+msgid "Choose an Author Slug based on the above profile information, or create your own."
 msgstr ""
 
 #: includes/admin.php:74
 msgid "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'"
 msgstr ""
 
-#: includes/admin.php:77 includes/admin.php:79 includes/admin.php:323
+#: includes/admin.php:77
+#: includes/admin.php:79
+#: includes/admin.php:323
 msgid "Author Slug"
 msgstr ""
 
@@ -57,15 +69,11 @@ msgid "<strong>ERROR</strong>: An author slug cannot be blank. Please try again.
 msgstr ""
 
 #: includes/admin.php:213
-msgid ""
-"<strong>ERROR</strong>: An author slug can only contain alphanumeric "
-"characters, underscores (_) and dashes (-)."
+msgid "<strong>ERROR</strong>: An author slug can only contain alphanumeric characters, underscores (_) and dashes (-)."
 msgstr ""
 
 #: includes/admin.php:222
-msgid ""
-"<strong>ERROR</strong>: That author slug appears to be invalid. Please try "
-"something different."
+msgid "<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different."
 msgstr ""
 
 #: includes/admin.php:231
@@ -73,156 +81,152 @@ msgid "<strong>ERROR</strong>: An author slug may not be longer than 50 characte
 msgstr ""
 
 #: includes/admin.php:247
-msgid ""
-"<strong>ERROR</strong>: Your iThemes settings prevent your author slug from "
-"being the same as your username."
+msgid "<strong>ERROR</strong>: Your iThemes settings prevent your author slug from being the same as your username."
 msgstr ""
 
-#: includes/admin.php:263
 #. translators: 1: author slug
-msgid ""
-"<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try "
-"something different."
+#: includes/admin.php:263
+msgid "<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try something different."
 msgstr ""
 
-#: includes/admin.php:409 includes/admin.php:428
+#: includes/admin.php:409
+#: includes/admin.php:428
 msgid "Edit Author Slug Settings"
 msgstr ""
 
-#: includes/admin.php:452 includes/admin.php:460
+#: includes/admin.php:456
+#: includes/admin.php:464
 msgid "Author Base"
 msgstr ""
 
-#: includes/admin.php:474
+#: includes/admin.php:478
 msgid "Remove Front"
 msgstr ""
 
-#: includes/admin.php:485
+#: includes/admin.php:489
 msgid "Role-Based Author Base"
 msgstr ""
 
-#: includes/admin.php:495
+#: includes/admin.php:499
 msgid "Role Slugs"
 msgstr ""
 
-#: includes/admin.php:505
+#: includes/admin.php:509
 msgid "Automatic Author Slug Creation"
 msgstr ""
 
-#: includes/admin.php:513
+#: includes/admin.php:517
 msgid "Automatically Update"
 msgstr ""
 
-#: includes/admin.php:523 includes/admin.php:554
+#: includes/admin.php:527
+#: includes/admin.php:558
 msgid "Author Slug Structure"
 msgstr ""
 
-#: includes/admin.php:536
+#: includes/admin.php:540
 msgid "Bulk Update Author Slugs"
 msgstr ""
 
-#: includes/admin.php:544
+#: includes/admin.php:548
 msgid "Bulk Update"
 msgstr ""
 
-#: includes/admin.php:573
+#: includes/admin.php:577
 msgid "Change your author base to something more fun!"
 msgstr ""
 
-#: includes/admin.php:586
-msgid ""
-"Allow Author Slugs to be automatically updated, and set the default Author "
-"Slug structure for users. Automatic updating will only occur when a user "
-"can't edit Author Slugs on their own."
+#: includes/admin.php:590
+msgid "Allow Author Slugs to be automatically updated, and set the default Author Slug structure for users. Automatic updating will only occur when a user can't edit Author Slugs on their own."
 msgstr ""
 
-#: includes/admin.php:586
-msgid ""
-"This could have SEO repercussions if users update their profiles "
-"frequently, and it will override any manual editing of the Author Slug you "
-"may have previously completed."
+#: includes/admin.php:590
+msgid "This could have SEO repercussions if users update their profiles frequently, and it will override any manual editing of the Author Slug you may have previously completed."
 msgstr ""
 
-#: includes/admin.php:609
+#: includes/admin.php:613
 msgid "Defaults to 'author'"
 msgstr ""
 
-#: includes/admin.php:639
+#: includes/admin.php:643
 msgid "Remove the \"front\" portion of the author permalink structure."
 msgstr ""
 
-#: includes/admin.php:655
+#: includes/admin.php:659
 msgid "Set user's Author Base according to their role."
 msgstr ""
 
-#: includes/admin.php:661
-#. translators: 1: rewrite tag, 2: rewrite tag demo usage, 3: demo URL using
-#. rewrite tag
-msgid ""
-"Use the %1$s rewrite tag to customize the role-based author base. If you "
-"set the author base to \"%2$s\", the resulting author structure will be "
-"something like \"%3$s\"."
+#. translators: 1: rewrite tag, 2: rewrite tag demo usage, 3: demo URL using rewrite tag
+#: includes/admin.php:665
+msgid "Use the %1$s rewrite tag to customize the role-based author base. If you set the author base to \"%2$s\", the resulting author structure will be something like \"%3$s\"."
 msgstr ""
 
-#: includes/admin.php:774
+#: includes/admin.php:778
 msgid "Automatically update Author Slug when a user updates their profile."
 msgstr ""
 
-#: includes/admin.php:802
+#: includes/admin.php:806
 msgid "Default author slug options"
 msgstr ""
 
-#: includes/admin.php:828
+#: includes/admin.php:832
 msgid "Update all users at once based on the specified Author Slug structure."
 msgstr ""
 
-#: includes/admin.php:845
-msgid ""
-"Update all users according to the below Author Slug setting. This will only "
-"be run after clicking \"Save Changes\"."
+#: includes/admin.php:849
+msgid "Update all users according to the below Author Slug setting. This will only be run after clicking \"Save Changes\"."
 msgstr ""
 
-#: includes/admin.php:873
+#: includes/admin.php:877
 msgid "Default bulk update author slug options"
 msgstr ""
 
-#: includes/admin.php:910
+#: includes/admin.php:914
 msgid "Settings"
 msgstr ""
 
-#: includes/admin.php:937 tests/test-admin.php:1112
+#: includes/admin.php:941
+#: tests/test-admin.php:1112
 msgid "username (Default)"
 msgstr ""
 
-#: includes/admin.php:938 tests/test-admin.php:1113
+#: includes/admin.php:942
+#: tests/test-admin.php:1113
 msgid "nickname"
 msgstr ""
 
-#: includes/admin.php:939 tests/test-admin.php:1114
+#: includes/admin.php:943
+#: tests/test-admin.php:1114
 msgid "displayname"
 msgstr ""
 
-#: includes/admin.php:940 tests/test-admin.php:1115
+#: includes/admin.php:944
+#: tests/test-admin.php:1115
 msgid "firstname"
 msgstr ""
 
-#: includes/admin.php:941 tests/test-admin.php:1116
+#: includes/admin.php:945
+#: tests/test-admin.php:1116
 msgid "lastname"
 msgstr ""
 
-#: includes/admin.php:942 tests/test-admin.php:1117
+#: includes/admin.php:946
+#: tests/test-admin.php:1117
 msgid "firstname-lastname"
 msgstr ""
 
-#: includes/admin.php:943 tests/test-admin.php:1118
+#: includes/admin.php:947
+#: tests/test-admin.php:1118
 msgid "lastname-firstname"
 msgstr ""
 
-#: includes/admin.php:944 tests/test-admin.php:1119
+#: includes/admin.php:948
+#: tests/test-admin.php:1119
 msgid "userid"
 msgstr ""
 
-#: includes/admin.php:945 tests/test-admin.php:1120
+#: includes/admin.php:949
+#: tests/test-admin.php:1120
 msgid "hash"
 msgstr ""
 
@@ -234,17 +238,9 @@ msgstr ""
 msgid "Use class constant, BA_Edit_Author_Slug::DB_VERSION, instead."
 msgstr ""
 
-#: includes/functions.php:259
 #. translators: Updated author slugs count.
+#: includes/functions.php:259
 msgid "%d user author slug updated."
 msgid_plural "%d user author slugs updated."
 msgstr[0] ""
 msgstr[1] ""
-
-#. Description of the plugin/theme
-msgid ""
-"Allows an Admin (or capable user) to edit the author slug of a user, and "
-"change the Author Base. <em>i.e. - (WordPress default structure) "
-"http://example.com/author/username/ (Plugin allows) "
-"http://example.com/ninja/master-ninja/</em>"
-msgstr ""
