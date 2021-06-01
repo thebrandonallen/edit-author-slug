@@ -4,7 +4,7 @@
 **Requires at least:** 4.9  
 **Tested up to:** 5.6  
 **Requires PHP:** 5.6.20  
-**Stable tag:** 1.8.1  
+**Stable tag:** 1.8.2  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/old-licenses/gpl-2.0.html  
 
@@ -66,6 +66,10 @@ While I've made every attempt to prevent this, I may have missed a spot or two. 
 If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums.
 
 ## Changelog ##
+
+### 1.8.2 ###
+* Release date: 2021-06-01
+* Bumps "Tested up to" version to 5.7
 
 ### 1.8.1 ###
 * Release date: 2020-12-14

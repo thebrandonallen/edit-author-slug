@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [1.8.2](https://github.com/thebrandonallen/edit-author-slug/tree/1.8.2) - 2021-06-01
+### Changed
+* Bumps "Tested up to" version to 5.7
+
 ## [1.8.1](https://github.com/thebrandonallen/edit-author-slug/tree/1.8.1) - 2020-12-14
 ### Fixed
 * Corrects settings page notice link to actually link to the current user's profile page.
