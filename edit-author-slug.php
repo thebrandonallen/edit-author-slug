@@ -1,13 +1,17 @@
 <?php
 /**
- * Plugin Name:     Edit Author Slug
- * Plugin URI:      https://github.com/thebrandonallen/edit-author-slug/
- * Description:     Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
- * Author:          Brandon Allen
- * Author URI:      https://github.com/thebrandonallen/
- * Text Domain:     edit-author-slug
- * Domain Path:     /languages
- * Version:         1.8.2
+ * Plugin Name:       Edit Author Slug
+ * Plugin URI:        https://github.com/thebrandonallen/edit-author-slug/
+ * Description:       Allows an Admin (or capable user) to edit the author slug of a user, and change the Author Base. <em>i.e. - (WordPress default structure) http://example.com/author/username/ (Plugin allows) http://example.com/ninja/master-ninja/</em>
+ * Author:            Brandon Allen
+ * Author URI:        https://github.com/thebrandonallen/
+ * Text Domain:       edit-author-slug
+ * Domain Path:       /languages
+ * Version:           1.8.3
+ * Requires at least: 4.9
+ * Requires PHP:      5.6
+ * License:           GPLv2 or later
+ * License URI:       https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  * Copyright (C) 2009-2021  Brandon Allen (https://github.com/thebrandonallen)
  *
@@ -28,7 +32,7 @@
  * @package Edit_Author_Slug
  * @subpackage Main
  * @author Brandon Allen
- * @version 1.8.2
+ * @version 1.8.3
  */
 
 // Exit if accessed directly.

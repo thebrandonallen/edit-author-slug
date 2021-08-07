@@ -3,22 +3,20 @@
 # Submit translations to https://translate.wordpress.org/projects/wp-plugins/edit-author-slug.
 msgid ""
 msgstr ""
-"Project-Id-Version: Edit Author Slug 1.8.2\n"
+"Project-Id-Version: Edit Author Slug 1.8.3\n"
 "Report-Msgid-Bugs-To: https://github.com/thebrandonallen/edit-author-slug/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-01T05:26:31+00:00\n"
+"POT-Creation-Date: 2021-08-07T22:33:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-KeywordsList: __:1,2d;_e:1,2d;_x:1,2c,3d;_n:1,2,4d;_ex:1,2c,3d;_nx:1,2,4c,5d;esc_attr__:1,2d;esc_attr_e:1,2d;esc_attr_x:1,2c,3d;esc_html__:1,2d;esc_html_e:1,2d;esc_html_x:1,2c,3d;_n_noop:1,2,3d;_nx_noop:1,2,3c,4d\n"
 "X-Domain: edit-author-slug\n"
 
 #. Plugin Name of the plugin
-#: includes/admin.php:73
-#: includes/admin.php:410
 msgid "Edit Author Slug"
 msgstr ""
 
@@ -36,6 +34,11 @@ msgstr ""
 
 #. Author URI of the plugin
 msgid "https://github.com/thebrandonallen/"
+msgstr ""
+
+#: includes/admin.php:73
+msgctxt "Plugin settings page heading"
+msgid "Edit Author Slug"
 msgstr ""
 
 #: includes/admin.php:74
@@ -94,6 +97,19 @@ msgstr ""
 msgid "Edit Author Slug Settings"
 msgstr ""
 
+#: includes/admin.php:410
+msgctxt "Settings menu item"
+msgid "Edit Author Slug"
+msgstr ""
+
+#: includes/admin.php:431
+msgid "You can customize your own author slug by visiting your profile page. "
+msgstr ""
+
+#: includes/admin.php:431
+msgid "This also applies to other users."
+msgstr ""
+
 #: includes/admin.php:456
 #: includes/admin.php:464
 msgid "Author Base"
@@ -148,6 +164,10 @@ msgstr ""
 msgid "Defaults to 'author'"
 msgstr ""
 
+#: includes/admin.php:615
+msgid "Demo:"
+msgstr ""
+
 #: includes/admin.php:643
 msgid "Remove the \"front\" portion of the author permalink structure."
 msgstr ""
@@ -169,63 +189,69 @@ msgstr ""
 msgid "Default author slug options"
 msgstr ""
 
-#: includes/admin.php:832
+#. translators: 1: <code>username</code>, 2: <code>username</code>
+#: includes/admin.php:818
+#: includes/admin.php:896
+msgid "Your iThemes settings suggest you don't want the %1$s being used as an author slug. Leaving it set to %2$s will still work, but you may wish to change to something different."
+msgstr ""
+
+#: includes/admin.php:839
 msgid "Update all users at once based on the specified Author Slug structure."
 msgstr ""
 
-#: includes/admin.php:849
+#: includes/admin.php:856
 msgid "Update all users according to the below Author Slug setting. This will only be run after clicking \"Save Changes\"."
 msgstr ""
 
-#: includes/admin.php:877
+#: includes/admin.php:884
 msgid "Default bulk update author slug options"
 msgstr ""
 
-#: includes/admin.php:914
+#: includes/admin.php:928
 msgid "Settings"
 msgstr ""
 
-#: includes/admin.php:941
+#: includes/admin.php:955
 #: tests/test-admin.php:1112
 msgid "username (Default)"
 msgstr ""
 
-#: includes/admin.php:942
+#: includes/admin.php:956
 #: tests/test-admin.php:1113
 msgid "nickname"
 msgstr ""
 
-#: includes/admin.php:943
+#: includes/admin.php:957
 #: tests/test-admin.php:1114
 msgid "displayname"
 msgstr ""
 
-#: includes/admin.php:944
+#: includes/admin.php:958
 #: tests/test-admin.php:1115
 msgid "firstname"
 msgstr ""
 
-#: includes/admin.php:945
+#: includes/admin.php:959
 #: tests/test-admin.php:1116
 msgid "lastname"
 msgstr ""
 
-#: includes/admin.php:946
+#: includes/admin.php:960
 #: tests/test-admin.php:1117
 msgid "firstname-lastname"
 msgstr ""
 
-#: includes/admin.php:947
+#: includes/admin.php:961
 #: tests/test-admin.php:1118
 msgid "lastname-firstname"
 msgstr ""
 
-#: includes/admin.php:948
+#: includes/admin.php:962
 #: tests/test-admin.php:1119
 msgid "userid"
 msgstr ""
 
-#: includes/admin.php:949
+#: includes/admin.php:963
 #: tests/test-admin.php:1120
 msgid "hash"
 msgstr ""

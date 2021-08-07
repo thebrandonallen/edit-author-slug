@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [1.8.3](https://github.com/thebrandonallen/edit-author-slug/tree/1.8.3) - 2021-08-07
+### Changed
+* Bumps "Tested up to" version to 5.8
+* Improves string translations and adds some missing strings that couldn't, previously be translated. Props @alexclassroom
+
 ## [1.8.2](https://github.com/thebrandonallen/edit-author-slug/tree/1.8.2) - 2021-06-01
 ### Changed
 * Bumps "Tested up to" version to 5.7

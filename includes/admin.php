@@ -813,8 +813,8 @@ function ba_eas_admin_setting_callback_default_user_nicename() {
 		<?php if ( ba_eas()->is_itsec_force_unique_nickname() ) : ?>
 			<div class="eas-author-slug-select-error<?php echo esc_attr( $class ); ?>" style="background: #fff; border-left: 4px solid #fff; border-left-color: #dc3232; box-shadow: 0 1px 1px 0 rgba( 0, 0, 0, 0.1 ); margin: 10px 15px 2px 0; padding: 5px 12px 5px;">
 				<?php
-					/* translators: 1: <code>username</code>, 2: <code>username</code> */
 					printf(
+						/* translators: 1: <code>username</code>, 2: <code>username</code> */
 						esc_html__( 'Your iThemes settings suggest you don\'t want the %1$s being used as an author slug. Leaving it set to %2$s will still work, but you may wish to change to something different.', 'edit-author-slug' ),
 						'<code>username</code>',
 						'<code>username</code>'
@@ -891,8 +891,8 @@ function ba_eas_admin_setting_callback_bulk_update_structure() {
 		<?php if ( ba_eas()->is_itsec_force_unique_nickname() ) : ?>
 			<div class="eas-author-slug-select-error<?php echo esc_attr( $class ); ?>" style="background: #fff; border-left: 4px solid #fff; border-left-color: #dc3232; box-shadow: 0 1px 1px 0 rgba( 0, 0, 0, 0.1 ); margin: 10px 15px 2px 0; padding: 5px 12px 5px;">
 				<?php
-					/* translators: 1: <code>username</code>, 2: <code>username</code> */
 					printf(
+						/* translators: 1: <code>username</code>, 2: <code>username</code> */
 						esc_html__( 'Your iThemes settings suggest you don\'t want the %1$s being used as an author slug. Leaving it set to %2$s will still work, but you may wish to change to something different.', 'edit-author-slug' ),
 						'<code>username</code>',
 						'<code>username</code>'

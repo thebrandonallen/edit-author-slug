@@ -15,6 +15,7 @@ module.exports = function ( grunt ) {
 			'!phpcs.xml*',
 			'!phpunit.xml*',
 			'!.*',
+			'!.*/**',
 		];
 
 	// Load tasks.

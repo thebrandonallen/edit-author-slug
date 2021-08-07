@@ -2,9 +2,9 @@
 Contributors: thebrandonallen
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles
 Requires at least: 4.9
-Tested up to: 5.6
+Tested up to: 5.8
 Requires PHP: 5.6.20
-Stable tag: 1.8.2
+Stable tag: 1.8.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -66,6 +66,11 @@ While I've made every attempt to prevent this, I may have missed a spot or two. 
 If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums.
 
 == Changelog ==
+
+= 1.8.3 =
+* Release date: 2021-08-07
+* Bumps "Tested up to" version to 5.8
+* Improves string translations and adds some missing strings that couldn't, previously be translated. Props @alexclassroom
 
 = 1.8.2 =
 * Release date: 2021-06-01
