@@ -70,7 +70,7 @@ function ba_eas_show_user_nicename( $user ) {
 	$checked = true;
 	?>
 
-	<h2><?php echo esc_html_x( 'Edit Author Slug', 'Added Section', 'edit-author-slug' ); ?></h2>
+	<h2><?php echo esc_html_x( 'Edit Author Slug', 'Plugin settings page heading', 'edit-author-slug' ); ?></h2>
 	<p><?php esc_html_e( 'Choose an Author Slug based on the above profile information, or create your own.', 'edit-author-slug' ); ?> <br /><span class="description"><?php esc_html_e( "ie. - 'user-name', 'firstname-lastname', or 'master-ninja'", 'edit-author-slug' ); ?></span></p>
 	<table class="form-table">
 		<tbody><tr>
@@ -407,7 +407,7 @@ function ba_eas_add_settings_menu() {
 	if ( ba_eas_can_edit_author_slug() ) {
 		add_options_page(
 			__( 'Edit Author Slug Settings', 'edit-author-slug' ),
-			_x( 'Edit Author Slug', 'Menu Item', 'edit-author-slug' ),
+			_x( 'Edit Author Slug', 'Settings menu item', 'edit-author-slug' ),
 			'edit_users',
 			'edit-author-slug',
 			'ba_eas_settings_page_html'
