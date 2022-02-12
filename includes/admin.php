@@ -89,6 +89,7 @@ function ba_eas_show_user_nicename( $user ) {
 					}
 					?>
 				<label title="<?php echo ba_eas_esc_nicename( $item ); ?>">
+					<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<input type="radio" class="eas-author-slug" name="ba_eas_author_slug" value="<?php echo ba_eas_esc_nicename( $item ); ?>" autocapitalize="none" autocorrect="off" maxlength="50"<?php echo $checked_text; ?>>
 					<span><?php echo ba_eas_esc_nicename( $item ); ?></span>
 				</label><br />

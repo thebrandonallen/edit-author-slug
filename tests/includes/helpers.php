@@ -19,19 +19,19 @@ function ba_eas_tests_slugs_default() {
 			'name' => 'Administrator',
 			'slug' => 'administrator',
 		),
-		'editor' => array(
+		'editor'        => array(
 			'name' => 'Editor',
 			'slug' => 'editor',
 		),
-		'author' => array(
+		'author'        => array(
 			'name' => 'Author',
 			'slug' => 'author',
 		),
-		'contributor' => array(
+		'contributor'   => array(
 			'name' => 'Contributor',
 			'slug' => 'contributor',
 		),
-		'subscriber' => array(
+		'subscriber'    => array(
 			'name' => 'Subscriber',
 			'slug' => 'subscriber',
 		),
@@ -87,16 +87,16 @@ function ba_eas_tests_roles( $type ) {
 			'administrator' => array(
 				'name' => 'Administrator',
 			),
-			'editor' => array(
+			'editor'        => array(
 				'name' => 'Editor',
 			),
-			'author' => array(
+			'author'        => array(
 				'name' => 'Author',
 			),
-			'contributor' => array(
+			'contributor'   => array(
 				'name' => 'Contributor',
 			),
-			'subscriber' => array(
+			'subscriber'    => array(
 				'name' => 'Subscriber',
 			),
 		),
