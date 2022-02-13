@@ -6,6 +6,8 @@
  * @subpackage Edit Author Slug
  */
 
+require_once dirname( dirname( __FILE__ ) ) . '/vendor/yoast/phpunit-polyfills/phpunitpolyfills-autoload.php';
+
 if ( defined( 'BA_EAS_USE_WP_ENV_TESTS' ) ) {
 	// wp-env setup.
 	define( 'WP_TESTS_CONFIG_FILE_PATH', dirname( __FILE__ ) . '/assets/phpunit-wp-config.php' );

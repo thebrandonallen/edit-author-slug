@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a4cbc7c2d75f3830eb0f170a5ff55505",
+    "content-hash": "8151790a312ee13d861b3f6f36636368",
     "packages": [
         {
             "name": "composer/installers",
@@ -1740,7 +1740,6 @@
                     "type": "github"
                 }
             ],
-            "abandoned": true,
             "time": "2020-11-30T07:30:19+00:00"
         },
         {
@@ -2061,16 +2060,16 @@
         },
         {
             "name": "wp-phpunit/wp-phpunit",
-            "version": "5.7.2",
+            "version": "5.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-phpunit/wp-phpunit.git",
-                "reference": "5ab77c1e1328e9bee65f60c246e33b13fc202375"
+                "reference": "02d98f9d5f15442489b5d98c1f4c486901e3e110"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-phpunit/wp-phpunit/zipball/5ab77c1e1328e9bee65f60c246e33b13fc202375",
-                "reference": "5ab77c1e1328e9bee65f60c246e33b13fc202375",
+                "url": "https://api.github.com/repos/wp-phpunit/wp-phpunit/zipball/02d98f9d5f15442489b5d98c1f4c486901e3e110",
+                "reference": "02d98f9d5f15442489b5d98c1f4c486901e3e110",
                 "shasum": ""
             },
             "type": "library",
@@ -2100,7 +2099,64 @@
                 "test",
                 "wordpress"
             ],
-            "time": "2021-03-10T17:57:07+00:00"
+            "time": "2022-01-25T20:37:14+00:00"
+        },
+        {
+            "name": "yoast/phpunit-polyfills",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Yoast/PHPUnit-Polyfills.git",
+                "reference": "5ea3536428944955f969bc764bbe09738e151ada"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Yoast/PHPUnit-Polyfills/zipball/5ea3536428944955f969bc764bbe09738e151ada",
+                "reference": "5ea3536428944955f969bc764bbe09738e151ada",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "phpunit/phpunit": "^4.8.36 || ^5.7.21 || ^6.0 || ^7.0 || ^8.0 || ^9.0"
+            },
+            "require-dev": {
+                "yoast/yoastcs": "^2.2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.x-dev",
+                    "dev-develop": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "phpunitpolyfills-autoload.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Team Yoast",
+                    "email": "support@yoast.com",
+                    "homepage": "https://yoast.com"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/Yoast/PHPUnit-Polyfills/graphs/contributors"
+                }
+            ],
+            "description": "Set of polyfills for changed PHPUnit functionality to allow for creating PHPUnit cross-version compatible tests",
+            "homepage": "https://github.com/Yoast/PHPUnit-Polyfills",
+            "keywords": [
+                "phpunit",
+                "polyfill",
+                "testing"
+            ],
+            "time": "2021-11-23T01:37:03+00:00"
         }
     ],
     "aliases": [],
