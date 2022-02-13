@@ -27,7 +27,7 @@
     "grunt": "grunt",
     "eslint": "eslint",
     "eslint:fix": "eslint --fix",
-    "build:js": "terser",
+    "build:js": "terser js/edit-author-slug.js --compress --mangle --output js/edit-author-slug.min.js --format",
     "version": "npm --no-git-tag-version version",
     "wp-env": "wp-env",
     "test-php": "npm run wp-env run phpunit 'php /var/www/html/wp-content/plugins/edit-author-slug/vendor/phpunit/phpunit/phpunit -c /var/www/html/wp-content/plugins/edit-author-slug/tests/env.xml'"

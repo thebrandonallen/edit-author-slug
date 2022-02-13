@@ -284,24 +284,13 @@ module.exports = function ( grunt ) {
 		function () {
 			const banner = grunt.template.process(
 				'/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-					'<%= grunt.template.today("UTC:yyyy-mm-dd h:MM:ss TT Z") %> - ' +
+					'<%= grunt.template.today("UTC:yyyy-mm-dd HH:MM:ss TT Z") %> - ' +
 					'https://github.com/thebrandonallen/edit-author-slug/ */'
 			);
 			grunt.util.spawn(
 				{
 					cmd: 'npm',
-					args: [
-						'run',
-						'build:js',
-						'--',
-						'js/edit-author-slug.js',
-						'--copmress',
-						'--mangle',
-						'--output',
-						'js/edit-author-slug.min.js',
-						'--format',
-						`preamble='${ banner }'`,
-					],
+					args: [ 'run', 'build:js', '--', `preamble='${ banner }'` ],
 					opts: { stdio: 'inherit' },
 				},
 				this.async()
