@@ -67,6 +67,10 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 
 ## Changelog ##
 
+### 1.8.4 ###
+* Release date: TBD
+* Bumps "Tested up to" version to 5.9
+
 ### 1.8.3 ###
 * Release date: 2021-08-07
 * Bumps "Tested up to" version to 5.8
