@@ -4,7 +4,7 @@
 **Requires at least:** 4.9  
 **Tested up to:** 5.9  
 **Requires PHP:** 5.6.20  
-**Stable tag:** 1.8.3  
+**Stable tag:** 1.8.4  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/old-licenses/gpl-2.0.html  
 
@@ -68,7 +68,7 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 ## Changelog ##
 
 ### 1.8.4 ###
-* Release date: TBD
+* Release date: 2022-02-13
 * Bumps "Tested up to" version to 5.9
 
 ### 1.8.3 ###

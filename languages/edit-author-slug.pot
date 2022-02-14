@@ -1,16 +1,16 @@
-# Copyright (C) 2009-2021 Brandon Allen
+# Copyright (C) 2009-2022 Brandon Allen
 # This file is distributed under the same license as the Edit Author Slug package.
 # Submit translations to https://translate.wordpress.org/projects/wp-plugins/edit-author-slug.
 msgid ""
 msgstr ""
-"Project-Id-Version: Edit Author Slug 1.8.3\n"
+"Project-Id-Version: Edit Author Slug 1.8.4\n"
 "Report-Msgid-Bugs-To: https://github.com/thebrandonallen/edit-author-slug/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-08-07T22:33:31+00:00\n"
+"POT-Creation-Date: 2022-02-14T00:30:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Poedit-KeywordsList: __:1,2d;_e:1,2d;_x:1,2c,3d;_n:1,2,4d;_ex:1,2c,3d;_nx:1,2,4c,5d;esc_attr__:1,2d;esc_attr_e:1,2d;esc_attr_x:1,2c,3d;esc_html__:1,2d;esc_html_e:1,2d;esc_html_x:1,2c,3d;_n_noop:1,2,3d;_nx_noop:1,2,3c,4d\n"
@@ -51,207 +51,207 @@ msgstr ""
 
 #: includes/admin.php:77
 #: includes/admin.php:79
-#: includes/admin.php:323
+#: includes/admin.php:324
 msgid "Author Slug"
 msgstr ""
 
-#: includes/admin.php:98
+#: includes/admin.php:99
 msgid "Custom:"
 msgstr ""
 
-#: includes/admin.php:99
+#: includes/admin.php:100
 msgid "Enter a custom author slug in the following field"
 msgstr ""
 
-#: includes/admin.php:101
+#: includes/admin.php:102
 msgid "Custom author slug:"
 msgstr ""
 
-#: includes/admin.php:168
+#: includes/admin.php:169
 msgid "<strong>ERROR</strong>: An author slug cannot be blank. Please try again."
 msgstr ""
 
-#: includes/admin.php:213
+#: includes/admin.php:214
 msgid "<strong>ERROR</strong>: An author slug can only contain alphanumeric characters, underscores (_) and dashes (-)."
 msgstr ""
 
-#: includes/admin.php:222
+#: includes/admin.php:223
 msgid "<strong>ERROR</strong>: That author slug appears to be invalid. Please try something different."
 msgstr ""
 
-#: includes/admin.php:231
+#: includes/admin.php:232
 msgid "<strong>ERROR</strong>: An author slug may not be longer than 50 characters."
 msgstr ""
 
-#: includes/admin.php:247
+#: includes/admin.php:248
 msgid "<strong>ERROR</strong>: Your iThemes settings prevent your author slug from being the same as your username."
 msgstr ""
 
 #. translators: 1: author slug
-#: includes/admin.php:263
+#: includes/admin.php:264
 msgid "<strong>ERROR</strong>: The author slug, %1$s, already exists. Please try something different."
 msgstr ""
 
-#: includes/admin.php:409
-#: includes/admin.php:428
+#: includes/admin.php:410
+#: includes/admin.php:429
 msgid "Edit Author Slug Settings"
 msgstr ""
 
-#: includes/admin.php:410
+#: includes/admin.php:411
 msgctxt "Settings menu item"
 msgid "Edit Author Slug"
 msgstr ""
 
-#: includes/admin.php:431
+#: includes/admin.php:432
 msgid "You can customize your own author slug by visiting your profile page. "
 msgstr ""
 
-#: includes/admin.php:431
+#: includes/admin.php:432
 msgid "This also applies to other users."
 msgstr ""
 
-#: includes/admin.php:456
-#: includes/admin.php:464
+#: includes/admin.php:457
+#: includes/admin.php:465
 msgid "Author Base"
 msgstr ""
 
-#: includes/admin.php:478
+#: includes/admin.php:479
 msgid "Remove Front"
 msgstr ""
 
-#: includes/admin.php:489
+#: includes/admin.php:490
 msgid "Role-Based Author Base"
 msgstr ""
 
-#: includes/admin.php:499
+#: includes/admin.php:500
 msgid "Role Slugs"
 msgstr ""
 
-#: includes/admin.php:509
+#: includes/admin.php:510
 msgid "Automatic Author Slug Creation"
 msgstr ""
 
-#: includes/admin.php:517
+#: includes/admin.php:518
 msgid "Automatically Update"
 msgstr ""
 
-#: includes/admin.php:527
-#: includes/admin.php:558
+#: includes/admin.php:528
+#: includes/admin.php:559
 msgid "Author Slug Structure"
 msgstr ""
 
-#: includes/admin.php:540
+#: includes/admin.php:541
 msgid "Bulk Update Author Slugs"
 msgstr ""
 
-#: includes/admin.php:548
+#: includes/admin.php:549
 msgid "Bulk Update"
 msgstr ""
 
-#: includes/admin.php:577
+#: includes/admin.php:578
 msgid "Change your author base to something more fun!"
 msgstr ""
 
-#: includes/admin.php:590
+#: includes/admin.php:591
 msgid "Allow Author Slugs to be automatically updated, and set the default Author Slug structure for users. Automatic updating will only occur when a user can't edit Author Slugs on their own."
 msgstr ""
 
-#: includes/admin.php:590
+#: includes/admin.php:591
 msgid "This could have SEO repercussions if users update their profiles frequently, and it will override any manual editing of the Author Slug you may have previously completed."
 msgstr ""
 
-#: includes/admin.php:613
+#: includes/admin.php:614
 msgid "Defaults to 'author'"
 msgstr ""
 
-#: includes/admin.php:615
+#: includes/admin.php:616
 msgid "Demo:"
 msgstr ""
 
-#: includes/admin.php:643
+#: includes/admin.php:644
 msgid "Remove the \"front\" portion of the author permalink structure."
 msgstr ""
 
-#: includes/admin.php:659
+#: includes/admin.php:660
 msgid "Set user's Author Base according to their role."
 msgstr ""
 
 #. translators: 1: rewrite tag, 2: rewrite tag demo usage, 3: demo URL using rewrite tag
-#: includes/admin.php:665
+#: includes/admin.php:666
 msgid "Use the %1$s rewrite tag to customize the role-based author base. If you set the author base to \"%2$s\", the resulting author structure will be something like \"%3$s\"."
 msgstr ""
 
-#: includes/admin.php:778
+#: includes/admin.php:779
 msgid "Automatically update Author Slug when a user updates their profile."
 msgstr ""
 
-#: includes/admin.php:806
+#: includes/admin.php:807
 msgid "Default author slug options"
 msgstr ""
 
 #. translators: 1: <code>username</code>, 2: <code>username</code>
-#: includes/admin.php:818
-#: includes/admin.php:896
+#: includes/admin.php:819
+#: includes/admin.php:897
 msgid "Your iThemes settings suggest you don't want the %1$s being used as an author slug. Leaving it set to %2$s will still work, but you may wish to change to something different."
 msgstr ""
 
-#: includes/admin.php:839
+#: includes/admin.php:840
 msgid "Update all users at once based on the specified Author Slug structure."
 msgstr ""
 
-#: includes/admin.php:856
+#: includes/admin.php:857
 msgid "Update all users according to the below Author Slug setting. This will only be run after clicking \"Save Changes\"."
 msgstr ""
 
-#: includes/admin.php:884
+#: includes/admin.php:885
 msgid "Default bulk update author slug options"
 msgstr ""
 
-#: includes/admin.php:928
+#: includes/admin.php:929
 msgid "Settings"
 msgstr ""
 
-#: includes/admin.php:955
+#: includes/admin.php:956
 #: tests/test-admin.php:1112
 msgid "username (Default)"
 msgstr ""
 
-#: includes/admin.php:956
+#: includes/admin.php:957
 #: tests/test-admin.php:1113
 msgid "nickname"
 msgstr ""
 
-#: includes/admin.php:957
+#: includes/admin.php:958
 #: tests/test-admin.php:1114
 msgid "displayname"
 msgstr ""
 
-#: includes/admin.php:958
+#: includes/admin.php:959
 #: tests/test-admin.php:1115
 msgid "firstname"
 msgstr ""
 
-#: includes/admin.php:959
+#: includes/admin.php:960
 #: tests/test-admin.php:1116
 msgid "lastname"
 msgstr ""
 
-#: includes/admin.php:960
+#: includes/admin.php:961
 #: tests/test-admin.php:1117
 msgid "firstname-lastname"
 msgstr ""
 
-#: includes/admin.php:961
+#: includes/admin.php:962
 #: tests/test-admin.php:1118
 msgid "lastname-firstname"
 msgstr ""
 
-#: includes/admin.php:962
+#: includes/admin.php:963
 #: tests/test-admin.php:1119
 msgid "userid"
 msgstr ""
 
-#: includes/admin.php:963
+#: includes/admin.php:964
 #: tests/test-admin.php:1120
 msgid "hash"
 msgstr ""
