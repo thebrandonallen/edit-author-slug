@@ -284,7 +284,7 @@ module.exports = function ( grunt ) {
 		function () {
 			const banner = grunt.template.process(
 				'/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-					'<%= grunt.template.today("UTC:yyyy-mm-dd HH:MM:ss TT Z") %> - ' +
+					'<%= grunt.template.today("UTC:yyyy-mm-dd HH:MM:ss Z") %> - ' +
 					'https://github.com/thebrandonallen/edit-author-slug/ */'
 			);
 			grunt.util.spawn(
