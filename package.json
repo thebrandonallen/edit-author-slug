@@ -21,7 +21,7 @@
     "grunt-wp-i18n": "~1.0.3",
     "grunt-wp-readme-to-markdown": "~2.1.0",
     "matchdep": "~2.0.0",
-    "terser": "~5.10.0"
+    "terser": "~5.14.2"
   },
   "scripts": {
     "grunt": "grunt",
