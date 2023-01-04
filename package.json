@@ -7,7 +7,7 @@
   "license": "GPL-2.0-or-later",
   "repository": "github:thebrandonallen/edit-author-slug",
   "devDependencies": {
-    "@wordpress/env": "~4.9.0",
+    "@wordpress/env": "~5.9.0",
     "@wordpress/eslint-plugin": "~10.0.2",
     "eslint": "~8.31.0",
     "grunt": "~1.5.3",
