@@ -25,7 +25,7 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 	 *
 	 * @since 1.6.0
 	 */
-	public static function setUpBeforeClass() {
+	public static function setUpBeforeClass(): void {
 		// Load the ITSEC_Modules mock.
 		require_once 'mocks/class-itsec-modules-mock.php';
 	}
@@ -35,7 +35,7 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 	 *
 	 * @since 1.1.0
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		// Set the default roles slugs, if not already.
@@ -51,7 +51,7 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 	 *
 	 * Resets the current user and globals.
 	 */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 
 		// Reset properties used in testing.

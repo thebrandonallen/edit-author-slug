@@ -34,7 +34,7 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 	 *
 	 * @since 1.6.0
 	 */
-	public static function setUpBeforeClass() {
+	public static function setUpBeforeClass(): void {
 		$f = new WP_UnitTest_Factory();
 
 		// Set up the new user.
@@ -58,7 +58,7 @@ class BA_EAS_Tests_Deprecated extends WP_UnitTestCase {
 	 *
 	 * @since 1.6.0
 	 */
-	public static function tearDownAfterClass() {
+	public static function tearDownAfterClass(): void {
 		wp_delete_user( self::$user_id );
 		self::commit_transaction();
 	}

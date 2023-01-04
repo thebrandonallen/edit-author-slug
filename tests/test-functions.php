@@ -61,7 +61,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 *
 	 * @since 1.6.0
 	 */
-	public static function setUpBeforeClass() {
+	public static function setUpBeforeClass(): void {
 		$f = new WP_UnitTest_Factory();
 
 		// Set up the new user.
@@ -121,7 +121,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 *
 	 * @since 1.6.0
 	 */
-	public static function tearDownAfterClass() {
+	public static function tearDownAfterClass(): void {
 		wp_delete_user( self::$user_id );
 		wp_delete_user( self::$tmnt_ids['leo'] );
 		wp_delete_user( self::$tmnt_ids['raph'] );
@@ -135,7 +135,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 *
 	 * @since 1.1.0
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		// Set the default roles slugs, if not already.
@@ -149,7 +149,7 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 *
 	 * @since 1.1.0
 	 */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 
 		// Reset some globals to their defaults.

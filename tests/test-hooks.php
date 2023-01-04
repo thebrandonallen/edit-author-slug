@@ -16,7 +16,7 @@ class BA_EAS_Tests_Hooks extends WP_UnitTestCase {
 	 *
 	 * @since 1.1.0
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		$this->eas = ba_eas();

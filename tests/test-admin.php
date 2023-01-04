@@ -43,7 +43,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 *
 	 * @since 1.6.0
 	 */
-	public static function setUpBeforeClass() {
+	public static function setUpBeforeClass(): void {
 		$f = new WP_UnitTest_Factory();
 
 		// Set up the new user.
@@ -74,7 +74,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 *
 	 * @since 1.6.0
 	 */
-	public static function tearDownAfterClass() {
+	public static function tearDownAfterClass(): void {
 		wp_delete_user( self::$user_id );
 		self::commit_transaction();
 	}
@@ -86,7 +86,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 *
 	 * Sets up up some users, and loads the admin.
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		wp_set_current_user( self::$user_id );
 
@@ -103,7 +103,7 @@ class BA_EAS_Tests_Admin extends WP_UnitTestCase {
 	 *
 	 * Resets the current user and globals.
 	 */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 
 		wp_set_current_user( self::$old_user_id );
