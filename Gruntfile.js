@@ -238,7 +238,7 @@ module.exports = function ( grunt ) {
 						{
 							pattern: /# Edit Author Slug #/gim,
 							replacement:
-								'# Edit Author Slug [![Build Status](https://travis-ci.org/thebrandonallen/edit-author-slug.svg?branch=master)](https://travis-ci.org/thebrandonallen/edit-author-slug) #',
+								'# Edit Author Slug ![Build Status](https://github.com/thebrandonallen/edit-author-slug/actions/workflows/phpunit-tests.yml/badge.svg) #',
 						},
 					],
 				},
