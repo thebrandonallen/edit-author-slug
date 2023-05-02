@@ -64,8 +64,8 @@ jobs:
         with:
           composer-options: "--ignore-platform-reqs"
 
-      # - name: Adjust phpunit/wp-phpunit version
-      #   run: if [ ${{ env.WP_VERSION }} == '5.1' ]; then composer require --dev --with-all-dependencies "wp-phpunit/wp-phpunit:5.1.*" "phpunit/phpunit:^6"; fi
+      - name: Adjust phpunit/wp-phpunit version
+        run: if [ ${{ env.WP_VERSION }} == '5.1' ]; then composer require --dev --with-all-dependencies "wp-phpunit/wp-phpunit:5.1.*" "phpunit/phpunit:^6"; fi
 
       - name: Cache node modules
         uses: actions/cache@v2
