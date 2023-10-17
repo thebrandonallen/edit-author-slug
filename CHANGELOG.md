@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [1.9.0](https://github.com/thebrandonallen/edit-author-slug/tree/1.9.0) - TBD
+### Changed
+* Bumps "Tested up to" version to 6.4
+* Bumps minimum required PHP version to 7.0
+* Bumps minimum required WP version to 5.5
+
 ## [1.8.4](https://github.com/thebrandonallen/edit-author-slug/tree/1.8.4) - 2022-02-13
 ### Changed
 * Bumps "Tested up to" version to 5.9

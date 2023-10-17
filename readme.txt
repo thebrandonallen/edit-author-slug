@@ -1,9 +1,9 @@
 === Edit Author Slug ===
 Contributors: thebrandonallen
 Tags: author, author base, author slug, user nicename, nicename, permalink, permalinks, slug, users, user, role, roles
-Requires at least: 4.9
-Tested up to: 6.2
-Requires PHP: 5.6.20
+Requires at least: 5.5
+Tested up to: 6.4
+Requires PHP: 7.0
 Stable tag: 1.8.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -66,6 +66,13 @@ While I've made every attempt to prevent this, I may have missed a spot or two. 
 If this doesn't work, make sure you don't have any slug conflicts from other posts/pages/plugins/permalink setting/etc. If you're still experiencing the issue, feel free to post a support request in the forums.
 
 == Changelog ==
+
+= 1.9.0 =
+* Release date: TBD
+* Bumps "Tested up to" version to 6.4
+* Bumps minimum required PHP version to 7.0
+* Bumps minimum required WP version to 5.5
+* Update dependency package versions
 
 = 1.8.4 =
 * Release date: 2022-02-13
