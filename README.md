@@ -4,7 +4,7 @@
 **Requires at least:** 5.5  
 **Tested up to:** 6.4  
 **Requires PHP:** 7.0  
-**Stable tag:** 1.8.4  
+**Stable tag:** 1.9.0  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/old-licenses/gpl-2.0.html  
 
@@ -68,7 +68,7 @@ If this doesn't work, make sure you don't have any slug conflicts from other pos
 ## Changelog ##
 
 ### 1.9.0 ###
-* Release date: TBD
+* Release date: 2023-10-17
 * Bumps "Tested up to" version to 6.4
 * Bumps minimum required PHP version to 7.0
 * Bumps minimum required WP version to 5.5

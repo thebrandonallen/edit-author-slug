@@ -1,6 +1,6 @@
 {
   "name": "edit-author-slug",
-  "version": "1.8.4",
+  "version": "1.9.0",
   "main": "Gruntfile.js",
   "author": "Brandon Allen",
   "description": "Allows an admin (or capable user) to edit the author slug of a user, and change the author base.",
