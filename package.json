@@ -9,7 +9,7 @@
   "devDependencies": {
     "@wordpress/env": "~6.0.0",
     "@wordpress/eslint-plugin": "~10.0.2",
-    "eslint": "~8.39.0",
+    "eslint": "~8.51.0",
     "grunt": "~1.6.1",
     "grunt-checktextdomain": "~1.0.1",
     "grunt-contrib-clean": "~2.0.1",
@@ -21,7 +21,7 @@
     "grunt-wp-i18n": "~1.0.3",
     "grunt-wp-readme-to-markdown": "~2.1.0",
     "matchdep": "~2.0.0",
-    "terser": "~5.17.1"
+    "terser": "~5.22.0"
   },
   "scripts": {
     "grunt": "grunt",
