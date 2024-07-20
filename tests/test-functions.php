@@ -381,9 +381,9 @@ class BA_EAS_Tests_Functions extends WP_UnitTestCase {
 	 * @since 1.6.0
 	 *
 	 * @covers ::ba_eas_auto_update_user_nicename_bulk
-	 * @expectedException WPDieException
 	 */
 	public function test_ba_eas_auto_update_user_nicename_bulk_invalid_nonce() {
+		$this->expectException( 'WPDieException' );
 		ba_eas_auto_update_user_nicename_bulk( true );
 	}
 
