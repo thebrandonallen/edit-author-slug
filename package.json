@@ -8,7 +8,7 @@
   "repository": "github:thebrandonallen/edit-author-slug",
   "devDependencies": {
     "@wordpress/env": "~10.3.0",
-    "@wordpress/eslint-plugin": "~15.1.0",
+    "@wordpress/eslint-plugin": "~16.0.13",
     "eslint": "~8.57.0",
     "grunt": "~1.6.1",
     "grunt-checktextdomain": "~1.0.1",
@@ -21,7 +21,7 @@
     "grunt-wp-i18n": "~1.0.3",
     "grunt-wp-readme-to-markdown": "~2.1.0",
     "matchdep": "~2.0.0",
-    "terser": "~5.31.2"
+    "terser": "~5.31.3"
   },
   "scripts": {
     "grunt": "grunt",
