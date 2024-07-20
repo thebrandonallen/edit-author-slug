@@ -168,7 +168,7 @@ module.exports = function (grunt) {
 				options: {
 					replacements: [
 						{
-							pattern: /(const\sVERSION.*)'(.*)';/gm, // For plugin version variable
+							pattern: /(const\sVERSION\s=\s).*/gm, // For plugin version variable
 							replacement: "$1'<%= pkg.version %>';",
 						},
 						{
@@ -186,14 +186,13 @@ module.exports = function (grunt) {
 				files: {
 					'CHANGELOG.md': 'CHANGELOG.md',
 					'edit-author-slug.php': 'edit-author-slug.php',
-					'includes/classes/class-edit-author-slug.php':
-						'includes/classes/class-edit-author-slug.php',
+					'includes/classes/': 'includes/classes/**',
 					'readme.txt': 'readme.txt',
 				},
 				options: {
 					replacements: [
 						{
-							pattern: /(const\sVERSION.*)'(.*)';/gm, // For plugin version variable
+							pattern: /(const\sVERSION\s=\s).*/gm, // For plugin version variable
 							replacement: "$1'<%= pkg.version %>';",
 						},
 						{
