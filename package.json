@@ -30,6 +30,6 @@
     "build:js": "terser js/edit-author-slug.js --compress --mangle --output js/edit-author-slug.min.js --format",
     "version": "npm --no-git-tag-version version",
     "wp-env": "wp-env",
-    "test-php": "npm run wp-env run tests-cli phpunit 'php /var/www/html/wp-content/plugins/edit-author-slug/vendor/phpunit/phpunit/phpunit -c /var/www/html/wp-content/plugins/edit-author-slug/tests/env.xml'"
+    "test-php": "npm run wp-env run cli -- --env-cwd=wp-content/plugins/edit-author-slug composer test"
   }
 }

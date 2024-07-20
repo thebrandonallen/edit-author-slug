@@ -31,5 +31,8 @@
             "composer/installers": true,
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
+    },
+    "scripts": {
+      "test": "@php ./vendor/phpunit/phpunit/phpunit"
     }
 }
