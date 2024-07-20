@@ -1,4 +1,4 @@
-module.exports = function ( grunt ) {
+module.exports = function (grunt) {
 	const BUILD_DIR = 'build/',
 		EAS_EXCLUDED_MISC = [
 			'!**/assets/**',
@@ -19,15 +19,15 @@ module.exports = function ( grunt ) {
 		];
 
 	// Load tasks.
-	require( 'matchdep' )
-		.filterDev( [ 'grunt-*', '!grunt-legacy-util' ] )
-		.forEach( grunt.loadNpmTasks );
+	require('matchdep')
+		.filterDev(['grunt-*', '!grunt-legacy-util'])
+		.forEach(grunt.loadNpmTasks);
 
 	// Load legacy utils
-	grunt.util = require( 'grunt-legacy-util' );
+	grunt.util = require('grunt-legacy-util');
 
-	grunt.initConfig( {
-		pkg: grunt.file.readJSON( 'package.json' ),
+	grunt.initConfig({
+		pkg: grunt.file.readJSON('package.json'),
 		checktextdomain: {
 			options: {
 				text_domain: 'edit-author-slug',
@@ -50,12 +50,12 @@ module.exports = function ( grunt ) {
 				],
 			},
 			files: {
-				src: [ '**/*.php' ].concat( EAS_EXCLUDED_MISC ),
+				src: ['**/*.php'].concat(EAS_EXCLUDED_MISC),
 				expand: true,
 			},
 		},
 		clean: {
-			all: [ BUILD_DIR ],
+			all: [BUILD_DIR],
 			dynamic: {
 				cwd: BUILD_DIR,
 				dot: true,
@@ -72,7 +72,7 @@ module.exports = function ( grunt ) {
 					'https://github.com/thebrandonallen/edit-author-slug/ */\n',
 			},
 			dist: {
-				src: [ 'js/edit-author-slug.min.js' ],
+				src: ['js/edit-author-slug.min.js'],
 				dest: 'js/edit-author-slug.min.js',
 			},
 		},
@@ -84,7 +84,7 @@ module.exports = function ( grunt ) {
 						dest: 'build/',
 						dot: true,
 						expand: true,
-						src: [ '**', '!**/.{svn,git}/**' ].concat(
+						src: ['**', '!**/.{svn,git}/**'].concat(
 							EAS_EXCLUDED_MISC
 						),
 					},
@@ -107,7 +107,7 @@ module.exports = function ( grunt ) {
 							'BRANDON ALLEN <plugins@brandonallen.me>',
 						'language-team': 'ENGLISH <plugins@brandonallen.me>',
 					},
-					processPot( pot ) {
+					processPot(pot) {
 						let translation; // Exclude meta data from pot.
 						const excludedMeta = [
 							'Plugin Name of the plugin/theme',
@@ -116,29 +116,26 @@ module.exports = function ( grunt ) {
 							'Author URI of the plugin/theme',
 						];
 
-						for ( translation in pot.translations[ '' ] ) {
+						for (translation in pot.translations['']) {
 							if (
 								'undefined' !==
-								typeof pot.translations[ '' ][ translation ]
+								typeof pot.translations[''][translation]
 									.comments.extracted
 							) {
 								if (
 									0 <=
 									excludedMeta.indexOf(
-										pot.translations[ '' ][ translation ]
+										pot.translations[''][translation]
 											.comments.extracted
 									)
 								) {
 									// eslint-disable-next-line
 									console.log(
 										'Excluded meta: ' +
-											pot.translations[ '' ][
-												translation
-											].comments.extracted
+											pot.translations[''][translation]
+												.comments.extracted
 									);
-									delete pot.translations[ '' ][
-										translation
-									];
+									delete pot.translations[''][translation];
 								}
 							}
 						}
@@ -152,7 +149,7 @@ module.exports = function ( grunt ) {
 		phpunit: {
 			default: {
 				cmd: 'phpunit',
-				args: [ '-c', 'phpunit.xml.dist' ],
+				args: ['-c', 'phpunit.xml.dist'],
 			},
 			codecoverage: {
 				cmd: 'phpunit',
@@ -246,8 +243,8 @@ module.exports = function ( grunt ) {
 		},
 		watch: {
 			js: {
-				files: [ 'Gruntfile.js' ],
-				tasks: [ 'jshint' ],
+				files: ['Gruntfile.js'],
+				tasks: ['jshint'],
 			},
 		},
 		wp_readme_to_markdown: {
@@ -257,13 +254,13 @@ module.exports = function ( grunt ) {
 				},
 			},
 		},
-	} );
+	});
 
 	// Build tasks.
-	grunt.registerTask( 'readme', [
+	grunt.registerTask('readme', [
 		'wp_readme_to_markdown',
 		'string-replace:readme',
-	] );
+	]);
 	grunt.registerTask(
 		'eslint:fix',
 		'Runs ESLint on JavaScript files.',
@@ -271,7 +268,7 @@ module.exports = function ( grunt ) {
 			grunt.util.spawn(
 				{
 					cmd: 'npm',
-					args: [ 'run', 'eslint:fix', 'js/edit-author-slug.js' ],
+					args: ['run', 'eslint:fix', 'js/edit-author-slug.js'],
 					opts: { stdio: 'inherit' },
 				},
 				this.async()
@@ -290,7 +287,7 @@ module.exports = function ( grunt ) {
 			grunt.util.spawn(
 				{
 					cmd: 'npm',
-					args: [ 'run', 'build:js', '--', `preamble='${ banner }'` ],
+					args: ['run', 'build:js', '--', `preamble='${banner}'`],
 					opts: { stdio: 'inherit' },
 				},
 				this.async()
@@ -325,7 +322,7 @@ module.exports = function ( grunt ) {
 			const headers = {
 				'Report-Msgid-Bugs-To':
 					'https://github.com/thebrandonallen/edit-author-slug/issues',
-				'X-Poedit-KeywordsList': `${ keywords.join( ';' ) }`,
+				'X-Poedit-KeywordsList': `${keywords.join(';')}`,
 			};
 			grunt.util.spawn(
 				{
@@ -335,8 +332,8 @@ module.exports = function ( grunt ) {
 						'make-pot',
 						'.',
 						'languages/edit-author-slug.pot',
-						`--headers=${ JSON.stringify( headers ) }`,
-						`--file-comment=${ banner }`,
+						`--headers=${JSON.stringify(headers)}`,
+						`--file-comment=${banner}`,
 						'--exclude=build',
 					],
 					opts: { stdio: 'inherit' },
@@ -345,7 +342,7 @@ module.exports = function ( grunt ) {
 			);
 		}
 	);
-	grunt.registerTask( 'build', [
+	grunt.registerTask('build', [
 		'clean:all',
 		'checktextdomain',
 		'string-replace:build',
@@ -353,7 +350,7 @@ module.exports = function ( grunt ) {
 		'js:build',
 		'i18n:build',
 		'copy:files',
-	] );
+	]);
 
 	// PHPUnit test task.
 	grunt.registerMultiTask(
@@ -371,14 +368,6 @@ module.exports = function ( grunt ) {
 		}
 	);
 
-	// Travis CI Tasks.
-	grunt.registerTask( 'travis:phpunit', [ 'phpunit:default' ] );
-	grunt.registerTask(
-		'travis:codecoverage',
-		'Runs PHPUnit tasks with code-coverage generation.',
-		[ 'phpunit:codecoverage' ]
-	);
-
 	// Register the default tasks.
-	grunt.registerTask( 'default', [ 'watch' ] );
+	grunt.registerTask('default', ['watch']);
 };
