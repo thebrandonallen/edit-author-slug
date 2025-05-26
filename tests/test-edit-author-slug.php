@@ -61,41 +61,6 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Filter the text domain, so that something is loaded for testing.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param bool   $override Whether to override the .mo file loading. Default false.
-	 * @param string $domain   Text domain. Unique identifier for retrieving translated strings.
-	 * @param string $file     Path to the MO file.
-	 *
-	 * @return bool
-	 */
-	function _override_load_textdomain_filter( $override, $domain, $file ) {
-		global $l10n, $wp_version;
-
-		$file = WP_LANG_DIR . '/plugins/internationalized-plugin-de_DE.mo';
-
-		if ( ! is_readable( $file ) ) {
-			return false;
-		}
-
-		$mo = new MO();
-
-		if ( ! $mo->import_from_file( $file ) ) {
-			return false;
-		}
-
-		if ( isset( $l10n[ $domain ] ) ) {
-			$mo->merge_with( $l10n[ $domain ] );
-		}
-
-		$l10n[ $domain ] = &$mo;
-
-		return true;
-	}
-
-	/**
 	 * Test for `BA_Edit_Author_Slug::setup_globals()`.
 	 *
 	 * @since 1.2.0
@@ -129,7 +94,6 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 		$this->assertEquals( 10, has_action( 'after_setup_theme', array( ba_eas(), 'set_role_slugs' ) ) );
 		$this->assertEquals( 4, has_action( 'init', 'ba_eas_wp_rewrite_overrides' ) );
 		$this->assertEquals( 20, has_action( 'init', array( ba_eas(), 'add_rewrite_tags' ) ) );
-		$this->assertEquals( 10, has_action( 'ba_eas_loaded', array( ba_eas(), 'load_textdomain' ) ) );
 	}
 
 	/**
@@ -150,28 +114,6 @@ class BA_EAS_Tests_BA_Edit_Author_Slug extends WP_UnitTestCase {
 
 		$actual = ba_eas()->__get( 'db_version' );
 		$this->assertSame( BA_Edit_Author_Slug::DB_VERSION, $actual );
-	}
-
-	/**
-	 * Test for `BA_Edit_Author_Slug::load_textdomain()`.
-	 *
-	 * @since 1.2.0
-	 *
-	 * @covers BA_Edit_Author_Slug::load_textdomain
-	 */
-	public function test_load_textdomain() {
-
-		// Make sure the text domain isn't already loaded.
-		unload_textdomain( 'edit-author-slug' );
-		$this->assertFalse( is_textdomain_loaded( 'edit-author-slug' ) );
-
-		add_filter( 'override_load_textdomain', array( $this, '_override_load_textdomain_filter' ), 10, 3 );
-		ba_eas()->load_textdomain();
-		remove_filter( 'override_load_textdomain', array( $this, '_override_load_textdomain_filter' ) );
-
-		$this->assertTrue( is_textdomain_loaded( 'edit-author-slug' ) );
-
-		unload_textdomain( 'edit-author-slug' );
 	}
 
 	/**

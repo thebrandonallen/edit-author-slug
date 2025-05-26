@@ -309,27 +309,9 @@ if ( ! class_exists( 'BA_Edit_Author_Slug' ) ) :
 			add_action( 'after_setup_theme', array( $this, 'set_role_slugs' ) );
 			add_action( 'init', 'ba_eas_wp_rewrite_overrides', 4 );
 			add_action( 'init', array( $this, 'add_rewrite_tags' ), 20 );
-
-			// Localize.
-			add_action( 'ba_eas_loaded', array( $this, 'load_textdomain' ) );
 		}
 
 		/** Public Methods ****************************************************/
-
-		/**
-		 * Load the translation file for the current language.
-		 *
-		 * We only check the default WP language plugins folder.
-		 * (ie - wp-content/languages/plugins).
-		 *
-		 * @since 0.9.6
-		 * @since 1.5.0 Only check the default WP languages folder.
-		 *
-		 * @return bool
-		 */
-		public function load_textdomain() {
-			return load_plugin_textdomain( 'edit-author-slug' );
-		}
 
 		/**
 		 * Rewrite Author Base according to user's setting.
