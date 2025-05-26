@@ -1,27 +1,32 @@
 module.exports = function (grunt) {
-	const BUILD_DIR = 'build/',
-		EAS_EXCLUDED_MISC = [
-			'!**/assets/**',
-			'!**/bin/**',
-			'!**/build/**',
-			'!**/coverage/**',
-			'!**/node_modules/**',
-			'!**/tests/**',
-			'!**/vendor/**',
-			'!composer.*',
-			'!Gruntfile.js*',
-			'!package.json*',
-			'!package-lock.json*',
-			'!phpcs.xml*',
-			'!phpunit.xml*',
-			'!.*',
-			'!.*/**',
-		];
+	const BUILD_DIR = 'build/';
+	const EAS_EXCLUDED_MISC = [
+		'!**/assets/**',
+		'!**/bin/**',
+		'!**/build/**',
+		'!**/coverage/**',
+		'!**/node_modules/**',
+		'!**/tests/**',
+		'!**/vendor/**',
+		'!composer.*',
+		'!Gruntfile.js*',
+		'!package.json*',
+		'!package-lock.json*',
+		'!phpcs.xml*',
+		'!phpunit.xml*',
+		'!.*',
+		'!.*/**',
+	];
 
-	// Load tasks.
-	require('matchdep')
-		.filterDev(['grunt-*', '!grunt-legacy-util'])
-		.forEach(grunt.loadNpmTasks);
+	// Load all Grunt tasks, except `grunt-legacy-util`.
+	grunt.loadNpmTasks('grunt-checktextdomain');
+	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-string-replace');
+	grunt.loadNpmTasks('grunt-wp-i18n');
+	grunt.loadNpmTasks('grunt-wp-readme-to-markdown');
 
 	// Load legacy utils
 	grunt.util = require('grunt-legacy-util');
