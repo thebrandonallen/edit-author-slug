@@ -10,7 +10,7 @@ on:
   pull_request:
     branches: [ develop ]
 
-# Cancel any in-progress runs of a workflow/branch if a new run is triggered,
+# Cancel any in-progress runs of a workflow, per branch, if a new run is triggered,
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
