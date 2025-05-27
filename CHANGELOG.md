@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [1.9.2](https://github.com/thebrandonallen/edit-author-slug/tree/1.9.2) - 2025-05-27
+### Changed
+* Bumps "Tested up to" version to 6.8
+* Fixes issue where `load_plugin_textdomain` was called too early.
+* Update dependency package versions
+
 ## [1.9.1](https://github.com/thebrandonallen/edit-author-slug/tree/1.9.1) - 2024-10-14
 ### Changed
 * Bumps "Tested up to" version to 6.6
